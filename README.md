@@ -1,6 +1,7 @@
 # the ELEMENTs Environment
 The ELEMENTs Environment is a collection of controls and user interfaces as well as a test application. 
 The library implements the CSS classes of Bootstrap and Tabler.IO. Only the CSS and JS links have to be added to the HTML file.
+
 ![ELEMENTS](https://raw.githubusercontent.com/ELEMENTs-JP/the-ELEMENTs-Environment/master/ELEMENTs.Environment/Screenshots/ELEMENTS_TEASER.png)
 
 ## the Goal
@@ -24,6 +25,7 @@ We use repositories to establish a connection between the data framework and the
 
 ### ELEMENTs GO - the integrated data framework
 The framework additionally contains an integrated data framework with which database applications can be developed in a fast way.
+
 ![ELEMENTS GO Data Framework](https://raw.githubusercontent.com/ELEMENTs-JP/the-ELEMENTs-Environment/master/ELEMENTs.Environment/Screenshots/ELEMENTS_GO.png)
 
 ## Test environment
