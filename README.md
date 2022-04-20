@@ -106,3 +106,5 @@ This library uses external technologies such as Microsoft ASP.NET Core 5.0, Micr
 - services.AddSingleton<IFileDragDropService, FileDragDropUploadService>();
 - services.AddSingleton<IFileUploadService, FileUploadService>();
 - The Color Picker control only works with the Tabler.IO CSS framework.
+- Placeholder provides max. 5 placeholder elements
+- Text Devider only works with Tabler.IO CSS Framework
