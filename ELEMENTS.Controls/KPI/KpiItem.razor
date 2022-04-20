@@ -1,0 +1,25 @@
+﻿
+
+    <div class="bg-light border rounded overflow-hidden">
+        <div class="row">
+            <div class="col bg-white ps-3 p-1 pe-2 text-dark">
+                @KPI.ToSecureString()
+            </div>
+            <div class="col-auto pe-3 p-1 ps-2 bg-light text-dark border-start">
+                @Value.ToSecureString()
+            </div>
+        </div>
+    </div>
+
+
+
+
+@code {
+
+    [Parameter]
+    public string KPI { get; set; } = string.Empty;
+
+    [Parameter]
+    public string Value { get; set; } = string.Empty;
+
+}

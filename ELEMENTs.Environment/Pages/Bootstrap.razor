@@ -143,12 +143,65 @@
 
         <ELEMENTS.Controls.Text.Label Value="List" />
         <ELEMENTS.Controls.List.List Items="@( new List<string>() { "New York", "Washington D.C.", "Chicago" })" />
-        
+
         <ELEMENTS.Controls.Text.Label Value="Ordered List" />
         <ELEMENTS.Controls.List.OrderedList Items="@( new List<string>() { "New York", "Washington D.C.", "Chicago" })" />
-        
+
         <ELEMENTS.Controls.Text.Label Value="Bullet Point List" />
         <ELEMENTS.Controls.List.BulletPointList Items="@( new List<string>() { "New York", "Washington D.C.", "Chicago" })" />
+
+    </div>
+</div>
+
+
+
+
+<div class="row">
+    <div class="col">
+        <h3 class="h1">Analytics, Charts and KPIs</h3>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col p-3">
+
+        <ELEMENTS.Controls.Text.Label Value="KPI List" />
+        <ELEMENTS.Controls.KPI.KpiList Items="@( new List<KpiListItem>()  {
+                        new KpiListItem { KPI = "Umsatz", Value="100.000 EUR" },
+                        new KpiListItem { KPI = "Kosten", Value="90.000 EUR" },
+                        new KpiListItem { KPI = "Gewinn", Value="10.000 EUR" }
+                        })" />
+
+        <ELEMENTS.Controls.Text.Label Value="KPI Item" />
+        <ELEMENTS.Controls.KPI.KpiItem KPI="Umsatz" Value="30.000 EUR" />
+
+        <ELEMENTS.Controls.Text.Label Value="KPI Panel" />
+        <ELEMENTS.Controls.KPI.KpiPanel KPI="Umsatz" Value="30.000 EUR" Description="Umsatz im aktuellen Jahr" />
+
+        <ELEMENTS.Controls.Text.Label Value="KPI Trend Symbol" />
+        <ELEMENTS.Controls.KPI.KPITrend />
+    </div>
+    <div class="col p-3">
+
+
+    </div>
+    <div class="col p-3">
+
+
+    </div>
+</div>
+
+<div class="row">
+    <div class="col p-3">
+
+
+    </div>
+    <div class="col p-3">
+
+
+    </div>
+    <div class="col p-3">
+
 
     </div>
 </div>

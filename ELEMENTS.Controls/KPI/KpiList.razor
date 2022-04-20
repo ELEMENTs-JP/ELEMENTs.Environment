@@ -1,0 +1,43 @@
+﻿
+    @if (Items != null)
+    {
+        @if (Items.Count >= 1)
+        {
+            <ul class="@ListCSS">
+
+                @foreach (KpiListItem entry in Items)
+                {
+                    <li class="@ItemCSS">
+                        <div class="row">
+                            <div class="col bg-white ps-3 p-1 pe-2 text-dark">
+                                @entry.KPI.ToSecureString()
+                            </div>
+                            <div class="col-auto pe-3 p-1 ps-2 bg-light text-dark border-start">
+                                @entry.Value.ToSecureString()
+                            </div>
+                        </div>
+                    </li>
+                }
+
+            </ul>
+        }
+    }
+
+
+
+
+@code {
+
+
+
+    [Parameter]
+    public List<KpiListItem> Items { get; set; } = new List<KpiListItem>();
+
+    [Parameter]
+    public string ListCSS { get; set; } = "bg-light list-group overflow-hidden"; // list-group-flush
+
+    [Parameter]
+    public string ItemCSS { get; set; } = "list-group-item p-0 overflow-hidden";
+
+
+}

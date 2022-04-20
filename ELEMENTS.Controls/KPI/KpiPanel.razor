@@ -1,0 +1,32 @@
+﻿
+
+
+
+    <div class="col-auto bg-white border rounded overflow-hidden">
+        <div class="pt-3 ps-3 pb-1 text-dark fw-bold" >
+            @KPI
+        </div>
+        <div class="ps-3 display-6 text-dark" >
+            @Value
+        </div>
+        <div class="pb-3 ps-3 pt-1 text-muted" >
+            <small>@Description</small>
+        </div>
+    </div>
+
+
+
+@code {
+
+
+
+    [Parameter]
+    public string KPI { get; set; } = "Umsatz";
+
+    [Parameter]
+    public string Value { get; set; } = "100.000 EUR";
+
+    [Parameter]
+    public string Description { get; set; } = "Umsatz aus dem Jahr 2022";
+
+}
