@@ -83,10 +83,10 @@ This library uses external technologies such as Microsoft ASP.NET Core 5.0, Micr
 - [JavaScript](https://www.w3schools.com/js/)
 - [Microsoft Blazor / Razor / ASP.NET Core 5.0](https://docs.microsoft.com/en-us/aspnet/core/blazor/components/?view=aspnetcore-5.0)
 - [DropZone.JS](https://www.dropzone.dev/js/)
-- Microsoft Entity Framework Core 5.13
-- Microsoft Entity Framework Core for SQLite 5.13
-- SQLite
-- C#
+- [Microsoft Entity Framework Core 5.13](https://docs.microsoft.com/en-us/ef/core/what-is-new/ef-core-5.0/breaking-changes)
+- [Microsoft Entity Framework Core for SQLite 5.13](https://docs.microsoft.com/en-us/ef/core/providers/sqlite/?tabs=dotnet-core-cli)
+- [SQLite](https://www.sqlite.org/index.html)
+- [C#](https://docs.microsoft.com/en-us/dotnet/csharp/)
 
 ## Notes and known problems
 - The Waiting Progress Control works only with the Tabler.IO framework.
