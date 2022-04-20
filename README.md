@@ -105,3 +105,4 @@ This library uses external technologies such as Microsoft ASP.NET Core 5.0, Micr
 - To use the FileUpload functions, the IFileUploadService interface must be registered as a central service in Startup.cs.
 - services.AddSingleton<IFileDragDropService, FileDragDropUploadService>();
 - services.AddSingleton<IFileUploadService, FileUploadService>();
+- The Color Picker control only works with the Tabler.IO CSS framework.
