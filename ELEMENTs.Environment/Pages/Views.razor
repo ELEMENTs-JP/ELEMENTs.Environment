@@ -93,13 +93,43 @@
     </div>
     <div class="col p-3">
 
-        <ELEMENTS.Controls.Text.Label Value="Control Container" />
-        <ELEMENTS.Controls.Area.ControlContainer Title="Title">
-            <h1>This is a child Control</h1>
-        </ELEMENTS.Controls.Area.ControlContainer>
+
 
         <ELEMENTS.Controls.Text.Label Value="Menu Popup" />
         <ELEMENTS.Controls.Popup.MenuPopup />
+
+
+        <ELEMENTS.Controls.Text.Label Value="Toast" />
+        <ELEMENTS.Controls.Popup.Toast @ref="theTOAST" Title="Show Toast" />
+        <button class="btn btn-secondary" @onclick="ShowToast">Show Toast</button>
+
+        <ELEMENTS.Controls.Popup.Modal Title="Modal Dialog"
+                                       OnCancelClicked="@( e => { Value = e.ToString(); })"
+                                       OnOKClicked="@( e => { Value = e.ToString(); })">
+            <h1>this is the content of the modal</h1>
+        </ELEMENTS.Controls.Popup.Modal>
+
+        <ELEMENTS.Controls.Text.Label Value="Popup" />
+        <ELEMENTS.Controls.Popup.Popup />
+
+        <ELEMENTS.Controls.Text.Label Value="Sidebar" />
+        <button type="button" class="btn btn-sm btn-primary" @onclick="ShowSidebar">Partial Sidebar</button>
+        <ELEMENTS.Controls.Container.Sidebar @ref="pSidebar"
+                                             Position="ELEMENTS.Controls.Container.Sidebar.SideBarPosition.Partial">
+            <h1>This is the content of the sidebar</h1>
+        </ELEMENTS.Controls.Container.Sidebar>
+
+        <button type="button" class="btn btn-sm btn-primary" @onclick="ShowSidebarLeft">Left Sidebar</button>
+        <ELEMENTS.Controls.Container.Sidebar @ref="pSidebarLeft"
+                                             Position="ELEMENTS.Controls.Container.Sidebar.SideBarPosition.Left">
+            <h1>This is the content of the sidebar</h1>
+        </ELEMENTS.Controls.Container.Sidebar>
+
+        <button type="button" class="btn btn-sm btn-primary" @onclick="ShowSidebarTop">Top Sidebar</button>
+        <ELEMENTS.Controls.Container.Sidebar @ref="pSidebarTop"
+                                             Position="ELEMENTS.Controls.Container.Sidebar.SideBarPosition.Top">
+            <h1>This is the content of the sidebar</h1>
+        </ELEMENTS.Controls.Container.Sidebar>
 
         <ELEMENTS.Controls.Text.Label Value="Tab Control" />
         <ELEMENTS.Controls.Container.TabContainer>
@@ -132,18 +162,14 @@
     </div>
     <div class="col p-3">
 
-            <ELEMENTS.Controls.Text.Label Value="Card" />
+        <ELEMENTS.Controls.Text.Label Value="Card" />
         <ELEMENTS.Controls.Area.Card Title="Title" Text="this is the text of the card" SubTitle="Subtitle" />
 
-        <ELEMENTS.Controls.Text.Label Value="Toast" />
-        <ELEMENTS.Controls.Popup.Toast @ref="theTOAST" Title="Show Toast" />
-        <button class="btn btn-secondary" @onclick="ShowToast">Show Toast</button>
+        <ELEMENTS.Controls.Text.Label Value="Control Container" />
+        <ELEMENTS.Controls.Area.ControlContainer Title="Title">
+            <h1>This is a child Control</h1>
+        </ELEMENTS.Controls.Area.ControlContainer>
 
-        <ELEMENTS.Controls.Popup.Modal Title="Modal Dialog"
-                                       OnCancelClicked="@( e => { Value = e.ToString(); })"
-                                       OnOKClicked="@( e => { Value = e.ToString(); })">
-            <h1>this is the content of the modal</h1>
-        </ELEMENTS.Controls.Popup.Modal>
 
         <ELEMENTS.Controls.Text.Label Value="Component Container" />
         <ELEMENTS.Controls.Area.ComponentContainer>
@@ -158,31 +184,11 @@
             </Footer>
         </ELEMENTS.Controls.Area.ComponentContainer>
 
-        <ELEMENTS.Controls.Text.Label Value="Popup" />
-        <ELEMENTS.Controls.Popup.Popup />
 
-        <ELEMENTS.Controls.Text.Label Value="Sidebar" />
-        <button type="button" class="btn btn-sm btn-primary" @onclick="ShowSidebar">Partial Sidebar</button>
-        <ELEMENTS.Controls.Container.Sidebar @ref="pSidebar"
-                                             Position="ELEMENTS.Controls.Container.Sidebar.SideBarPosition.Partial">
-            <h1>This is the content of the sidebar</h1>
-        </ELEMENTS.Controls.Container.Sidebar>
-
-        <button type="button" class="btn btn-sm btn-primary" @onclick="ShowSidebarLeft">Left Sidebar</button>
-        <ELEMENTS.Controls.Container.Sidebar @ref="pSidebarLeft"
-                                             Position="ELEMENTS.Controls.Container.Sidebar.SideBarPosition.Left">
-            <h1>This is the content of the sidebar</h1>
-        </ELEMENTS.Controls.Container.Sidebar>
-
-        <button type="button" class="btn btn-sm btn-primary" @onclick="ShowSidebarTop">Top Sidebar</button>
-        <ELEMENTS.Controls.Container.Sidebar @ref="pSidebarTop"
-                                             Position="ELEMENTS.Controls.Container.Sidebar.SideBarPosition.Top">
-            <h1>This is the content of the sidebar</h1>
-        </ELEMENTS.Controls.Container.Sidebar>
     </div>
 </div>
 
-
+<ELEMENTS.Controls.Interface.Footer />
 
 
 

@@ -13,11 +13,11 @@ details summary::-webkit-details-marker {
 a:active {
     color: inherit !important;
     text-decoration: none !important;
-    background-color: rgba(100,110,120,.3) !important;
+    background-color: rgba(110,115,120,.5) !important;
 }
 
 .dropdown-item {
-    background-color: rgba(100,110,120,.06);
+    background-color: rgba(32,35,37,.15);
     border-top: 1px solid #eee;
 }
 
@@ -44,4 +44,8 @@ details[open] summary::after {
     color: inherit !important;
     transform: translate(0,0) rotate(45deg);
     
+}
+
+.bg-nav {
+    background-color: rgba(60,63,66,.08);
 }
