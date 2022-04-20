@@ -11,6 +11,11 @@ The framework consists (roughly) of the following components:
 - Data framework (e.g. API with Entity Framework for SQLite, SQL Server, etc.)
 
 ### Controls
+We start with a set of standard controls. Among them, for example, are the following:
+- TextBox, TextArea, IntegerBox, DecimalBox, etc.
+- Badge, Display, Heading, Label, etc.
+- Details Summary, Waiting Progress, Progress Bar, etc.
+
 ### Components
 ### Repositories
 ### Integrated data framework
