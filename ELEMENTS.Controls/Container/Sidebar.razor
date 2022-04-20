@@ -1,0 +1,154 @@
+﻿
+    @if (Visibility == true)
+    {
+        @if (Position == SideBarPosition.Left)
+        {
+            <div class="sidebarBackground">
+            </div>
+            <div class="sidebarLeft bg-white shadow-sm p-3">
+                <div class="row">
+                    <div class="col"><h2 class="h2">@Title</h2></div>
+                    <div class="col-auto">
+                        <button type="button" class="btn btn-hide" @onclick="Hide"><i class="fas fa-times text-dark"></i></button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col overflow-auto">
+                        @ChildContent
+                    </div>
+                </div>
+            </div>
+        }
+        @if (Position == SideBarPosition.Right)
+        {
+            <div class="sidebarBackground">
+            </div>
+            <div class="sidebarRight bg-white shadow-sm p-3">
+                <div class="row">
+                    <div class="col"><h2 class="h2">@Title</h2></div>
+                    <div class="col-auto">
+                        <button type="button" class="btn btn-hide" @onclick="Hide"><i class="fas fa-times text-dark"></i></button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col overflow-auto">
+                        @ChildContent
+                    </div>
+                </div>
+            </div>
+        }
+        @if (Position == SideBarPosition.Bottom)
+        {
+            <div class="sidebarBackground">
+            </div>
+            <div class="sidebarBottom bg-white shadow-sm p-3">
+                <div class="row">
+                    <div class="col"><h2 class="h2">@Title</h2></div>
+                    <div class="col-auto">
+                        <button type="button" class="btn btn-hide" @onclick="Hide"><i class="fas fa-times text-dark"></i></button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col overflow-auto">
+                        @ChildContent
+                    </div>
+                </div>
+            </div>
+        }
+        @if (Position == SideBarPosition.Top)
+        {
+            <div class="sidebarBackground">
+            </div>
+            <div class="sidebarTop bg-white shadow-sm p-3">
+                <div class="row">
+                    <div class="col"><h2 class="h2">@Title</h2></div>
+                    <div class="col-auto">
+                        <button type="button" class="btn btn-hide" @onclick="Hide"><i class="fas fa-times text-dark"></i></button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col overflow-auto">
+                        @ChildContent
+                    </div>
+                </div>
+            </div>
+        }
+        @if (Position == SideBarPosition.Full)
+        {
+            <div class="sidebarBackground">
+            </div>
+            <div class="sidebarFull bg-white shadow-sm p-3">
+                <div class="row">
+                    <div class="col"><h2 class="h2">@Title</h2></div>
+                    <div class="col-auto">
+                        <button type="button" class="btn btn-hide" @onclick="Hide"><i class="fas fa-times text-dark"></i></button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col overflow-auto">
+                        @ChildContent
+                    </div>
+                </div>
+            </div>
+        }
+        @if (Position == SideBarPosition.Partial)
+        {
+            <div class="sidebarBackground">
+            </div>
+            <div class="sidebarPartial bg-white shadow-sm p-3">
+                <div class="row">
+                    <div class="col"><h2 class="h2">@Title</h2></div>
+                    <div class="col-auto">
+                        <button type="button" class="btn btn-hide" @onclick="Hide"><i class="fas fa-times text-dark"></i></button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col overflow-auto">
+                        @ChildContent
+                    </div>
+                </div>
+            </div>
+        }
+    }
+
+
+
+
+@code {
+
+
+    [Parameter]
+    public SideBarPosition Position { get; set; } = SideBarPosition.Left;
+
+    [Parameter]
+    public string Title { get; set; } = "Title";
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    private bool Visibility = false;
+
+    public async Task Show()
+    {
+        Visibility = true;
+
+        await Task.FromResult<string>("Show");
+    }
+    public async Task Hide()
+    {
+        Visibility = false;
+
+        await Task.FromResult<string>("Hide");
+    }
+
+    public enum SideBarPosition
+    {
+        NULL = 0,
+        Full = 1,
+        Left = 2,
+        Right = 3,
+        Bottom = 4,
+        Top = 5,
+        Partial = 6,
+    }
+}

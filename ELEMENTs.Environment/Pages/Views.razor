@@ -80,6 +80,25 @@
 
         <ELEMENTS.Controls.Text.Label Value="Popup" />
         <ELEMENTS.Controls.Popup.Popup />
+
+        <ELEMENTS.Controls.Text.Label Value="Sidebar" />
+        <button type="button" class="btn btn-sm btn-primary" @onclick="ShowSidebar">Partial Sidebar</button>
+        <ELEMENTS.Controls.Container.Sidebar @ref="pSidebar"
+                                             Position="ELEMENTS.Controls.Container.Sidebar.SideBarPosition.Partial">
+            <h1>This is the content of the sidebar</h1>
+        </ELEMENTS.Controls.Container.Sidebar>
+
+        <button type="button" class="btn btn-sm btn-primary" @onclick="ShowSidebarLeft">Left Sidebar</button>
+        <ELEMENTS.Controls.Container.Sidebar @ref="pSidebarLeft"
+                                             Position="ELEMENTS.Controls.Container.Sidebar.SideBarPosition.Left">
+            <h1>This is the content of the sidebar</h1>
+        </ELEMENTS.Controls.Container.Sidebar>
+
+        <button type="button" class="btn btn-sm btn-primary" @onclick="ShowSidebarTop">Top Sidebar</button>
+        <ELEMENTS.Controls.Container.Sidebar @ref="pSidebarTop"
+                                             Position="ELEMENTS.Controls.Container.Sidebar.SideBarPosition.Top">
+            <h1>This is the content of the sidebar</h1>
+        </ELEMENTS.Controls.Container.Sidebar>
     </div>
 </div>
 
@@ -102,4 +121,34 @@
 
     [Parameter]
     public string Value { get; set; } = "Inhalt...";
+
+
+    private ELEMENTS.Controls.Container.Sidebar pSidebar;
+    private async Task ShowSidebar()
+    {
+        if (pSidebar != null)
+        {
+            await pSidebar.Show();
+        }
+    }
+
+
+    private ELEMENTS.Controls.Container.Sidebar pSidebarLeft;
+    private async Task ShowSidebarLeft()
+    {
+        if (pSidebarLeft != null)
+        {
+            await pSidebarLeft.Show();
+        }
+    }
+
+
+    private ELEMENTS.Controls.Container.Sidebar pSidebarTop;
+    private async Task ShowSidebarTop()
+    {
+        if (pSidebarTop != null)
+        {
+            await pSidebarTop.Show();
+        }
+    }
 }

@@ -1,0 +1,82 @@
+﻿.sidebarLeft {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 20rem;
+    height: 100%;
+    z-index: 1060;
+}
+
+.sidebarRight {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 20rem;
+    height: 100%;
+    z-index: 1060;
+}
+
+.sidebarTop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 16rem;
+    z-index: 1060;
+}
+
+.sidebarBottom {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 16rem;
+    z-index: 1060;
+}
+
+.sidebarFull {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1060;
+}
+
+.sidebarPartial {
+    position: fixed;
+    top: 75px;
+    bottom: 75px;
+    left: 60px;
+    right: 60px;
+    z-index: 1060;
+}
+
+.sidebarBackground {
+    position: fixed;
+    z-index: 1060;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #333;
+    opacity: 0.15;
+}
+
+.btn-hide {
+    box-sizing: content-box;
+    width: .75rem;
+    height: .75rem;
+    padding: .25em .25em;
+    color: #000;
+    border: 0;
+    border-radius: 4px;
+    opacity: .3;
+    cursor: pointer;
+}
+
+    .btn-hide:hover {
+        color: #000;
+        text-decoration: none;
+        opacity: .75;
+    }
