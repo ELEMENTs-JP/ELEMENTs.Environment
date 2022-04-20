@@ -85,6 +85,7 @@ This library uses external technologies such as Microsoft ASP.NET Core 5.0, Micr
 - [DropZone.JS](https://www.dropzone.dev/js/)
 - Microsoft Entity Framework Core 5.13
 - Microsoft Entity Framework Core for SQLite 5.13
+- SQLite
 - C#
 
 ## Notes and known problems
