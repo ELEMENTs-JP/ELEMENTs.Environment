@@ -9,8 +9,12 @@ The framework consists (roughly) of the following components:
 - User interfaces / Components (login screen, etc.)
 - Repositories
 - Data framework (e.g. API with Entity Framework for SQLite, SQL Server, etc.)
+
 ### Controls
 ### Components
 ### Repositories
 ### Integrated data framework
 The framework additionally contains an integrated data framework with which database applications can be developed in a fast way.
+
+## Test environment
+The test environment is a standard Microsoft Blazor Server application. It has been or will be adapted and extended over time with the controls and userob to show how the controls and user interfaces can be used.
