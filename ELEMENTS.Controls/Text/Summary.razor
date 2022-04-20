@@ -4,7 +4,15 @@
 
 <details>
     <summary class="@SummaryCSS">@Header.ToSecureString()</summary>
-    <p class="@DetailsCSS">@Value.ToSecureString()</p>
+    
+    @if (Value != null)
+    { 
+        <p class="@DetailsCSS">@Value.ToSecureString()</p>
+    }
+    @if (ChildContent != null)
+    {
+        @ChildContent
+    }
 </details>
 
 
@@ -32,4 +40,7 @@
 
     [Parameter]
     public string Header { get; set; } = string.Empty;
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
 }

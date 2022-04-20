@@ -1,7 +1,19 @@
 ﻿
 
 
-<span class="@ControlCSS">@Value.ToSecureString()</span>
+<span class="@ControlCSS">
+
+    @if (Value != null)
+    {
+        @Value.ToSecureString()
+    }
+
+    @if (ChildContent != null)
+    {
+        @ChildContent
+    }
+
+</span>
 
 @code {
 
@@ -18,4 +30,6 @@
     [Parameter]
     public string Value { get; set; } = string.Empty;
 
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
 }

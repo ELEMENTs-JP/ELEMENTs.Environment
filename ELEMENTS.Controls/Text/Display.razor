@@ -1,6 +1,16 @@
 ﻿
 
-<h3 class="@ControlCSS">@Value</h3>
+<h3 class="@ControlCSS">
+    @if (Value != null)
+    {
+        @Value.ToSecureString()
+    }
+
+    @if (ChildContent != null)
+    {
+        @ChildContent
+    }
+</h3>
 
 @code {
 
@@ -16,5 +26,8 @@
     /// </summary>
     [Parameter]
     public string Value { get; set; } = string.Empty;
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
 
 }

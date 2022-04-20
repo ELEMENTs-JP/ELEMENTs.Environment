@@ -1,4 +1,17 @@
-﻿<p class="@ControlCSS">@Value.ToSecureString()</p>
+﻿<p class="@ControlCSS">
+
+
+    @if (Value != null)
+    {
+        @Value.ToSecureString()
+    }
+
+    @if (ChildContent != null)
+    {
+        @ChildContent
+    }
+
+</p>
 
 @code {
 
@@ -14,4 +27,7 @@
     /// </summary>
     [Parameter]
     public string Value { get; set; } = string.Empty;
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
 }
