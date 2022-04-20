@@ -1,0 +1,105 @@
+﻿
+
+
+<select class="@ControlCSS"
+        @onchange="@(e => { Value = e.Value.ToSecureString(); onValueChanged(); onSelectionChanged(); })">
+
+    @if (Items.Count >= 1)
+    {
+        @foreach (OptionItem kvp in Items)
+        {
+            @if (kvp.isSelected)
+            {
+                <option class="@OptionItemCSS" value="@kvp.Value.ToSecureString()" selected>@kvp.Text.ToSecureString()</option>
+            }
+            else
+            {
+                <option class="@OptionItemCSS" value="@kvp.Value.ToSecureString()">@kvp.Text.ToSecureString()</option>
+            }
+        }
+    }
+</select>
+
+
+@code {
+
+
+    /// <summary>
+    /// Sets the option List of HTML Select.
+    /// </summary>
+    [Parameter]
+    public List<OptionItem> Items { get; set; } = new List<OptionItem>();
+
+
+    /// <summary>
+    /// Defines or sets a CSS class that controls the CSS style of the control. The default value is: form-control
+    /// </summary>
+    [Parameter]
+    public string ControlCSS { get; set; } = "form-control";
+
+    /// <summary>
+    /// Defines or sets a CSS class that controls the CSS style of the control. The default value is: form-control
+    /// </summary>
+    [Parameter]
+    public string OptionItemCSS { get; set; } = "";
+
+    /// <summary>
+    /// Defines or sets the value of the Value property of the control.
+    /// The property is initialized with "string.Empty".
+    /// </summary>
+    [Parameter]
+    public string Value { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Reacts when the Value property of the control is changed.
+    /// Returns the value of the control as a string. If this is not NULL.
+    /// If the Value property is NULL, the event is not thrown.
+    /// </summary>
+    [Parameter]
+    public EventCallback<string> ValueChanged { get; set; }
+    private async void onValueChanged()
+    {
+        try
+        {
+            // Raise Event
+            await ValueChanged.InvokeAsync(this.Value);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("FAIL: " + ex.Message);
+        }
+    }
+
+    /// <summary>
+    /// Reacts when the selected item of the control is changed.
+    /// Returns the selected item of the control. If this is not NULL.
+    /// If the Items List or the selected Item is NULL, the event is not thrown.
+    /// Info: The value of the option must be unique.
+    /// </summary>
+    [Parameter]
+    public EventCallback<OptionItem> SelectionChanged { get; set; }
+    private async void onSelectionChanged()
+    {
+        try
+        {
+            // Raise Event
+            if (this.Items.Count >= 1)
+            {
+                if (!string.IsNullOrEmpty(Value))
+                {
+                    OptionItem item = Items.Where(se => se.Value == Value.ToSecureString()).FirstOrDefault();
+
+                    if (item != null)
+                    {
+                        await SelectionChanged.InvokeAsync(item);
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("FAIL: " + ex.Message);
+        }
+    }
+
+}
