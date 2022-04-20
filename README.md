@@ -20,6 +20,7 @@ We start with a set of standard controls. Among them, for example, are the follo
 - FileInputBox, FileDragDropBox, etc.
 - Badge, Display, Heading, Label, Lead, etc.
 - Details Summary, Waiting Progress, Progress Bar, etc.
+- Button, Toggle-Button, etc.
 
 ### Components
 ### Repositories
