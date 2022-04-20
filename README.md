@@ -40,6 +40,10 @@ The framework additionally contains an integrated data framework with which data
 
 ![ELEMENTS GO Data Framework](https://raw.githubusercontent.com/ELEMENTs-JP/the-ELEMENTs-Environment/master/ELEMENTs.Environment/Screenshots/ELEMENTS_GO.png)
 
+[ELEMENTs GO Data Framework on nuget](https://www.nuget.org/packages/ELEMENTS.GO.SQLite/)
+
+> Nuget Command: Install-Package ELEMENTS.GO.SQLite
+
 ## Components of ELEMENTs GO
 ELEMENTs GO is an interface based database framework. In the version available here the database SQLite is implemented as an example. You can perform the following operations:
 - Delete database
