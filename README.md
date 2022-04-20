@@ -67,6 +67,9 @@ This library uses external technologies such as Microsoft ASP.NET Core 5.0, Micr
 - [Fontawesome Version 5](https://fontawesome.com/v5/search?m=free)
 - [JavaScript](https://www.w3schools.com/js/)
 - [Microsoft Blazor / Razor / ASP.NET Core 5.0](https://docs.microsoft.com/en-us/aspnet/core/blazor/components/?view=aspnetcore-5.0)
+- [DropZone.JS](https://www.dropzone.dev/js/)
+- Microsoft Entity Framework Core 5.13
+- Microsoft Entity Framework Core for SQLite 5.13
 - C#
 
 ## Notes and known problems
