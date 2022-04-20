@@ -1,0 +1,40 @@
+﻿
+
+@if (Count == 1)
+{
+    <div class="placeholder col-9"></div>
+}
+else if (Count == 2)
+{
+    <div class="placeholder col-9"></div>
+    <div class="placeholder col-11"></div>
+}
+else if (Count == 3)
+{
+    <div class="placeholder col-9"></div>
+    <div class="placeholder col-11"></div>
+    <div class="placeholder col-10"></div>
+}
+else if (Count == 4)
+{
+    <div class="placeholder col-9"></div>
+    <div class="placeholder col-11"></div>
+    <div class="placeholder col-10"></div>
+    <div class="placeholder col-8"></div>
+}
+else if (Count == 5)
+{
+    <div class="placeholder col-11"></div>
+    <div class="placeholder col-9"></div>
+    <div class="placeholder col-11"></div>
+    <div class="placeholder col-10"></div>
+    <div class="placeholder col-8"></div>
+}
+
+
+
+@code {
+
+    [Parameter]
+    public int Count { get; set; } = 1;
+}
