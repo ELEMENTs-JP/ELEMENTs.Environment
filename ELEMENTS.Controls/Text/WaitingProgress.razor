@@ -1,0 +1,26 @@
+﻿
+<div class="@OuterCSS">
+    <div class="@( InnerCSS + " " + BackgroundCSS )"></div>
+</div>
+
+@code {
+
+
+    /// <summary>
+    /// Defines or sets a CSS class that controls the CSS style of the control. The default value is: 'progress'
+    /// </summary>
+    [Parameter]
+    public string OuterCSS { get; set; } = "progress";
+
+    /// <summary>
+    /// Defines or sets a CSS class that controls the CSS style of the bar. The default value is: 'progress-bar progress-bar-indeterminate'
+    /// </summary>
+    [Parameter]
+    public string InnerCSS { get; set; } = "progress-bar progress-bar-indeterminate";
+
+    /// <summary>
+    /// Defines or sets a CSS class that controls the CSS style of the background. The default value is: 'bg-green'
+    /// </summary>
+    [Parameter]
+    public string BackgroundCSS { get; set; } = "bg-green";
+}

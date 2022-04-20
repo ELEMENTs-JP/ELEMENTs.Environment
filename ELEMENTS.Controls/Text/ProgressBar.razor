@@ -1,0 +1,32 @@
+﻿
+
+
+<div class="@ControlCSS" title="@(Value + "% Complete")">
+    <div class="@ProgressCSS" style="width: @(Value + "%")" role="progressbar"
+         aria-valuenow="@Value" aria-valuemin="0" aria-valuemax="100">
+    </div>
+</div>
+
+@code {
+
+    /// <summary>
+    /// Defines or sets a CSS class that controls the CSS style of the control. The default value is: 'progress'
+    /// </summary>
+    [Parameter]
+    public string ControlCSS { get; set; } = "progress";
+
+    /// <summary>
+    /// Defines or sets a CSS class that controls the CSS style of the progress bar. The default value is: 'progress-bar'
+    /// </summary>
+    [Parameter]
+    public string ProgressCSS { get; set; } = "progress-bar";
+
+    /// <summary>
+    /// Defines or sets the value of the Value property of the control.
+    /// The property is initialized with "0".
+    /// The minimum value is 0. The maximum value is 100.
+    /// </summary>
+    [Parameter]
+    public int Value { get; set; } = 0;
+
+}
