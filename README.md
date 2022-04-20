@@ -52,6 +52,9 @@ The ELEMENTs GO Data Framework for SQLite has the following dependencies:
 - Entity Framework Core Tools 5.0.13
 - ELEMENTs Infrastructure Library
 
+### Lists and list elements
+Lists and list items can be used both manually and with the Data Framework. Basically you have to work with the IDTO interface. The ListItem will not be displayed until the DTO object has been injected. The ItemsList can only be filled with IDTO interface.
+
 ## ELEMENTs Infrastructure Library
 The ELEMENTs Infrastructure Library is a Razor class library with a set of helper methods, interfaces and enumerations that help to keep the ELEMENTs GO Data Framework functional. The library is required for the operation of the ELEMENTs GO Data Framework.
 
