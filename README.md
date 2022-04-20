@@ -58,3 +58,4 @@ We have made the entire control library available for free on nuget. So you can 
 
 ## Known problems between Bootstrap and Tabler.IO
 - The Waiting Progress Control works only with the Tabler.IO framework.
+- The Fontawesome Library is required to display icons. But you can also use other libraries.
