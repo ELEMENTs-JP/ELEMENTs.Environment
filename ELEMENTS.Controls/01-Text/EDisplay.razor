@@ -1,0 +1,20 @@
+﻿
+
+<h3 class="@ControlCSS">@Value</h3>
+
+@code {
+
+    /// <summary>
+    /// Defines or sets a CSS class that controls the CSS style of the control. Default css class is 'display-3'
+    /// </summary>
+    [Parameter]
+    public string ControlCSS { get; set; } = "display-3";
+
+    /// <summary>
+    /// Defines or sets the value of the Value property of the control.
+    /// The property is initialized with "string.Empty".
+    /// </summary>
+    [Parameter]
+    public string Value { get; set; } = string.Empty;
+
+}

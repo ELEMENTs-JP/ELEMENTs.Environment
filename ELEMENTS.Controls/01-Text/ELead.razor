@@ -1,0 +1,24 @@
+﻿
+
+
+
+<p class="@ControlCSS">@Value.ToSecureString()</p>
+
+
+
+@code {
+
+    /// <summary>
+    /// Defines or sets a CSS class that controls the CSS style of the control. Default css class is 'lead'
+    /// </summary>
+    [Parameter]
+    public string ControlCSS { get; set; } = "lead";
+
+    /// <summary>
+    /// Defines or sets the value of the Value property of the control.
+    /// The property is initialized with "string.Empty".
+    /// </summary>
+    [Parameter]
+    public string Value { get; set; } = string.Empty;
+
+}
