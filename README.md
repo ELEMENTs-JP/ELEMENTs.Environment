@@ -15,8 +15,9 @@ The framework consists (roughly) of the following components:
 
 ### Controls
 We start with a set of standard controls. Among them, for example, are the following:
-- TextBox, TextArea, IntegerBox, DecimalBox, etc.
-- Badge, Display, Heading, Label, etc.
+- TextBox, TextArea, IntegerBox, DecimalBox, MoneyBox, etc.
+- DateBox, TimeBox, DateTimeBox, etc.
+- Badge, Display, Heading, Label, Lead, etc.
 - Details Summary, Waiting Progress, Progress Bar, etc.
 
 ### Components
