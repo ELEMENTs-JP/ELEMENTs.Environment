@@ -1,0 +1,34 @@
+﻿
+
+
+    @if (Parent.ActivePage == this)
+    {
+        @ChildContent
+    }
+
+
+
+@code {
+
+    protected override void OnInitialized()
+    {
+        if (Parent == null)
+            throw new ArgumentNullException(nameof(Parent), "TabPage must exist within a TabControl");
+
+        Parent.AddPage(this);
+
+        base.OnInitialized();
+    }
+
+    // https://blazor-university.com/templating-components-with-renderfragements/creating-a-tabcontrol/
+
+    [Parameter]
+    public string Text { get; set; } = "TabPage";
+
+    [CascadingParameter]
+    private TabContainer Parent { get; set; }
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+}

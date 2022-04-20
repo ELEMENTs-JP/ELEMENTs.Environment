@@ -1,0 +1,37 @@
+﻿
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="@("Head_" + ID)">
+            <button class="accordion-button"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="@("#" + ID)"
+                    aria-expanded="false"
+                    aria-controls="@ID">
+                @Title
+            </button>
+        </h2>
+        <div id="@ID"
+             class="accordion-collapse collapse"
+             aria-labelledby="headingOne"
+             data-bs-parent="@( "#" + ID )">
+            <div class="accordion-body">
+                @ChildContent
+            </div>
+        </div>
+    </div>
+
+
+
+@code {
+
+
+    [Parameter]
+    public string ID { get; set; } = "TAB_" + Guid.NewGuid().ToString();
+
+    [Parameter]
+    public string Title { get; set; } = "Accordion";
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+}

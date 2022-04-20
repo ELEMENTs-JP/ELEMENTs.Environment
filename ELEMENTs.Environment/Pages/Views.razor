@@ -19,10 +19,22 @@
         <button class="btn btn-secondary" @onclick="ShowToast">Show Toast</button>
 
         <ELEMENTS.Controls.Popup.Modal Title="Modal Dialog"
-                    OnCancelClicked="@( e => { Value = e.ToString(); })"
-                    OnOKClicked="@( e => { Value = e.ToString(); })">
+                                       OnCancelClicked="@( e => { Value = e.ToString(); })"
+                                       OnOKClicked="@( e => { Value = e.ToString(); })">
             <h1>this is the content of the modal</h1>
         </ELEMENTS.Controls.Popup.Modal>
+
+
+        <ELEMENTS.Controls.Text.Label Value="Accordion" />
+        <ELEMENTS.Controls.Container.TabContainer>
+            <ELEMENTS.Controls.Container.TabItem Text="Tab Item 1">
+                <h1>This is the Content of Tab Item 1</h1>
+            </ELEMENTS.Controls.Container.TabItem>
+            <ELEMENTS.Controls.Container.TabItem Text="Tab Item 2">
+                <h1>This is the Content of Tab Item 2</h1>
+
+            </ELEMENTS.Controls.Container.TabItem>
+        </ELEMENTS.Controls.Container.TabContainer>
 
     </div>
     <div class="col p-3">
@@ -35,6 +47,21 @@
         <ELEMENTS.Controls.Text.Label Value="Menu Popup" />
         <ELEMENTS.Controls.Popup.MenuPopup />
 
+        <ELEMENTS.Controls.Text.Label Value="Accordion" />
+        <ELEMENTS.Controls.Container.Accordion>
+            <ELEMENTS.Controls.Container.AccordionItem Title="ASDF">
+                <h1>Inhalt 21</h1>
+            </ELEMENTS.Controls.Container.AccordionItem>
+            <ELEMENTS.Controls.Container.AccordionItem Title="QWER">
+                <h1>Inhalt 23</h1>
+            </ELEMENTS.Controls.Container.AccordionItem>
+            <ELEMENTS.Controls.Container.AccordionItem Title="poiu">
+                <h1>Inhalt 25</h1>
+            </ELEMENTS.Controls.Container.AccordionItem>
+            <ELEMENTS.Controls.Container.AccordionItem Title="ölkj">
+                <h1>Inhalt 27</h1>
+            </ELEMENTS.Controls.Container.AccordionItem>
+        </ELEMENTS.Controls.Container.Accordion>
     </div>
     <div class="col p-3">
 

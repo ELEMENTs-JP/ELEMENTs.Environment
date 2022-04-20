@@ -1,0 +1,48 @@
+﻿
+
+<ul class="nav nav-tabs">
+    @foreach (TabItem tabPage in Pages)
+    {
+        <li class="nav-item">
+            <span style="cursor:pointer;" class="nav-link @GetTabClass(tabPage)"
+                  aria-current="page" @onclick=@( () => ActivatePage(tabPage) )>@tabPage.Text</span>
+            </li>
+        }
+</ul>
+
+<CascadingValue Value="this">
+    @ChildContent
+</CascadingValue>
+
+
+@code {
+
+    string GetTabClass(TabItem page)
+    {
+        return page == ActivePage ? "active" : "";
+    }
+    string GetButtonClass(TabItem page)
+    {
+        return page == ActivePage ? "btn-primary" : "btn-secondary";
+    }
+    void ActivatePage(TabItem page)
+    {
+        ActivePage = page;
+    }
+
+    // Next line is needed so we are able to add <TabPage> components inside
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    public TabItem ActivePage { get; set; }
+    List<TabItem> Pages = new List<TabItem>();
+    internal void AddPage(TabItem tabPage)
+    {
+        Pages.Add(tabPage);
+
+        if (Pages.Count == 1)
+            ActivePage = tabPage;
+
+        StateHasChanged();
+    }
+}
