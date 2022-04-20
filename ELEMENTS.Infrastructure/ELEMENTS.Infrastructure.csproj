@@ -3,6 +3,13 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+    <Version>0.0.1</Version>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Description>The ELEMENTs Infrastructure Library is a set of helper methods, enums and interfaces for the ELEMENTs GO Data Framework and the ELEMENTs Controls UI Framework</Description>
+    <Copyright>Jürgen Pott 2022</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/ELEMENTs-JP/the-ELEMENTs-Environment</RepositoryUrl>
+    <PackageReleaseNotes>Please visit github at: https://github.com/ELEMENTs-JP/the-ELEMENTs-Environment</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
