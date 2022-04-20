@@ -23,6 +23,8 @@ We start with a set of standard controls. Among them, for example, are the follo
 - Badge, Display, Heading, Label, Lead, etc.
 - Details Summary, Waiting Progress, Progress Bar, etc.
 - Button, Toggle-Button, etc.
+- Items List, List Items, etc.
+- List (a simple list), Bullet Point List, Ordered List, etc.
 
 ### Components
 ### Repositories
