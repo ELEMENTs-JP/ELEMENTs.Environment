@@ -1,0 +1,58 @@
+﻿@inject IContextService cs
+
+@code {
+
+
+
+    protected override Task OnInitializedAsync()
+    {
+        try
+        {
+            // Set Path
+            if (cs != null)
+            {
+                SQLiteContext.DbFileName = "Elements.db";
+                SQLiteContext.FullDirectory = cs.GetContentRootPath() + "\\Database";
+                SQLiteContext.FullFilePath = SQLiteContext.FullDirectory + "\\" + SQLiteContext.DbFileName;
+
+                if (!Directory.Exists(SQLiteContext.FullDirectory))
+                {
+                    Directory.CreateDirectory(SQLiteContext.FullDirectory);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            string msg = ex.Message;
+        }
+
+        try
+        {
+            // Create
+            if (cs != null)
+            {
+                SQLiteHelper.EnsureDatabaseCreated();
+            }
+        }
+        catch (Exception ex)
+        {
+            string msg = ex.Message;
+        }
+
+        try
+        {
+            // Update
+            if (cs != null)
+            {
+                SQLiteHelper.MigrateDatabase();
+            }
+        }
+        catch (Exception ex)
+        {
+            string msg = ex.Message;
+        }
+
+        return base.OnInitializedAsync();
+    }
+
+}
