@@ -2,7 +2,7 @@
 The ELEMENTs Environment is a collection of controls and user interfaces as well as a test application. 
 The library implements the CSS classes of Bootstrap and Tabler.IO. Only the CSS and JS links have to be added to the HTML file.
 
-At the moment the Controls Library contains **66 different Microsoft Razor controls** that you can use in your projects. We are still working on providing you with more controls, components and user interfaces as well as an improved data framework.
+At the moment the Controls Library contains **74 different Microsoft Razor controls** that you can use in your projects. We are still working on providing you with more controls, components and user interfaces as well as an improved data framework.
 
 ![ELEMENTS](https://raw.githubusercontent.com/ELEMENTs-JP/the-ELEMENTs-Environment/master/ELEMENTs.Environment/Screenshots/ELEMENTS_TEASER.png)
 
@@ -34,7 +34,8 @@ We start with a set of standard controls. Among them, for example, are the follo
 
 ### Components
 Components are not yet finished user interfaces. In terms of size, they are somewhere between a small or larger control and a small user interface. In the vast majority of cases, a component can be used to implement a small use case. Here are a few examples:
-- Security: Login, Register, Log off, Change Password, etc.
+- Security: Login, Register, Log off, Change Password, Permissions list etc.
+- Security: Request Access, Request new Password, Set new password, etc.
 
 ### Repositories
 We use repositories to establish a connection between the data framework and the user interfaces / controls. We use the "Dependency Injection" pattern to implement customizable and reusable access code and business logic using interfaces. You can adapt this code to your needs at any time.
