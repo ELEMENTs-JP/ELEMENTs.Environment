@@ -57,6 +57,14 @@ You can change the CSS classes of each control (i.e. the Bootstrap or Tabler.IO 
 We have made the entire control library available for free on nuget. So you can easily integrate ELEMENTs controls into your Visual Studio solution at any time.
 [Here you can find the Nuget Package for Visual Studio and .NET-Core 5](https://www.nuget.org/packages/ELEMENTS.Controls/)
 
+## Libraries and technologies used
+- [Bootstrap](https://getbootstrap.com/)
+- [Tabler.IO](https://preview.tabler.io/)
+- [Fontawesome Version 5](https://fontawesome.com/v5/search?m=free)
+- [JavaScript](https://www.w3schools.com/js/)
+- [Microsoft Blazor / Razor / ASP.NET Core 5.0](https://docs.microsoft.com/en-us/aspnet/core/blazor/components/?view=aspnetcore-5.0)
+- C#
+
 ## Known problems between Bootstrap and Tabler.IO
 - The Waiting Progress Control works only with the Tabler.IO framework.
 - The Fontawesome Library is required to display icons. But you can also use other libraries.
