@@ -1,0 +1,79 @@
+﻿@inject NavigationManager nm
+
+
+@if (PermissionItems != null)
+{
+    <div class="@ControlCSS">
+        <div class="row">
+            <h2>@Title</h2>
+        </div>
+        <div class="row border-top">
+
+            @foreach (Permission entry in PermissionItems)
+            {
+                if (entry.Value == true)
+                {
+                    <div class="py-2 border-bottom">
+                        <label class="row">
+                            <span class="col">@entry.Title.ToSecureString()</span>
+                            <span class="col-auto">
+                                <label class="form-check form-check-single form-switch">
+                                    <input class="form-check-input" type="checkbox" checked=""
+                                           @onchange="@( e => { onPermissionChanged(entry, e.Value.ToSecureBool()); })">
+                                </label>
+                            </span>
+                        </label>
+                    </div>
+
+                }
+                else
+                {
+                    <div class="py-2 border-bottom">
+                        <label class="row">
+                            <span class="col">@entry.Title.ToSecureString()</span>
+                            <span class="col-auto">
+                                <label class="form-check form-check-single form-switch">
+                                    <input class="form-check-input" type="checkbox"
+                                           @onchange="@( e => { onPermissionChanged(entry, e.Value.ToSecureBool()); })">
+                                </label>
+                            </span>
+                        </label>
+                    </div>
+                }
+            }
+
+        </div>
+    </div>
+}
+
+
+
+@code {
+
+    /// <summary>
+    /// Defines or sets a CSS class that controls the CSS style of the control. The default value is: form-control
+    /// </summary>
+    [Parameter]
+    public string ControlCSS { get; set; } = "border bg-white rounded p-2";
+
+    /// <summary>
+    /// Reacts when the Value property of the control is changed by keyboard input.
+    /// Returns the value of the control as a string. If this is not NULL.
+    /// If the Value property is NULL, the event is not thrown.
+    /// Info: If intensive operations or accesses to the hardware are implemented with this event,
+    /// delays may occur due to the roundtrip in the user interface.
+    /// </summary>
+    [Parameter]
+    public EventCallback<Permission> PermissionChanged { get; set; }
+    private async void onPermissionChanged(Permission permission, bool theValue)
+    {
+        permission.Value = theValue;
+
+        // Raise Event
+        await PermissionChanged.InvokeAsync(permission);
+    }
+
+    [Parameter] public string Title { get; set; } = "Permissions";
+    [Parameter] public List<Permission> PermissionItems { get; set; } = null;
+
+}

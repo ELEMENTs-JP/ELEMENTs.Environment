@@ -1,0 +1,99 @@
+﻿@inject NavigationManager nm
+
+
+    <div class="row d-flex align-items-center">
+        <div class="col-auto px-1">
+            <strong>@FormTitle</strong>
+        </div>
+        <div class="col-auto px-1">
+            <input type="email" class="@ControlCSS" 
+                   placeholder="@MailPlaceholder" 
+                     @onchange="@( e => { Mail = e.Value.ToSecureString(); })" >
+        </div>
+        <div class="col-auto px-1">
+            <div class="input-group input-group-flat">
+                <input type="password" class="@ControlCSS"  
+                       placeholder="@PasswordPlaceholder" autocomplete="off"
+                        @onchange="@( e => { Pwd = e.Value.ToSecureString(); })" >
+                <span class="input-group-text bg-white">
+                    <i class="fas fa-key"></i>
+                </span>
+            </div>
+        </div>
+        <div class="col-auto px-1">
+            <button type="button" class="@ButtonCSS"
+                    @onclick="click">@SignInButtonLabel</button>
+        </div>
+    </div>
+
+
+
+@code {
+
+
+    [Parameter]
+    public string ControlCSS { get; set; } = "form-control";
+
+    [Parameter]
+    public string ButtonCSS { get; set; } = "btn btn-primary";
+
+    // Form
+    [Parameter]
+    public string FormTitle { get; set; } = "Login";
+
+    // Mail
+    [Parameter]
+    public string MailPlaceholder { get; set; } = "Email";
+
+    // Password
+    [Parameter]
+    public string PasswordPlaceholder { get; set; } = "Password";
+
+    // Sign Int 
+    [Parameter]
+    public string SignInButtonLabel { get; set; } = "Login";
+
+    private string Mail = string.Empty;
+    private string Pwd = string.Empty;
+
+    [Parameter]
+    public EventCallback<AuthentificationFeedback> OnLoginClicked { get; set; }
+
+    private void click()
+    {
+        AuthentificationFeedback fb = new AuthentificationFeedback();
+
+        try
+        {
+            if (string.IsNullOrEmpty(Mail))
+            {
+                fb.Message = "E-Mail is empty";
+                fb.Status = "FAIL";
+            }
+            if (string.IsNullOrEmpty(Pwd))
+            {
+                fb.Message = "Password is empty";
+                fb.Status = "FAIL";
+            }
+
+            fb.Mail = Mail;
+            fb.Password = Pwd;
+
+            if (!string.IsNullOrEmpty(Mail) &&
+                !string.IsNullOrEmpty(Pwd))
+            {
+                fb.Status = "OK";
+            }
+        }
+        catch (Exception ex)
+        {
+            fb.Message = "Error: " + ex.Message;
+            fb.Status = "FAIL";
+        }
+        finally
+        {
+            OnLoginClicked.InvokeAsync(fb);
+        }
+    }
+
+}

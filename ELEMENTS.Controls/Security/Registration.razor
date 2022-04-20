@@ -1,0 +1,190 @@
+﻿
+@inject NavigationManager nm
+
+<div class="card card-md">
+    <div class="card-body">
+
+        <h2 class="card-title text-center mb-4">@FormTitle</h2>
+
+        <div class="mb-3">
+            <label class="form-label">@NameLabel</label>
+            <input type="text" class="@ControlCSS" placeholder="@NamePlaceholder"
+                   @onchange="@( e => { Name = e.Value.ToSecureString(); })">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">@MailLabel</label>
+            <input type="email" class="@ControlCSS" placeholder="@MailPlaceholder"
+                   @onchange="@( e => { Mail = e.Value.ToSecureString(); })">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">@PasswordLabel</label>
+            <div class="input-group input-group-flat">
+                <input type="password" class="@ControlCSS" placeholder="@PasswordPlaceholder" autocomplete="off"
+                       @onchange="@( e => { Pwd = e.Value.ToSecureString(); })">
+                <span class="input-group-text bg-white">
+                    <i class="fas fa-key"></i>
+                </span>
+            </div>
+        </div>
+
+        @if (ShowTermsPolicyCheck == true)
+        {
+            <div class="mb-3">
+                <label class="form-check">
+                    <input type="checkbox" class="form-check-input"
+                           @onchange="@( e => { AcceptAgreements = ConvertToSecureBool(e.Value);  })">
+                    <span class="form-check-label"><a href="@TermsPolicyLink" target="_blank" tabindex="-1">@TermsPolicyLabel</a></span>
+                </label>
+            </div>
+        }
+
+        <div class="form-footer">
+            <button type="button" class="@ButtonCSS" @onclick="click">@SignUpButtonLabel</button>
+        </div>
+    </div>
+</div>
+
+
+@code {
+
+
+    [Parameter]
+    public string ControlCSS { get; set; } = "form-control";
+
+    [Parameter]
+    public string ButtonCSS { get; set; } = "btn btn-primary w-100";
+
+    // Form
+    [Parameter]
+    public string FormTitle { get; set; } = "Create new account";
+
+    // Name
+    [Parameter]
+    public string NameLabel { get; set; } = "Name";
+
+    [Parameter]
+    public string NamePlaceholder { get; set; } = "Enter name";
+
+    // Mail
+    [Parameter]
+    public string MailLabel { get; set; } = "Email address";
+
+    [Parameter]
+    public string MailPlaceholder { get; set; } = "Enter email";
+
+    // Password
+    [Parameter]
+    public string PasswordLabel { get; set; } = "Password";
+
+    [Parameter]
+    public string PasswordPlaceholder { get; set; } = "Enter password";
+
+    [Parameter]
+    public string TermsPolicyLabel { get; set; } = "Agree the terms and policy.";
+
+    [Parameter]
+    public string TermsPolicyLink { get; set; } = "./terms-of-service.html";
+
+
+    [Parameter]
+    public bool ShowTermsPolicyCheck { get; set; } = true;
+
+    // Sign Int
+    [Parameter]
+    public string SignUpButtonLabel { get; set; } = "Create new account";
+
+    private string Name = string.Empty;
+    private string Mail = string.Empty;
+    private string Pwd = string.Empty;
+    private bool AcceptAgreements = false;
+
+    [Parameter]
+    public EventCallback<AuthentificationFeedback> OnRegisterClicked { get; set; }
+
+    private void click()
+    {
+        AuthentificationFeedback fb = new AuthentificationFeedback();
+
+        try
+        {
+            // Name, Mail, Password 
+            if (string.IsNullOrEmpty(Mail))
+            {
+                fb.Status = "FAIL";
+                fb.Message = "E-Mail is empty";
+            }
+            if (string.IsNullOrEmpty(Pwd))
+            {
+                fb.Status = "FAIL";
+                fb.Message = "Password is empty";
+            }
+            if (string.IsNullOrEmpty(Name))
+            {
+                fb.Status = "FAIL";
+                fb.Message = "Name is empty";
+            }
+
+            // Policy 
+            if (ShowTermsPolicyCheck == true)
+            {
+                if (AcceptAgreements == false)
+                {
+                    fb.Status = "FAIL";
+                    fb.Message = "Agreements not accepted";
+                }
+            }
+
+            // Name, Mail, Password 
+            fb.Name = Name;
+            fb.Mail = Mail;
+            fb.Password = Pwd;
+
+            // Policy 
+            if (ShowTermsPolicyCheck == true)
+            {
+                fb.AcceptAgreements = AcceptAgreements;
+            }
+
+            if (!string.IsNullOrEmpty(Mail) &&
+                !string.IsNullOrEmpty(Name) &&
+                !string.IsNullOrEmpty(Pwd))
+            {
+                if (ShowTermsPolicyCheck == true)
+                {
+                    if (AcceptAgreements == true)
+                    {
+                        fb.Status = "OK";
+                    }
+                }
+                else
+                {
+                    fb.Status = "OK";
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            fb.Status = "FAIL";
+            fb.Message = "Error: " + ex.Message;
+        }
+        finally
+        {
+            OnRegisterClicked.InvokeAsync(fb);
+        }
+    }
+
+    bool ConvertToSecureBool(object obj)
+    {
+        try
+        {
+            return Convert.ToBoolean(obj);
+        }
+        catch (Exception ex)
+        {
+
+        }
+        return false;
+    }
+}
