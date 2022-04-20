@@ -1,0 +1,65 @@
+﻿
+@inject NavigationManager nm
+
+
+<nav class="@ControlCSS">
+
+    @if (Entries != null)
+    {
+        @if (Entries.Count >= 1)
+        {
+            <ul class="navbar-nav me-auto">
+
+                @foreach (NavigationEntry entry in Entries)
+                {
+                    <li class="nav-item">
+
+                        @if (entry.Items == null || entry.Items.Count == 0)
+                        {
+                            <a class="@NavigationItemCSS" href="@entry.Link">@entry.Title</a>
+                        }
+                        else
+                        {
+                            <div class="nav-item dropdown">
+                                <a href="#" class="nav-link d-flex lh-1 text-reset px-2" data-bs-toggle="dropdown" aria-label="menu">
+
+                                    <div class="d-none d-xl-block">
+                                        <div>@entry.Title</div>
+                                    </div>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-start dropdown-menu-arrow">
+                                    <div class="px-2 pt-2 fw-bold">@entry.Title</div>
+                                    <div class="dropdown-divider"></div>
+
+                                    @foreach (NavigationEntry child in entry.Items)
+                                    {
+                                        <a href="@child.Link" class="dropdown-item">@child.Title</a>
+                                    }
+
+                                </div>
+                            </div>
+                        }
+                    </li>
+                }
+            </ul>
+        }
+    }
+
+</nav>
+
+
+
+@code {
+
+
+
+    [Parameter]
+    public List<NavigationEntry> Entries { get; set; } = new List<NavigationEntry>();
+
+    [Parameter]
+    public string ControlCSS { get; set; } = "navbar navbar-expand-lg "; // list-group-flush
+
+    [Parameter]
+    public string NavigationItemCSS { get; set; } = "nav-link";
+
+}

@@ -9,6 +9,14 @@ using Microsoft.AspNetCore.Hosting;
 
 namespace ELEMENTS.Infrastructure
 {
+    public class NavigationEntry
+    {
+        public string Link { get; set; } = "/";
+        public string Title { get; set; } = "Home";
+
+        public List<NavigationEntry> Items { get; set; } = new List<NavigationEntry>();
+    }
+
     public enum ElementsEntityType
     { 
         NULL = 0,
