@@ -1,0 +1,131 @@
+﻿@using System.IO
+
+@inject IJSRuntime JSRuntime
+@implements IAsyncDisposable
+@inject IFileDragDropService fileUpload
+
+<style>
+    .drop-zone {
+        min-height: 100px;
+        border: 3px dashed #666666;
+        background-color: #fff;
+    }
+
+        .drop-zone.hover {
+            border: 3px dashed #999999;
+        }
+
+        .drop-zone:hover {
+            border: 3px dashed #999999;
+            background-color: #eee;
+        }
+</style>
+
+
+<div @ref="dropZoneElement" class="drop-zone p-3 w-100 rounded">
+    <div @ref="inputFileContainer">
+        <InputFile OnChange="@OnChange" class="form-control" />
+    </div>
+</div>
+
+@code {
+
+
+
+
+    protected override void OnInitialized()
+    {
+        try
+        {
+            fileUpload.NotificationService.Notify += internalFileNotifyAsync;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("FAIL: " + ex.Message);
+        }
+    }
+
+    [Parameter]
+    public EventCallback<FileNotification> OnFileUploaded { get; set; }
+    public async Task internalFileNotifyAsync(FileNotification notification)
+    {
+        await OnFileUploaded.InvokeAsync(notification);
+    }
+
+    [Parameter]
+    public int MaxAllowedFiles { get; set; } = 3;
+
+    ElementReference dropZoneElement;
+    ElementReference inputFileContainer;
+
+    IJSObjectReference _module;
+    IJSObjectReference _dropZoneInstance;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            // Load the JS file
+            string ImportPath = "./_content/ELEMENTS.Controls/dropZone.js";
+            _module = await JSRuntime.InvokeAsync<IJSObjectReference>("import", ImportPath);
+
+            // Initialize the drop zone
+            _dropZoneInstance = await _module.InvokeAsync<IJSObjectReference>("initializeFileDropZone", dropZoneElement, inputFileContainer);
+        }
+    }
+
+    // Called when a new file is uploaded
+    async Task OnChange(InputFileChangeEventArgs e)
+    {
+        try
+        {
+            // https://docs.microsoft.com/de-de/aspnet/core/blazor/file-uploads?view=aspnetcore-6.0&pivots=server
+            foreach (IBrowserFile file in e.GetMultipleFiles(MaxAllowedFiles))
+            {
+                try
+                {
+                    if (file != null)
+                    {
+                        await fileUpload.UploadAsync(file);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("FAIL: " + ex.Message);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("FAIL: " + ex.Message);
+        }
+    }
+
+    // Unregister the drop zone events
+    public async ValueTask DisposeAsync()
+    {
+        try
+        {
+            if (_dropZoneInstance != null)
+            {
+                await _dropZoneInstance.DisposeAsync();
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("FAIL: " + ex.Message);
+        }
+
+        try
+        {
+            if (_module != null)
+            {
+                await _module.DisposeAsync();
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("FAIL: " + ex.Message);
+        }
+    }
+}

@@ -1,0 +1,65 @@
+﻿@inject IFileUploadService FileUploadService
+
+<InputFile OnChange="@LoadFiles" multiple
+           class="form-control"
+           style="height: 36px !important;"></InputFile>
+
+@code {
+
+    [Parameter]
+    public EventCallback<FileNotification> OnFileUploaded { get; set; }
+
+    public async Task internalFileNotifyAsync(FileNotification notification)
+    {
+        try
+        {
+            await OnFileUploaded.InvokeAsync(notification);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("FAIL:" + ex.Message);
+        }
+    }
+
+    [Parameter]
+    public int MaxAllowedFiles { get; set; } = 3;
+
+    private List<IBrowserFile> loadedFiles = new List<IBrowserFile>();
+    private bool isLoading;
+
+    private async Task LoadFiles(InputFileChangeEventArgs e)
+    {
+        try
+        {
+            if (FileUploadService == null)
+                return;
+
+            isLoading = true;
+            loadedFiles.Clear();
+
+            // https://docs.microsoft.com/de-de/aspnet/core/blazor/file-uploads?view=aspnetcore-6.0&pivots=server
+            foreach (IBrowserFile file in e.GetMultipleFiles(MaxAllowedFiles))
+            {
+                try
+                {
+                    if (file != null)
+                    {
+                        await FileUploadService.UploadAsync(file);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("FAIL: " + ex.Message);
+                }
+            }
+
+            isLoading = false;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("FAIL: " + ex.Message);
+        }
+    }
+
+
+}
