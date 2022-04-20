@@ -2,6 +2,8 @@
 The ELEMENTs Environment is a collection of controls and user interfaces as well as a test application. 
 The library implements the CSS classes of Bootstrap and Tabler.IO. Only the CSS and JS links have to be added to the HTML file.
 
+At the moment the Controls Library contains 32 different Microsoft Razor controls that you can use in your projects. We are still working on providing you with more controls, components and user interfaces as well as an improved data framework.
+
 ![ELEMENTS](https://raw.githubusercontent.com/ELEMENTs-JP/the-ELEMENTs-Environment/master/ELEMENTs.Environment/Screenshots/ELEMENTS_TEASER.png)
 
 ## the Goal
@@ -49,6 +51,9 @@ The ELEMENTs GO Data Framework for SQLite has the following dependencies:
 - Entity Framework Core SQLite 5.0.13
 - Entity Framework Core Tools 5.0.13
 - ELEMENTs Infrastructure Library
+
+### Lists and list elements
+Lists and list items can be used both manually and with the Data Framework. Basically you have to work with the IDTO interface. The ListItem will not be displayed until the DTO object has been injected. The ItemsList can only be filled with IDTO interface.
 
 ## ELEMENTs Infrastructure Library
 The ELEMENTs Infrastructure Library is a Razor class library with a set of helper methods, interfaces and enumerations that help to keep the ELEMENTs GO Data Framework functional. The library is required for the operation of the ELEMENTs GO Data Framework.
