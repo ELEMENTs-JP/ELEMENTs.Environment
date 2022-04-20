@@ -1,0 +1,57 @@
+﻿
+
+<input type="number" step="0.01"
+       @bind-value="Value"
+       class="@ControlCSS"
+       placeholder="@Placeholder"
+       @bind-value:event="oninput"
+       @onchange="@( e => { onValueChanged(); })" />
+
+
+
+@code {
+
+
+    /// <summary>
+    /// Defines or sets a CSS class that controls the CSS style of the control. The default value is: 'form-control'
+    /// </summary>
+    [Parameter]
+    public string ControlCSS { get; set; } = "form-control";
+
+    /// <summary>
+    /// Defines or sets the value of the Value property of the control.
+    /// The property is initialized with "0m". Steps are '0.01'.
+    /// </summary>
+    [Parameter]
+    public decimal Value { get; set; } = 0m;
+
+    /// <summary>
+    /// Defines or sets the Placeholder text of the Placeholder property of the control.
+    /// The property is initialized with "string.Empty".
+    /// </summary>
+    [Parameter]
+    public string Placeholder { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Reacts when the Value property of the control is changed by keyboard input.
+    /// Returns the value of the control as a string. If this is not NULL.
+    /// If the Value property is NULL, the event is not thrown.
+    /// Info: If intensive operations or accesses to the hardware are implemented with this event,
+    /// delays may occur due to the roundtrip in the user interface.
+    /// </summary>
+    [Parameter]
+    public EventCallback<decimal> ValueChanged { get; set; }
+    private async void onValueChanged()
+    {
+        try
+        {
+            // Raise Event
+            await ValueChanged.InvokeAsync(this.Value);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("FAIL: " + ex.Message);
+        }
+    }
+
+}
