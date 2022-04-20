@@ -30,6 +30,21 @@ The framework additionally contains an integrated data framework with which data
 
 ![ELEMENTS GO Data Framework](https://raw.githubusercontent.com/ELEMENTs-JP/the-ELEMENTs-Environment/master/ELEMENTs.Environment/Screenshots/ELEMENTS_GO.png)
 
+## Components of ELEMENTs GO
+ELEMENTs GO is an interface based database framework. In the version available here the database SQLite is implemented as an example. You can perform the following operations:
+- Delete database
+- Create database
+- Migrate database
+- Query data
+- Create data
+- Query number of data
+- Query parameterized data
+- Set or delete columns / properties for a data set
+- Set or delete settings for a data set
+
+### Console Test Application
+In order to understand the use of the ELEMENTs GO Data Framework or to replicate its implementation, a console test application has been added to the Solution. In the main method, all the commands that you can execute with the ELEMENTs GO Data Framework for SQLite have been implemented.
+
 ## Test environment
 The test environment is a standard Microsoft Blazor Server application. It has been or will be adapted and extended over time with the controls and userob to show how the controls and user interfaces can be used.
 
