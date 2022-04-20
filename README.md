@@ -17,6 +17,7 @@ The framework consists (roughly) of the following components:
 We start with a set of standard controls. Among them, for example, are the following:
 - TextBox, TextArea, IntegerBox, DecimalBox, MoneyBox, etc.
 - DateBox, TimeBox, DateTimeBox, etc.
+- FileInputBox, FileDragDropBox, etc.
 - Badge, Display, Heading, Label, Lead, etc.
 - Details Summary, Waiting Progress, Progress Bar, etc.
 
@@ -57,6 +58,20 @@ You can change the CSS classes of each control (i.e. the Bootstrap or Tabler.IO 
 We have made the entire control library available for free on nuget. So you can easily integrate ELEMENTs controls into your Visual Studio solution at any time.
 [Here you can find the Nuget Package for Visual Studio and .NET-Core 5](https://www.nuget.org/packages/ELEMENTS.Controls/)
 
-## Known problems between Bootstrap and Tabler.IO
+## Use of external technologies
+This library uses external technologies such as Microsoft ASP.NET Core 5.0, Microsoft Razor / Blazor, Bootstrap, Tabler.IO, Fontawesome, JavaScript or Chart.JS to provide controls, components and user interfaces to accelerate the development of mobile and web-based business applications. The dependent libraries are listed and would need to be integrated separately into the _Host.cshtml.
+
+## Libraries and technologies used
+- [Bootstrap](https://getbootstrap.com/)
+- [Tabler.IO](https://preview.tabler.io/)
+- [Fontawesome Version 5](https://fontawesome.com/v5/search?m=free)
+- [JavaScript](https://www.w3schools.com/js/)
+- [Microsoft Blazor / Razor / ASP.NET Core 5.0](https://docs.microsoft.com/en-us/aspnet/core/blazor/components/?view=aspnetcore-5.0)
+- C#
+
+## Notes and known problems
 - The Waiting Progress Control works only with the Tabler.IO framework.
 - The Fontawesome Library is required to display icons. But you can also use other libraries.
+- To use the FileUpload functions, the IFileUploadService interface must be registered as a central service in Startup.cs.
+- services.AddSingleton<IFileDragDropService, FileDragDropUploadService>();
+- services.AddSingleton<IFileUploadService, FileUploadService>();
