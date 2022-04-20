@@ -42,6 +42,13 @@ ELEMENTs GO is an interface based database framework. In the version available h
 - Set or delete columns / properties for a data set
 - Set or delete settings for a data set
 
+The ELEMENTs GO Data Framework for SQLite has the following dependencies:
+- Entity Framework Core 5.0.13
+- Entity Framework Core Design 5.0.13
+- Entity Framework Core SQLite 5.0.13
+- Entity Framework Core Tools 5.0.13
+- ELEMENTs Infrastructure Library
+
 ## ELEMENTs Infrastructure Library
 The ELEMENTs Infrastructure Library is a Razor class library with a set of helper methods, interfaces and enumerations that help to keep the ELEMENTs GO Data Framework functional. The library is required for the operation of the ELEMENTs GO Data Framework.
 
