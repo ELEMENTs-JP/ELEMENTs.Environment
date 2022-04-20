@@ -1,0 +1,44 @@
+﻿
+
+<div class="bg-white border rounded p-0">
+
+    @if (Header != null)
+    {
+        <div class="bg-white border-bottom p-2">
+            @Header
+        </div>
+    }
+
+    @if (ChildContent != null)
+    {
+        <div class="p-2">
+            @ChildContent
+        </div>
+    }
+
+    @if (Footer != null)
+    {
+        <div class="bg-light border-top p-2">
+            @Footer
+        </div>
+    }
+</div>
+
+
+
+
+
+@code
+{
+
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public RenderFragment Header { get; set; }
+
+    [Parameter]
+    public RenderFragment Footer { get; set; }
+
+}

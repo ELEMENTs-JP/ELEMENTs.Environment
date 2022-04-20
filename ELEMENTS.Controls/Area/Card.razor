@@ -1,0 +1,47 @@
+﻿
+
+
+<div class="card">
+    <div class="card-body">
+
+        @if (!string.IsNullOrEmpty(Title))
+        {
+            <h5 class="card-title">@Title</h5>
+        }
+
+        @if (!string.IsNullOrEmpty(SubTitle))
+        {
+            <h6 class="card-subtitle mb-2 text-muted">@SubTitle</h6>
+        }
+
+        @if (!string.IsNullOrEmpty(Text))
+        {
+            <p class="card-text">@Text</p>
+        }
+
+        @if (ChildContent != null)
+        {
+            @ChildContent
+        }
+    </div>
+</div>
+
+
+
+
+@code
+{
+
+    [Parameter]
+    public string Title { get; set; } = string.Empty;
+
+    [Parameter]
+    public string SubTitle { get; set; } = string.Empty;
+
+    [Parameter]
+    public string Text { get; set; } = string.Empty;
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+}
