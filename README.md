@@ -26,8 +26,12 @@ We start with a set of standard controls. Among them, for example, are the follo
 - Items List, List Items, etc.
 - List (a simple list), Bullet Point List, Ordered List, etc.
 - KPI List, KPI Item, KPI Panel, KPI Trend Indicator, etc.
+- Hero Image, Avatar Image, Audio Player, Video Player, etc.
 
 ### Components
+Components are not yet finished user interfaces. In terms of size, they are somewhere between a small or larger control and a small user interface. In the vast majority of cases, a component can be used to implement a small use case. Here are a few examples:
+- Security: Login, Register, Log off, Change Password, etc.
+
 ### Repositories
 We use repositories to establish a connection between the data framework and the user interfaces / controls. We use the "Dependency Injection" pattern to implement customizable and reusable access code and business logic using interfaces. You can adapt this code to your needs at any time.
 
@@ -35,6 +39,10 @@ We use repositories to establish a connection between the data framework and the
 The framework additionally contains an integrated data framework with which database applications can be developed in a fast way.
 
 ![ELEMENTS GO Data Framework](https://raw.githubusercontent.com/ELEMENTs-JP/the-ELEMENTs-Environment/master/ELEMENTs.Environment/Screenshots/ELEMENTS_GO.png)
+
+[ELEMENTs GO Data Framework on nuget](https://www.nuget.org/packages/ELEMENTS.GO.SQLite/)
+
+> Nuget Command: Install-Package ELEMENTS.GO.SQLite
 
 ## Components of ELEMENTs GO
 ELEMENTs GO is an interface based database framework. In the version available here the database SQLite is implemented as an example. You can perform the following operations:
@@ -91,6 +99,8 @@ You can change the CSS classes of each control (i.e. the Bootstrap or Tabler.IO 
 ## Nuget Library
 We have made the entire control library available for free on nuget. So you can easily integrate ELEMENTs controls into your Visual Studio solution at any time.
 [Here you can find the Nuget Package for Visual Studio and .NET-Core 5](https://www.nuget.org/packages/ELEMENTS.Controls/)
+
+> Nuget Command: Install-Package ELEMENTS.Controls
 
 ## Use of external technologies
 This library uses external technologies such as Microsoft ASP.NET Core 5.0, Microsoft Razor / Blazor, Bootstrap, Tabler.IO, Fontawesome, JavaScript or Chart.JS to provide controls, components and user interfaces to accelerate the development of mobile and web-based business applications. The dependent libraries are listed and would need to be integrated separately into the _Host.cshtml.
