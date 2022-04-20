@@ -1,0 +1,35 @@
+﻿
+
+
+
+@if (Items != null)
+{
+    @if (Items.Count >= 1)
+    {
+        <ol class="@ListCSS">
+
+            @foreach (string entry in Items)
+            {
+                <li class="@ItemCSS">@entry</li>
+            }
+
+        </ol>
+    }
+}
+
+
+
+@code {
+
+
+
+    [Parameter]
+    public List<string> Items { get; set; } = new List<string>();
+
+    [Parameter]
+    public string ListCSS { get; set; } = "bg-white list-group list-group-numbered";
+
+    [Parameter]
+    public string ItemCSS { get; set; } = "list-group-item p-2";
+
+}

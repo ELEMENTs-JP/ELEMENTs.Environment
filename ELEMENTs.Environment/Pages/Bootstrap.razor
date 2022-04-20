@@ -1,6 +1,12 @@
 ﻿@page "/bootstrap"
 
 <div class="row">
+    <div class="col">
+        <h3 class="h1">Controls</h3>
+    </div>
+</div>
+
+<div class="row">
     <div class="col p-3">
         <ELEMENTS.Controls.Text.Display>this is a Bootstrap Display 3</ELEMENTS.Controls.Text.Display>
         <ELEMENTS.Controls.Text.Heading>this is a Bootstrap Heading h3</ELEMENTS.Controls.Text.Heading>
@@ -68,6 +74,13 @@
 
 
 <div class="row">
+    <div class="col">
+        <h3 class="h1">Selectors and Lists</h3>
+    </div>
+</div>
+
+
+<div class="row">
     <div class="col p-3">
         <ELEMENTS.Controls.Text.Label>Button</ELEMENTS.Controls.Text.Label>
         <ELEMENTS.Controls.Selection.Button Value="Button" />
@@ -110,6 +123,7 @@
     </div>
     <div class="col p-3">
 
+        <ELEMENTS.Controls.Text.Label Value="Items List" />
         <ELEMENTS.Controls.List.ItemsList Items="@(
                 new List<IDTO>()
                     {
@@ -123,8 +137,18 @@
                     })">
 
         </ELEMENTS.Controls.List.ItemsList>
+
+        <ELEMENTS.Controls.Text.Label Value="Pagination" />
         <ELEMENTS.Controls.List.Pagination TotaPageCount="10" />
 
+        <ELEMENTS.Controls.Text.Label Value="List" />
+        <ELEMENTS.Controls.List.List Items="@( new List<string>() { "New York", "Washington D.C.", "Chicago" })" />
+        
+        <ELEMENTS.Controls.Text.Label Value="Ordered List" />
+        <ELEMENTS.Controls.List.OrderedList Items="@( new List<string>() { "New York", "Washington D.C.", "Chicago" })" />
+        
+        <ELEMENTS.Controls.Text.Label Value="Bullet Point List" />
+        <ELEMENTS.Controls.List.BulletPointList Items="@( new List<string>() { "New York", "Washington D.C.", "Chicago" })" />
 
     </div>
 </div>
