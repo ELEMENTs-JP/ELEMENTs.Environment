@@ -1,0 +1,85 @@
+﻿
+
+
+<label class="@OuterCSS">
+
+    @if (Value)
+    {
+        <input class="@ControlCSS" type="checkbox"
+               value="@Value" checked
+               @onchange="@( e => { Value = ConvertToSecureBool(e.Value); onValueChanged(); })" />
+    }
+    else
+    {
+        <input class="@ControlCSS" type="checkbox"
+               value="@Value"
+               @onchange="@( e => { Value = ConvertToSecureBool(e.Value); onValueChanged(); })" />
+    }
+
+    <span class="@LabelCSS">@Title</span>
+        <span class="@DescriptionCSS">@Description</span>
+    </label>
+
+
+    @code {
+
+
+
+        [Parameter]
+        public bool Value { get; set; } = false;
+
+        [Parameter]
+        public string ControlCSS { get; set; } = "form-check-input";
+
+        [Parameter]
+        public string OuterCSS { get; set; } = "form-check form-switch";
+
+        [Parameter]
+        public string LabelCSS { get; set; } = "form-check-label";
+
+        [Parameter]
+        public string DescriptionCSS { get; set; } = "form-check-description";
+
+        [Parameter]
+        public string Title { get; set; } = string.Empty;
+
+        [Parameter]
+        public string Description { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Reacts when the Value property of the control is changed by keyboard input.
+        /// Returns the value of the control as a string. If this is not NULL.
+        /// If the Value property is NULL, the event is not thrown.
+        /// Info: If intensive operations or accesses to the hardware are implemented with this event,
+        /// delays may occur due to the roundtrip in the user interface.
+        /// </summary>
+        [Parameter]
+        public EventCallback<bool> ValueChanged { get; set; }
+        private async void onValueChanged()
+        {
+            try
+            {
+                // Raise Event
+                await ValueChanged.InvokeAsync(this.Value);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("FAIL: " + ex.Message);
+            }
+        }
+
+        bool ConvertToSecureBool(object obj)
+        {
+            try
+            {
+                return Convert.ToBoolean(obj);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("FAIL: " + ex.Message);
+            }
+            return false;
+        }
+
+
+    }
