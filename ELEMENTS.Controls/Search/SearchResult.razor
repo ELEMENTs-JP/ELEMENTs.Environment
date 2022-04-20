@@ -1,0 +1,70 @@
+﻿@inject NavigationManager nm
+@inject IJSRuntime JS
+
+<div class="@ControlCSS">
+    @if (Items != null)
+    {
+        @if (Items.Count >= 1)
+        {
+            <div class="border-top">
+                
+                @foreach (IDTO item in Items)
+                {
+                    <div class="@ItemCSS">
+                        <div class="col" style="cursor:pointer;" @onclick="@( e => { Navigate(item.NavigateUrl); } )">
+                            
+                            @if (ShowID)
+                            { 
+                                <small class="text-muted d-block">@item.ID.ToSecureString()</small>
+                            }
+                            
+                            <strong class="d-block text-truncate fw-bold text-dark">@item.Title.ToSecureString()</strong>
+
+                            @if (ShowContent)
+                            { 
+                                <small class="d-block text-truncate">@item.Content.ToSecureString()</small>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    }
+</div>
+
+
+
+@code {
+
+
+    // Parameter
+    /// <summary>
+    /// Defines or sets a CSS class that controls the CSS style of the control. The default value is: form-control
+    /// </summary>
+    [Parameter]
+    public string ControlCSS { get; set; } = "bg-white overflow-hidden";
+
+    [Parameter]
+    public string ItemCSS { get; set; } = "row border-bottom p-2 overflow-hidden";
+
+    [Parameter]
+    public IList<IDTO> Items { get; set; } = new List<IDTO>();
+
+    [Parameter] public bool ShowContent { get; set; } = true;
+    [Parameter] public bool ShowID { get; set; } = true;
+
+    private async Task Navigate(string url)
+    {
+        try
+        {
+            // nm.NavigateTo(url);
+            await JS.InvokeVoidAsync("open", url, "_blank");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("FAIL: " + ex.Message);
+        }
+    }
+
+
+}

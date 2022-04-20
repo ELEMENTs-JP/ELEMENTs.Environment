@@ -1,0 +1,91 @@
+﻿@using System.Linq
+@using ELEMENTS.Infrastructure
+
+@if (Items != null)
+{
+    @if (Items.Count() >= 1)
+    {
+        <div class="row">
+            <div class="col">
+
+                @if (!string.IsNullOrEmpty(Title))
+                {
+                    <strong class="d-block my-1">@Title</strong>
+                }
+
+                <select class="@ControlCSS"  
+                        @onchange="@(e => { Value = e.Value.ToString(); onValueChanged(); onSelectionChanged(); })">
+
+                    @foreach (string item in Items)
+                    {
+                        <option value="@item.ToString()">@item.ToString()</option>
+                    }
+
+                </select>
+            </div>
+        </div>
+    }
+}
+
+
+@code {
+
+
+
+    [Parameter] public string Title { get; set; } = string.Empty;
+
+    [Parameter]
+    public IEnumerable<string> Items { get; set; } = new List<string>();
+
+    /// <summary>
+    /// Defines or sets the value of the Value property of the control.
+    /// The property is initialized with "string.Empty".
+    /// </summary>
+    [Parameter]
+    public string Value { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Defines or sets a CSS class that controls the CSS style of the control. The default value is: form-control
+    /// </summary>
+    [Parameter]
+    public string ControlCSS { get; set; } = "form-control";
+
+    /// <summary>
+    /// Reacts when the Value property of the control is changed.
+    /// Returns the value of the control as a string. If this is not NULL.
+    /// If the Value property is NULL, the event is not thrown.
+    /// </summary>
+    [Parameter]
+    public EventCallback<string> ValueChanged { get; set; }
+    private async void onValueChanged()
+    {
+        // Raise Event
+        await ValueChanged.InvokeAsync(this.Value);
+    }
+
+    /// <summary>
+    /// Reacts when the selected item of the control is changed.
+    /// Returns the selected item of the control. If this is not NULL.
+    /// If the Items List or the selected Item is NULL, the event is not thrown.
+    /// Info: The value of the option must be unique.
+    /// </summary>
+    [Parameter]
+    public EventCallback<string> SelectionChanged { get; set; }
+    private async void onSelectionChanged()
+    {
+        // Raise Event
+        if (this.Items.Count() >= 1)
+        {
+            if (!string.IsNullOrEmpty(Value))
+            {
+                string item = Items.Where(se => se == Value.ToString()).FirstOrDefault();
+
+                if (item != null)
+                {
+                    await SelectionChanged.InvokeAsync(item);
+                }
+            }
+        }
+    }
+
+}

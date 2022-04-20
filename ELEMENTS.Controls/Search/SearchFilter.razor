@@ -1,0 +1,62 @@
+﻿
+@using System.Linq
+@using ELEMENTS.Infrastructure
+
+@if (Items != null)
+{
+    @if (Items.Count() >= 1)
+    {
+        <div class="row">
+            <div class="col">
+
+                @if (!string.IsNullOrEmpty(Title))
+                {
+                    <strong class="d-block my-1">@Title</strong>
+                }
+
+                @foreach (string item in Items)
+                {
+                    <label class="form-check mb-1">
+                        <input class="form-check-input" type="checkbox"
+                               value="@item"   
+                               @onchange="@( e => { onFilterChanged(item, ConvertToSecureBool(e.Value)); })"  />
+                        <span class="fw-normal">@item</span>
+                    </label>
+                }
+
+            </div>
+        </div>
+    }
+}
+
+
+@code {
+
+
+    [Parameter] public string Title { get; set; } = string.Empty;
+
+    [Parameter]
+    public IEnumerable<string> Items { get; set; } = new List<string>();
+
+
+    [Parameter]
+    public EventCallback<KeyValuePair<string, bool>> FilterChanged { get; set; }
+
+    private async void onFilterChanged(string filter, bool isChecked)
+    {
+        // Raise Event 
+        await FilterChanged.InvokeAsync(new KeyValuePair<string, bool>(filter, isChecked));
+    }
+
+    bool ConvertToSecureBool(object obj)
+    {
+        try
+        {
+            return Convert.ToBoolean(obj);
+        }
+        catch (Exception ex)
+        {
+            return false;
+        }
+    }
+}
