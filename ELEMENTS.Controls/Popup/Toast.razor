@@ -1,0 +1,108 @@
+﻿
+
+
+@inject IJSRuntime JS
+@implements IDisposable
+
+
+
+
+
+
+
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+        <div id="@toastGUID.ToString()" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <img src="" class="rounded me-2" alt="">
+                <strong  id="@titleGUID.ToString()"  class="me-auto">@Title</strong>
+                <small></small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div  id="@messageGUID.ToString()" class="toast-body">
+                @Content
+            </div>
+        </div>
+    </div>
+
+
+
+@code {
+
+    private DotNetObjectReference<Toast>? objRef;
+
+    IJSObjectReference _jsModule;
+    IJSObjectReference _toastInstance;
+
+
+
+    Guid toastGUID { get; set; } = Guid.NewGuid();
+    Guid buttonGUID { get; set; } = Guid.NewGuid();
+
+    Guid titleGUID { get; set; } = Guid.NewGuid();
+    Guid messageGUID { get; set; } = Guid.NewGuid();
+
+    [Parameter]
+    public string Title { get; set; } = string.Empty;
+
+    [Parameter]
+    public string Content { get; set; } = string.Empty;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            // Load the JS file
+            string theJSFile = "./_content/ELEMENTS.Controls/toast.js";
+            _jsModule = await JS.InvokeAsync<IJSObjectReference>("import", theJSFile);
+
+            objRef = DotNetObjectReference.Create(this);
+            _toastInstance = await _jsModule.InvokeAsync<IJSObjectReference>("initShow", buttonGUID.ToString(), toastGUID.ToString(), objRef);
+        }
+    }
+
+
+    public async Task ShowToast(string Title, string Message)
+    {
+        try
+        {
+            this.Title = Title;
+            this.Content = Message;
+
+            objRef = DotNetObjectReference.Create(this);
+            _toastInstance = await _jsModule.InvokeAsync<IJSObjectReference>("showToastWithMessage",
+                toastGUID.ToString(), Title, titleGUID.ToString(), Message, messageGUID.ToString());
+        }
+        catch (Exception ex)
+        {
+
+        }
+    }
+    private async Task click()
+    {
+        try
+        {
+            objRef = DotNetObjectReference.Create(this);
+            _toastInstance = await _jsModule.InvokeAsync<IJSObjectReference>("showToast", toastGUID.ToString());
+        }
+        catch (Exception ex)
+        {
+
+        }
+    }
+
+    public void Dispose()
+    {
+        try
+        {
+            if (_jsModule != null)
+            {
+                _jsModule.DisposeAsync();
+            }
+        }
+        catch (Exception ex)
+        {
+            string msg = ex.Message;
+        }
+    }
+
+}

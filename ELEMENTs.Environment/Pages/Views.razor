@@ -20,13 +20,21 @@
         <ELEMENTS.Controls.Text.Label Value="Card" />
         <ELEMENTS.Controls.Area.Card Title="Title" Text="this is the text of the card" SubTitle="Subtitle" />
 
+        <ELEMENTS.Controls.Text.Label Value="Toast" />
+        <ELEMENTS.Controls.Popup.Toast  @ref="theTOAST" Title="Show Toast" />
+        <button class="btn btn-secondary" @onclick="ShowToast">Show Toast</button>
+
     </div>
     <div class="col p-3">
 
         <ELEMENTS.Controls.Text.Label Value="Control Container" />
-        <ELEMENTS.Controls.Area.ControlContainer Title="Title" >
+        <ELEMENTS.Controls.Area.ControlContainer Title="Title">
             <h1>This is a child Control</h1>
         </ELEMENTS.Controls.Area.ControlContainer>
+
+        <ELEMENTS.Controls.Text.Label Value="Menu Popup" />
+        <ELEMENTS.Controls.Popup.MenuPopup />
+
     </div>
     <div class="col p-3">
 
@@ -42,6 +50,9 @@
                 <h4>Footer</h4>
             </Footer>
         </ELEMENTS.Controls.Area.ComponentContainer>
+
+        <ELEMENTS.Controls.Text.Label Value="Popup" />
+        <ELEMENTS.Controls.Popup.Popup />
     </div>
 </div>
 
@@ -53,5 +64,12 @@
 
 
 @code {
-
+    private ELEMENTS.Controls.Popup.Toast theTOAST;
+    private async Task ShowToast()
+    {
+        if (theTOAST != null)
+        {
+            await theTOAST.ShowToast("Hallo Welt", "this is a message");
+        }
+    }
 }

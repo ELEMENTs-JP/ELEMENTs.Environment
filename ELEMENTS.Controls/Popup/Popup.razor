@@ -1,0 +1,46 @@
+﻿
+
+
+    <div class="nav-item dropdown" >
+        <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
+
+            @if (!string.IsNullOrEmpty(ImageUrl))
+            {
+                <span class="avatar avatar-sm" style="background-image: url(@ImageUrl)"></span>
+            }
+
+            <div class="d-none d-xl-block ps-2">
+                <div class="fw-bold">@Title</div>
+                <div class="mt-1 small text-muted">@SubTitle</div>
+            </div>
+        </a>
+        <div class="dropdown-menu dropdown-menu-start dropdown-menu-arrow">
+            <div class="px-2 pt-2 fw-bold">@Title</div>
+            <div class="px-2 mb-1 small text-muted">@SubTitle</div>
+            <div class="dropdown-divider"></div>
+
+            @ChildContent
+        </div>
+    </div>
+
+
+
+
+
+@code {
+
+
+
+    [Parameter]
+    public string ImageUrl { get; set; } = string.Empty;
+
+    [Parameter]
+    public string Title { get; set; } = "Title";
+
+    [Parameter]
+    public string SubTitle { get; set; } = "SubTitle";
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+}
