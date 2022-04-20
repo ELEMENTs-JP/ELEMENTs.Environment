@@ -1,6 +1,10 @@
-﻿<div class="input-group">
-    
-    <input type="number" step="0.01"
+﻿@using Microsoft.JSInterop
+@inject IJSRuntime JS
+@implements IDisposable
+
+
+<div class="input-group">
+    <input type="text"
            @bind-value="Value"
            class="@ControlCSS"
            placeholder="@Placeholder"
@@ -9,34 +13,56 @@
 
     @if (!string.IsNullOrEmpty(Symbol))
     {
-        <span class="input-group-text">
+        <span class="input-group-text"
+              style="cursor:pointer;"
+              @onclick="NavigateToLink">
             @((MarkupString)Symbol)
         </span>
     }
-
 </div>
+
 
 @code {
 
 
     /// <summary>
-    /// Defines or sets a HTML money symbol
+    /// Defines or sets a HTML mail symbol
     /// </summary>
     [Parameter]
-    public string Symbol { get; set; } = "<i class='fas fa-euro-sign'></i>";
+    public string Symbol { get; set; } = "<i class='fas fa-external-link-alt'></i>";
+
+    private async Task NavigateToLink()
+    {
+        try
+        {
+            if (!string.IsNullOrEmpty(Value))
+            {
+                if (_jsModule != null)
+                {
+                    await _jsModule.InvokeVoidAsync("navigateToLink", Value);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+
+        }
+    }
+
+    IJSObjectReference _jsModule;
 
     /// <summary>
-    /// Defines or sets a CSS class that controls the CSS style of the control. The default value is: 'form-control'
+    /// Defines or sets a CSS class that controls the CSS style of the control. The default value is: form-control
     /// </summary>
     [Parameter]
     public string ControlCSS { get; set; } = "form-control";
 
     /// <summary>
     /// Defines or sets the value of the Value property of the control.
-    /// The property is initialized with "0.00m".
+    /// The property is initialized with "string.Empty".
     /// </summary>
     [Parameter]
-    public decimal Value { get; set; } = 0.00m;
+    public string Value { get; set; } = string.Empty;
 
     /// <summary>
     /// Defines or sets the Placeholder text of the Placeholder property of the control.
@@ -53,40 +79,42 @@
     /// delays may occur due to the roundtrip in the user interface.
     /// </summary>
     [Parameter]
-    public EventCallback<decimal> ValueChanged { get; set; }
+    public EventCallback<string> ValueChanged { get; set; }
     private async void onValueChanged()
     {
-        // Raise Event
         try
         {
             await ValueChanged.InvokeAsync(this.Value);
         }
         catch (Exception ex)
         {
-            Console.Write("FAIL: " + ex.Message);
+            Console.WriteLine("FAIL: " + ex.Message);
         }
     }
 
-    [Parameter]
-    public string Culture { get; set; } = "de-DE";
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            // Load the JS file
+            string theJSFile = "./_content/ELEMENTS.Controls/hyperlink.js";
+            _jsModule = await JS.InvokeAsync<IJSObjectReference>("import", theJSFile);
+        }
+    }
 
-    [Parameter]
-    public string Format { get; set; } = "C";
-
-    public string ToCurrency(decimal zahl)
+    public void Dispose()
     {
         try
         {
-            // return string.Format("{0:C}", zahl);
-            System.Globalization.NumberFormatInfo nfi = new System.Globalization.CultureInfo(Culture, false).NumberFormat;
-            return zahl.ToString(Format, nfi);
+            if (_jsModule != null)
+            {
+                _jsModule.DisposeAsync();
+            }
         }
         catch (Exception ex)
         {
             string msg = ex.Message;
         }
-
-        return String.Empty;
     }
 
 }
