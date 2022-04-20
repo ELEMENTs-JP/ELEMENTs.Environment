@@ -56,5 +56,5 @@ You can change the CSS classes of each control (i.e. the Bootstrap or Tabler.IO 
 We have made the entire control library available for free on nuget. So you can easily integrate ELEMENTs controls into your Visual Studio solution at any time.
 [Here you can find the Nuget Package for Visual Studio and .NET-Core 5](https://www.nuget.org/packages/ELEMENTS.Controls/)
 
-##Known problems between Bootstrap and Tabler.IO
+## Known problems between Bootstrap and Tabler.IO
 - The Waiting Progress Control works only with the Tabler.IO framework.
