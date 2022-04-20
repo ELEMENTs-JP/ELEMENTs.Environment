@@ -68,6 +68,7 @@ This library uses external technologies such as Microsoft ASP.NET Core 5.0, Micr
 - [Microsoft Blazor / Razor / ASP.NET Core 5.0](https://docs.microsoft.com/en-us/aspnet/core/blazor/components/?view=aspnetcore-5.0)
 - C#
 
-## Known problems between Bootstrap and Tabler.IO
+## Notes and known problems
 - The Waiting Progress Control works only with the Tabler.IO framework.
 - The Fontawesome Library is required to display icons. But you can also use other libraries.
+- To use the FileUpload functions, the IFileUploadService interface must be registered as a central service in Startup.cs.
