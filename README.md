@@ -30,6 +30,31 @@ The framework additionally contains an integrated data framework with which data
 
 ![ELEMENTS GO Data Framework](https://raw.githubusercontent.com/ELEMENTs-JP/the-ELEMENTs-Environment/master/ELEMENTs.Environment/Screenshots/ELEMENTS_GO.png)
 
+## Components of ELEMENTs GO
+ELEMENTs GO is an interface based database framework. In the version available here the database SQLite is implemented as an example. You can perform the following operations:
+- Delete database
+- Create database
+- Migrate database
+- Query data
+- Create data
+- Query number of data
+- Query parameterized data
+- Set or delete columns / properties for a data set
+- Set or delete settings for a data set
+
+The ELEMENTs GO Data Framework for SQLite has the following dependencies:
+- Entity Framework Core 5.0.13
+- Entity Framework Core Design 5.0.13
+- Entity Framework Core SQLite 5.0.13
+- Entity Framework Core Tools 5.0.13
+- ELEMENTs Infrastructure Library
+
+## ELEMENTs Infrastructure Library
+The ELEMENTs Infrastructure Library is a Razor class library with a set of helper methods, interfaces and enumerations that help to keep the ELEMENTs GO Data Framework functional. The library is required for the operation of the ELEMENTs GO Data Framework.
+
+### Console Test Application
+In order to understand the use of the ELEMENTs GO Data Framework or to replicate its implementation, a console test application has been added to the Solution. In the main method, all the commands that you can execute with the ELEMENTs GO Data Framework for SQLite have been implemented.
+
 ## Test environment
 The test environment is a standard Microsoft Blazor Server application. It has been or will be adapted and extended over time with the controls and userob to show how the controls and user interfaces can be used.
 
@@ -68,9 +93,10 @@ This library uses external technologies such as Microsoft ASP.NET Core 5.0, Micr
 - [JavaScript](https://www.w3schools.com/js/)
 - [Microsoft Blazor / Razor / ASP.NET Core 5.0](https://docs.microsoft.com/en-us/aspnet/core/blazor/components/?view=aspnetcore-5.0)
 - [DropZone.JS](https://www.dropzone.dev/js/)
-- Microsoft Entity Framework Core 5.13
-- Microsoft Entity Framework Core for SQLite 5.13
-- C#
+- [Microsoft Entity Framework Core 5.13](https://docs.microsoft.com/en-us/ef/core/what-is-new/ef-core-5.0/breaking-changes)
+- [Microsoft Entity Framework Core for SQLite 5.13](https://docs.microsoft.com/en-us/ef/core/providers/sqlite/?tabs=dotnet-core-cli)
+- [SQLite](https://www.sqlite.org/index.html)
+- [C#](https://docs.microsoft.com/en-us/dotnet/csharp/)
 
 ## Notes and known problems
 - The Waiting Progress Control works only with the Tabler.IO framework.
