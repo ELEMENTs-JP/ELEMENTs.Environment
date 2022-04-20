@@ -31,6 +31,7 @@ To make the controls and user interfaces work visually with Bootstrap, you need 
 [Bootstrap js.delivr Documentation](https://getbootstrap.com/docs/5.1/getting-started/introduction/)
 
 ![Bootstrap Controls](https://raw.githubusercontent.com/ELEMENTs-JP/the-ELEMENTs-Environment/master/ELEMENTs.Environment/Screenshots/Bootstrap%20Controls.png)
+The Waiting Progress Control is not implemented in Bootstrap and therefore does not work with the Bootstrap CSS framework.
 
 ## Tabler.IO
 To make the controls and user interfaces work visually with Tabler.IO, you need to include the Tabler.IO libraries / script files in the HTML files. We used the following links in the test environment and created the screenshots based on them. Don't forget to note the @ symbol twice in the HTML code/link so that the Blazor engine doesn't throw errors.
