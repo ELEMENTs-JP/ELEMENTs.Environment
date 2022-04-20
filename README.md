@@ -17,6 +17,7 @@ The framework consists (roughly) of the following components:
 We start with a set of standard controls. Among them, for example, are the following:
 - TextBox, TextArea, IntegerBox, DecimalBox, MoneyBox, etc.
 - DateBox, TimeBox, DateTimeBox, etc.
+- FileInputBox, FileDragDropBox, etc.
 - Badge, Display, Heading, Label, Lead, etc.
 - Details Summary, Waiting Progress, Progress Bar, etc.
 
@@ -72,4 +73,5 @@ This library uses external technologies such as Microsoft ASP.NET Core 5.0, Micr
 - The Waiting Progress Control works only with the Tabler.IO framework.
 - The Fontawesome Library is required to display icons. But you can also use other libraries.
 - To use the FileUpload functions, the IFileUploadService interface must be registered as a central service in Startup.cs.
+- services.AddSingleton<IFileDragDropService, FileDragDropUploadService>();
 - services.AddSingleton<IFileUploadService, FileUploadService>();
