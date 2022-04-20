@@ -77,11 +77,17 @@
 
         <ELEMENTS.Controls.Text.Label>CheckBox</ELEMENTS.Controls.Text.Label>
         <ELEMENTS.Controls.Selection.CheckBox />
-        
+
         <ELEMENTS.Controls.Text.Label>Switch</ELEMENTS.Controls.Text.Label>
         <ELEMENTS.Controls.Selection.Switch />
 
-
+        <ELEMENTS.Controls.Text.Label>SELECT</ELEMENTS.Controls.Text.Label>
+        <ELEMENTS.Controls.Selection.DropDownSelect Items="@( new List<ELEMENTS.OptionItem>() 
+                                { 
+                                    new ELEMENTS.OptionItem { ID = "123", isSelected = true, Text ="123", Value = "123" }, 
+                                    new ELEMENTS.OptionItem { ID = "234", isSelected = false, Text ="234", Value = "234" }, 
+                                    new ELEMENTS.OptionItem { ID = "345", isSelected = false, Text ="345", Value = "345" }
+                                })" />
 
 
     </div>
