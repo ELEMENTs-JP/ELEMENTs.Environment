@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ELEMENTs.Environment.Data;
 using ELEMENTS;
+using ELEMENTS.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;

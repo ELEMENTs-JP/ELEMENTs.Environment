@@ -1,0 +1,74 @@
+﻿
+
+@if (DTO != null)
+{
+    <div class="@ControlCSS">
+        @if (StartContent != null)
+        {
+            <div class="col-auto">
+                @StartContent
+            </div>
+        }
+
+        <div class="col text-truncate">
+            @if (ShowTitle == true)
+            {
+                <span class="d-block text-truncate pointer fw-bold text-dark">@DTO.Title.ToSecureString()</span>
+            }
+
+            @if (ShowText == true)
+            {
+                <small class="d-block text-truncate text-secondary">@DTO.Content.ToSecureString()</small>
+            }
+        </div>
+
+        @if (ChildContent != null)
+        {
+            <div class="col-auto">
+                @ChildContent
+            </div>
+        }
+
+        @if (ShowCreated == true)
+        {
+            <div class="col-auto">
+                <span class="d-block text-truncate text-dark">@DTO.Creator.ToSecureString()</span>
+                <small class="d-block text-truncate text-secondary">@DTO.CreatedAt.ToShortDateString().ToSecureString()</small>
+            </div>
+        }
+
+        @if (ShowModified == true)
+        {
+            <div class="col-auto">
+                <span class="d-block text-truncate text-dark">@DTO.Modifier.ToSecureString()</span>
+                <small class="d-block text-truncate text-secondary">@DTO.ModifiedAt.ToShortDateString().ToSecureString()</small>
+            </div>
+        }
+
+        @if (EndContent != null)
+        {
+            <div class="col-auto">
+                @EndContent
+            </div>
+        }
+    </div>
+}
+
+
+@code {
+
+
+    [Parameter] public string ControlCSS { get; set; } = "row d-flex align-items-center bg-white p-2";
+
+    [Parameter] public IDTO DTO { get; set; } = null;
+
+    [Parameter] public bool ShowCreated { get; set; } = true;
+    [Parameter] public bool ShowModified { get; set; } = true;
+    [Parameter] public bool ShowTitle { get; set; } = true;
+    [Parameter] public bool ShowText { get; set; } = true;
+
+    [Parameter] public RenderFragment StartContent { get; set; }
+    [Parameter] public RenderFragment ChildContent { get; set; }
+    [Parameter] public RenderFragment EndContent { get; set; }
+
+}

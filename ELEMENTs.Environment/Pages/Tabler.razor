@@ -110,6 +110,22 @@
     </div>
     <div class="col p-3">
 
+        <ELEMENTS.Controls.List.ItemsList Items="@(
+                new List<IDTO>()
+                    {
+                        new DTO() { Title = "this is a very long text that should be truncated",
+                                    Content = "this is a very long text that should be truncated",
+                                    Creator = "ME and YOU", Modifier = "ME and YOU" },
+                        new DTO() { Title = "2 Elemente", Content = "Content", Creator = "ME and YOU", Modifier = "ME and YOU"  },
+                        new DTO() { Title = "3 Elemente", Content = "Content", Creator = "ME and YOU", Modifier = "ME and YOU"  },
+                        new DTO() { Title = "4 Elemente", Content = "Content", Creator = "ME and YOU", Modifier = "ME and YOU"  },
+                        new DTO() { Title = "5 Elemente", Content = "Content", Creator = "ME and YOU", Modifier = "ME and YOU"  },
+                    })">
+
+        </ELEMENTS.Controls.List.ItemsList>
+
+
+
     </div>
 </div>
 

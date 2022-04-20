@@ -1,0 +1,91 @@
+﻿
+
+<div class="border-top">
+
+    @foreach (IDTO DTO in Items)
+    {
+        @if (DTO != null)
+        {
+            <div class="@ItemCSS">
+                @if (StartContent != null)
+                {
+                    <CascadingValue Value="@DTO">
+                        <div class="col-auto">
+                            @StartContent
+                        </div>
+                    </CascadingValue>
+                }
+
+                <div class="col px-2">
+                    @if (ShowTitle == true)
+                    {
+                        <span class="d-block text-truncate pointer fw-bold text-dark" style="max-width: 150px;">@DTO.Title.ToSecureString()</span>
+                    }
+
+                    @if (ShowText == true)
+                    {
+                        <small class="d-block text-truncate text-secondary" style="max-width: 150px;">@DTO.Content.ToSecureString()</small>
+                    }
+                </div>
+
+                @if (ChildContent != null)
+                {
+                    <CascadingValue Value="@DTO">
+                        <div class="col-auto px-2">
+                            @ChildContent
+                        </div>
+                    </CascadingValue>
+                }
+
+                @if (ShowCreated == true)
+                {
+                    <div class="col-auto px-2">
+                        <small class="d-block text-truncate text-dark">@DTO.Creator.ToSecureString()</small>
+                        <small class="d-block text-truncate text-secondary">@DTO.CreatedAt.ToShortDateString().ToSecureString()</small>
+                    </div>
+                }
+
+                @if (ShowModified == true)
+                {
+                    <div class="col-auto px-2">
+                        <small class="d-block text-truncate text-dark">@DTO.Modifier.ToSecureString()</small>
+                        <small class="d-block text-truncate text-secondary">@DTO.ModifiedAt.ToShortDateString().ToSecureString()</small>
+                    </div>
+                }
+
+                @if (EndContent != null)
+                {
+                    <CascadingValue Value="@DTO">
+                        <div class="col-auto px-2">
+                            @EndContent
+                        </div>
+                    </CascadingValue>
+                }
+            </div>
+        }
+
+    }
+
+
+</div>
+
+
+@code {
+
+
+    [Parameter] public string ControlCSS { get; set; } = "";
+    [Parameter] public string ItemCSS { get; set; } = "row align-items-center bg-white p-2 border-start border-end border-bottom";
+
+    [Parameter] public bool ShowCreated { get; set; } = true;
+    [Parameter] public bool ShowModified { get; set; } = true;
+    [Parameter] public bool ShowTitle { get; set; } = true;
+    [Parameter] public bool ShowText { get; set; } = true;
+
+    [Parameter] public RenderFragment StartContent { get; set; }
+    [Parameter] public RenderFragment ChildContent { get; set; }
+    [Parameter] public RenderFragment EndContent { get; set; }
+
+    [Parameter]
+    public IList<IDTO> Items { get; set; } = new List<IDTO>();
+
+}
