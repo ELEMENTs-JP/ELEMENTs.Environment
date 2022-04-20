@@ -11,8 +11,15 @@ The framework consists (roughly) of the following components:
 - Data framework (e.g. API with Entity Framework for SQLite, SQL Server, etc.)
 
 ### Controls
+We start with a set of standard controls. Among them, for example, are the following:
+- TextBox, TextArea, IntegerBox, DecimalBox, etc.
+- Badge, Display, Heading, Label, etc.
+- Details Summary, Waiting Progress, Progress Bar, etc.
+
 ### Components
 ### Repositories
+We use repositories to establish a connection between the data framework and the user interfaces / controls. We use the "Dependency Injection" pattern to implement customizable and reusable access code and business logic using interfaces. You can adapt this code to your needs at any time.
+
 ### Integrated data framework
 The framework additionally contains an integrated data framework with which database applications can be developed in a fast way.
 
@@ -21,6 +28,15 @@ The test environment is a standard Microsoft Blazor Server application. It has b
 
 ## Bootstrap
 To make the controls and user interfaces work visually with Bootstrap, you need to include the Bootstrap CSS libraries in the HTML files. We used the following links in the test environment and created the screenshots based on them.
->  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" 
->          rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" 
->          crossorigin="anonymous">
+[Bootstrap js.delivr Documentation](https://getbootstrap.com/docs/5.1/getting-started/introduction/)
+
+## Tabler.IO
+To make the controls and user interfaces work visually with Tabler.IO, you need to include the Tabler.IO libraries / script files in the HTML files. We used the following links in the test environment and created the screenshots based on them. Don't forget to note the @ symbol twice in the HTML code/link so that the Blazor engine doesn't throw errors.
+[Tabler Documentation](https://preview.tabler.io/docs/download.html)
+
+### Bootstrap or Tabler.IO
+Our recommendation for business use is: Use the Tabler.IO libraries. The spacing between the user interfaces is slightly smaller, and we believe this is more suitable for business applications. If you are more interested in building a website with the framework, you should use the Bootstrap framework. The spacing here is a bit larger and this is a bit easier for the user to handle. Furthermore, it is the case that the support of all functions and styles between Tabler.IO and Bootstrap cannot be guaranteed 100%. However, it is also the case that Tabler.IO offers a tiny bit more business styles than Bootstrap. We would like to leave the decision to you for which framework you choose.
+
+## Nuget Library
+We have made the entire control library available for free on nuget. So you can easily integrate ELEMENTs controls into your Visual Studio solution at any time.
+[Here you can find the Nuget Package for Visual Studio and .NET-Core 5](https://www.nuget.org/packages/ELEMENTS.Controls/)
