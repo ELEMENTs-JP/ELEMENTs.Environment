@@ -1,0 +1,47 @@
+﻿
+
+<button type="button"
+        class="@ControlCSS"
+        @onclick="@(e => { onClicked(); })">
+    @((MarkupString)Value)
+</button>
+
+
+@code {
+
+
+    /// <summary>
+    /// Defines or sets a CSS class that controls the CSS style of the control. The default value is: 'btn btn-primary'
+    /// </summary>
+    [Parameter]
+    public string ControlCSS { get; set; } = "btn btn-primary";
+
+    /// <summary>
+    /// Defines or sets the value of the Value property of the control.
+    /// The property is initialized with "string.Empty".
+    /// </summary>
+    [Parameter]
+    public string Value { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Reacts when the button was clicked with the mouse.
+    /// Returns the value of the control as a string. If this is not NULL.
+    /// If the Value property is NULL, the event is not thrown.
+    /// You can also fill the Value property with HTML. HTML is always rendered in this property using MarkupString.
+    /// </summary>
+    [Parameter]
+    public EventCallback<string> Clicked { get; set; }
+    private async void onClicked()
+    {
+        // Raise Event
+        try
+        {
+            await Clicked.InvokeAsync(this.Value);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("FAIL: " + ex.Message);
+        }
+
+    }
+}
