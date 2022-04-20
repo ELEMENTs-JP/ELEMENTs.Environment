@@ -42,6 +42,9 @@ ELEMENTs GO is an interface based database framework. In the version available h
 - Set or delete columns / properties for a data set
 - Set or delete settings for a data set
 
+## ELEMENTs Infrastructure Library
+The ELEMENTs Infrastructure Library is a Razor class library with a set of helper methods, interfaces and enumerations that help to keep the ELEMENTs GO Data Framework functional. The library is required for the operation of the ELEMENTs GO Data Framework.
+
 ### Console Test Application
 In order to understand the use of the ELEMENTs GO Data Framework or to replicate its implementation, a console test application has been added to the Solution. In the main method, all the commands that you can execute with the ELEMENTs GO Data Framework for SQLite have been implemented.
 
