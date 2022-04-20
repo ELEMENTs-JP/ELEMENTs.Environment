@@ -19,8 +19,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="00-General\" />
-    <Folder Include="01-Text\" />
     <Folder Include="02-Input\" />
   </ItemGroup>
   
