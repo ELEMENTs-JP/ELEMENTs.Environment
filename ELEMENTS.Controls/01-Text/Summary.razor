@@ -1,0 +1,35 @@
+﻿
+
+
+
+<details>
+    <summary class="@SummaryCSS">@Header.ToSecureString()</summary>
+    <p class="@DetailsCSS">@Value.ToSecureString()</p>
+</details>
+
+
+
+@code {
+
+    /// <summary>
+    /// Defines or sets a CSS class that controls the CSS style of the summary. The default value is: 'h3'
+    /// </summary>
+    [Parameter]
+    public string SummaryCSS { get; set; } = "h3";
+
+    /// <summary>
+    /// Defines or sets a CSS class that controls the CSS style of the details. The default value is: 'lead'
+    /// </summary>
+    [Parameter]
+    public string DetailsCSS { get; set; } = "lead";
+
+    /// <summary>
+    /// Defines or sets the value of the Value property of the control.
+    /// The property is initialized with "string.Empty".
+    /// </summary>
+    [Parameter]
+    public string Value { get; set; } = string.Empty;
+
+    [Parameter]
+    public string Header { get; set; } = string.Empty;
+}
