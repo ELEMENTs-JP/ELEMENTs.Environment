@@ -25,6 +25,7 @@ We start with a set of standard controls. Among them, for example, are the follo
 - Button, Toggle-Button, etc.
 - Items List, List Items, etc.
 - List (a simple list), Bullet Point List, Ordered List, etc.
+- KPI List, KPI Item, KPI Panel, KPI Trend Indicator, etc.
 
 ### Components
 ### Repositories
