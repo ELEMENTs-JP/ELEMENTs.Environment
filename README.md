@@ -27,6 +27,7 @@ We start with a set of standard controls. Among them, for example, are the follo
 - List (a simple list), Bullet Point List, Ordered List, etc.
 - KPI List, KPI Item, KPI Panel, KPI Trend Indicator, etc.
 - Hero Image, Avatar Image, Audio Player, Video Player, etc.
+- Card, Control Container, Component Container, etc.
 
 ### Components
 Components are not yet finished user interfaces. In terms of size, they are somewhere between a small or larger control and a small user interface. In the vast majority of cases, a component can be used to implement a small use case. Here are a few examples:
