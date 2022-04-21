@@ -11,9 +11,16 @@
 <div class="row">
     <div class="col p-3">
 
+        <ELEMENTS.Controls.Text.Label Value="Breadcrumbpath" />
+        <ELEMENTS.Controls.Navigation.BreadCrumbPath Items="@( new List<BreadCrumbPathElement>()
+                                                               {
+                                                                new BreadCrumbPathElement() { Title = "Google", Link = "https://www.google.com" },
+                                                                new BreadCrumbPathElement() { Title = "Google", Link = "https://www.google.com" },
+                                                                new BreadCrumbPathElement() { Title = "Google", Link = "https://www.google.com" }
+                                                               }
+                                                     )" />
 
-
-
+        <ELEMENTS.Controls.Text.Label Value="Website Navigation" />
         <ELEMENTS.Controls.Navigation.WebsiteNavigation Entries="@( new List<NavigationEntry>
                         {
                             new NavigationEntry { Title = "HOME", Link = "/" },
@@ -38,6 +45,7 @@
 
 
 
+        <ELEMENTS.Controls.Text.Label Value="App Navigation" />
         <ELEMENTS.Controls.Navigation.AppNavigation Entries="@( new List<NavigationEntry>
                         {
                             new NavigationEntry { Title = "HOME", Link = "/" },

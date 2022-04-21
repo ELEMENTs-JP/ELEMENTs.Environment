@@ -4,12 +4,12 @@
     <TargetFramework>net5.0</TargetFramework>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Description>ELEMENTs Controls is a Razor UI Library with over 60 free full featured razor controls and implements the CSS frameworks Bootstrap and Tabler.IO.</Description>
-    <PackageReleaseNotes>Please visit: https://github.com/ELEMENTs-JP/the-ELEMENTs-Environment</PackageReleaseNotes>
+    <Description>ELEMENTs Controls is a Razor UI Library with over 60 free full featured razor controls and implements the CSS frameworks Bootstrap and Tabler.IO. Please visit: https://github.com/ELEMENTs-JP/the-ELEMENTs-Environment</Description>
+    <PackageReleaseNotes>ELEMENTs Controls is a Razor UI Library with over 60 free full featured razor controls and implements the CSS frameworks Bootstrap and Tabler.IO. Please visit: https://github.com/ELEMENTs-JP/the-ELEMENTs-Environment</PackageReleaseNotes>
     <PackageProjectUrl>https://github.com/ELEMENTs-JP</PackageProjectUrl>
     <RepositoryUrl>https://github.com/ELEMENTs-JP</RepositoryUrl>
     <PackageTags>Microsoft, Blazor, Razor, Bootstrap, Tabler.IO, Controls, Library, C#</PackageTags>
-    <Version>0.0.27</Version>
+    <Version>0.0.28</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 

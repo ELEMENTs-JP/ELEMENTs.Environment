@@ -1,0 +1,18 @@
+﻿
+@if (Items != null && Items.Count >= 1)
+{
+    <div class="bg-light border rounded p-2 align-items-center">
+        @foreach (BreadCrumbPathElement elem in Items)
+        {
+            <span class="pe-1"><a class="text-secondary" href="@elem.Link">@elem.Title</a></span>
+            <i class="fas fa-chevron-right text-secondary pe-2"></i>
+        }
+    </div>
+}
+
+
+@code {
+
+    [Parameter]
+    public List<BreadCrumbPathElement> Items { get; set; } = new List<BreadCrumbPathElement>();
+}
