@@ -1,0 +1,64 @@
+﻿
+
+<div class="@ContainerClass">
+    <div class="@PageClass">
+
+        @if (HeaderContent != null)
+        {
+            <div class="row">
+                <div class="col-12">
+                    @HeaderContent
+                </div>
+            </div>
+        }
+
+        <div class="row">
+            <div class="col">
+                @ChildContent
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col">
+                @RelatedContent
+            </div>
+        </div>
+
+        @if (FooterContent != null)
+        {
+            <div class="row">
+                <div class="col-12">
+                    @FooterContent
+                </div>
+            </div>
+        }
+
+
+    </div>
+</div>
+
+
+
+
+@code {
+
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public RenderFragment RelatedContent { get; set; }
+
+    [Parameter]
+    public RenderFragment FooterContent { get; set; }
+
+    [Parameter]
+    public RenderFragment HeaderContent { get; set; }
+
+    [Parameter]
+    public string ContainerClass { get; set; } = "container-fluid";
+
+    [Parameter]
+    public string PageClass { get; set; } = "page bg-white border rounded p-3";
+}

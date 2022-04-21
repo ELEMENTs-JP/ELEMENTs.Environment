@@ -9,7 +9,7 @@
     <PackageProjectUrl>https://github.com/ELEMENTs-JP</PackageProjectUrl>
     <RepositoryUrl>https://github.com/ELEMENTs-JP</RepositoryUrl>
     <PackageTags>Microsoft, Blazor, Razor, Bootstrap, Tabler.IO, Controls, Library, C#</PackageTags>
-    <Version>0.0.28</Version>
+    <Version>0.0.29</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
@@ -19,10 +19,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ELEMENTS.Infrastructure\ELEMENTS.Infrastructure.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Layouts\" />
   </ItemGroup>
   
 

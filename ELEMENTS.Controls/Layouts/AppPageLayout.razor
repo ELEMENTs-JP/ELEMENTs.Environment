@@ -1,0 +1,22 @@
+﻿
+
+<div class="@ContainerClass">
+    <div class="@PageClass">
+        @ChildContent
+    </div>
+</div>
+
+
+@code {
+
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public string ContainerClass { get; set; } = "container-fluid";
+
+    [Parameter]
+    public string PageClass { get; set; } = "page bg-white border rounded p-3";
+
+}

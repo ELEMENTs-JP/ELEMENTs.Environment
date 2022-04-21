@@ -1,0 +1,21 @@
+﻿
+    <div class="page @PageClass">
+        <div class="@ContainerClass">
+            @ChildContent
+        </div>
+    </div>
+
+
+@code {
+
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public string ContainerClass { get; set; } = "";
+
+    [Parameter]
+    public string PageClass { get; set; } = "";
+
+}
