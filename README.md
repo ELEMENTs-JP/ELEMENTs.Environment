@@ -117,7 +117,7 @@ To make the controls and user interfaces work visually with Tabler.IO, you need 
 
 ![Tabler.IO Controls](https://raw.githubusercontent.com/ELEMENTs-JP/the-ELEMENTs-Environment/master/ELEMENTs.Environment/Screenshots/Tabler%20IO%20Controls.png)
 
-For the implementation of Tabler.IO we use the following reference:
+For the implementation of Tabler.IO we used the following links:
 ```
     // Don't forget to put @@ in quotes in the tabler URL.
     <script src="https://unpkg.com/@@tabler/core@1.0.0-beta9/dist/js/tabler.min.js"></script>
@@ -129,6 +129,13 @@ Our recommendation for business use is: Use the Tabler.IO libraries. The spacing
 
 ## Fontawesome for Icons
 For the display of icons, as for example in the "MoneyBox" we use Fontawesome in version 5. [Fontawesome](https://fontawesome.com/v5/search) Here we use exclusively the free assortment. You are not forced to use Fontawesome. Each control has a separate "string" property where you can insert an HTML icon. If you insert a HTML string here, this HTML string will be used instead of the Fontawesome icon.
+
+For the implementation of Fontawesome we used the following link:
+```
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+          integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+```
 
 ### Change CSS classes
 You can change the CSS classes of each control (i.e. the Bootstrap or Tabler.IO CSS classes) of each control. Each control implements different CSS class properties (e.g. ControlCSS, OuterCSS, InnerCSS, FrameCSS, etc.). This allows you to enrich the controls according to your wishes, e.g. with additional classes or change the size of an input box.
