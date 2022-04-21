@@ -37,6 +37,7 @@ ChartJS has also found its way into the control library. We implement a set of C
 - Line Chart, Area Chart, etc.
 - Vertical Bar Chart, Horizontal Bar Chart, etc.
 - Doughnut Chart, Pie Chart, etc.
+- Polar Area Chart, Radar Chart, etc.
 
 ![Analytics](https://raw.githubusercontent.com/ELEMENTs-JP/the-ELEMENTs-Environment/master/ELEMENTs.Environment/Screenshots/Analytics_Controls.png)
 
