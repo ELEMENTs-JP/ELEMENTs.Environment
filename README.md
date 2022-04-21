@@ -2,7 +2,7 @@
 The ELEMENTs Environment is a collection of controls and user interfaces as well as a test application. 
 The library implements the CSS classes of Bootstrap and Tabler.IO. Only the CSS and JS links have to be added to the HTML file.
 
-At the moment the Controls Library contains **74 different Microsoft Razor controls** that you can use in your projects. We are still working on providing you with more controls, components and user interfaces as well as an improved data framework.
+At the moment the Controls Library contains **85 different Microsoft Razor controls and page layouts** that you can use in your projects. We are still working on providing you with more controls, components and user interfaces as well as an improved data framework.
 
 ![ELEMENTS](https://raw.githubusercontent.com/ELEMENTs-JP/the-ELEMENTs-Environment/master/ELEMENTs.Environment/Screenshots/ELEMENTS_TEASER.png)
 
@@ -31,6 +31,13 @@ We start with a set of standard controls. Among them, for example, are the follo
 - Search Box, Search Filter, Search Result List, Search Drop Down, etc.
 - Tab Control with TabItem, Accordion with Items, etc.
 - Sidebar with 6 different orientations, etc.
+
+### PageLayouts
+PageLayouts are used to design the user interface of a single page. Please do not confuse PageLayouts with AppLayouts. The AppLayouts design the entire application and are to be understood as MasterPage. PageLayouts design a single page by providing individual areas where individual components can be inserted. The following PageLayouts are currently available:
+- Empty, App, Website, etc.
+- Portfolio, Category, etc.
+- PrintPreview, List, EditView, etc.
+- Profile, Dashboard, etc.
 
 ### Components
 Components are not yet finished user interfaces. In terms of size, they are somewhere between a small or larger control and a small user interface. In the vast majority of cases, a component can be used to implement a small use case. Here are a few examples:
