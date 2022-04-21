@@ -33,12 +33,16 @@ We start with a set of standard controls. Among them, for example, are the follo
 - Sidebar with 6 different orientations, etc.
 
 ### Charts
-ChartJS has also found its way into the control library. We implement a set of Chart JS charts that you can use in your applications. However, we do not deliver the Chart JS library with it. You can get the [Chart JS Library](https://www.chartjs.org/) here. Here we have made a simple standard implementation with the Razor functionalities. You are welcome to customize these functionalities to your needs. Currently or soon we support the following ChartJS charts as pre-implemented standard charts:
+ChartJS has also found its way into the control library. We implement a set of Chart JS charts that you can use in your applications. However, we do not deliver the Chart JS library with it. You can get the [Chart JS Library](https://www.chartjs.org/) here. Here we have made a simple standard implementation with the Razor functionalities. You are welcome to customize these functionalities to your needs. Currently we support the following ChartJS charts as pre-implemented standard charts:
 - Line Chart, Area Chart, etc.
 - Vertical Bar Chart, Horizontal Bar Chart, etc.
 
+![Analytics](https://raw.githubusercontent.com/ELEMENTs-JP/the-ELEMENTs-Environment/master/ELEMENTs.Environment/Screenshots/Analytics_Controls.png)
+
 For the implementation of the ChartJS charts we used the following link to the script:
-> ``` <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> ```
+```
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+```
 
 ### PageLayouts
 PageLayouts are used to design the user interface of a single page. Please do not confuse PageLayouts with AppLayouts. The AppLayouts design the entire application and are to be understood as MasterPage. PageLayouts design a single page by providing individual areas where individual components can be inserted. The following PageLayouts are currently available:
@@ -101,17 +105,37 @@ To make the controls and user interfaces work visually with Bootstrap, you need 
 
 ![Bootstrap Controls](https://raw.githubusercontent.com/ELEMENTs-JP/the-ELEMENTs-Environment/master/ELEMENTs.Environment/Screenshots/Bootstrap%20Controls.png)
 
+For the implementation of Bootstrap we used the following reference:
+``` 
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+              rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+              crossorigin="anonymous"> 
+```
 ## Tabler.IO
 To make the controls and user interfaces work visually with Tabler.IO, you need to include the Tabler.IO libraries / script files in the HTML files. We used the following links in the test environment and created the screenshots based on them. Don't forget to note the @ symbol twice in the HTML code/link so that the Blazor engine doesn't throw errors.
 [Tabler Documentation](https://preview.tabler.io/docs/download.html)
 
 ![Tabler.IO Controls](https://raw.githubusercontent.com/ELEMENTs-JP/the-ELEMENTs-Environment/master/ELEMENTs.Environment/Screenshots/Tabler%20IO%20Controls.png)
 
+For the implementation of Tabler.IO we used the following links:
+```
+    // Don't forget to put @@ in quotes in the tabler URL.
+    <script src="https://unpkg.com/@@tabler/core@1.0.0-beta9/dist/js/tabler.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/@@tabler/core@1.0.0-beta9/dist/css/tabler.min.css">
+```
+
 ### Bootstrap or Tabler.IO
 Our recommendation for business use is: Use the Tabler.IO libraries. The spacing between the user interfaces is slightly smaller, and we believe this is more suitable for business applications. If you are more interested in building a website with the framework, you should use the Bootstrap framework. The spacing here is a bit larger and this is a bit easier for the user to handle. Furthermore, it is the case that the support of all functions and styles between Tabler.IO and Bootstrap cannot be guaranteed 100%. However, it is also the case that Tabler.IO offers a tiny bit more business styles than Bootstrap. We would like to leave the decision to you for which framework you choose.
 
 ## Fontawesome for Icons
 For the display of icons, as for example in the "MoneyBox" we use Fontawesome in version 5. [Fontawesome](https://fontawesome.com/v5/search) Here we use exclusively the free assortment. You are not forced to use Fontawesome. Each control has a separate "string" property where you can insert an HTML icon. If you insert a HTML string here, this HTML string will be used instead of the Fontawesome icon.
+
+For the implementation of Fontawesome we used the following link:
+```
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+          integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+```
 
 ### Change CSS classes
 You can change the CSS classes of each control (i.e. the Bootstrap or Tabler.IO CSS classes) of each control. Each control implements different CSS class properties (e.g. ControlCSS, OuterCSS, InnerCSS, FrameCSS, etc.). This allows you to enrich the controls according to your wishes, e.g. with additional classes or change the size of an input box.
@@ -142,8 +166,10 @@ This library uses external technologies such as Microsoft ASP.NET Core 5.0, Micr
 - The Waiting Progress Control works only with the Tabler.IO framework.
 - The Fontawesome Library is required to display icons. But you can also use other libraries.
 - To use the FileUpload functions, the IFileUploadService interface must be registered as a central service in Startup.cs.
-> ``` services.AddSingleton<IFileDragDropService, FileDragDropUploadService>(); ```
-> ``` services.AddSingleton<IFileUploadService, FileUploadService>(); ```
+```
+services.AddSingleton<IFileDragDropService, FileDragDropUploadService>();
+services.AddSingleton<IFileUploadService, FileUploadService>();
+```
 - The Color Picker control only works with the Tabler.IO CSS framework.
 - Placeholder provides max. 5 placeholder elements.
 - Text Devider only works with Tabler.IO CSS Framework.
