@@ -13,6 +13,7 @@ namespace ELEMENTS.Infrastructure
     {
         public string Link { get; set; } = "/";
         public string Title { get; set; } = "Home";
+        public string Icon { get; set; } = "";
 
         public List<NavigationEntry> Items { get; set; } = new List<NavigationEntry>();
     }

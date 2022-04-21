@@ -19,7 +19,7 @@ export function initShow(btnID, toastID, dotnethelper)
         });
     }
     catch (e) {
-        alert(e);
+        console.log("FAIL: " + e);
     }
 }
 export function showToast(toastID) {
@@ -37,7 +37,7 @@ export function showToast(toastID) {
 
     }
     catch (e) {
-        alert(e);
+        console.log("FAIL: " + e);
     }
 }
 
@@ -64,7 +64,7 @@ export function showToastWithMessage(toastID, title, titleID, message, messageID
 
     }
     catch (e) {
-        alert(e);
+        console.log("FAIL: " + e);
     }
 }
 

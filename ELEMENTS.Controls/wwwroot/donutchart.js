@@ -20,8 +20,6 @@ export function loadChart(divID, dotNetHelper)
 
     try {
 
-        // Assembly Name + Method 
-        // DotNet.invokeMethodAsync('STRIDES.DonutChart', 'LoadDonutChartData', jsonParameter).then(data => {
         dotNetHelper.invokeMethodAsync('LoadChartData', jsonParameter).then(data => {
 
             onDonutChartJSSucess(data)
@@ -29,7 +27,7 @@ export function loadChart(divID, dotNetHelper)
     }
     catch (e)
     {
-        alert(e);
+        console.log("FAIL: " + e);
     }
     
 }
@@ -76,12 +74,12 @@ function onDonutChartJSSucess(data) {
                         dataset.push(value);
                     }
                     catch (e) {
-                        alert('Fehler bei der Datenzuordnung: ' + e);
+                        console.log("FAIL: " + e);
                     }
                 }
             }
         }
-        catch (ex) { alert('Fehler beim durchlaufen der Daten: ' + ex); }
+        catch (e) { console.log("FAIL: " + e); }
 
 
         // Get Canvas + Check Visibility 
@@ -96,7 +94,7 @@ function onDonutChartJSSucess(data) {
             canvas.height = generalChartHeight;
         }
         catch (e) {
-            alert('Fehler beim initialisieren des CANVAS: ' + e);
+            console.log("FAIL: " + e);
         }
 
         try {
@@ -187,11 +185,11 @@ function onDonutChartJSSucess(data) {
             });
         }
         catch (e) {
-            alert('Fehler beim konstruieren des Charts: ' + e);
+            console.log("FAIL: " + e);
         }
 
     } catch (e) {
-        alert('Fehler beim CHART: ' + e);
+        console.log("FAIL: " + e);
     }
 
   
