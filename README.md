@@ -2,7 +2,7 @@
 The ELEMENTs Environment is a collection of controls and user interfaces as well as a test application. 
 The library implements the CSS classes of Bootstrap and Tabler.IO. Only the CSS and JS links have to be added to the HTML file.
 
-At the moment the Controls Library contains **85 different Microsoft Razor controls and page layouts** that you can use in your projects. We are still working on providing you with more controls, components and user interfaces as well as an improved data framework.
+At the moment the Controls Library contains **85 different Microsoft Razor controls, components, page layouts and charts** that you can use in your projects. We are still working on providing you with more controls, components and user interfaces as well as an improved data framework.
 
 ![ELEMENTS](https://raw.githubusercontent.com/ELEMENTs-JP/the-ELEMENTs-Environment/master/ELEMENTs.Environment/Screenshots/ELEMENTS_TEASER.png)
 
@@ -31,6 +31,10 @@ We start with a set of standard controls. Among them, for example, are the follo
 - Search Box, Search Filter, Search Result List, Search Drop Down, etc.
 - Tab Control with TabItem, Accordion with Items, etc.
 - Sidebar with 6 different orientations, etc.
+
+### Charts
+ChartJS has also found its way into the control library. We implement a set of Chart JS charts that you can use in your applications. However, we do not deliver the Chart JS library with it. You can get the [Chart JS Library](https://www.chartjs.org/) here. Here we have made a simple standard implementation with the Razor functionalities. You are welcome to customize these functionalities to your needs. Currently or soon we support the following ChartJS charts as pre-implemented standard charts:
+- Line Chart
 
 ### PageLayouts
 PageLayouts are used to design the user interface of a single page. Please do not confuse PageLayouts with AppLayouts. The AppLayouts design the entire application and are to be understood as MasterPage. PageLayouts design a single page by providing individual areas where individual components can be inserted. The following PageLayouts are currently available:
@@ -121,6 +125,7 @@ This library uses external technologies such as Microsoft ASP.NET Core 5.0, Micr
 - [Bootstrap](https://getbootstrap.com/)
 - [Tabler.IO](https://preview.tabler.io/)
 - [Fontawesome Version 5](https://fontawesome.com/v5/search?m=free)
+- [ChartJS](https://www.chartjs.org/)
 - [JavaScript](https://www.w3schools.com/js/)
 - [Microsoft Blazor / Razor / ASP.NET Core 5.0](https://docs.microsoft.com/en-us/aspnet/core/blazor/components/?view=aspnetcore-5.0)
 - [DropZone.JS](https://www.dropzone.dev/js/)
