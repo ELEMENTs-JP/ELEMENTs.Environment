@@ -119,7 +119,7 @@ You can change the CSS classes of each control (i.e. the Bootstrap or Tabler.IO 
 We have made the entire control library available for free on nuget. So you can easily integrate ELEMENTs controls into your Visual Studio solution at any time.
 [Here you can find the Nuget Package for Visual Studio and .NET-Core 5](https://www.nuget.org/packages/ELEMENTS.Controls/)
 
-> Nuget Command: Install-Package ELEMENTS.Controls
+> Nuget Command: ```Install-Package ELEMENTS.Controls```
 
 ## Use of external technologies
 This library uses external technologies such as Microsoft ASP.NET Core 5.0, Microsoft Razor / Blazor, Bootstrap, Tabler.IO, Fontawesome, JavaScript or Chart.JS to provide controls, components and user interfaces to accelerate the development of mobile and web-based business applications. The dependent libraries are listed and would need to be integrated separately into the _Host.cshtml.
@@ -141,8 +141,8 @@ This library uses external technologies such as Microsoft ASP.NET Core 5.0, Micr
 - The Waiting Progress Control works only with the Tabler.IO framework.
 - The Fontawesome Library is required to display icons. But you can also use other libraries.
 - To use the FileUpload functions, the IFileUploadService interface must be registered as a central service in Startup.cs.
-``` services.AddSingleton<IFileDragDropService, FileDragDropUploadService>(); ```
-``` services.AddSingleton<IFileUploadService, FileUploadService>(); ```
+> ``` services.AddSingleton<IFileDragDropService, FileDragDropUploadService>(); ```
+> ``` services.AddSingleton<IFileUploadService, FileUploadService>(); ```
 - The Color Picker control only works with the Tabler.IO CSS framework.
 - Placeholder provides max. 5 placeholder elements.
 - Text Devider only works with Tabler.IO CSS Framework.
