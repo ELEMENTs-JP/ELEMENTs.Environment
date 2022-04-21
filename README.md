@@ -115,6 +115,13 @@ To make the controls and user interfaces work visually with Tabler.IO, you need 
 
 ![Tabler.IO Controls](https://raw.githubusercontent.com/ELEMENTs-JP/the-ELEMENTs-Environment/master/ELEMENTs.Environment/Screenshots/Tabler%20IO%20Controls.png)
 
+For the implementation of Tabler.IO we use the following reference:
+```
+    // Don't forget to put @@ in quotes in the tabler URL.
+    <script src="https://unpkg.com/@@tabler/core@1.0.0-beta9/dist/js/tabler.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/@@tabler/core@1.0.0-beta9/dist/css/tabler.min.css">
+```
+
 ### Bootstrap or Tabler.IO
 Our recommendation for business use is: Use the Tabler.IO libraries. The spacing between the user interfaces is slightly smaller, and we believe this is more suitable for business applications. If you are more interested in building a website with the framework, you should use the Bootstrap framework. The spacing here is a bit larger and this is a bit easier for the user to handle. Furthermore, it is the case that the support of all functions and styles between Tabler.IO and Bootstrap cannot be guaranteed 100%. However, it is also the case that Tabler.IO offers a tiny bit more business styles than Bootstrap. We would like to leave the decision to you for which framework you choose.
 
