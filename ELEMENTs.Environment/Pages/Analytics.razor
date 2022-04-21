@@ -121,6 +121,19 @@
     </div>
     <div class="col p-3">
 
+        <ELEMENTS.Controls.Text.Label Value="Step Line Chart" />
+        <ELEMENTS.Controls.Charts.StepLineChart Title="Company" Legende="Turnover"
+                                             Items="@( new List<ChartItemDTO>()  {
+                                    new ChartItemDTO { Key = "Microsoft", Value = 75 },
+                                    new ChartItemDTO { Key = "Apple", Value = 50 },
+                                    new ChartItemDTO { Key = "Oracle", Value = 45 },
+                                    new ChartItemDTO { Key = "IBM", Value = 55 },
+                                    new ChartItemDTO { Key = "TESLA", Value = 45 },
+                                    new ChartItemDTO { Key = "Space X", Value = 25 },
+                                    new ChartItemDTO { Key = "Amazon", Value = 15 },
+                                    new ChartItemDTO { Key = "NVidia", Value = 55 },
+                                })" />
+
         <ELEMENTS.Controls.Text.Label Value="KPI List" />
         <ELEMENTS.Controls.KPI.KpiList Items="@( new List<KpiListItem>()  {
                         new KpiListItem { KPI = "Turnover", Value="100.000 EUR" },
