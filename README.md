@@ -36,6 +36,9 @@ We start with a set of standard controls. Among them, for example, are the follo
 ChartJS has also found its way into the control library. We implement a set of Chart JS charts that you can use in your applications. However, we do not deliver the Chart JS library with it. You can get the [Chart JS Library](https://www.chartjs.org/) here. Here we have made a simple standard implementation with the Razor functionalities. You are welcome to customize these functionalities to your needs. Currently or soon we support the following ChartJS charts as pre-implemented standard charts:
 - Line Chart
 
+For the implementation of the ChartJS charts we used the following link to the script:
+```    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> ```
+
 ### PageLayouts
 PageLayouts are used to design the user interface of a single page. Please do not confuse PageLayouts with AppLayouts. The AppLayouts design the entire application and are to be understood as MasterPage. PageLayouts design a single page by providing individual areas where individual components can be inserted. The following PageLayouts are currently available:
 - Empty, App, Website, etc.
