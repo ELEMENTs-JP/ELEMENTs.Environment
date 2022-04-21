@@ -37,6 +37,8 @@ ChartJS has also found its way into the control library. We implement a set of C
 - Line Chart, Area Chart, etc.
 - Vertical Bar Chart, Horizontal Bar Chart, etc.
 
+![Analytics](https://raw.githubusercontent.com/ELEMENTs-JP/the-ELEMENTs-Environment/master/ELEMENTs.Environment/Screenshots/Analytics_Controls.png)
+
 For the implementation of the ChartJS charts we used the following link to the script:
 > ``` <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> ```
 
