@@ -11,6 +11,7 @@
 <div class="row">
     <div class="col p-3">
 
+        <ELEMENTS.Controls.Text.Label Value="Line Chart" />
         <ELEMENTS.Controls.Charts.LineChart Title="Company" Legende="Turnover"
                                             Items="@( new List<ChartItemDTO>()  {
                                     new ChartItemDTO { Key = "Microsoft", Value = 75 },
@@ -22,11 +23,38 @@
                                     new ChartItemDTO { Key = "Amazon", Value = 15 },
                                     new ChartItemDTO { Key = "NVidia", Value = 55 },
                                 })" />
-        
+
+        <ELEMENTS.Controls.Text.Label Value="Horizontal Bar Chart" />
+        <ELEMENTS.Controls.Charts.BarHorizontalChart Title="Company" Legende="Turnover"
+                                                     Items="@( new List<ChartItemDTO>()  {
+                                    new ChartItemDTO { Key = "Microsoft", Value = 75 },
+                                    new ChartItemDTO { Key = "Apple", Value = 50 },
+                                    new ChartItemDTO { Key = "Oracle", Value = 45 },
+                                    new ChartItemDTO { Key = "IBM", Value = 55 },
+                                    new ChartItemDTO { Key = "TESLA", Value = 45 },
+                                    new ChartItemDTO { Key = "Space X", Value = 25 },
+                                    new ChartItemDTO { Key = "Amazon", Value = 15 },
+                                    new ChartItemDTO { Key = "NVidia", Value = 55 },
+                                })" />
+
 
     </div>
     <div class="col p-3">
+        <ELEMENTS.Controls.Text.Label Value="Area Chart" />
         <ELEMENTS.Controls.Charts.AreaChart Title="Company" Legende="Turnover"
+                                            Items="@( new List<ChartItemDTO>()  {
+                                    new ChartItemDTO { Key = "Microsoft", Value = 75 },
+                                    new ChartItemDTO { Key = "Apple", Value = 50 },
+                                    new ChartItemDTO { Key = "Oracle", Value = 45 },
+                                    new ChartItemDTO { Key = "IBM", Value = 55 },
+                                    new ChartItemDTO { Key = "TESLA", Value = 45 },
+                                    new ChartItemDTO { Key = "Space X", Value = 25 },
+                                    new ChartItemDTO { Key = "Amazon", Value = 15 },
+                                    new ChartItemDTO { Key = "NVidia", Value = 55 },
+                                })" />
+
+        <ELEMENTS.Controls.Text.Label Value="Vertical Bar Chart" />
+        <ELEMENTS.Controls.Charts.BarVerticalChart Title="Company" Legende="Turnover"
                                             Items="@( new List<ChartItemDTO>()  {
                                     new ChartItemDTO { Key = "Microsoft", Value = 75 },
                                     new ChartItemDTO { Key = "Apple", Value = 50 },

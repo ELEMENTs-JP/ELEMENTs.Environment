@@ -10,15 +10,16 @@ using ELEMENTS.Infrastructure;
 
 namespace ELEMENTS.Controls.Charts
 {
-    public partial class LineChart : IAsyncDisposable
+    public partial class BarVerticalChart : IAsyncDisposable
     {
         // Fields 
         private ChartDTO Configuration { get; set; } = new ChartDTO();
-        private DotNetObjectReference<LineChart>? objRef;
+        private DotNetObjectReference<BarVerticalChart>? objRef;
         private Lazy<Task<IJSObjectReference>> moduleTask;
 
+
         // ctr 
-        public LineChart()
+        public BarVerticalChart()
         {
 
         }
@@ -28,7 +29,7 @@ namespace ELEMENTS.Controls.Charts
         {
             // Import JS File 
             moduleTask = new(() => jsRuntime.InvokeAsync<IJSObjectReference>(
-               "import", "./_content/ELEMENTS.Controls/linechart.js").AsTask());
+               "import", "./_content/ELEMENTS.Controls/barverticalchart.js").AsTask());
         }
 
         // Methods 
@@ -89,14 +90,14 @@ namespace ELEMENTS.Controls.Charts
 
                     // Default Queries 
                     foreach (ChartItemDTO dto in Items)
-                    { 
+                    {
                         serie.Items.Add(dto);
                     }
 
                     // Series Append 
                     Configuration.Series.Add(serie);
                 }
-           
+
             }
             catch (Exception ex)
             {
@@ -139,5 +140,4 @@ namespace ELEMENTS.Controls.Charts
             }
         }
     }
-
 }
