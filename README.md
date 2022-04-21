@@ -37,7 +37,7 @@ ChartJS has also found its way into the control library. We implement a set of C
 - Line Chart
 
 For the implementation of the ChartJS charts we used the following link to the script:
-```    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> ```
+> ``` <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> ```
 
 ### PageLayouts
 PageLayouts are used to design the user interface of a single page. Please do not confuse PageLayouts with AppLayouts. The AppLayouts design the entire application and are to be understood as MasterPage. PageLayouts design a single page by providing individual areas where individual components can be inserted. The following PageLayouts are currently available:
