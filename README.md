@@ -159,8 +159,10 @@ This library uses external technologies such as Microsoft ASP.NET Core 5.0, Micr
 - The Waiting Progress Control works only with the Tabler.IO framework.
 - The Fontawesome Library is required to display icons. But you can also use other libraries.
 - To use the FileUpload functions, the IFileUploadService interface must be registered as a central service in Startup.cs.
-> ``` services.AddSingleton<IFileDragDropService, FileDragDropUploadService>(); ```
-> ``` services.AddSingleton<IFileUploadService, FileUploadService>(); ```
+```
+services.AddSingleton<IFileDragDropService, FileDragDropUploadService>();
+services.AddSingleton<IFileUploadService, FileUploadService>();
+```
 - The Color Picker control only works with the Tabler.IO CSS framework.
 - Placeholder provides max. 5 placeholder elements.
 - Text Devider only works with Tabler.IO CSS Framework.
