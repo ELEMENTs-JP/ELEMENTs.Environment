@@ -12,6 +12,25 @@
 <div class="row">
     <div class="col p-3">
 
+        <ELEMENTS.Controls.Text.Label Value="Items Collection" />
+        <ELEMENTS.Controls.Collection.ItemsCollection Items="pets" Context="pet">
+            <Header>
+                <h2>ItemsCollection (Template Engine)</h2>
+            </Header>
+            <RowTemplate>
+                <div class="row p-2 border-bottom">
+                    <div class="col-auto">@pet.PetId</div>
+                    <div class="col">@pet.Name</div>
+                    <div class="col-auto">@pet.Size</div>
+                </div>
+            </RowTemplate>
+            <Footer>
+                <strong>ItemsCollection (Template Engine)</strong>
+            </Footer>
+        </ELEMENTS.Controls.Collection.ItemsCollection>
+
+
+
         <ELEMENTS.Controls.Text.Label Value="Items List" />
         <ELEMENTS.Controls.List.ItemsList Items="@(
                 new List<IDTO>()
@@ -69,4 +88,21 @@
 
 @code {
 
+
+    private List<Pet> pets = new()
+    {
+        new Pet { PetId = 2, Name = "Mr. Bigglesworth", Size = "21 kg" },
+        new Pet { PetId = 4, Name = "Salem Saberhagen", Size = "21 kg" },
+        new Pet { PetId = 7, Name = "K-9", Size = "21 kg" },
+        new Pet { PetId = 2, Name = "Mr. Bigglesworth", Size = "21 kg" },
+        new Pet { PetId = 4, Name = "Salem Saberhagen", Size = "21 kg" },
+        new Pet { PetId = 7, Name = "K-9", Size = "21 kg" }
+    };
+
+    private class Pet
+    {
+        public int PetId { get; set; }
+        public string Name { get; set; }
+        public string Size { get; set; }
+    }
 }
