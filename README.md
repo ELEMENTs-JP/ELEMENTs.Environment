@@ -36,6 +36,7 @@ We start with a set of standard controls. Among them, for example, are the follo
 ChartJS has also found its way into the control library. We implement a set of Chart JS charts that you can use in your applications. However, we do not deliver the Chart JS library with it. You can get the [Chart JS Library](https://www.chartjs.org/) here. Here we have made a simple standard implementation with the Razor functionalities. You are welcome to customize these functionalities to your needs. Currently we support the following ChartJS charts as pre-implemented standard charts:
 - Line Chart, Area Chart, etc.
 - Vertical Bar Chart, Horizontal Bar Chart, etc.
+- Doughnut Chart, Pie Chart, etc.
 
 ![Analytics](https://raw.githubusercontent.com/ELEMENTs-JP/the-ELEMENTs-Environment/master/ELEMENTs.Environment/Screenshots/Analytics_Controls.png)
 
