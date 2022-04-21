@@ -2,7 +2,7 @@
 The ELEMENTs Environment is a collection of controls and user interfaces as well as a test application. 
 The library implements the CSS classes of Bootstrap and Tabler.IO. Only the CSS and JS links have to be added to the HTML file.
 
-At the moment the Controls Library contains **87 different Microsoft Razor controls, components, page layouts and charts** that you can use in your projects. We are still working on providing you with more controls, components and user interfaces as well as an improved data framework.
+At the moment the Controls Library contains **90 different Microsoft Razor controls, components, page layouts and charts** that you can use in your projects. We are still working on providing you with more controls, components and user interfaces as well as an improved data framework.
 
 ![ELEMENTS](https://raw.githubusercontent.com/ELEMENTs-JP/the-ELEMENTs-Environment/master/ELEMENTs.Environment/Screenshots/ELEMENTS_TEASER.png)
 
@@ -24,6 +24,7 @@ We start with a set of standard controls. Among them, for example, are the follo
 - Details Summary, Waiting Progress, Progress Bar, etc.
 - Button, Toggle-Button, etc.
 - Items List, List Items, etc.
+- Template based Items Collection, etc.
 - List (a simple list), Bullet Point List, Ordered List, etc.
 - KPI List, KPI Item, KPI Panel, KPI Trend Indicator, etc.
 - Hero Image, Avatar Image, Audio Player, Video Player, etc.
