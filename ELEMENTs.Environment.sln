@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.32126.315
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ELEMENTs.Environment", "ELEMENTs.Environment\ELEMENTs.Environment.csproj", "{F99B7748-6C9C-4519-8305-29A162C6009A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ELEMENTS.Controls", "ELEMENTS.Controls\ELEMENTS.Controls.csproj", "{180D4FCC-03DD-44E5-8153-325B76CCF8C1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ELEMENTS.Controls", "ELEMENTS.Controls\ELEMENTS.Controls.csproj", "{180D4FCC-03DD-44E5-8153-325B76CCF8C1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01-Application", "01-Application", "{12FB78CD-1C4D-421D-8B7B-E4032966BC0E}"
 EndProject
@@ -19,7 +19,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ELEMENTS.GO.SQLite.Console.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "99-Infrastructure", "99-Infrastructure", "{79E0A21A-4ADC-4A58-A7C8-C05FEC9FAD7C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ELEMENTS.Infrastructure", "ELEMENTS.Infrastructure\ELEMENTS.Infrastructure.csproj", "{5040107E-5F83-4CB9-804D-32FEA5F32921}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ELEMENTS.Infrastructure", "ELEMENTS.Infrastructure\ELEMENTS.Infrastructure.csproj", "{5040107E-5F83-4CB9-804D-32FEA5F32921}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
