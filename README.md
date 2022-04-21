@@ -2,7 +2,7 @@
 The ELEMENTs Environment is a collection of controls and user interfaces as well as a test application. 
 The library implements the CSS classes of Bootstrap and Tabler.IO. Only the CSS and JS links have to be added to the HTML file.
 
-At the moment the Controls Library contains **85 different Microsoft Razor controls, components, page layouts and charts** that you can use in your projects. We are still working on providing you with more controls, components and user interfaces as well as an improved data framework.
+At the moment the Controls Library contains **87 different Microsoft Razor controls, components, page layouts and charts** that you can use in your projects. We are still working on providing you with more controls, components and user interfaces as well as an improved data framework.
 
 ![ELEMENTS](https://raw.githubusercontent.com/ELEMENTs-JP/the-ELEMENTs-Environment/master/ELEMENTs.Environment/Screenshots/ELEMENTS_TEASER.png)
 
@@ -34,7 +34,8 @@ We start with a set of standard controls. Among them, for example, are the follo
 
 ### Charts
 ChartJS has also found its way into the control library. We implement a set of Chart JS charts that you can use in your applications. However, we do not deliver the Chart JS library with it. You can get the [Chart JS Library](https://www.chartjs.org/) here. Here we have made a simple standard implementation with the Razor functionalities. You are welcome to customize these functionalities to your needs. Currently or soon we support the following ChartJS charts as pre-implemented standard charts:
-- Line Chart
+- Line Chart, Area Chart, etc.
+- Vertical Bar Chart, Horizontal Bar Chart, etc.
 
 For the implementation of the ChartJS charts we used the following link to the script:
 > ``` <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> ```
