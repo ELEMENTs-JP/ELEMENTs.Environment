@@ -2,7 +2,7 @@
 The ELEMENTs Environment is a collection of controls and user interfaces as well as a test application. 
 The library implements the CSS classes of Bootstrap and Tabler.IO. Only the CSS and JS links have to be added to the HTML file.
 
-At the moment the Controls Library contains **74 different Microsoft Razor controls** that you can use in your projects. We are still working on providing you with more controls, components and user interfaces as well as an improved data framework.
+At the moment the Controls Library contains **85 different Microsoft Razor controls, components, page layouts and charts** that you can use in your projects. We are still working on providing you with more controls, components and user interfaces as well as an improved data framework.
 
 ![ELEMENTS](https://raw.githubusercontent.com/ELEMENTs-JP/the-ELEMENTs-Environment/master/ELEMENTs.Environment/Screenshots/ELEMENTS_TEASER.png)
 
@@ -32,6 +32,20 @@ We start with a set of standard controls. Among them, for example, are the follo
 - Tab Control with TabItem, Accordion with Items, etc.
 - Sidebar with 6 different orientations, etc.
 
+### Charts
+ChartJS has also found its way into the control library. We implement a set of Chart JS charts that you can use in your applications. However, we do not deliver the Chart JS library with it. You can get the [Chart JS Library](https://www.chartjs.org/) here. Here we have made a simple standard implementation with the Razor functionalities. You are welcome to customize these functionalities to your needs. Currently or soon we support the following ChartJS charts as pre-implemented standard charts:
+- Line Chart
+
+For the implementation of the ChartJS charts we used the following link to the script:
+> ``` <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> ```
+
+### PageLayouts
+PageLayouts are used to design the user interface of a single page. Please do not confuse PageLayouts with AppLayouts. The AppLayouts design the entire application and are to be understood as MasterPage. PageLayouts design a single page by providing individual areas where individual components can be inserted. The following PageLayouts are currently available:
+- Empty, App, Website, etc.
+- Portfolio, Category, etc.
+- PrintPreview, List, EditView, etc.
+- Profile, Dashboard, etc.
+
 ### Components
 Components are not yet finished user interfaces. In terms of size, they are somewhere between a small or larger control and a small user interface. In the vast majority of cases, a component can be used to implement a small use case. Here are a few examples:
 - Security: Login, Register, Log off, Change Password, Permissions list etc.
@@ -47,7 +61,7 @@ The framework additionally contains an integrated data framework with which data
 
 [ELEMENTs GO Data Framework on nuget](https://www.nuget.org/packages/ELEMENTS.GO.SQLite/)
 
-> Nuget Command: Install-Package ELEMENTS.GO.SQLite
+> Nuget Command: ```Install-Package ELEMENTS.GO.SQLite```
 
 ## Components of ELEMENTs GO
 ELEMENTs GO is an interface based database framework. In the version available here the database SQLite is implemented as an example. You can perform the following operations:
@@ -105,7 +119,7 @@ You can change the CSS classes of each control (i.e. the Bootstrap or Tabler.IO 
 We have made the entire control library available for free on nuget. So you can easily integrate ELEMENTs controls into your Visual Studio solution at any time.
 [Here you can find the Nuget Package for Visual Studio and .NET-Core 5](https://www.nuget.org/packages/ELEMENTS.Controls/)
 
-> Nuget Command: Install-Package ELEMENTS.Controls
+> Nuget Command: ```Install-Package ELEMENTS.Controls```
 
 ## Use of external technologies
 This library uses external technologies such as Microsoft ASP.NET Core 5.0, Microsoft Razor / Blazor, Bootstrap, Tabler.IO, Fontawesome, JavaScript or Chart.JS to provide controls, components and user interfaces to accelerate the development of mobile and web-based business applications. The dependent libraries are listed and would need to be integrated separately into the _Host.cshtml.
@@ -114,6 +128,7 @@ This library uses external technologies such as Microsoft ASP.NET Core 5.0, Micr
 - [Bootstrap](https://getbootstrap.com/)
 - [Tabler.IO](https://preview.tabler.io/)
 - [Fontawesome Version 5](https://fontawesome.com/v5/search?m=free)
+- [ChartJS](https://www.chartjs.org/)
 - [JavaScript](https://www.w3schools.com/js/)
 - [Microsoft Blazor / Razor / ASP.NET Core 5.0](https://docs.microsoft.com/en-us/aspnet/core/blazor/components/?view=aspnetcore-5.0)
 - [DropZone.JS](https://www.dropzone.dev/js/)
@@ -126,8 +141,8 @@ This library uses external technologies such as Microsoft ASP.NET Core 5.0, Micr
 - The Waiting Progress Control works only with the Tabler.IO framework.
 - The Fontawesome Library is required to display icons. But you can also use other libraries.
 - To use the FileUpload functions, the IFileUploadService interface must be registered as a central service in Startup.cs.
-``` services.AddSingleton<IFileDragDropService, FileDragDropUploadService>(); ```
-``` services.AddSingleton<IFileUploadService, FileUploadService>(); ```
+> ``` services.AddSingleton<IFileDragDropService, FileDragDropUploadService>(); ```
+> ``` services.AddSingleton<IFileUploadService, FileUploadService>(); ```
 - The Color Picker control only works with the Tabler.IO CSS framework.
 - Placeholder provides max. 5 placeholder elements.
 - Text Devider only works with Tabler.IO CSS Framework.
