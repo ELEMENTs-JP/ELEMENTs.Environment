@@ -99,6 +99,10 @@ Lists and list items can be used both manually and with the Data Framework. Basi
 ## ELEMENTs Infrastructure Library
 The ELEMENTs Infrastructure Library is a Razor class library with a set of helper methods, interfaces and enumerations that help to keep the ELEMENTs GO Data Framework functional. The library is required for the operation of the ELEMENTs GO Data Framework.
 
+The Nuget Package for the Infrastructure Library can be found here: [Nuget Infrastructure Library Package](https://www.nuget.org/packages/ELEMENTS.Infrastructure/)
+
+> Nuget Package ```Install-Package ELEMENTS.Infrastructure```
+
 ### Console Test Application
 In order to understand the use of the ELEMENTs GO Data Framework or to replicate its implementation, a console test application has been added to the Solution. In the main method, all the commands that you can execute with the ELEMENTs GO Data Framework for SQLite have been implemented.
 
