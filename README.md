@@ -172,6 +172,15 @@ This library uses external technologies such as Microsoft ASP.NET Core 5.0, Micr
 - [SQLite](https://www.sqlite.org/index.html)
 - [C#](https://docs.microsoft.com/en-us/dotnet/csharp/)
 
+## Imports
+To help you build the _Imports.razor file faster, we have listed the most important import statements in the following code section. Of course, there are a few more in total. But with these import lines you already have a good overview.
+```
+@using ELEMENTs
+@using ELEMENTS
+@using ELEMENTS.Controls
+@using ELEMENTS.Infrastructure
+```
+
 ## Notes and known problems
 - The Waiting Progress Control works only with the Tabler.IO framework.
 - The Fontawesome Library is required to display icons. But you can also use other libraries.
