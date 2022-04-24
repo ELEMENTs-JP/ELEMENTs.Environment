@@ -12,6 +12,7 @@ namespace ELEMENTS.Infrastructure
         IFactoryStatusInfo CreateDatabase();
         IFactoryStatusInfo DeleteDatabase();
         IFactoryStatusInfo MigrateDatabase();
+        string GetDatabaseVersion();
         void SetDatabasePath();
 
         // Factory 

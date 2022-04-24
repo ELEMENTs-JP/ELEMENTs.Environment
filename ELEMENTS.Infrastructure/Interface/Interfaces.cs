@@ -14,7 +14,7 @@ namespace ELEMENTS.Infrastructure
         {
             if (Status != "OK")
             {
-                throw new Exception("Fehler: " + Message);
+                Console.WriteLine("FAIL: " + Message);
             }
         }
     }

@@ -33,6 +33,12 @@ namespace ELEMENTS.Data.SQLite
             info.Validate();
             return info;
         }
+
+        public string GetDatabaseVersion()
+        {
+            return SQLiteHelper.GetMigrationVersion();
+        }
+
     }
 
     public partial class SQLiteFactory : IFactory

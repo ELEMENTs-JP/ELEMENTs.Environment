@@ -277,6 +277,37 @@ namespace ELEMENTS.Data.SQLite
                 return info;
             }
         }
+
+        public static string GetMigrationVersion()
+        {
+            string version = string.Empty;
+            
+            try
+            {
+                var query = "SELECT MigrationId FROM __EFMigrationsHistory LIMIT 1";
+
+                using (SQLiteContext context = SQLiteHelper.GetEntities())
+                {
+                    using (var connection = context.Database.GetDbConnection())
+                    {
+                        connection.Open();
+
+                        using (var command = connection.CreateCommand())
+                        {
+                            command.CommandText = query;
+                            object result = command.ExecuteReader();
+                            version = result.ToSecureString();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+            
+            return version;
+        }
     }
 
 

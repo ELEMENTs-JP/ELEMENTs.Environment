@@ -1,0 +1,110 @@
+﻿@inject IJSRuntime JS
+@inject ISQLiteService db
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="h3">Database Version Management</h3>
+    </div>
+    <div class="card-body">
+
+        <div class="row">
+            <div class="col-12">
+                <label class="form-label">Name</label>
+                <input type="text"
+                       @bind-value="Name"
+                       class="@InputCSS"
+                       @bind-value:event="oninput" />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+                <label class="form-label">Exists the database?</label>
+                <p class="@( (DoesDbExists) ? "text-success" : "text-danger" )">
+                    <strong>@( (DoesDbExists) ? "Database exists" : "does not exist" )</strong>
+
+                    @if (DoesDbExists == true)
+                    {
+                        <strong><i class="ms-2 fas fa-check text-success"></i></strong>
+                    }
+                    else
+                    {
+                        <strong><i class="ms-2 fas fa-exclamation-circle text-danger"></i></strong>
+                    }
+
+                </p>
+            </div>
+        </div>
+
+        @if (DoesDbExists)
+        {
+            <div class="row">
+                <div class="col-6">
+                    <label class="form-label">Database Version</label>
+                    <p><strong>@Version</strong></p>
+                </div>
+            </div>
+        }
+
+    </div>
+    <div class="card-footer bg-light">
+        <div class="row">
+            <div class="col-auto"></div>
+            <div class="col"></div>
+            <div class="col-auto">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+
+    [Parameter]
+    public string Name { get; set; } = "ELEMENTs";
+
+    [Parameter]
+    public string Version { get; set; } = string.Empty;
+
+    [Parameter]
+    public bool DoesDbExists { get; set; } = false;
+
+    [Parameter]
+    public string InputCSS { get; set; } = "form-control";
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+    }
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+
+        CheckDatabaseExists();
+    }
+
+    private void CheckDatabaseExists()
+    {
+        try
+        {
+            if (File.Exists(Name + ".db"))
+            {
+                DoesDbExists = true;
+
+                Version = db.GetMigrationVersion();
+            }
+            else
+            {
+                DoesDbExists = false;
+
+                Version = string.Empty;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("FAIL: " + ex.Message);
+        }
+    }
+
+
+}

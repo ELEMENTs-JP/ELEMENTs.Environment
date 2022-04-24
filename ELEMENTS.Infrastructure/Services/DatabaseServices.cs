@@ -11,6 +11,9 @@ namespace ELEMENTS.Infrastructure
     {
         Guid MasterGUID { get; set; }
         IFactoryStatusInfo CreateDatabase(string name);
+        IFactoryStatusInfo MigrateDatabase(string name);
+
+        string GetMigrationVersion();
     }
 
    
