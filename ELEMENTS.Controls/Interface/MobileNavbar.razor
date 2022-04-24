@@ -6,38 +6,43 @@
 </div>
 
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
-    <ul class="nav flex-column">
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
-            </NavLink>
-        </li>
+    <div class="overflow-auto">
+        <ul class="nav flex-column">
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                    <span class="oi oi-home" aria-hidden="true"></span> Home
+                </NavLink>
+            </li>
 
-        @if (Entries != null)
-        {
-            @if (Entries.Count >= 1)
+            @if (Repository != null)
             {
-                @foreach (NavigationEntry entry in Entries)
+                @if (Repository.Items != null)
                 {
-                    <li class="nav-item px-3">
-                        <NavLink class="nav-link" href="@entry.Link">
+                    @if (Repository.Items.Count >= 1)
+                    {
+                        @foreach (NavigationEntry entry in Repository.Items.OrderBy(se => se.Position))
+                        {
+                            <li class="nav-item px-3">
+                                <NavLink class="nav-link" href="@entry.Link">
 
-                            @if (string.IsNullOrEmpty(entry.Icon))
-                            {
-                                <span class="oi oi-plus" aria-hidden="true"></span>
-                            }
-                            else
-                            {
-                                @((MarkupString)@entry.Icon.ToSecureString())
-                            }
-                            <span class="ms-3">@entry.Title</span>
-                        </NavLink>
-                    </li>
+                                    @if (string.IsNullOrEmpty(entry.Icon))
+                                    {
+                                        <span class="oi oi-plus" aria-hidden="true"></span>
+                                    }
+                                    else
+                                    {
+                                        @((MarkupString)@entry.Icon.ToSecureString())
+                                    }
+                                    <span class="ms-3">@entry.Title</span>
+                                </NavLink>
+                            </li>
+                        }
+                    }
                 }
             }
-        }
 
-    </ul>
+        </ul>
+    </div>
 </div>
 
 @code {
@@ -54,5 +59,7 @@
     public string Title { get; set; } = "Environment";
 
     [Parameter]
-    public List<NavigationEntry> Entries { get; set; } = new List<NavigationEntry>();
+    public INavigationRepository Repository { get; set; }
+
+
 }

@@ -3,7 +3,7 @@
 
 <ELEMENTS.Controls.Interface.AppLayout>
     <Sidebar>
-        <ELEMENTS.Controls.Interface.MobileNavbar Entries="@Entries" />
+        <ELEMENTS.Controls.Interface.MobileNavbar Repository="@Repository" />
     </Sidebar>
     <Header>
         <div class="row">
@@ -19,6 +19,7 @@
                             new NavigationEntry { Title = "Interfaces", Link = "",
                                 Items = new List<NavigationEntry>()
                                 {
+                                    new NavigationEntry() { Title = "Navigation", Link = "/navigation" },
                                     new NavigationEntry() { Title = "PageLayouts", Link = "/layouts" },
                                     new NavigationEntry() { Title = "Views and Container", Link = "/view" },
                                     new NavigationEntry() { Title = "Analytics", Link = "/analytics" },
@@ -47,6 +48,8 @@
 
 @code
 {
+    [Parameter]
+    public INavigationRepository Repository { get; set; }
 
     private IFooter DTO { get; set; }
     private List<NavigationEntry> Entries { get; set; } = new List<NavigationEntry>();
@@ -75,9 +78,25 @@
         }
         DTO.Groups = Groups;
 
+
+        try
+        {
+            NavigationRepository repository = NavigationRepository.Load();
+
+            repository.Title = (string.IsNullOrEmpty(repository.Title)) ? "Navigation" : repository.Title;
+            repository.Text = (string.IsNullOrEmpty(repository.Text)) ? "" : repository.Text;
+
+            Repository = repository;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("FAIL: " + ex.Message);
+        }
+
         // Entries 
         Entries.Add(new NavigationEntry() { Title = "Bootstrap", Link = "bootstrap", Icon = "<i class='fas fa-angle-double-right'></i>" });
         Entries.Add(new NavigationEntry() { Title = "Tabler.IO", Link = "tabler", Icon = "<i class='fas fa-angle-double-right'></i>" });
+        Entries.Add(new NavigationEntry() { Title = "Navigation", Link = "/navigation", Icon = "<i class='fas fa-angle-double-right'></i>" });
         Entries.Add(new NavigationEntry() { Title = "Page Layouts", Link = "layouts", Icon = "<i class='fas fa-angle-double-right'></i>" });
         Entries.Add(new NavigationEntry() { Title = "Views and Container", Link = "view", Icon = "<i class='fas fa-angle-double-right'></i>" });
         Entries.Add(new NavigationEntry() { Title = "Analytics", Link = "analytics", Icon = "<i class='fas fa-angle-double-right'></i>" });

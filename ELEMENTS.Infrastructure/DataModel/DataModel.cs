@@ -13,6 +13,15 @@ namespace ELEMENTS.Infrastructure
 
     public class NavigationEntry
     {
+        public NavigationEntry()
+        {
+            if (ID == Guid.Empty)
+            {
+                ID = Guid.NewGuid();
+            }
+        }
+        public Guid ID { get; set; }
+        public int Position { get; set; } = 1;
         public string Link { get; set; } = "/";
         public string Title { get; set; } = "Home";
         public string Icon { get; set; } = "";

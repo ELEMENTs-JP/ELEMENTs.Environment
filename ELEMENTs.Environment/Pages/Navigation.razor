@@ -1,0 +1,123 @@
+﻿@page "/navigation"
+
+
+<div class="row">
+    <div class="col p-3">
+
+        <ELEMENTS.Controls.Navigation.NavigationEditor Repository="@Repository" />
+
+    </div>
+    <div class="col p-3">
+
+        <ELEMENTS.Controls.Text.Label Value="Breadcrumbpath" />
+        <ELEMENTS.Controls.Navigation.BreadCrumbPath Items="@( new List<BreadCrumbPathElement>()
+                                                               {
+                                                                new BreadCrumbPathElement() { Title = "Google", Link = "https://www.google.com" },
+                                                                new BreadCrumbPathElement() { Title = "Google", Link = "https://www.google.com" },
+                                                                new BreadCrumbPathElement() { Title = "Google", Link = "https://www.google.com" }
+                                                               }
+                                                     )" />
+
+        <ELEMENTS.Controls.Text.Label Value="Website Navigation" />
+        <ELEMENTS.Controls.Navigation.WebsiteNavigation Entries="@( new List<NavigationEntry>
+                        {
+                            new NavigationEntry { Title = "HOME", Link = "/" },
+                            new NavigationEntry { Title = "App", Link = "/App" },
+                            new NavigationEntry { Title = "Website", Link = "/Website",
+                                Items = new List<NavigationEntry>()
+                                {
+                                    new NavigationEntry() { Title = "HOME", Link = "/" },
+                                    new NavigationEntry() { Title = "Website", Link = "/Website" },
+                                    new NavigationEntry() { Title = "Empty Page", Link = "/EmptyPage" },
+                                    new NavigationEntry() { Title = "Website Page", Link = "/WebsitePage" },
+                                    new NavigationEntry() { Title = "App Page", Link = "/AppPageLayout" },
+                                    new NavigationEntry() { Title = "List", Link = "/ListPage" },
+                                    new NavigationEntry() { Title = "View", Link = "/ViewPage" },
+                                    new NavigationEntry() { Title = "Print Preview", Link = "/PrintPreviewPage" },
+                                    new NavigationEntry() { Title = "Dashboard", Link = "/DashboardPage" },
+                                    new NavigationEntry() { Title = "App", Link = "/App" },
+                                    new NavigationEntry() { Title = "License Manager", Link = "/LicenseManager" },
+                                } },
+                        } )" />
+
+
+        <ELEMENTS.Controls.Text.Label Value="App Navigation" />
+        <ELEMENTS.Controls.Navigation.AppNavigation Entries="@( new List<NavigationEntry>
+                        {
+                            new NavigationEntry { Title = "HOME", Link = "/" },
+
+                            new NavigationEntry { Title = "Interface", Link = "/Interface",
+                                Items= new List<NavigationEntry>()
+                                {
+                                    new NavigationEntry() { Title = "Empty Page", Link = "/EmptyPage" },
+                                    new NavigationEntry() { Title = "Website Page", Link = "/WebsitePage" },
+                                    new NavigationEntry() { Title = "Portfolio Page", Link = "/PortfolioPage" },
+                                    new NavigationEntry() { Title = "Profile Page", Link = "/ProfilePage" },
+                                    new NavigationEntry() { Title = "App Page", Link = "/AppPageLayout" },
+                                    new NavigationEntry() { Title = "Category Page", Link = "/CategoryPage" },
+                                    new NavigationEntry() { Title = "List", Link = "/ListPage" },
+                                    new NavigationEntry() { Title = "View", Link = "/ViewPage" },
+                                    new NavigationEntry() { Title = "Dashboard", Link = "/DashboardPage" },
+                                    new NavigationEntry() { Title = "Report", Link = "/ReportPage" },
+                                    new NavigationEntry() { Title = "Print Preview", Link = "/PrintPreviewPage" },
+                                } },
+
+                            new NavigationEntry { Title = "Form Elements", Link = "/FormElements" },
+                            new NavigationEntry { Title = "Container", Link = "/ContainerElements" },
+                            new NavigationEntry { Title = "Lists", Link = "/List" },
+                            new NavigationEntry { Title = "Items", Link = "/Items" },
+                            new NavigationEntry { Title = "Search", Link = "/Search" },
+                            new NavigationEntry { Title = "KPI and Charts", Link = "/Financial" },
+                            new NavigationEntry { Title = "Security", Link = "/Security" },
+                            new NavigationEntry { Title = "Media", Link = "/Media" },
+                            new NavigationEntry { Title = "Layout & Navigation", Link = "/Layout" },
+
+                            new NavigationEntry { Title = "Scenarios", Link = "/Scenario",
+                                Items= new List<NavigationEntry>()
+                                {
+                                    new NavigationEntry() { Title = "Stammdaten", Link = "/Scenario/Stammdaten" },
+                                    new NavigationEntry() { Title = "Business Model", Link = "/Scenario/BusinessModel" },
+                                    new NavigationEntry() { Title = "Strategyzer", Link = "/Scenario/Strategyzer" },
+                                }
+                            },
+
+                            new NavigationEntry() { Title = "Layout: App", Link = "/App" },
+                            new NavigationEntry() { Title = "Layout: Website", Link = "/Website" },
+
+                        } )" />
+
+    </div>
+</div>
+
+
+
+@code {
+
+
+    private string title = "Navigation";
+    private string lastchange = "January 2022";
+
+    [Parameter]
+    public INavigationRepository Repository { get; set; }
+
+
+    // Events 
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        try
+        {
+            NavigationRepository repository = NavigationRepository.Load();
+
+            repository.Title = (string.IsNullOrEmpty(repository.Title)) ? title : repository.Title;
+            repository.Text = (string.IsNullOrEmpty(repository.Text)) ? lastchange : repository.Text;
+
+            Repository = repository;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("FAIL: " + ex.Message);
+        }
+    }
+}

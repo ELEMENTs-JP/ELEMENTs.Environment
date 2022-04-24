@@ -1,0 +1,206 @@
+﻿@inject IJSRuntime JS
+
+@if (Repository != null)
+{
+    <div class="@ContainerCSS">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="h3">@FormTitle</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col px-2">
+
+                        <div class="row mb-2">
+                            <div class="col">
+                                <input type="text"
+                                       @bind-value="Matchcode"
+                                       class="@InputCSS"
+                                       placeholder="@SearchPlaceholder"
+                                       @bind-value:event="oninput" />
+                            </div>
+                            <div class="col-auto px-2">
+                                <button type="button" class="btn btn-primary" @onclick="Add">+</button>
+                            </div>
+                        </div>
+
+
+                        @if (Repository != null)
+                        {
+                            @if (Repository.Items.Count >= 1)
+                            {
+                                <div class="row  g-0">
+                                    <div class="col  g-0 border-top">
+                                        @foreach (NavigationEntry entry in Repository.Items)
+                                        {
+                                        <div class="row border-bottom p-2 bg-light"
+                                             style="cursor:pointer;" title="@entry.ID.ToSecureString()"
+                                             @onclick="@( e => { Entry = entry; }  )">
+                                            <div class="col">
+                                                <strong class="text-start">@entry.Title</strong>
+                                            </div>
+                                            <div class="col-auto px-2">
+                                                <small class="ms-3 text-end">@entry.Link</small>
+                                            </div>
+                                            <div class="col-auto px-2">
+                                                <button type="button" class="btn btn-sm" @onclick="@( e => { Delete(entry); })"><i class="fas fa-trash-alt"></i></button>
+                                            </div>
+                                        </div>
+                                        }
+                                    </div>
+                                </div>
+                            }
+                        }
+
+                    </div>
+                    <div class="col px-2">
+
+                    </div>
+                    <div class="col px-2">
+                        <label class="form-label">Title</label>
+                        <input type="text"
+                               @bind-value="Repository.Title"
+                               class="@InputCSS"
+                               @bind-value:event="oninput" />
+
+                        <label class="form-label">Text</label>
+                        <input type="text"
+                               @bind-value="Repository.Text"
+                               class="@InputCSS"
+                               @bind-value:event="oninput" />
+
+                        <div class="mt-2 mb-2 border-bottom" />
+
+                        @if (Entry != null)
+                        {
+                            <label class="form-label">Position</label>
+                            <input type="number" step="1"
+                                   @bind-value="Entry.Position"
+                                   class="@InputCSS"
+                                   @bind-value:event="oninput" />
+
+                            <label class="form-label">Title</label>
+                            <input type="text"
+                                   @bind-value="Entry.Title"
+                                   class="@InputCSS"
+                                   @bind-value:event="oninput" />
+
+                            <label class="form-label">Link</label>
+                            <input type="text"
+                                   @bind-value="Entry.Link"
+                                   class="@InputCSS"
+                                   @bind-value:event="oninput" />
+
+                            <label class="form-label">Icon</label>
+                            <input type="text"
+                                   @bind-value="Entry.Icon"
+                                   class="@InputCSS"
+                                   @bind-value:event="oninput" />
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer bg-light">
+                <div class="row">
+                    <div class="col-auto"></div>
+                    <div class="col"></div>
+                    <div class="col-auto">
+                        <button type="button" class="btn btn-primary btn-sm" @onclick="Save">@SaveButtonText</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+@code {
+
+    public NavigationEntry Entry { get; set; }
+
+
+    private string Matchcode { get; set; } = string.Empty;
+
+    [Parameter]
+    public string SearchPlaceholder { get; set; } = "Search...";
+
+    [Parameter]
+    public string ContainerCSS { get; set; } = "container-flex";
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public string FormTitle { get; set; } = "Navigation Editor";
+
+    [Parameter]
+    public string InputCSS { get; set; } = "form-control";
+
+    [Parameter]
+    public string SaveButtonText { get; set; } = "Save...";
+
+    [Parameter]
+    public INavigationRepository Repository { get; set; }
+
+    private void Delete(NavigationEntry entry)
+    {
+        try
+        {
+            if (entry == null)
+            {
+                JS.InvokeVoidAsync("alert", "Fail, entry is null");
+                return;
+            }
+            if (Repository != null)
+            {
+                Repository.Items.Remove(entry);
+                Repository.Save();
+
+                //JS.InvokeVoidAsync("alert", "Entry removed and repository saved");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("FAIL: " + ex.Message);
+        }
+    }
+
+    private void Add()
+    {
+        try
+        {
+            if (string.IsNullOrEmpty(Matchcode))
+            {
+                JS.InvokeVoidAsync("alert", "Please enter a matchcode");
+                return;
+            }
+            if (Repository != null)
+            {
+                Repository.Items.Add(new NavigationEntry() { Title = Matchcode, Link = "", Icon = "" });
+                Repository.Save();
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("FAIL: " + ex.Message);
+        }
+    }
+
+    private void Save()
+    {
+        try
+        {
+            if (Repository != null)
+            {
+                Repository.Save();
+
+                JS.InvokeVoidAsync("alert", "Navigation has been saved");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("FAIL: " + ex.Message);
+        }
+    }
+
+}
