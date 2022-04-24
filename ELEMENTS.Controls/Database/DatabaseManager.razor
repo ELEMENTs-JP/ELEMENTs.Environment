@@ -1,0 +1,172 @@
+﻿@inject IJSRuntime JS
+@inject ISQLiteService db
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="h3">Database Management</h3>
+    </div>
+    <div class="card-body">
+
+        <div class="row">
+            <div class="col-12">
+                <label class="form-label">Name</label>
+                <input type="text"
+                       @bind-value="Name"
+                       class="@InputCSS"
+                       @bind-value:event="oninput" />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <label class="form-label">Exists the database?</label>
+                <p class="@( (DoesDbExists) ? "text-success" : "text-danger" )">
+                    <strong>@( (DoesDbExists) ? "Database exists" : "does not exist" )</strong>
+                </p>
+            </div>
+        </div>
+
+        @if (!File.Exists(Name + ".db"))
+        {
+            <div class="row">
+                <div class="col-12">
+                    <label class="form-label">Create database</label>
+                    <button type="button" class="btn btn-primary w-100"
+                            @onclick="CreateDatabase">
+                        Create database
+                    </button>
+                </div>
+            </div>
+        }
+
+        @if (File.Exists(Name + ".db"))
+        {
+            <div class="row">
+                <div class="col-12">
+                    <label class="form-label">Delete database</label>
+                    <button type="button" class="btn btn-danger w-100"
+                            @onclick="DeleteDatabase">
+                        Delete existing database
+                    </button>
+                </div>
+            </div>
+        }
+
+    </div>
+    <div class="card-footer bg-light">
+        <div class="row">
+            <div class="col-auto"></div>
+            <div class="col"></div>
+            <div class="col-auto">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@code {
+
+    [Parameter]
+    public string Name { get; set; } = "ELEMENTs";
+
+    [Parameter]
+    public bool DoesDbExists { get; set; } = false;
+
+    [Parameter]
+    public string InputCSS { get; set; } = "form-control";
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+    }
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+
+        CheckDatabaseExists();
+    }
+
+    private void CheckDatabaseExists()
+    {
+        try
+        {
+            if (File.Exists(Name + ".db"))
+            {
+                DoesDbExists = true;
+            }
+            else
+            {
+                DoesDbExists = false;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("FAIL: " + ex.Message);
+        }
+    }
+    private void DeleteDatabase()
+    {
+        try
+        {
+            if (string.IsNullOrEmpty(Name))
+            {
+                JS.InvokeVoidAsync("alert", "Please enter a name");
+                return;
+            }
+
+            // set Master GUID
+            db.MasterGUID = new Guid("F3477293-24DA-4638-9C45-5BD0D3A35350");
+
+            if (File.Exists(Name + ".db"))
+            {
+                File.Delete(Name + ".db");
+            }
+
+            CheckDatabaseExists();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("FAIL: " + ex.Message);
+        }
+    }
+    private void CreateDatabase()
+    {
+        try
+        {
+            if (string.IsNullOrEmpty(Name))
+            {
+                JS.InvokeVoidAsync("alert", "Please enter a name");
+                return;
+            }
+
+            // set Master GUID
+            db.MasterGUID = new Guid("F3477293-24DA-4638-9C45-5BD0D3A35350");
+
+            if (File.Exists(Name + ".db"))
+            {
+                JS.InvokeVoidAsync("alert", "Database already exists");
+                return;
+            }
+
+            IFactoryStatusInfo status = db.CreateDatabase(Name);
+
+            if (status.Status == "OK")
+            {
+                JS.InvokeVoidAsync("alert", "Database created successfully");
+            }
+            else
+            {
+                JS.InvokeVoidAsync("alert", "Database creation failed");
+            }
+
+            CheckDatabaseExists();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("FAIL: " + ex.Message);
+        }
+    }
+
+}

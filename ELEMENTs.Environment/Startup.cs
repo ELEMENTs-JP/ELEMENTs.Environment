@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ELEMENTs.Environment.Data;
 using ELEMENTS;
+using ELEMENTS.Data.SQLite;
 using ELEMENTS.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
@@ -31,8 +32,11 @@ namespace ELEMENTs.Environment
             services.AddRazorPages();
             services.AddServerSideBlazor();
 
-            services.AddSingleton<IFileDragDropService, FileDragDropUploadService>();
+            // Database Service 
+            services.AddSingleton<ISQLiteService, SQLiteService>();
 
+            // File Service 
+            services.AddSingleton<IFileDragDropService, FileDragDropUploadService>();
             services.AddSingleton<IFileUploadService, FileUploadService>();
 
         }
