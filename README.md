@@ -58,6 +58,8 @@ PageLayouts are used to design the user interface of a single page. Please do no
 Components are not yet finished user interfaces. In terms of size, they are somewhere between a small or larger control and a small user interface. In the vast majority of cases, a component can be used to implement a small use case. Here are a few examples:
 - Security: Login, Register, Log off, Change Password, Permissions list etc.
 - Security: Request Access, Request new Password, Set new password, etc.
+- Search: Search Box, Search Filter, Search Scope, Search Result List, etc.
+- Help: Help Search Box, Help Scope, Help Result Items, Help View, etc.
 
 ### Repositories
 We use repositories to establish a connection between the data framework and the user interfaces / controls. We use the "Dependency Injection" pattern to implement customizable and reusable access code and business logic using interfaces. You can adapt this code to your needs at any time.
