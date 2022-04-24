@@ -6,14 +6,16 @@
     @if (Items.Count() >= 1)
     {
         <div class="row">
-            <div class="col">
 
-                @if (!string.IsNullOrEmpty(Title))
-                {
+            @if (!string.IsNullOrEmpty(Title))
+            {
+                <div class="col-auto">
                     <strong class="d-block my-1">@Title</strong>
-                }
+                </div>
+            }
 
-                <select class="@ControlCSS"  
+            <div class="col-auto">
+                <select class="@ControlCSS"
                         @onchange="@(e => { Value = e.Value.ToString(); onValueChanged(); onSelectionChanged(); })">
 
                     @foreach (string item in Items)

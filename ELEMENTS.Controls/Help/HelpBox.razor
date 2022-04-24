@@ -1,0 +1,54 @@
+﻿
+<div class="input-group">
+    <input type="text"
+           class="@ControlCSS"
+           placeholder="@Placeholder"
+           aria-label="Search box for help" aria-describedby="helpIcon"
+           @oninput="@( e => {  onValueInput(e.Value.ToSecureString()); })"
+           @onchange="@( e => {  onValueChanged(e.Value.ToSecureString()); })">
+    <span class="input-group-text" id="helpIcon"><i class="fas fa-question"></i></span>
+</div>
+
+
+
+@code {
+
+
+
+    /// <summary>
+    /// Defines or sets a CSS class that controls the CSS style of the control. The default value is: form-control
+    /// </summary>
+    [Parameter]
+    public string ControlCSS { get; set; } = "form-control";
+
+    /// <summary>
+    /// Defines or sets the Placeholder text of the Placeholder property of the control.
+    /// The property is initialized with "string.Empty".
+    /// </summary>
+    [Parameter]
+    public string Placeholder { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Reacts when the Value property of the control is changed by keyboard input.
+    /// Returns the value of the control as a string. If this is not NULL.
+    /// If the Value property is NULL, the event is not thrown.
+    /// Info: If intensive operations or accesses to the hardware are implemented with this event,
+    /// delays may occur due to the roundtrip in the user interface.
+    /// </summary>
+    [Parameter]
+    public EventCallback<string> ValueChanged { get; set; }
+    private async void onValueChanged(string value)
+    {
+        // Raise Event
+        await ValueChanged.InvokeAsync(value);
+    }
+
+    [Parameter]
+    public EventCallback<string> ValueInput { get; set; }
+    private async void onValueInput(string value)
+    {
+        // Raise Event
+        await ValueInput.InvokeAsync(value);
+    }
+
+}

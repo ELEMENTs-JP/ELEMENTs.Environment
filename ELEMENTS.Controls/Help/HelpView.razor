@@ -1,0 +1,58 @@
+﻿
+<div class="@ContainerCSS">
+
+    <div class="@ControlCSS">
+        <div class="@BodyCSS">
+
+            @if (!string.IsNullOrEmpty(Title))
+            {
+                <h5 class="card-title">@Title</h5>
+            }
+
+            @if (!string.IsNullOrEmpty(SubTitle))
+            {
+                <h6 class="card-subtitle mb-2 text-muted">@SubTitle</h6>
+            }
+
+            @if (!string.IsNullOrEmpty(Text))
+            {
+                <div class="card-text">
+                    @((MarkupString)Text)
+                </div>
+            }
+
+            @if (ChildContent != null)
+            {
+                @ChildContent
+            }
+        </div>
+    </div>
+
+</div>
+
+
+
+@code {
+
+    [Parameter]
+    public string ContainerCSS { get; set; } = "container-flex";
+
+    [Parameter]
+    public string ControlCSS { get; set; } = "card";
+
+    [Parameter]
+    public string BodyCSS { get; set; } = "card-body";
+
+    [Parameter]
+    public string Title { get; set; } = string.Empty;
+
+    [Parameter]
+    public string SubTitle { get; set; } = string.Empty;
+
+    [Parameter]
+    public string Text { get; set; } = string.Empty;
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+}

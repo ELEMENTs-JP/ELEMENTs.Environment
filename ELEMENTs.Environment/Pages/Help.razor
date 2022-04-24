@@ -1,0 +1,107 @@
+﻿@page "/help"
+
+
+@using ELEMENTS.Infrastructure
+@using System.Linq
+
+
+<h3 class="h3">Help Elements</h3>
+
+<div class="card mb-3">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-lg px-2 pt-1 pb-2">
+                <ELEMENTS.Controls.Help.HelpScope Title="Help Scope"
+                                                  SelectionChanged="@( e => { FilterValue = e.ToSecureString(); })"
+                                                  Items="@( new List<string>() { "General", "Application", "Administration", "Other..." })" />
+            </div>
+            <div class="col-lg px-2 pt-1">
+                <ELEMENTS.Controls.Help.HelpBox ValueInput="@( e => { Matchcode = e.ToSecureString(); SearchItems(); })" />
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+
+        <div class="row">
+            <div class="col-lg px-2 pb-3">
+                <ELEMENTS.Controls.Help.HelpResult Items="@Items"
+                                                   OnItemSelected="@( e => { DTO = e; })" ShowContent="false" />
+            </div>
+
+            @if (DTO != null)
+            {
+                <div class="col-lg-9 px-2">
+                    <ELEMENTS.Controls.Help.HelpView Title="@DTO.Title.ToSecureString()"
+                                                     SubTitle="Harry Hanson at Jan. 12, 2022"
+                                                     Text="@DTO.Content.ToSecureString()" />
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+@code
+{
+    [Parameter]
+    public IList<IDTO> Items { get; set; } = new List<IDTO>();
+
+    public IList<IDTO> Store { get; set; } = new List<IDTO>();
+    public IList<string> Filter { get; set; } = new List<string>();
+
+    string Matchcode { get; set; } = string.Empty;
+
+    string FilterValue { get; set; } = string.Empty;
+
+    public IDTO DTO { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+
+        Load();
+    }
+
+    private void Load()
+    {
+        Store.Clear();
+
+        string li = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.";
+
+        Store.Add(new DTO { Title = "Administration", Content = li, NavigateUrl = "https://www.google.de" });
+        Store.Add(new DTO { Title = "Application", Content = li, NavigateUrl = "https://www.google.de" });
+        Store.Add(new DTO { Title = "Help", Content = li, NavigateUrl = "https://www.google.de" });
+        Store.Add(new DTO { Title = "Search", Content = li, NavigateUrl = "https://www.google.de" });
+        Store.Add(new DTO { Title = "Business", Content = li, NavigateUrl = "https://www.google.de" });
+        Store.Add(new DTO { Title = "Content", Content = li, NavigateUrl = "https://www.google.de" });
+        Store.Add(new DTO { Title = "Management", Content = li, NavigateUrl = "https://www.google.de" });
+
+        Filter.Clear();
+        Filter = Store.DistinctBy(se => se.Title).Select(se => se.Title).ToList();
+    }
+    private void SearchItems()
+    {
+        Items.Clear();
+
+        foreach (IDTO dto in Store.Where(se => se.Title.ToLower().Contains(Matchcode.ToLower())))
+        {
+            Items.Add(dto);
+        }
+    }
+
+    private void FilterValues(KeyValuePair<string, bool> filter)
+    {
+        FilterValue = filter.Key.ToSecureString() + " - " + filter.Value.ToSecureString();
+
+        if (filter.Value == true)
+        {
+            Matchcode = filter.Key.ToSecureString();
+        }
+        else
+        {
+            Matchcode = string.Empty;
+        }
+
+        SearchItems();
+    }
+}
