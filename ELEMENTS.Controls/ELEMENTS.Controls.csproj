@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ELEMENTS.GO.SQLite\ELEMENTS.GO.SQLite.csproj" />
     <ProjectReference Include="..\ELEMENTS.Infrastructure\ELEMENTS.Infrastructure.csproj" />
   </ItemGroup>
 

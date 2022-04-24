@@ -7,6 +7,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ELEMENTS.Controls\ELEMENTS.Controls.csproj" />
     <ProjectReference Include="..\ELEMENTS.GO.SQLite\ELEMENTS.GO.SQLite.csproj" />
+    <ProjectReference Include="..\ELEMENTS.Infrastructure\ELEMENTS.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

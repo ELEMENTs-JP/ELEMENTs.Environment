@@ -1,0 +1,146 @@
+﻿@inject IJSRuntime JS
+@inject ISQLiteService db
+
+@if (Repository != null)
+{
+    <button type="button" class="btn btn-primary"
+            data-bs-toggle="modal"
+            data-bs-target="@( "#modal_" + modalGUID.ToString() )">
+        @Title
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="@( "modal_" + modalGUID.ToString() )" tabindex="-1"
+         aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">@Title</h5>
+                    <button type="button" class="btn-close"
+                            data-bs-dismiss="modal" aria-label="Close"
+                            @onclick="closeclick"></button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="row">
+                        <div class="col-12">
+                            <label class="form-label">@FieldHeader</label>
+                            <input type="text"
+                                   @bind-value="Repository.Value"
+                                   class="@InputCSS"
+                                   @bind-value:event="oninput" />
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @onclick="cancelclick">@CancelTitle</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" @onclick="okclick">@OKTitle</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+
+    private Guid modalGUID = Guid.NewGuid();
+
+    [Parameter]
+    public string Title { get; set; } = string.Empty;
+
+    [Parameter]
+    public IAddItemRepository Repository { get; set; }
+
+    [Parameter]
+    public EventCallback<string> OnOKClicked { get; set; }
+
+    private void okclick()
+    {
+        try
+        {
+            // Repository 
+            if (Repository == null)
+            {
+                JS.InvokeVoidAsync("alert", "Repository is null");
+                return;
+            }
+
+            // Master GUID 
+            if (Repository.MasterGUID == Guid.Empty)
+            {
+                Repository.MasterGUID = db.MasterGUID;
+            }
+
+            // Check Value 
+            if (string.IsNullOrEmpty(Repository.Value))
+            {
+                JS.InvokeVoidAsync("alert", "No Value added");
+                return;
+            }
+
+            IDTO dto = Repository.Create();
+            if (dto != null)
+            {
+                OnOKClicked.InvokeAsync("OK");
+                JS.InvokeVoidAsync("alert", "Entry added");
+            }
+            if (dto == null)
+            {
+                OnOKClicked.InvokeAsync("FAIL");
+                JS.InvokeVoidAsync("alert", "Entry creation failed");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("FAIL: " + ex.Message);
+        }
+    }
+
+    [Parameter]
+    public EventCallback<string> OnCancelClicked { get; set; }
+
+    private void cancelclick()
+    {
+        try
+        {
+            OnCancelClicked.InvokeAsync("Cancel");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("FAIL: " + ex.Message);
+        }
+    }
+
+    [Parameter]
+    public EventCallback<string> OnCloseClicked { get; set; }
+
+    private void closeclick()
+    {
+        try
+        {
+            OnCloseClicked.InvokeAsync("Close");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("FAIL: " + ex.Message);
+        }
+    }
+
+    [Parameter]
+    public string OKTitle { get; set; } = "OK";
+
+    [Parameter]
+    public string CancelTitle { get; set; } = "Cancel";
+
+    [Parameter]
+    public string FieldHeader { get; set; } = "Title";
+
+    [Parameter]
+    public string InputCSS { get; set; } = "form-control";
+
+    [Parameter]
+    public string AppType { get; set; } = "AppType";
+    [Parameter]
+    public string ItemType { get; set; } = "ItemType";
+}
