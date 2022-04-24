@@ -18,39 +18,49 @@
         </div>
 
         <div class="row">
-            <div class="col-12">
+            <div class="col-6">
                 <label class="form-label">Exists the database?</label>
                 <p class="@( (DoesDbExists) ? "text-success" : "text-danger" )">
                     <strong>@( (DoesDbExists) ? "Database exists" : "does not exist" )</strong>
+
+                    @if (DoesDbExists == true)
+                    {
+                        <strong><i class="ms-2 fas fa-check text-success"></i></strong>
+                    }
+                    else
+                    {
+                        <strong><i class="ms-2 fas fa-exclamation-circle text-danger"></i></strong>
+                    }
+
                 </p>
             </div>
-        </div>
 
-        @if (!File.Exists(Name + ".db"))
-        {
-            <div class="row">
-                <div class="col-12">
+            @if (!File.Exists(Name + ".db"))
+            {
+
+                <div class="col-6">
                     <label class="form-label">Create database</label>
                     <button type="button" class="btn btn-primary w-100"
                             @onclick="CreateDatabase">
                         Create database
                     </button>
                 </div>
-            </div>
-        }
 
-        @if (File.Exists(Name + ".db"))
-        {
-            <div class="row">
-                <div class="col-12">
+            }
+
+            @if (File.Exists(Name + ".db"))
+            {
+
+                <div class="col-6">
                     <label class="form-label">Delete database</label>
                     <button type="button" class="btn btn-danger w-100"
                             @onclick="DeleteDatabase">
                         Delete existing database
                     </button>
                 </div>
-            </div>
-        }
+
+            }
+        </div>
 
     </div>
     <div class="card-footer bg-light">
@@ -63,8 +73,6 @@
         </div>
     </div>
 </div>
-
-
 
 @code {
 
