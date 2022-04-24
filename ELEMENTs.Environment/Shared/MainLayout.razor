@@ -11,25 +11,7 @@
 
             </div>
             <div class="col-8">
-                <ELEMENTS.Controls.Navigation.WebsiteNavigation Entries="@( new List<NavigationEntry>
-                        {
-                            new NavigationEntry { Title = "HOME", Link = "/" },
-                            new NavigationEntry { Title = "Bootstrap", Link = "/bootstrap" },
-                            new NavigationEntry { Title = "Tabler.IO", Link = "/tabler" },
-                            new NavigationEntry { Title = "Interfaces", Link = "",
-                                Items = new List<NavigationEntry>()
-                                {
-                                    new NavigationEntry() { Title = "Navigation", Link = "/navigation" },
-                                    new NavigationEntry() { Title = "PageLayouts", Link = "/layouts" },
-                                    new NavigationEntry() { Title = "Views and Container", Link = "/view" },
-                                    new NavigationEntry() { Title = "Analytics", Link = "/analytics" },
-                                    new NavigationEntry() { Title = "Lists", Link = "/lists" },
-                                    new NavigationEntry() { Title = "Search", Link = "/search" },
-                                    new NavigationEntry() { Title = "Help", Link = "/help" },
-                                    new NavigationEntry() { Title = "Security", Link = "/security" },
-                                    new NavigationEntry() { Title = "Terms", Link = "/terms" },
-                                } },
-                        } )" />
+                <ELEMENTS.Controls.Navigation.WebsiteNavigation Repository="@Repository" />
             </div>
             <div class="col-2">
 

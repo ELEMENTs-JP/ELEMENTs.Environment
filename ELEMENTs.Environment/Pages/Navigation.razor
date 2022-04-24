@@ -19,26 +19,7 @@
                                                      )" />
 
         <ELEMENTS.Controls.Text.Label Value="Website Navigation" />
-        <ELEMENTS.Controls.Navigation.WebsiteNavigation Entries="@( new List<NavigationEntry>
-                        {
-                            new NavigationEntry { Title = "HOME", Link = "/" },
-                            new NavigationEntry { Title = "App", Link = "/App" },
-                            new NavigationEntry { Title = "Website", Link = "/Website",
-                                Items = new List<NavigationEntry>()
-                                {
-                                    new NavigationEntry() { Title = "HOME", Link = "/" },
-                                    new NavigationEntry() { Title = "Website", Link = "/Website" },
-                                    new NavigationEntry() { Title = "Empty Page", Link = "/EmptyPage" },
-                                    new NavigationEntry() { Title = "Website Page", Link = "/WebsitePage" },
-                                    new NavigationEntry() { Title = "App Page", Link = "/AppPageLayout" },
-                                    new NavigationEntry() { Title = "List", Link = "/ListPage" },
-                                    new NavigationEntry() { Title = "View", Link = "/ViewPage" },
-                                    new NavigationEntry() { Title = "Print Preview", Link = "/PrintPreviewPage" },
-                                    new NavigationEntry() { Title = "Dashboard", Link = "/DashboardPage" },
-                                    new NavigationEntry() { Title = "App", Link = "/App" },
-                                    new NavigationEntry() { Title = "License Manager", Link = "/LicenseManager" },
-                                } },
-                        } )" />
+        <ELEMENTS.Controls.Navigation.WebsiteNavigation Repository="@Repository" />
 
 
         <ELEMENTS.Controls.Text.Label Value="App Navigation" />

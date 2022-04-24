@@ -53,7 +53,48 @@
                         }
 
                     </div>
+
+                    
                     <div class="col px-2">
+
+                        <div class="row mb-2">
+                            <div class="col">
+                                <input type="text"
+                                       @bind-value="Matchcode"
+                                       class="@InputCSS"
+                                       placeholder="@SearchPlaceholder"
+                                       @bind-value:event="oninput" />
+                            </div>
+                            <div class="col-auto px-2">
+                                <button type="button" class="btn btn-primary" @onclick="AddChild">+</button>
+                            </div>
+                        </div>
+
+                        @if (Entry != null)
+                        {
+                            @if (Entry.Items != null)
+                            {
+                                @if (Entry.Items.Count >= 1)
+                                {
+                                    @foreach (NavigationEntry entry in Entry.Items)
+                                    {
+                                        <div class="row border-bottom p-2 bg-light"
+                                             style="cursor:pointer;" title="@entry.ID.ToSecureString()"
+                                             @onclick="@( e => { ChildEntry = entry; }  )">
+                                            <div class="col">
+                                                <strong class="text-start">@entry.Title</strong>
+                                            </div>
+                                            <div class="col-auto px-2">
+                                                <small class="ms-3 text-end">@entry.Link</small>
+                                            </div>
+                                            <div class="col-auto px-2">
+                                                <button type="button" class="btn btn-sm" @onclick="@( e => { DeleteByEntry(entry); })"><i class="fas fa-trash-alt"></i></button>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            }
+                        }
 
                     </div>
                     <div class="col px-2">
@@ -97,6 +138,35 @@
                                    class="@InputCSS"
                                    @bind-value:event="oninput" />
                         }
+
+                        <div class="mt-2 mb-2 border-bottom" />
+
+                        @if (ChildEntry != null)
+                        {
+                            <label class="form-label">Position</label>
+                            <input type="number" step="1"
+                                   @bind-value="ChildEntry.Position"
+                                   class="@InputCSS"
+                                   @bind-value:event="oninput" />
+
+                            <label class="form-label">Title</label>
+                            <input type="text"
+                                   @bind-value="ChildEntry.Title"
+                                   class="@InputCSS"
+                                   @bind-value:event="oninput" />
+
+                            <label class="form-label">Link</label>
+                            <input type="text"
+                                   @bind-value="ChildEntry.Link"
+                                   class="@InputCSS"
+                                   @bind-value:event="oninput" />
+
+                            <label class="form-label">Icon</label>
+                            <input type="text"
+                                   @bind-value="ChildEntry.Icon"
+                                   class="@InputCSS"
+                                   @bind-value:event="oninput" />
+                        }
                     </div>
                 </div>
             </div>
@@ -117,7 +187,7 @@
 @code {
 
     public NavigationEntry Entry { get; set; }
-
+    public NavigationEntry ChildEntry { get; set; }
 
     private string Matchcode { get; set; } = string.Empty;
 
@@ -142,6 +212,28 @@
     [Parameter]
     public INavigationRepository Repository { get; set; }
 
+    private void DeleteByEntry(NavigationEntry entry)
+    {
+        try
+        {
+            if (entry == null)
+            {
+                JS.InvokeVoidAsync("alert", "Fail, entry is null");
+                return;
+            }
+            if (Repository != null && Entry != null)
+            {
+                Entry.Items.Remove(entry);
+                Repository.Save();
+
+                //JS.InvokeVoidAsync("alert", "Entry removed and repository saved");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("FAIL: " + ex.Message);
+        }
+    }
     private void Delete(NavigationEntry entry)
     {
         try
@@ -177,6 +269,26 @@
             if (Repository != null)
             {
                 Repository.Items.Add(new NavigationEntry() { Title = Matchcode, Link = "", Icon = "" });
+                Repository.Save();
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("FAIL: " + ex.Message);
+        }
+    }
+    private void AddChild()
+    {
+        try
+        {
+            if (string.IsNullOrEmpty(Matchcode))
+            {
+                JS.InvokeVoidAsync("alert", "Please enter a matchcode");
+                return;
+            }
+            if (Repository != null && Entry != null)
+            {
+                Entry.Items.Add(new NavigationEntry() { Title = Matchcode, Link = "", Icon = "" });
                 Repository.Save();
             }
         }

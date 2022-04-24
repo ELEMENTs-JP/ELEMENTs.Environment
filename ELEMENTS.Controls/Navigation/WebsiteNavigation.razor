@@ -4,44 +4,48 @@
 
 <nav class="@ControlCSS">
 
-    @if (Entries != null)
+    @if (Repository != null)
     {
-        @if (Entries.Count >= 1)
+        @if (Repository.Items != null)
         {
-            <ul class="navbar-nav me-auto">
 
-                @foreach (NavigationEntry entry in Entries)
-                {
-                    <li class="nav-item">
+            @if (Repository.Items.Count >= 1)
+            {
+                <ul class="navbar-nav me-auto">
 
-                        @if (entry.Items == null || entry.Items.Count == 0)
-                        {
-                            <a class="@NavigationItemCSS" href="@entry.Link">@entry.Title</a>
-                        }
-                        else
-                        {
-                            <div class="nav-item dropdown">
-                                <a href="#" class="nav-link d-flex lh-1 text-reset px-2" data-bs-toggle="dropdown" aria-label="menu">
+                    @foreach (NavigationEntry entry in Repository.Items)
+                    {
+                        <li class="nav-item">
 
-                                    <div class="d-none d-xl-block">
-                                        <div>@entry.Title</div>
+                            @if (entry.Items == null || entry.Items.Count == 0)
+                            {
+                                <a class="@NavigationItemCSS" href="@entry.Link">@entry.Title</a>
+                            }
+                            else
+                            {
+                                <div class="nav-item dropdown">
+                                    <a href="#" class="nav-link d-flex lh-1 text-reset px-2" data-bs-toggle="dropdown" aria-label="menu">
+
+                                        <div class="d-none d-xl-block">
+                                            <div>@entry.Title</div>
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-start dropdown-menu-arrow">
+                                        <div class="px-2 pt-2 fw-bold">@entry.Title</div>
+                                        <div class="dropdown-divider"></div>
+
+                                        @foreach (NavigationEntry child in entry.Items)
+                                        {
+                                            <a href="@child.Link" class="dropdown-item">@child.Title</a>
+                                        }
+
                                     </div>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-start dropdown-menu-arrow">
-                                    <div class="px-2 pt-2 fw-bold">@entry.Title</div>
-                                    <div class="dropdown-divider"></div>
-
-                                    @foreach (NavigationEntry child in entry.Items)
-                                    {
-                                        <a href="@child.Link" class="dropdown-item">@child.Title</a>
-                                    }
-
                                 </div>
-                            </div>
-                        }
-                    </li>
-                }
-            </ul>
+                            }
+                        </li>
+                    }
+                </ul>
+            }
         }
     }
 
@@ -52,9 +56,8 @@
 @code {
 
 
-
     [Parameter]
-    public List<NavigationEntry> Entries { get; set; } = new List<NavigationEntry>();
+    public INavigationRepository Repository { get; set; }
 
     [Parameter]
     public string ControlCSS { get; set; } = "navbar navbar-expand-lg "; // list-group-flush
