@@ -1,0 +1,43 @@
+﻿
+
+@if (Repository != null)
+{
+    <div class="card">
+        <div class="card-body">
+
+            @if (!string.IsNullOrEmpty(Repository.Title))
+            {
+                <h3 class="card-title">@Repository.Title</h3>
+            }
+
+            @if (!string.IsNullOrEmpty(Repository.LastChange))
+            {
+                <h6 class="card-subtitle mb-2 text-muted">@Repository.LastChange</h6>
+            }
+
+            @if (!string.IsNullOrEmpty(Repository.Text))
+            {
+                <div class="card-text">@((MarkupString)Repository.Text)</div>
+            }
+
+            @if (ChildContent != null)
+            {
+                @ChildContent
+            }
+        </div>
+    </div>
+}
+
+
+
+
+@code
+{
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public ITermsRepository Repository { get; set; }
+
+}

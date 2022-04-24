@@ -1,0 +1,15 @@
+﻿body
+{
+}
+
+label {
+    font-weight: 600 !important;
+    font-size: small !important;
+    display: block;
+    margin-bottom: 0.15rem !important;
+    margin-top: 0.5rem !important;
+}
+
+.bg-light {
+color: inherit !important;
+}

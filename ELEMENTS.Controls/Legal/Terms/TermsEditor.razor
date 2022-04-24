@@ -1,0 +1,94 @@
+﻿@inject IJSRuntime JS
+
+@if (Repository != null)
+{
+    <div class="@ContainerCSS">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="h3">@FormTitle</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                        <label class="form-label">Title</label>
+                        <input type="text"
+                               @bind-value="Repository.Title"
+                               class="@InputCSS"
+                               @bind-value:event="oninput" />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <label class="form-label">Last Change</label>
+                        <input type="text"
+                               @bind-value="Repository.LastChange"
+                               class="@InputCSS"
+                               @bind-value:event="oninput" />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <label class="form-label">Content</label>
+                        <textarea type="text"
+                                  class="@InputCSS"
+                                  @oninput="@(e => { Repository.Text = e.Value.ToSecureString(); })"
+                                  rows="9">@Repository.Text </textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer bg-light">
+                <div class="row">
+                    <div class="col-auto"></div>
+                    <div class="col"></div>
+                    <div class="col-auto">
+                        <button type="button" class="btn btn-primary btn-sm" @onclick="Save">@SaveButtonText</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+
+@code {
+
+    [Parameter]
+    public string ContainerCSS { get; set; } = "container-flex";
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public string FormTitle { get; set; } = "Terms Editor";
+
+    [Parameter]
+    public string InputCSS { get; set; } = "form-control";
+
+    [Parameter]
+    public string SaveButtonText { get; set; } = "Save...";
+
+    [Parameter]
+    public ITermsRepository Repository { get; set; }
+
+    private void Save()
+    {
+        try
+        {
+            if (Repository != null)
+            {
+                Repository.Save();
+
+                JS.InvokeVoidAsync("alert", "Repository has been saved");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("FAIL: " + ex.Message);
+        }
+    }
+
+
+}

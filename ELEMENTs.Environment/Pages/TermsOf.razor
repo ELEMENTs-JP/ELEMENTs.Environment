@@ -1,0 +1,43 @@
+﻿@page "/terms"
+
+
+@if (Repository != null)
+{ 
+<ELEMENTS.Controls.Legal.Terms.TermsOf  Repository="@Repository"  />
+
+<div class="mt-3" />
+
+<ELEMENTS.Controls.Legal.Terms.TermsEditor Repository="@Repository"  />
+}
+
+
+@code {
+
+    private string title = "Terms of Service";
+    private string lastchange = "Last Update: December 2021";
+    private string content = "The following terms of service (these 'Terms of Service'), govern your access to and use of the website and mobile application, including any content, functionality and services offered on or through www.lorem-ipsum.xyz.com or the mobile application (the 'Site') by xyz. (Address) as applicable. Company name and its subsidiaries are collectively referred hereto as 'we' or 'us' and 'you' or 'user' means you as an user of the Site.";
+
+    [Parameter]
+    public ITermsRepository Repository { get; set; }
+
+    // Events 
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        try
+        {
+            TermsRepository repository = TermsRepository.Load();
+
+            repository.Title = (string.IsNullOrEmpty(repository.Title)) ? title : repository.Title;
+            repository.LastChange = (string.IsNullOrEmpty(repository.LastChange)) ? lastchange : repository.LastChange;
+            repository.Text = (string.IsNullOrEmpty(repository.Text)) ? content : repository.Text;
+
+            Repository = repository;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("FAIL: " + ex.Message);
+        }
+    }
+}
