@@ -114,7 +114,9 @@ The test environment is a standard Microsoft Blazor Server application. It has b
 ![Environment](https://raw.githubusercontent.com/ELEMENTs-JP/the-ELEMENTs-Environment/master/ELEMENTs.Environment/Screenshots/Environment_Example_UI.png)
 
 ## Navigation
-Navigation is often a difficult part within a software application. In some applications it is set manually, in some it results from different structures. In ELEMENTs we introduce a mixed mode. First of all you have 3 different navigation interfaces. A simple and mobile navigation bar on the left side. But you can also use a classic hierarchical website navigation for the header. And finally there is a hierarchical application navigation for more complex tasks in the left navigation area. You can organize all these navigation interfaces using the included "NavigationEditor". But you can also use the INavigationRepository and implement your own navigation provider or just use the NavigationEntry class for your own needs.  
+Navigation is often a difficult part within a software application. In some applications it is set manually, in some it results from different structures. In ELEMENTs we introduce a mixed mode. First of all you have 3 different navigation interfaces. A simple and mobile navigation bar on the left side. But you can also use a classic hierarchical website navigation for the header. And finally there is a hierarchical application navigation for more complex tasks in the left navigation area. You can organize all these navigation interfaces using the included "NavigationEditor". But you can also use the INavigationRepository and implement your own navigation provider or just use the NavigationEntry class for your own needs. 
+
+![Navigation_Editor](https://raw.githubusercontent.com/ELEMENTs-JP/the-ELEMENTs-Environment/master/ELEMENTs.Environment/Screenshots/Navigation_Editor.png)
 
 ## Bootstrap
 To make the controls and user interfaces work visually with Bootstrap, you need to include the Bootstrap CSS libraries in the HTML files. We used the following links in the test environment and created the screenshots based on them.
