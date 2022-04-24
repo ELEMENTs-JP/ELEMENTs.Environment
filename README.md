@@ -60,6 +60,7 @@ Components are not yet finished user interfaces. In terms of size, they are some
 - Security: Request Access, Request new Password, Set new password, etc.
 - Search: Search Box, Search Filter, Search Scope, Search Result List, etc.
 - Help: Help Search Box, Help Scope, Help Result Items, Help View, etc.
+- Website: Teaser (left), Teaser (right), etc.
 
 ### Repositories
 We use repositories to establish a connection between the data framework and the user interfaces / controls. We use the "Dependency Injection" pattern to implement customizable and reusable access code and business logic using interfaces. You can adapt this code to your needs at any time.
