@@ -3,24 +3,50 @@
 <div class="@ContainerClass">
     <div class="@PageClass">
 
-        @if (HeaderContent != null)
+        <div class="bg-light border-bottom p-3">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h2 class="page-title">@Title.ToSecureString()</h2>
+
+                    @if (!string.IsNullOrEmpty(SubTitle))
+                    {
+                        <div class="page-subtitle">
+                            <div class="row">
+                                <div class="col-auto">
+                                    @SubTitle.ToSecureString()
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+                @if (HeaderContent != null)
+                {
+                    <div class="col-auto d-none d-md-flex">
+                        @HeaderContent
+                    </div>
+                }
+            </div>
+        </div>
+
+
+        @*@if (HeaderContent != null)
         {
             <div class="row">
                 <div class="col-12">
                     @HeaderContent
                 </div>
             </div>
-        }
+        }*@
 
         <div class="row">
-            <div class="col">
+            <div class="col p-3">
                 @ChildContent
             </div>
 
         </div>
 
         <div class="row">
-            <div class="col">
+            <div class="col p-3">
                 @RelatedContent
             </div>
         </div>
@@ -43,6 +69,11 @@
 
 @code {
 
+    [Parameter]
+    public string Title { get; set; } = "List Page";
+
+    [Parameter]
+    public string SubTitle { get; set; } = "Content Type";
 
     [Parameter]
     public RenderFragment ChildContent { get; set; }
@@ -60,5 +91,5 @@
     public string ContainerClass { get; set; } = "container-fluid";
 
     [Parameter]
-    public string PageClass { get; set; } = "page bg-white border rounded p-3";
+    public string PageClass { get; set; } = "page bg-white border rounded";
 }
