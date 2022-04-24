@@ -1,7 +1,12 @@
 ﻿@inject NavigationManager nm
 
-<footer class="@ControlCSS">
-    <div class="@ContainerCSS">
+<footer class="@ContainerCSS">
+    <div class="@ControlCSS">
+
+        @if (HeaderContent != null)
+        {
+            @HeaderContent
+        }
 
         @if (ChildContent != null)
         {
@@ -13,33 +18,72 @@
             @if (DTO.Groups != null)
             {
                 <div class="row">
-                    @foreach (IFooterGroup group in DTO.Groups)
-                    {
-                    <div class="@GroupCSS">
-                        <h4 class="@GroupTitleCSS">@group.GroupTitle</h4>
 
-                        @if (group.Links != null)
+                    @if (ShowAsDropDown)
+                    {
+                        @foreach (IFooterGroup group in DTO.Groups)
                         {
-                            @foreach (IFooterLink link in group.Links)
-                            {
-                                @try
-                                {
-                                    <div class="row">
-                                        <div class="col">
-                                            <a class="@LinkCSS" href="@link.LinkUrl" target="_blank">@link.LinkTitle</a>
-                                        </div>
-                                    </div>
-                                }
-                                catch (Exception ex)
-                                {
-                                    Console.WriteLine("Fehler: " + ex.Message);
-                                }
-                            }
+                            <div class="@GroupCSS">
+                                <details open>
+                                    <summary class="border-bottom"><h4 class="@GroupTitleCSS">@group.GroupTitle</h4></summary>
+                                    @if (group.Links != null)
+                                    {
+                                        @foreach (IFooterLink link in group.Links)
+                                        {
+                                            @try
+                                            {
+                                                <div class="row pt-2">
+                                                    <div class="col">
+                                                        <a class="@LinkCSS" href="@link.LinkUrl" target="_blank">@link.LinkTitle</a>
+                                                    </div>
+                                                </div>
+                                            }
+                                            catch (Exception ex)
+                                            {
+                                                Console.WriteLine("Fehler: " + ex.Message);
+                                            }
+                                        }
+                                    }
+                                </details>
+                            </div>
                         }
-                    </div>
                     }
+                    else
+                    {
+                        @foreach (IFooterGroup group in DTO.Groups)
+                        {
+                            <div class="@GroupCSS">
+                                <h4 class="@GroupTitleCSS">@group.GroupTitle</h4>
+
+                                @if (group.Links != null)
+                                {
+                                    @foreach (IFooterLink link in group.Links)
+                                    {
+                                        @try
+                                        {
+                                            <div class="row">
+                                                <div class="col">
+                                                    <a class="@LinkCSS" href="@link.LinkUrl" target="_blank">@link.LinkTitle</a>
+                                                </div>
+                                            </div>
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            Console.WriteLine("Fehler: " + ex.Message);
+                                        }
+                                    }
+                                }
+                            </div>
+                        }
+                    }
+
                 </div>
             }
+        }
+
+        @if (FooterContent != null)
+        {
+            @FooterContent
         }
     </div>
 </footer>
@@ -54,10 +98,10 @@
     public string ControlCSS { get; set; } = "footer mt-auto py-3";
 
     [Parameter]
-    public string ContainerCSS { get; set; } = "container";
+    public string ContainerCSS { get; set; } = "container-flex";
 
     [Parameter]
-    public string GroupCSS { get; set; } = "col mx-auto px-3";
+    public string GroupCSS { get; set; } = "col-lg mx-auto px-3 mb-2";
 
     [Parameter]
     public string GroupTitleCSS { get; set; } = "h3";
@@ -66,7 +110,16 @@
     public string LinkCSS { get; set; } = "";
 
     [Parameter]
+    public RenderFragment HeaderContent { get; set; }
+
+    [Parameter]
     public RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public RenderFragment FooterContent { get; set; }
+
+    [Parameter]
+    public bool ShowAsDropDown { get; set; } = true;
 
     [Parameter]
     public IFooter DTO { get; set; }

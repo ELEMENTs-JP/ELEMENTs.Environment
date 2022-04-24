@@ -1,3 +1,37 @@
 ﻿.bg-light {
     color: inherit !important;
 }
+.footer {
+    background-color: transparent;
+}
+
+
+
+details summary::-webkit-details-marker {
+    display: none;
+}
+
+summary {
+    position: relative;
+    outline: none;
+    display: block;
+}
+
+    summary::marker {
+        color: transparent;
+    }
+
+    summary::after {
+        content: "\25B4";
+        position: absolute;
+        color: inherit !important;
+        font-size: 1.4em;
+        right: 1em;
+        top: -0.15em;
+        transition: all 0.5s;
+    }
+
+details[open] summary::after {
+    color: inherit !important;
+    transform: translate(0,0) rotate(180deg);
+}

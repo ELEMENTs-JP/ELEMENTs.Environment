@@ -11,6 +11,13 @@
         <div class="content px-4">
             @ChildContent
         </div>
+
+        @if (Footer != null)
+        {
+            <div>
+                @Footer
+            </div>
+        }
     </div>
 </div>
 
@@ -21,5 +28,8 @@
 
     [Parameter]
     public RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public RenderFragment Footer { get; set; }
 
 }

@@ -1,0 +1,31 @@
+﻿
+@if (Items != null)
+{
+    @if (Items.Count >= 1)
+    {
+        <div class="container-timeline">
+            <div class="timeline">
+                <ul>
+                    @foreach (TimeLineItem item in Items)
+                    {
+                        <li>
+                            <div class="timeline-content">
+                                <h3 class="date">@item.Date.ToShortDateString()</h3>
+                                <h1>@item.Title.ToSecureString()</h1>
+                                <p>@item.Content.ToSecureString()</p>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    }
+}
+
+@code {
+
+    [Parameter]
+    public List<TimeLineItem> Items { get; set; } = new List<TimeLineItem>();
+
+
+}

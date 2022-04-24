@@ -1,5 +1,5 @@
 ﻿@inherits LayoutComponentBase
-
+@using System.Linq
 
 <ELEMENTS.Controls.Interface.AppLayout>
     <Sidebar>
@@ -8,17 +8,43 @@
     <ChildContent>
         @Body
     </ChildContent>
+    <Footer>
+        <ELEMENTS.Controls.Interface.Footer DTO="@DTO" />
+    </Footer>
 </ELEMENTS.Controls.Interface.AppLayout>
 
 
 @code
 {
-    List<NavigationEntry> Entries { get; set; } = new List<NavigationEntry>();
+
+    private IFooter DTO { get; set; }
+    private List<NavigationEntry> Entries { get; set; } = new List<NavigationEntry>();
 
     protected override void OnInitialized()
     {
         base.OnInitialized();
 
+        DTO = new Footer();
+
+        List<FooterGroup> Groups = new List<FooterGroup>();
+
+        List<string> groups = new List<string>() { "Kategorien", "Support", "Community", "Über Uns", "Rechtliches" };
+
+        foreach (string group in groups)
+        {
+            FooterGroup fg = new FooterGroup() { GroupTitle = group };
+            List<FooterLink> links = new List<FooterLink>();
+            for (int i = 1; i <= 6; i++)
+            {
+                FooterLink fl = new FooterLink() { LinkTitle = "Google", LinkUrl = "https://www.google.com" };
+                links.Add(fl);
+            }
+            fg.Links = links;
+            Groups.Add(fg);
+        }
+        DTO.Groups = Groups;
+
+        // Entries 
         Entries.Add(new NavigationEntry() { Title = "Bootstrap", Link = "bootstrap", Icon = "<i class='fas fa-angle-double-right'></i>" });
         Entries.Add(new NavigationEntry() { Title = "Tabler.IO", Link = "tabler", Icon = "<i class='fas fa-angle-double-right'></i>" });
         Entries.Add(new NavigationEntry() { Title = "Page Layouts", Link = "layouts", Icon = "<i class='fas fa-angle-double-right'></i>" });

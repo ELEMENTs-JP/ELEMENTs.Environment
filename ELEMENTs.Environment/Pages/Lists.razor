@@ -1,6 +1,6 @@
 ﻿@page "/lists"
 
-
+@using ELEMENTS.Controls.Timeline
 
 <div class="row">
     <div class="col">
@@ -50,6 +50,7 @@
         <ELEMENTS.Controls.List.Pagination TotaPageCount="10" />
 
 
+
     </div>
     <div class="col p-3">
 
@@ -70,24 +71,36 @@
 
         <ELEMENTS.Controls.Text.Label Value="Avatar" />
         <ELEMENTS.Controls.Media.AvatarImage ImageUrl="https://www.w3schools.com/howto/photographer.jpg" />
-        
+
         <ELEMENTS.Controls.Text.Label Value="Audio Player" />
-        <ELEMENTS.Controls.Media.AudioPlayer  AudioUrl="https://wiki.selfhtml.org/local/Europahymne.mp3" />
-        
+        <ELEMENTS.Controls.Media.AudioPlayer AudioUrl="https://wiki.selfhtml.org/local/Europahymne.mp3" />
+
         <ELEMENTS.Controls.Text.Label Value="Video Player" />
-    <ELEMENTS.Controls.Media.VideoPlayer  VideoUrl="https://wiki.selfhtml.org/local/small.mp4" />
-    
+        <ELEMENTS.Controls.Media.VideoPlayer VideoUrl="https://wiki.selfhtml.org/local/small.mp4" />
+
     </div>
 </div>
 
-
-
-
-
+<ELEMENTS.Controls.Text.Label Value="Vertical Timeline" />
+<ELEMENTS.Controls.Timeline.VerticalTimeline Items="@TimeLineItems" />
 
 
 @code {
 
+
+    private List<TimeLineItem> TimeLineItems = new()
+    {
+        new TimeLineItem { Date = DateTime.Now, Title = "Lorem ipsum dolor sit amet", Content = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." },
+        new TimeLineItem { Date = DateTime.Now, Title = "Lorem ipsum dolor sit amet", Content = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." },
+        new TimeLineItem { Date = DateTime.Now, Title = "Lorem ipsum dolor sit amet", Content = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." },
+        new TimeLineItem { Date = DateTime.Now, Title = "Lorem ipsum dolor sit amet", Content = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." },
+        new TimeLineItem { Date = DateTime.Now, Title = "Lorem ipsum dolor sit amet", Content = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." },
+        new TimeLineItem { Date = DateTime.Now, Title = "Lorem ipsum dolor sit amet", Content = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." },
+        new TimeLineItem { Date = DateTime.Now, Title = "Lorem ipsum dolor sit amet", Content = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." },
+        new TimeLineItem { Date = DateTime.Now, Title = "Lorem ipsum dolor sit amet", Content = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." },
+        new TimeLineItem { Date = DateTime.Now, Title = "Lorem ipsum dolor sit amet", Content = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." },
+        
+    };
 
     private List<Pet> pets = new()
     {
@@ -105,4 +118,6 @@
         public string Name { get; set; }
         public string Size { get; set; }
     }
+
+
 }

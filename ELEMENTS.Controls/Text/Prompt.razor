@@ -1,0 +1,39 @@
+﻿
+<div class="@ControlCSS" role="alert">
+
+    @if(Symbol != null)
+    {
+        @((MarkupString)Symbol.ToSecureString())
+    }
+
+    <strong class="ms-2 me-2">@Title.ToSecureString()</strong>
+
+    @if(Content != null)
+    {
+    <span class="text-nowrap">
+
+        @((MarkupString)Content.ToSecureString())
+
+    </span>
+    }
+
+
+</div>
+
+
+@code {
+
+    [Parameter]
+    public string Title { get; set; } = string.Empty;
+
+    [Parameter]
+    public string Content { get; set; } = string.Empty;
+
+    [Parameter]
+    public string Symbol { get; set; } = "<span class='oi oi-pencil mr-2' aria-hidden='true'></span>";
+
+    [Parameter]
+    public string ControlCSS { get; set; } = "alert alert-secondary mt-4";
+
+
+}
