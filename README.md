@@ -99,6 +99,10 @@ Lists and list items can be used both manually and with the Data Framework. Basi
 ## ELEMENTs Infrastructure Library
 The ELEMENTs Infrastructure Library is a Razor class library with a set of helper methods, interfaces and enumerations that help to keep the ELEMENTs GO Data Framework functional. The library is required for the operation of the ELEMENTs GO Data Framework.
 
+The Nuget Package for the Infrastructure Library can be found here: [Nuget Infrastructure Library Package](https://www.nuget.org/packages/ELEMENTS.Infrastructure/)
+
+> Nuget Package ```Install-Package ELEMENTS.Infrastructure```
+
 ### Console Test Application
 In order to understand the use of the ELEMENTs GO Data Framework or to replicate its implementation, a console test application has been added to the Solution. In the main method, all the commands that you can execute with the ELEMENTs GO Data Framework for SQLite have been implemented.
 
@@ -167,6 +171,15 @@ This library uses external technologies such as Microsoft ASP.NET Core 5.0, Micr
 - [Microsoft Entity Framework Core for SQLite 5.13](https://docs.microsoft.com/en-us/ef/core/providers/sqlite/?tabs=dotnet-core-cli)
 - [SQLite](https://www.sqlite.org/index.html)
 - [C#](https://docs.microsoft.com/en-us/dotnet/csharp/)
+
+## Imports
+To help you build the _Imports.razor file faster, we have listed the most important import statements in the following code section. Of course, there are a few more in total. But with these import lines you already have a good overview.
+```
+@using ELEMENTs
+@using ELEMENTS
+@using ELEMENTS.Controls
+@using ELEMENTS.Infrastructure
+```
 
 ## Notes and known problems
 - The Waiting Progress Control works only with the Tabler.IO framework.
