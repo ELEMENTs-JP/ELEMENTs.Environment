@@ -65,6 +65,7 @@ Components are not yet finished user interfaces. In terms of size, they are some
 ### Repositories
 We use repositories to establish a connection between the data framework and the user interfaces / controls. We use the "Dependency Injection" pattern to implement customizable and reusable access code and business logic using interfaces. You can adapt this code to your needs at any time.
 - Terms of, etc.
+- Navigation, etc.
 
 ## ELEMENTs GO - the integrated data framework
 The framework additionally contains an integrated data framework with which database applications can be developed in a fast way.
@@ -111,6 +112,9 @@ In order to understand the use of the ELEMENTs GO Data Framework or to replicate
 The test environment is a standard Microsoft Blazor Server application. It has been or will be adapted and extended over time with the controls and userob to show how the controls and user interfaces can be used.
 
 ![Environment](https://raw.githubusercontent.com/ELEMENTs-JP/the-ELEMENTs-Environment/master/ELEMENTs.Environment/Screenshots/Environment_Example_UI.png)
+
+## Navigation
+Navigation is often a difficult part within a software application. In some applications it is set manually, in some it results from different structures. In ELEMENTs we introduce a mixed mode. First of all you have 3 different navigation interfaces. A simple and mobile navigation bar on the left side. But you can also use a classic hierarchical website navigation for the header. And finally there is a hierarchical application navigation for more complex tasks in the left navigation area. You can organize all these navigation interfaces using the included "NavigationEditor". But you can also use the INavigationRepository and implement your own navigation provider or just use the NavigationEntry class for your own needs.  
 
 ## Bootstrap
 To make the controls and user interfaces work visually with Bootstrap, you need to include the Bootstrap CSS libraries in the HTML files. We used the following links in the test environment and created the screenshots based on them.
