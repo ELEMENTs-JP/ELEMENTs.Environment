@@ -64,6 +64,7 @@ Components are not yet finished user interfaces. In terms of size, they are some
 
 ### Repositories
 We use repositories to establish a connection between the data framework and the user interfaces / controls. We use the "Dependency Injection" pattern to implement customizable and reusable access code and business logic using interfaces. You can adapt this code to your needs at any time.
+- Terms of, etc.
 
 ### ELEMENTs GO - the integrated data framework
 The framework additionally contains an integrated data framework with which database applications can be developed in a fast way.
