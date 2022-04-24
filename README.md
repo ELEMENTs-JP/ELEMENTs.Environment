@@ -109,6 +109,8 @@ In order to understand the use of the ELEMENTs GO Data Framework or to replicate
 ## Test environment
 The test environment is a standard Microsoft Blazor Server application. It has been or will be adapted and extended over time with the controls and userob to show how the controls and user interfaces can be used.
 
+![Environment](https://raw.githubusercontent.com/ELEMENTs-JP/the-ELEMENTs-Environment/master/ELEMENTs.Environment/Screenshots/Environment_Example_UI.png)
+
 ## Bootstrap
 To make the controls and user interfaces work visually with Bootstrap, you need to include the Bootstrap CSS libraries in the HTML files. We used the following links in the test environment and created the screenshots based on them.
 [Bootstrap js.delivr Documentation](https://getbootstrap.com/docs/5.1/getting-started/introduction/)
