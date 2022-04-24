@@ -1,0 +1,91 @@
+﻿@using ELEMENTS.Infrastructure
+
+@if (Direction == TeaserDirection.Left)
+{
+    <div class="@BackgroundCSS">
+        <div class="@ContainerCSS">
+            <div class="row pb-3">
+                <div class="@TeaserCSS">
+                    <div class="@TitleCSS">@Title</div>
+
+                    <div class="@SubTextCSS">@SubText</div>
+                    <div class="@TextCSS">@Text</div>
+                </div>
+
+                @if (ChildContent != null)
+                {
+                    <div class="@ChildCSS">
+                        @ChildContent
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+}
+
+@if (Direction == TeaserDirection.Right)
+{
+    <div class="@BackgroundCSS">
+        <div class="@ContainerCSS">
+            <div class="row pb-3">
+
+                @if (ChildContent != null)
+                {
+                    <div class="@ChildCSS">
+                        @ChildContent
+                    </div>
+                }
+
+
+                <div class="@TeaserCSS">
+                    <div class="@TitleCSS">@Title</div>
+
+                    <div class="@SubTextCSS">@SubText</div>
+                    <div class="@TextCSS">@Text</div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+
+
+@code {
+
+    [Parameter]
+    public string BackgroundCSS { get; set; } = "";
+
+    [Parameter]
+    public string ContainerCSS { get; set; } = "container";
+
+    [Parameter]
+    public string TitleCSS { get; set; } = "text-blue display-4 p-3 ps-1 me-5 mb-4";
+
+    [Parameter]
+    public string SubTextCSS { get; set; } = "display-5 fw-bold";
+
+    [Parameter]
+    public string TextCSS { get; set; } = "py-3 pe-5 fs-4";
+
+    [Parameter]
+    public string Title { get; set; } = "Teaser Title";
+
+    [Parameter]
+    public string SubText { get; set; } = "Teaser Subtext";
+
+    [Parameter]
+    public string Text { get; set; } = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.";
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public string TeaserCSS { get; set; } = "col-lg-7 col-sm-12 pt-5";
+
+    [Parameter]
+    public string ChildCSS { get; set; } = "col-lg-5 col-sm-12";
+
+    [Parameter]
+    public TeaserDirection Direction { get; set; } = TeaserDirection.Left;
+
+}

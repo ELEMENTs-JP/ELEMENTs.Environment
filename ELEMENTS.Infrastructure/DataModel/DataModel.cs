@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Hosting;
 
 namespace ELEMENTS.Infrastructure
 {
+    public enum TeaserDirection { Left, Right };
+
     public class NavigationEntry
     {
         public string Link { get; set; } = "/";
