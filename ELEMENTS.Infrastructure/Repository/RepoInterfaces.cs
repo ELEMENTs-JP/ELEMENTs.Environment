@@ -22,4 +22,12 @@ namespace ELEMENTS
         List<IDTO> Load();
         List<IDTO> Search();
     }
+
+    public interface IEditItemRepository
+    {
+        ISQLiteService Service { get; set; }
+        IDTO DTO { get; set; }
+        IDTO Init();
+        Guid ItemGUID { get; set; }
+    }
 }

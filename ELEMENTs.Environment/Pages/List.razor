@@ -1,6 +1,6 @@
 ﻿@page "/list"
 @inject ISQLiteService sql
-@using ELEMENTS.Infrastructure 
+@using ELEMENTS.Infrastructure
 
 <ELEMENTS.Controls.Layouts.ListPageLayout Title="Liste" SubTitle="ItemType">
     <HeaderContent>
@@ -13,9 +13,13 @@
                 <h2>ItemsCollection (Template Engine)</h2>
             </Header>
             <RowTemplate>
-                <div class="row p-2 border-bottom">
-                    <div class="col-auto">@IDTO.ID.ToSecureString()</div>
-                    <div class="col">@IDTO.Title.ToSecureString()</div>
+                <div class="p-2 border-bottom">
+                    <a href="@( "/edit/" + IDTO.ItemType.ToSecureString() + "/" + IDTO.GUID.ToSecureString() )">
+                        <div class="row">
+                            <div class="col-auto">@IDTO.ID.ToSecureString()</div>
+                            <div class="col">@IDTO.Title.ToSecureString()</div>
+                        </div>
+                    </a>
                 </div>
             </RowTemplate>
             <Footer>

@@ -1,19 +1,32 @@
 ﻿@page "/edit"
+@page "/edit/{ItemType}"
+@page "/edit/{ItemType}/{GUID}"
+
 @inject ISQLiteService sql
 @using ELEMENTS.Infrastructure
 
-<ELEMENTS.Controls.Layouts.ViewPageLayout Title="Title" SubTitle="ItemType">
+
+<ELEMENTS.Controls.Layouts.ViewPageLayout Title="@Title" SubTitle="ItemType">
     <HeaderContent>
         <ELEMENTS.Controls.Collection.AddItem Title="Eintrag hinzufügen"
                                               FieldHeader="Bezeichnung" Repository="@AddRepo" />
     </HeaderContent>
-   
+
 </ELEMENTS.Controls.Layouts.ViewPageLayout>
 
 @code {
 
 
+    [Parameter]
+    public string ItemType { get; set; }
+
+    [Parameter]
+    public string GUID { get; set; }
+
     private IAddItemRepository AddRepo = new AddItemRepository();
+    private IEditItemRepository EditRepository = new EditItemRepository();
+
+    private string Title = string.Empty;
 
     protected override void OnInitialized()
     {
@@ -23,6 +36,18 @@
         {
             AddRepo.Service = sql;
         }
+        if (EditRepository != null)
+        {
+            EditRepository.Service = sql;
+            EditRepository.ItemGUID = new Guid(GUID);
+            EditRepository.Init();
 
+            if (EditRepository.DTO != null)
+            { 
+                Title = EditRepository.DTO.Title;
+            }
+        }
     }
+    
+    
 }
