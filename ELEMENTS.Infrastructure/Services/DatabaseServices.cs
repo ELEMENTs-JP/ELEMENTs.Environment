@@ -9,12 +9,9 @@ namespace ELEMENTS.Infrastructure
 
     public interface ISQLiteService
     {
-        Guid MasterGUID { get; set; }
         IFactoryStatusInfo CreateDatabase(string name);
         IFactoryStatusInfo MigrateDatabase(string name);
-
         string GetMigrationVersion();
+        IFactory Factory { get; set; }
     }
-
-   
 }

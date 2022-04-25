@@ -1,0 +1,28 @@
+﻿@page "/edit"
+@inject ISQLiteService sql
+@using ELEMENTS.Infrastructure
+
+<ELEMENTS.Controls.Layouts.ViewPageLayout Title="Title" SubTitle="ItemType">
+    <HeaderContent>
+        <ELEMENTS.Controls.Collection.AddItem Title="Eintrag hinzufügen"
+                                              FieldHeader="Bezeichnung" Repository="@AddRepo" />
+    </HeaderContent>
+   
+</ELEMENTS.Controls.Layouts.ViewPageLayout>
+
+@code {
+
+
+    private IAddItemRepository AddRepo = new AddItemRepository();
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        if (AddRepo != null)
+        {
+            AddRepo.Service = sql;
+        }
+
+    }
+}

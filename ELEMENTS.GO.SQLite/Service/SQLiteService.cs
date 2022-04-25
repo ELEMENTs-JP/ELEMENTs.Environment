@@ -10,7 +10,22 @@ namespace ELEMENTS.Data.SQLite
 {
     public class SQLiteService : ISQLiteService
     {
-        public Guid MasterGUID { get; set; } = Guid.Empty;
+        public SQLiteService()
+        {
+            if (Factory == null)
+            { 
+                Factory = new SQLiteFactory();
+            }
+
+            // Master GUID 
+            Factory.MasterGUID = new Guid("76D9F592-E0C3-4819-B564-E2A7A722CAA0");
+
+            // DB File 
+            SQLiteContext.DbFileName = "ELEMENTs.db";
+            Factory.SetDatabasePath();
+
+            // 
+        }
         public IFactoryStatusInfo CreateDatabase(string name)
         {
             try
@@ -53,7 +68,6 @@ namespace ELEMENTS.Data.SQLite
                 return null;
             }
         }
-
         public string GetMigrationVersion()
         {
             try
@@ -70,5 +84,6 @@ namespace ELEMENTS.Data.SQLite
                 return string.Empty;
             }
         }
+        public IFactory Factory { get; set; } = new SQLiteFactory();
     }
 }

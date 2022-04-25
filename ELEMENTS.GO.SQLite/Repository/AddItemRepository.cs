@@ -10,19 +10,10 @@ using ELEMENTS.Infrastructure;
 
 namespace ELEMENTS
 {
-    public interface IAddItemRepository
-    {
-        string AppType { get; set; }
-        string ItemType { get; set; }
-        Guid MasterGUID { get; set; }
-        string Value { get; set; }
-        IDTO Create();
-    }
+   
     public class AddItemRepository : IAddItemRepository
     {
-        public string AppType { get; set; } = "Default";
-        public string ItemType { get; set; } = "Default";
-        public Guid MasterGUID { get; set; }
+        public ISQLiteService Service { get; set; }
         public string Value { get; set; }
         public IDTO Create()
         {
@@ -32,15 +23,14 @@ namespace ELEMENTS
                 {
                     return null;
                 }
-
-                IFactory factory = new SQLiteFactory();
-
-                SQLiteContext.DbFileName = "ELEMENTs.db";
-                factory.SetDatabasePath();
-
+               
+                // Prepare 
                 Guid itemGUID = Guid.NewGuid();
-                IInputDTO input = InputDTO.CreateTemplate(itemGUID, Value, MasterGUID, AppType, ItemType);
-                IDTO dto = factory.Create(input);
+                IInputDTO input = InputDTO.CreateTemplate(
+                    itemGUID, Value, Service.Factory.MasterGUID, "ELEMENTs", "Product");
+                
+                // Create 
+                IDTO dto = Service.Factory.Create(input);
                 if (dto == null)
                 {
                     return null;

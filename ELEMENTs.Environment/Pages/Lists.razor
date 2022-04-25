@@ -12,11 +12,7 @@
 <div class="row">
     <div class="col p-3">
 
-        <ELEMENTS.Controls.Text.Label Value="Add Item" />
-        <ELEMENTS.Controls.Collection.AddItem Repository="@Repository"
-                Title="Eintrag hinzufügen" 
-                FieldHeader="Bezeichnung" 
-                AppType="ELEMENTS" ItemType="Product" />
+ 
 
         <ELEMENTS.Controls.Text.Label Value="Items Collection" />
         <ELEMENTS.Controls.Collection.ItemsCollection Items="pets" Context="pet">
@@ -87,7 +83,7 @@
 
 @code {
 
-    private IAddItemRepository Repository = new AddItemRepository();
+
 
     private List<TimeLineItem> TimeLineItems = new()
     {

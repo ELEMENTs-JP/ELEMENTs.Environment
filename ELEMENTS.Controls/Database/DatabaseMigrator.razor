@@ -111,9 +111,6 @@
                 return;
             }
 
-            // set Master GUID
-            db.MasterGUID = new Guid("F3477293-24DA-4638-9C45-5BD0D3A35350");
-
             if (File.Exists(Name + ".db"))
             {
                 IFactoryStatusInfo status = db.MigrateDatabase(Name);

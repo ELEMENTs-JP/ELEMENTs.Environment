@@ -14,6 +14,7 @@ namespace ELEMENTS.Infrastructure
         IFactoryStatusInfo MigrateDatabase();
         string GetDatabaseVersion();
         void SetDatabasePath();
+        Guid MasterGUID { get; set; } 
 
         // Factory 
         IDTO Create(IInputDTO input);

@@ -66,12 +66,6 @@
                 return;
             }
 
-            // Master GUID 
-            if (Repository.MasterGUID == Guid.Empty)
-            {
-                Repository.MasterGUID = db.MasterGUID;
-            }
-
             // Check Value 
             if (string.IsNullOrEmpty(Repository.Value))
             {
@@ -83,7 +77,6 @@
             if (dto != null)
             {
                 OnOKClicked.InvokeAsync("OK");
-                JS.InvokeVoidAsync("alert", "Entry added");
             }
             if (dto == null)
             {
@@ -139,8 +132,4 @@
     [Parameter]
     public string InputCSS { get; set; } = "form-control";
 
-    [Parameter]
-    public string AppType { get; set; } = "AppType";
-    [Parameter]
-    public string ItemType { get; set; } = "ItemType";
 }

@@ -38,7 +38,7 @@ namespace ELEMENTS.Data.SQLite
         {
             return SQLiteHelper.GetMigrationVersion();
         }
-
+        public Guid MasterGUID { get; set; } = Guid.Empty;
     }
 
     public partial class SQLiteFactory : IFactory

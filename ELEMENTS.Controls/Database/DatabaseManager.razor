@@ -31,13 +31,11 @@
                     {
                         <strong><i class="ms-2 fas fa-exclamation-circle text-danger"></i></strong>
                     }
-
                 </p>
             </div>
 
             @if (!File.Exists(Name + ".db"))
             {
-
                 <div class="col-6">
                     <label class="form-label">Create database</label>
                     <button type="button" class="btn btn-primary w-100"
@@ -45,12 +43,10 @@
                         Create database
                     </button>
                 </div>
-
             }
 
             @if (File.Exists(Name + ".db"))
             {
-
                 <div class="col-6">
                     <label class="form-label">Delete database</label>
                     <button type="button" class="btn btn-danger w-100"
@@ -58,7 +54,6 @@
                         Delete existing database
                     </button>
                 </div>
-
             }
         </div>
 
@@ -124,9 +119,6 @@
                 return;
             }
 
-            // set Master GUID
-            db.MasterGUID = new Guid("F3477293-24DA-4638-9C45-5BD0D3A35350");
-
             if (File.Exists(Name + ".db"))
             {
                 File.Delete(Name + ".db");
@@ -148,9 +140,6 @@
                 JS.InvokeVoidAsync("alert", "Please enter a name");
                 return;
             }
-
-            // set Master GUID
-            db.MasterGUID = new Guid("F3477293-24DA-4638-9C45-5BD0D3A35350");
 
             if (File.Exists(Name + ".db"))
             {
