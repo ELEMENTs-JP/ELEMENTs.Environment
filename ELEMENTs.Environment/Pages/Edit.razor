@@ -39,15 +39,28 @@
         if (EditRepository != null)
         {
             EditRepository.Service = sql;
-            EditRepository.ItemGUID = new Guid(GUID);
+
+            if (!string.IsNullOrEmpty(GUID))
+            { 
+                EditRepository.ItemGUID = new Guid(GUID);
+            }
+
             EditRepository.Init();
+        }
+    }
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+
+        if (EditRepository != null)
+        {
 
             if (EditRepository.DTO != null)
-            { 
+            {
                 Title = EditRepository.DTO.Title;
             }
         }
     }
-    
-    
+
 }

@@ -44,8 +44,20 @@
         if (ItemsRepo != null)
         {
             ItemsRepo.Service = sql;
-            ItemsRepo.Load();
         }
+    }
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+
+    }
+
+
+    protected override async Task OnParametersSetAsync()
+    {
+        LoadItems();
+        await Task.FromResult<string>("OK");
     }
 
     private void LoadItems()
