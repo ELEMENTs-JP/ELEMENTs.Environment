@@ -1,0 +1,151 @@
+﻿
+<div class="@BackgroundCSS">
+    <div class="@ContainerCSS">
+        <div class="row">
+            <div class="col">
+
+            </div>
+            <div class="col d-flex justify-content-center pt-5">
+                @if (!string.IsNullOrEmpty(LogoUrl))
+                {
+                    <div class="hero-image mb-3"
+                         style="height: @LogoHeight; width: @LogoWidth; background-image: url(@LogoUrl);">
+                    </div>
+                }
+            </div>
+            <div class="col">
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col pt-3">
+
+                @if (!string.IsNullOrEmpty(Title))
+                {
+                    <h1 class="display-3 text-center">@Title</h1>
+                }
+
+                @if (!string.IsNullOrEmpty(SubTitle))
+                {
+                    <h1 class="display-6 text-center">@SubTitle</h1>
+                }
+
+                @if (!string.IsNullOrEmpty(Description))
+                {
+                    <p class="fs-3 text-center">@Description</p>
+                }
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col"></div>
+            <div class="col-auto p-3">
+
+                @if (!string.IsNullOrEmpty(PrimaryButtonLink) && !string.IsNullOrEmpty(PrimaryButtonText))
+                {
+                    <a href="@PrimaryButtonLink" class="btn btn-primary m-1">@PrimaryButtonText</a>
+                }
+
+                @if (!string.IsNullOrEmpty(SecondaryButtonLink) && !string.IsNullOrEmpty(SecondaryButtonText))
+                {
+                    <a href="@SecondaryButtonLink" class="btn btn-secondary m-1">@SecondaryButtonText</a>
+                }
+
+            </div>
+            <div class="col"></div>
+        </div>
+
+        <div class="row">
+            <div class="col p-3 pb-5">
+
+                <div class="hero-image"
+                     style="height: @Height; width: @Width; background-image: url(@ImageUrl);">
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@code {
+
+    [Parameter]
+    public string BackgroundCSS { get; set; } = "bg-white";
+
+    [Parameter]
+    public string ContainerCSS { get; set; } = "container";
+
+    /// <summary>
+    /// Defines or sets the Url of the Image control.
+    /// The property is initialized with "string.Empty".
+    /// </summary>
+    [Parameter]
+    public string LogoUrl { get; set; } = string.Empty;
+
+    [Parameter]
+    public string Title { get; set; } = "Components";
+
+    [Parameter]
+    public string SubTitle { get; set; } = "A set of 90+ free and open source native UI controls.";
+
+    [Parameter]
+    public string Description { get; set; } = "Our component library provides state-of-the-art solutions for startups and enterprises. It includes more than 90 components that make developers work easier.";
+
+    /// <summary>
+    /// Defines or sets a CSS class that controls the CSS style of the control. The default value is: string.empty
+    /// </summary>
+    [Parameter]
+    public string ControlCSS { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Defines or sets the Url of the Image control.
+    /// The property is initialized with "string.Empty".
+    /// </summary>
+    [Parameter]
+    public string ImageUrl { get; set; } = string.Empty;
+
+    /// <summary>
+    /// The height and width can be specified, for example, in 100px (pixels) or also in 100% (percent).
+    /// Example: 100px or 100%. The default value for width is 100% (percent)
+    /// </summary>
+    [Parameter]
+    public string Width { get; set; } = "100%";
+
+    /// <summary>
+    /// The height and width can be specified, for example, in 100px (pixels) or also in 100% (percent).
+    /// Example: 100px or 100%. The default value for height is 300px (pixel)
+    /// </summary>
+    [Parameter]
+    public string Height { get; set; } = "400px";
+
+    /// <summary>
+    /// The height and width can be specified, for example, in 100px (pixels) or also in 100% (percent).
+    /// Example: 100px or 100%. The default value for width is 100% (percent)
+    /// </summary>
+    [Parameter]
+    public string LogoWidth { get; set; } = "50%";
+
+    /// <summary>
+    /// The height and width can be specified, for example, in 100px (pixels) or also in 100% (percent).
+    /// Example: 100px or 100%. The default value for height is 300px (pixel)
+    /// </summary>
+    [Parameter]
+    public string LogoHeight { get; set; } = "200px";
+
+    [Parameter]
+    public string PrimaryButtonText { get; set; } = "Components";
+
+    [Parameter]
+    public string PrimaryButtonLink { get; set; } = "https://www.google.com";
+
+    [Parameter]
+    public string SecondaryButtonText { get; set; } = "How to";
+
+    [Parameter]
+    public string SecondaryButtonLink { get; set; } = "https://www.google.com";
+
+
+}
