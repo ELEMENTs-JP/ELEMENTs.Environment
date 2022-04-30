@@ -121,9 +121,12 @@
     </div>
     <div class="col p-3">
 
+        <ELEMENTS.Controls.Text.Label Value="Progress Chart" />
+        <ELEMENTS.Controls.Charts.ProgressChart Title="Progress" Legende="Status" />
+
         <ELEMENTS.Controls.Text.Label Value="Step Line Chart" />
         <ELEMENTS.Controls.Charts.StepLineChart Title="Company" Legende="Turnover"
-                                             Items="@( new List<ChartItemDTO>()  {
+                                                Items="@( new List<ChartItemDTO>()  {
                                     new ChartItemDTO { Key = "Microsoft", Value = 75 },
                                     new ChartItemDTO { Key = "Apple", Value = 50 },
                                     new ChartItemDTO { Key = "Oracle", Value = 45 },

@@ -1,0 +1,37 @@
+﻿@inject IJSRuntime JS
+@implements IDisposable
+
+
+<div class="bg-light border rounded p-2"
+     style="@( "position: relative; overflow: hidden; ")">
+    <div style="position: relative; overflow: hidden;">
+        <canvas id="@chartGUID" />
+    </div>
+</div>
+
+
+@code {
+
+
+    private Guid chartGUID = Guid.NewGuid();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        Init(JS);
+        await LoadChart(chartGUID.ToSecureString());
+        await base.OnParametersSetAsync();
+    }
+
+    // Parameter
+    [Parameter]
+    public List<ChartItemDTO> Items { get; set; } = new List<ChartItemDTO>();
+
+    [Parameter]
+    public string Title { get; set; } = string.Empty;
+
+    [Parameter]
+    public string Legende { get; set; } = string.Empty;
+
+    [Parameter]
+    public int Progress { get; set; } = 20;
+}
