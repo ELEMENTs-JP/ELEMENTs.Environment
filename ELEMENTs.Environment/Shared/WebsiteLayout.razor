@@ -2,10 +2,84 @@
 @using System.Linq
 
 
-@Body
+
+<ELEMENTS.Controls.Interface.WebsiteLayout>
+
+    <Header>
+        <ELEMENTS.Controls.Frontpage.StickyHeader />
+        <ELEMENTS.Controls.Frontpage.StickyNavbar />
+        <ELEMENTS.Controls.Frontpage.StickySubNavbar />
+
+    </Header>
+    <ChildContent>
+        @Body
+    </ChildContent>
+    <Footer>
+        <ELEMENTS.Controls.Interface.Footer DTO="@DTO" />
+    </Footer>
+</ELEMENTS.Controls.Interface.WebsiteLayout>
+
+
 
 
 @code
 {
+    [Parameter]
+    public INavigationRepository Repository { get; set; }
 
+    private IFooter DTO { get; set; }
+    private List<NavigationEntry> Entries { get; set; } = new List<NavigationEntry>();
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        DTO = new Footer();
+
+        List<FooterGroup> Groups = new List<FooterGroup>();
+
+        List<string> groups = new List<string>() { "Kategorien", "Support", "Community", "Über Uns", "Rechtliches" };
+
+        foreach (string group in groups)
+        {
+            FooterGroup fg = new FooterGroup() { GroupTitle = group };
+            List<FooterLink> links = new List<FooterLink>();
+            for (int i = 1; i <= 6; i++)
+            {
+                FooterLink fl = new FooterLink() { LinkTitle = "Google", LinkUrl = "https://www.google.com" };
+                links.Add(fl);
+            }
+            fg.Links = links;
+            Groups.Add(fg);
+        }
+        DTO.Groups = Groups;
+
+
+        try
+        {
+            NavigationRepository repository = NavigationRepository.Load();
+
+            repository.Title = (string.IsNullOrEmpty(repository.Title)) ? "Navigation" : repository.Title;
+            repository.Text = (string.IsNullOrEmpty(repository.Text)) ? "" : repository.Text;
+
+            Repository = repository;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("FAIL: " + ex.Message);
+        }
+
+        // Entries
+        Entries.Add(new NavigationEntry() { Title = "Bootstrap", Link = "bootstrap", Icon = "<i class='fas fa-angle-double-right'></i>" });
+        Entries.Add(new NavigationEntry() { Title = "Tabler.IO", Link = "tabler", Icon = "<i class='fas fa-angle-double-right'></i>" });
+        Entries.Add(new NavigationEntry() { Title = "Navigation", Link = "/navigation", Icon = "<i class='fas fa-angle-double-right'></i>" });
+        Entries.Add(new NavigationEntry() { Title = "Page Layouts", Link = "layouts", Icon = "<i class='fas fa-angle-double-right'></i>" });
+        Entries.Add(new NavigationEntry() { Title = "Views and Container", Link = "view", Icon = "<i class='fas fa-angle-double-right'></i>" });
+        Entries.Add(new NavigationEntry() { Title = "Analytics", Link = "analytics", Icon = "<i class='fas fa-angle-double-right'></i>" });
+        Entries.Add(new NavigationEntry() { Title = "Lists and Media", Link = "lists", Icon = "<i class='fas fa-angle-double-right'></i>" });
+        Entries.Add(new NavigationEntry() { Title = "Search UI", Link = "search", Icon = "<i class='fas fa-angle-double-right'></i>" });
+        Entries.Add(new NavigationEntry() { Title = "Help UI", Link = "help", Icon = "<i class='fas fa-angle-double-right'></i>" });
+        Entries.Add(new NavigationEntry() { Title = "Security", Link = "security", Icon = "<i class='fas fa-angle-double-right'></i>" });
+        Entries.Add(new NavigationEntry() { Title = "Terms", Link = "terms", Icon = "<i class='fas fa-angle-double-right'></i>" });
+    }
 }

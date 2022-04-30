@@ -1,9 +1,35 @@
 ﻿
 
-<header>this is the header</header>
+<header style="@(((IsSticky == true) ? " position: sticky; top: 0px; z-index:1; " : ""))" class="@HeaderCSS">
+    <div class="row">
+        @if (LogoContent != null)
+        {
+            <div class="col-auto">@LogoContent</div>
+        }
+        <div class="col-auto">@Title</div>
+
+        <div class="col"></div>
+
+        <div class="col-auto"></div>
+    </div>
+
+</header>
 
 
 
 @code {
+
+    [Parameter]
+    public RenderFragment LogoContent { get; set; }
+
+    [Parameter]
+    public string Title { get; set; } = "Title of the website";
+
+    [Parameter]
+    public string HeaderCSS { get; set; } = "bg-light border-bottom px-5 py-3";
+
+    [Parameter]
+    public bool IsSticky { get; set; } = true;
+
 
 }

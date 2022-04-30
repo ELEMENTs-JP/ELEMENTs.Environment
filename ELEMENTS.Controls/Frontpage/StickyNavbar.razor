@@ -1,6 +1,6 @@
 ﻿
 
-<nav>
+<nav style="@(((IsSticky == true) ? " position: sticky; top: 0px; z-index:1; " : ""))" class="@NavBarCSS">
     <ul>
         <li><a href="/" class="active">Home</a></li>
         <li><a href="/website">Website</a></li>
@@ -10,4 +10,9 @@
 
 @code {
 
+    [Parameter]
+    public string NavBarCSS { get; set; } = "bg-light border-bottom px-5";
+
+    [Parameter]
+    public bool IsSticky { get; set; } = false;
 }

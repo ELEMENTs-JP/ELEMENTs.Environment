@@ -4,10 +4,10 @@
 }
 
 header {
-    background-color:#fff;
-    padding: 10px 100px;
     box-sizing: border-box;
-    position: sticky;
-    top: 0px;
-    z-index:1;
+  
+}
+
+.bg-light {
+    color:inherit !important;
 }

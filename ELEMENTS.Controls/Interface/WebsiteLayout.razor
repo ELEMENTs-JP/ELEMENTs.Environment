@@ -1,0 +1,28 @@
+﻿
+
+    @Header
+
+
+<div class="container">
+    @ChildContent
+</div>
+
+@if (Footer != null)
+{
+    <div class="container">
+        @Footer
+    </div>
+}
+
+@code {
+
+    [Parameter]
+    public RenderFragment Header { get; set; }
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public RenderFragment Footer { get; set; }
+
+}
