@@ -24,6 +24,19 @@
                                     new ChartItemDTO { Key = "NVidia", Value = 55 },
                                 })" />
 
+              <ELEMENTS.Controls.Text.Label Value="Pie Chart" />
+        <ELEMENTS.Controls.Charts.PieChart Title="Company" Legende="Turnover"
+                                           Items="@( new List<ChartItemDTO>()  {
+                                    new ChartItemDTO { Key = "Microsoft", Value = 75 },
+                                    new ChartItemDTO { Key = "Apple", Value = 50 },
+                                    new ChartItemDTO { Key = "Oracle", Value = 45 },
+                                    new ChartItemDTO { Key = "IBM", Value = 55 },
+                                    new ChartItemDTO { Key = "TESLA", Value = 45 },
+                                    new ChartItemDTO { Key = "Space X", Value = 25 },
+                                    new ChartItemDTO { Key = "Amazon", Value = 15 },
+                                    new ChartItemDTO { Key = "NVidia", Value = 55 },
+                                })" />
+
         <ELEMENTS.Controls.Text.Label Value="Horizontal Bar Chart" />
         <ELEMENTS.Controls.Charts.BarHorizontalChart Title="Company" Legende="Turnover"
                                                      Items="@( new List<ChartItemDTO>()  {
@@ -37,18 +50,7 @@
                                     new ChartItemDTO { Key = "NVidia", Value = 55 },
                                 })" />
 
-        <ELEMENTS.Controls.Text.Label Value="Pie Chart" />
-        <ELEMENTS.Controls.Charts.PieChart Title="Company" Legende="Turnover"
-                                           Items="@( new List<ChartItemDTO>()  {
-                                    new ChartItemDTO { Key = "Microsoft", Value = 75 },
-                                    new ChartItemDTO { Key = "Apple", Value = 50 },
-                                    new ChartItemDTO { Key = "Oracle", Value = 45 },
-                                    new ChartItemDTO { Key = "IBM", Value = 55 },
-                                    new ChartItemDTO { Key = "TESLA", Value = 45 },
-                                    new ChartItemDTO { Key = "Space X", Value = 25 },
-                                    new ChartItemDTO { Key = "Amazon", Value = 15 },
-                                    new ChartItemDTO { Key = "NVidia", Value = 55 },
-                                })" />
+  
 
         <ELEMENTS.Controls.Text.Label Value="Polar Area Chart" />
         <ELEMENTS.Controls.Charts.PolarAreaChart Title="Company" Legende="Turnover"
@@ -79,18 +81,7 @@
                                     new ChartItemDTO { Key = "NVidia", Value = 55 },
                                 })" />
 
-        <ELEMENTS.Controls.Text.Label Value="Vertical Bar Chart" />
-        <ELEMENTS.Controls.Charts.BarVerticalChart Title="Company" Legende="Turnover"
-                                                   Items="@( new List<ChartItemDTO>()  {
-                                    new ChartItemDTO { Key = "Microsoft", Value = 75 },
-                                    new ChartItemDTO { Key = "Apple", Value = 50 },
-                                    new ChartItemDTO { Key = "Oracle", Value = 45 },
-                                    new ChartItemDTO { Key = "IBM", Value = 55 },
-                                    new ChartItemDTO { Key = "TESLA", Value = 45 },
-                                    new ChartItemDTO { Key = "Space X", Value = 25 },
-                                    new ChartItemDTO { Key = "Amazon", Value = 15 },
-                                    new ChartItemDTO { Key = "NVidia", Value = 55 },
-                                })" />
+
 
         <ELEMENTS.Controls.Text.Label Value="Doughnut Chart" />
         <ELEMENTS.Controls.Charts.DoughnutChart Title="Company" Legende="Turnover"
@@ -105,9 +96,22 @@
                                     new ChartItemDTO { Key = "NVidia", Value = 55 },
                                 })" />
 
+        <ELEMENTS.Controls.Text.Label Value="Vertical Bar Chart" />
+        <ELEMENTS.Controls.Charts.BarVerticalChart Title="Company" Legende="Turnover"
+                                                   Items="@( new List<ChartItemDTO>()  {
+                                    new ChartItemDTO { Key = "Microsoft", Value = 75 },
+                                    new ChartItemDTO { Key = "Apple", Value = 50 },
+                                    new ChartItemDTO { Key = "Oracle", Value = 45 },
+                                    new ChartItemDTO { Key = "IBM", Value = 55 },
+                                    new ChartItemDTO { Key = "TESLA", Value = 45 },
+                                    new ChartItemDTO { Key = "Space X", Value = 25 },
+                                    new ChartItemDTO { Key = "Amazon", Value = 15 },
+                                    new ChartItemDTO { Key = "NVidia", Value = 55 },
+                                })" />
+
         <ELEMENTS.Controls.Text.Label Value="Radar Chart" />
         <ELEMENTS.Controls.Charts.RadarChart Title="Company" Legende="Turnover"
-                                                Items="@( new List<ChartItemDTO>()  {
+                                             Items="@( new List<ChartItemDTO>()  {
                                     new ChartItemDTO { Key = "Microsoft", Value = 75 },
                                     new ChartItemDTO { Key = "Apple", Value = 50 },
                                     new ChartItemDTO { Key = "Oracle", Value = 45 },
@@ -121,8 +125,7 @@
     </div>
     <div class="col p-3">
 
-        <ELEMENTS.Controls.Text.Label Value="Progress Chart" />
-        <ELEMENTS.Controls.Charts.ProgressChart Title="Progress" Legende="Status" />
+
 
         <ELEMENTS.Controls.Text.Label Value="Step Line Chart" />
         <ELEMENTS.Controls.Charts.StepLineChart Title="Company" Legende="Turnover"
@@ -136,6 +139,9 @@
                                     new ChartItemDTO { Key = "Amazon", Value = 15 },
                                     new ChartItemDTO { Key = "NVidia", Value = 55 },
                                 })" />
+
+        <ELEMENTS.Controls.Text.Label Value="Progress Chart" />
+        <ELEMENTS.Controls.Charts.ProgressChart Title="Progress" Legende="Status" />
 
         <ELEMENTS.Controls.Text.Label Value="KPI List" />
         <ELEMENTS.Controls.KPI.KpiList Items="@( new List<KpiListItem>()  {

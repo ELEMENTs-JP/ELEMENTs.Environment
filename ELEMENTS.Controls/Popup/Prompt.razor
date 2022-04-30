@@ -1,0 +1,118 @@
+﻿
+
+<button type="button" class="btn btn-success"
+        data-bs-toggle="modal"
+        data-bs-target="@( "#modal_" + modalGUID.ToString() )">
+    @ButtonText
+</button>
+
+
+<!-- Modal -->
+<div class="modal fade" role="document" id="@( "modal_" + modalGUID.ToString() )" tabindex="-1"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content" style="border:0px solid transparent !important;">
+            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                    aria-label="Close" @onclick="closeclick"></button>
+            <div class="modal-status bg-success" style="height:3px !important;"></div>
+            <div class="modal-body text-center py-4">
+                <i class="fas fa-check mb-2 display-6 text-success"></i>
+                <h3>@Title</h3>
+                <div class="text-muted">@Text</div>
+
+                <div>@ChildContent</div>
+            </div>
+            <div class="modal-footer">
+                <div class="w-100">
+                    <div class="row">
+                        <div class="col">
+                            <button type="button" class="btn btn-outline-secondary w-100"
+                                    data-bs-dismiss="modal"
+                                    @onclick="cancelclick">
+                                @CancelTitle
+                            </button>
+                        </div>
+                        <div class="col">
+                            <button type="button" class="btn btn-success w-100"
+                                    data-bs-dismiss="modal"
+                                    @onclick="okclick">
+                                @OKTitle
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@code {
+
+    private Guid modalGUID = Guid.NewGuid();
+
+    [Parameter]
+    public string ButtonText { get; set; } = "Create";
+
+    [Parameter]
+    public string Title { get; set; } = "Are you sure?";
+
+    [Parameter]
+    public string Text { get; set; } = "Do you really want to remove 84 files? What you've done cannot be undone.";
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public EventCallback<string> OnOKClicked { get; set; }
+
+    private void okclick()
+    {
+        try
+        {
+            OnOKClicked.InvokeAsync("OK");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("FAIL: " + ex.Message);
+        }
+    }
+
+    [Parameter]
+    public EventCallback<string> OnCancelClicked { get; set; }
+
+    private void cancelclick()
+    {
+        try
+        {
+            OnCancelClicked.InvokeAsync("Cancel");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("FAIL: " + ex.Message);
+        }
+    }
+
+    [Parameter]
+    public EventCallback<string> OnCloseClicked { get; set; }
+
+    private void closeclick()
+    {
+        try
+        {
+            OnCloseClicked.InvokeAsync("Close");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("FAIL: " + ex.Message);
+        }
+    }
+
+    [Parameter]
+    public string OKTitle { get; set; } = "OK";
+
+    [Parameter]
+    public string CancelTitle { get; set; } = "Cancel";
+
+}
