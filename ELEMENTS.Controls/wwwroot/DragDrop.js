@@ -32,7 +32,7 @@ function assignSortableJS(containerElement, dragabbleClass, dotNetHelper)
             touchStartThreshold: 0, // px, how many pixels the point should move before cancelling a delayed drag event
             disabled: false, // Disables the sortable if set to true.
             store: null,  // @see Store
-            animation: 60,  // ms, animation speed moving items when sorting, `0` — without animation
+            animation: 150,  // ms, animation speed moving items when sorting, `0` — without animation
             easing: "cubic-bezier(1, 0, 0, 1)", // Easing for animation. Defaults to null. See https://easings.net/ for examples.
             handle: ".grab",  // Drag handle selector within list items
             draggable: "." + dragabbleClass,  // Specifies which items inside the element should be draggable
