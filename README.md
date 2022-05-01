@@ -52,6 +52,8 @@ With the drag & drop user interfaces you can develop your own applications like 
 Currently we are implementing the following drag and drop user interfaces:
 - Backlog, Kanban, etc.
 
+![Backlog_Image](https://raw.githubusercontent.com/ELEMENTs-JP/the-ELEMENTs-Environment/master/ELEMENTs.Environment/Screenshots/Board_Backlog.png)
+
 ### PageLayouts
 PageLayouts are used to design the user interface of a single page. Please do not confuse PageLayouts with AppLayouts. The AppLayouts design the entire application and are to be understood as MasterPage. PageLayouts design a single page by providing individual areas where individual components can be inserted. The following PageLayouts are currently available:
 - Empty, App, Website, etc.
