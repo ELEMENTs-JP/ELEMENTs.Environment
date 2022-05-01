@@ -1,0 +1,52 @@
+﻿@page "/Board"
+@page "/Board/{View}"
+
+
+
+@if (string.IsNullOrEmpty(View))
+{
+
+}
+else
+{
+    @if (View.ToLower().Contains("backlog"))
+    {
+        <ELEMENTS.Controls.Board.Backlog Columns="@Columns" Rows="@Rows" Items="@Items" />
+
+        <div class="mt-3 mb-3"></div>
+    }
+}
+
+
+
+
+
+
+
+
+@code
+{
+    [Parameter]
+    public string View { get; set; } = string.Empty;
+
+    List<IDTO> Columns { get; set; } = new List<IDTO>();
+    List<IDTO> Rows { get; set; } = new List<IDTO>();
+    List<IDTO> Items { get; set; } = new List<IDTO>();
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        Columns.Add(new DTO() { ID = "1", Title = "in Refinement" });
+        Columns.Add(new DTO() { ID = "2", Title = "in Development" });
+        Columns.Add(new DTO() { ID = "3", Title = "in Test" });
+        Columns.Add(new DTO() { ID = "4", Title = "done" });
+
+        Rows.Add(new DTO() { ID = "1", Title = "Critical" });
+        Rows.Add(new DTO() { ID = "2", Title = "Regular" });
+
+        Items.Add(new DTO() { GUID = Guid.NewGuid(), MasterGUID = Guid.NewGuid(), Title = "Title", Content = "Content" });
+        Items.Add(new DTO() { GUID = Guid.NewGuid(), MasterGUID = Guid.NewGuid(), Title = "Title", Content = "Content" });
+        Items.Add(new DTO() { GUID = Guid.NewGuid(), MasterGUID = Guid.NewGuid(), Title = "Title", Content = "Content" });
+    }
+}
