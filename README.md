@@ -166,7 +166,6 @@ For the implementation of Fontawesome we used the following link:
 ## Sortable.JS
 We have included sortable.JS via jsdelivr. Please find out the current link of sortable.JS via jsdelivr or include a sortable.JS library yourself. We have included it here at the end of _Host.cshtml with async. We did this because we don't need sortable.js right away, but only when we need a backlog or a corresponding drag and drop interface. So we can load sortable.js calmly with a small time delay. This speeds up the basic loading process of the website a bit.
 
-Translated with www.DeepL.com/Translator (free version)
 For the implementation of sortable.js we used the following link:
 ```
   @* Sortable *@
