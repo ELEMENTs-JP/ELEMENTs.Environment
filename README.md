@@ -163,6 +163,17 @@ For the implementation of Fontawesome we used the following link:
           crossorigin="anonymous" referrerpolicy="no-referrer" />
 ```
 
+## Sortable.JS
+We have included sortable.JS via jsdelivr. Please find out the current link of sortable.JS via jsdelivr or include a sortable.JS library yourself. We have included it here at the end of _Host.cshtml with async. We did this because we don't need sortable.js right away, but only when we need a backlog or a corresponding drag and drop interface. So we can load sortable.js calmly with a small time delay. This speeds up the basic loading process of the website a bit.
+
+Translated with www.DeepL.com/Translator (free version)
+For the implementation of sortable.js we used the following link:
+```
+  @* Sortable *@
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js" async></script>
+```
+
+
 ### Change CSS classes
 You can change the CSS classes of each control (i.e. the Bootstrap or Tabler.IO CSS classes) of each control. Each control implements different CSS class properties (e.g. ControlCSS, OuterCSS, InnerCSS, FrameCSS, etc.). This allows you to enrich the controls according to your wishes, e.g. with additional classes or change the size of an input box.
 
@@ -183,6 +194,7 @@ This library uses external technologies such as Microsoft ASP.NET Core 5.0, Micr
 - [JavaScript](https://www.w3schools.com/js/)
 - [Microsoft Blazor / Razor / ASP.NET Core 5.0](https://docs.microsoft.com/en-us/aspnet/core/blazor/components/?view=aspnetcore-5.0)
 - [DropZone.JS](https://www.dropzone.dev/js/)
+- [Sortable.JS](https://sortablejs.github.io/Sortable/)
 - [Microsoft Entity Framework Core 5.13](https://docs.microsoft.com/en-us/ef/core/what-is-new/ef-core-5.0/breaking-changes)
 - [Microsoft Entity Framework Core for SQLite 5.13](https://docs.microsoft.com/en-us/ef/core/providers/sqlite/?tabs=dotnet-core-cli)
 - [SQLite](https://www.sqlite.org/index.html)
