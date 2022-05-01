@@ -910,7 +910,7 @@ namespace ELEMENTS.Data.SQLite
                                             " [AppType], [ItemType], " +
                                             " [DataType], [Name], " +
                                             " [Value], [Typ], [Date]) " +
-                        " VALUES('" + input.ItemGUID.ToSecureString() + "' , " +
+                        " VALUES('" + input.GUID.ToSecureString() + "' , " +
                                     " '" + input.MasterGUID.ToSecureString() + "' , " +
                                     " '" + input.RelatedItemGUID.ToSecureString() + "' , " +
 
@@ -937,7 +937,7 @@ namespace ELEMENTS.Data.SQLite
             sql += "UPDATE " + tbl + " SET [Value] = '" + input.Value + "', [Typ] = '" + input.Typ + "', [Date] = '" + input.Date.ToString() + "' " +
                                 " WHERE  " + tbl + ".MasterGUID = '" + input.MasterGUID.ToSecureString() + "' " +
                                    " AND " + tbl + ".RelatedItemGUID =  '" + input.RelatedItemGUID.ToSecureString() + "' " +
-                                   " AND " + tbl + ".GUID =  '" + input.ItemGUID.ToSecureString() + "' " +
+                                   " AND " + tbl + ".GUID =  '" + input.GUID.ToSecureString() + "' " +
                                    " AND " + tbl + ".Name =  '" + input.Name.ToSecureString() + "' " +
                                    " AND " + tbl + ".AppType =  '" + input.AppType.ToSecureString() + "' " +
                                    " AND " + tbl + ".ItemType =  '" + input.ItemType.ToSecureString() + "' ;";

@@ -48,8 +48,20 @@ else
         Rows.Add(new DTO() { ID = "1", Title = "Critical" });
         Rows.Add(new DTO() { ID = "2", Title = "Regular" });
 
-        Items.Add(new DTO() { GUID = Guid.NewGuid(), MasterGUID = Guid.NewGuid(), Title = "Title", Content = "Content" });
-        Items.Add(new DTO() { GUID = Guid.NewGuid(), MasterGUID = Guid.NewGuid(), Title = "Title", Content = "Content" });
-        Items.Add(new DTO() { GUID = Guid.NewGuid(), MasterGUID = Guid.NewGuid(), Title = "Title", Content = "Content" });
+
+
+
+        Items.Add(new DTO() { GUID = Guid.NewGuid(), MasterGUID = Guid.NewGuid(), Title = "Title", Content = "Content",
+            Properties = new List<IProperty>() { new PropertyDTO() { GUID = Guid.NewGuid(), MasterGUID = Guid.NewGuid(), Value = "Critical", Name = "Row" }, 
+                new PropertyDTO() { GUID = Guid.NewGuid(), MasterGUID = Guid.NewGuid(), Value = "in Refinement", Name = "Column" }, } 
+        });
+        Items.Add(new DTO() { GUID = Guid.NewGuid(), MasterGUID = Guid.NewGuid(), Title = "Title", Content = "Content",
+            Properties = new List<IProperty>() { new PropertyDTO() { GUID = Guid.NewGuid(), MasterGUID = Guid.NewGuid(), Value = "Critical", Name = "Row" }, 
+                new PropertyDTO() { GUID = Guid.NewGuid(), MasterGUID = Guid.NewGuid(), Value = "in Development", Name = "Column" }, }
+        });
+        Items.Add(new DTO() { GUID = Guid.NewGuid(), MasterGUID = Guid.NewGuid(), Title = "Title", Content = "Content",
+            Properties = new List<IProperty>() { new PropertyDTO() { GUID = Guid.NewGuid(), MasterGUID = Guid.NewGuid(), Value = "Regular", Name = "Row" }, 
+                new PropertyDTO() { GUID = Guid.NewGuid(), MasterGUID = Guid.NewGuid(), Value = "in Test", Name = "Column" }, }
+        });
     }
 }

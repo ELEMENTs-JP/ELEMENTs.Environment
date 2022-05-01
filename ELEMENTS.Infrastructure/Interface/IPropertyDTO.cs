@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace ELEMENTS.Infrastructure
 {
-    public class PropertyDTO
+    public class PropertyDTO : IProperty
     {
         // Identify 
-        public Guid ItemGUID { get; set; }
+        public Guid GUID { get; set; }
         public Guid RelatedItemGUID { get; set; }
         public Guid MasterGUID { get; set; }
         public string Name { get; set; }
@@ -29,7 +29,7 @@ namespace ELEMENTS.Infrastructure
             try
             {
                 // masterGUID 
-                dto.ItemGUID = itemGUID;
+                dto.GUID = itemGUID;
                 dto.MasterGUID = masterGUID;
                 dto.RelatedItemGUID = relatedItemGUID;
 
@@ -50,7 +50,7 @@ namespace ELEMENTS.Infrastructure
         {
             // Check 
             #region Check
-            if (ItemGUID == Guid.Empty)
+            if (GUID == Guid.Empty)
             {
                 throw new Exception("GUID not set");
             }
