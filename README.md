@@ -46,6 +46,11 @@ For the implementation of the ChartJS charts we used the following link to the s
 ```
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 ```
+### Drag & drop user interfaces
+With the drag & drop user interfaces you can develop your own applications like Backlog or Kanban tools. We use the external library Sortable.JS for the drag & drop user interfaces. We have made good experiences with it. However, you have to integrate the external library yourself. Of course you can also look at the code and map the corresponding functionalities. At the beginning you will not see so many features. Maybe there are still some bugs in it. Please report them to us and tell us where you found a bug. We basically start with a simple backlog and a Kanban drag & drop user interface. But we will extend these user interfaces significantly over time and also attach repositories. This will give you the possibility to use the user interfaces with the ELEMENTs GO data framework.
+
+Currently we are implementing the following drag and drop user interfaces:
+- Backlog, Kanban, etc.
 
 ### PageLayouts
 PageLayouts are used to design the user interface of a single page. Please do not confuse PageLayouts with AppLayouts. The AppLayouts design the entire application and are to be understood as MasterPage. PageLayouts design a single page by providing individual areas where individual components can be inserted. The following PageLayouts are currently available:
