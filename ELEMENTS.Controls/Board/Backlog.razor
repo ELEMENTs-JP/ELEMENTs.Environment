@@ -177,6 +177,34 @@
         }
     }
 
+    [JSInvokable]
+    public async void OnDragEnd(JsonElement json)
+    {
+        try
+        {
+            // string div = json.GetProperty("DIV").GetString();
+            await DragEnd.InvokeAsync("OK");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("FAIL: " + ex.Message);
+        }
+    }
+
+    [JSInvokable]
+    public async void OnItemRemoved(JsonElement json)
+    {
+        try
+        {
+            // string div = json.GetProperty("DIV").GetString();
+            await ItemRemoved.InvokeAsync("OK");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("FAIL: " + ex.Message);
+        }
+    }
+
     // Callback 
     [Parameter]
     public EventCallback<string> ItemChanged { get; set; }
@@ -186,6 +214,12 @@
 
     [Parameter]
     public EventCallback<string> SortOrderChanged { get; set; }
+
+    [Parameter]
+    public EventCallback<string> DragEnd { get; set; }
+
+    [Parameter]
+    public EventCallback<string> ItemRemoved { get; set; }
 
     // Events
     protected override async Task OnAfterRenderAsync(bool firstRender)

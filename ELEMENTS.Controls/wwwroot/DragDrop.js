@@ -60,22 +60,9 @@ function assignSortableJS(containerElement, dragabbleClass, dotNetHelper)
                 evt.oldIndex;  // element index within parent
             },
 
-            // Element dragging ended
+            // Element dragging ended 
             onEnd: function (/**Event*/evt)
             {
-                //var itemEl = evt.item;  // dragged HTMLElement
-                //evt.to;    // target list
-                // var allitems = evt.to.children; // all items of parent 
-                //evt.from;  // previous list
-                //evt.oldIndex;  // element's old index within old parent
-                //evt.newIndex;  // element's new index within new parent
-                //evt.oldDraggableIndex; // element's old index within old parent, only counting draggable elements
-                //evt.newDraggableIndex; // element's new index within new parent, only counting draggable elements
-                //evt.clone // the clone element
-                //evt.pullMode;  // when item is in another sortable: `"clone"` if cloning, `true` if moving 
-
-                //setRowIndex(itemEl, evt.newDraggableIndex);
-
                 try
                 {
 
@@ -102,20 +89,9 @@ function assignSortableJS(containerElement, dragabbleClass, dotNetHelper)
                             "SortOrder": sortorder,
                         };
 
-                        //try {
-
-                        //    dotNetHelper.invokeMethodAsync('OnSortOrderChanged', jsonParameter).then(data => {
-
-                        //        console.log(data);
-                        //    });
-                        //}
-                        //catch (e) {
-                        //    console.log("FAIL: " + e);
-                        //}
-
                         try {
 
-                            dotNetHelper.invokeMethodAsync('OnItemChanged', jsonParameter).then(data => {
+                            dotNetHelper.invokeMethodAsync('OnDragEnd', jsonParameter).then(data => {
 
                                 console.log(data);
                             });
@@ -171,17 +147,6 @@ function assignSortableJS(containerElement, dragabbleClass, dotNetHelper)
                         "ColumnItemType": columnitemtype,
                         "RowItemType": rowitemtype,
                     };
-
-                    //try {
-
-                    //    dotNetHelper.invokeMethodAsync('OnSortOrderChanged', jsonParameter).then(data => {
-
-                    //        console.log(data);
-                    //    });
-                    //}
-                    //catch (e) {
-                    //    console.log("FAIL: " + e);
-                    //}
 
                     try {
 
@@ -239,10 +204,6 @@ function assignSortableJS(containerElement, dragabbleClass, dotNetHelper)
                         "RowItemType": rowitemtype,
                     };
 
-
-
-
-
                     try {
 
                         dotNetHelper.invokeMethodAsync('OnSortOrderChanged', jsonParameter).then(data => {
@@ -254,19 +215,6 @@ function assignSortableJS(containerElement, dragabbleClass, dotNetHelper)
                         console.log("FAIL: " + e);
                     }
 
-                    //try {
-
-                    //    dotNetHelper.invokeMethodAsync('OnItemChanged', jsonParameter).then(data => {
-
-                    //        console.log(data);
-                    //    });
-                    //}
-                    //catch (e) {
-                    //    console.log("FAIL: " + e);
-                    //}
-
-
-
                 }
                 catch (e)
                 {
@@ -277,6 +225,58 @@ function assignSortableJS(containerElement, dragabbleClass, dotNetHelper)
             // Element is removed from the list into another list
             onRemove: function (/**Event*/evt) {
                 // same properties as onEnd
+
+                // same properties as onEnd 
+                try {
+                    let item = evt.item;
+                    if (item === null)
+                        return;
+
+                    let dropContainer = evt.to;
+                    if (dropContainer === null)
+                        return;
+
+                    let newIndex = evt.newIndex.toString();
+
+                    let col = getAttributeValue(dropContainer, "data-column");
+                    let row = getAttributeValue(dropContainer, "data-row");
+
+                    let id = item.id;
+                    let itemtype = getAttributeValue(item, "data-itemtype");
+                    let ppid = getAttributeValue(item, "data-ppid");
+                    let boardtype = getAttributeValue(item, "data-boardtype");
+                    let sortorder = newIndex;
+                    let columnitemtype = getAttributeValue(item, "data-columnitemtype");
+                    let rowitemtype = getAttributeValue(item, "data-rowitemtype");
+
+                    // Create Parameter 
+                    let jsonParameter = {
+                        "GUID": id,
+                        "ItemType": itemtype,
+                        "PPID": ppid,
+                        "Column": col,
+                        "Row": row,
+                        "BoardType": boardtype,
+                        "SortOrder": sortorder,
+                        "ColumnItemType": columnitemtype,
+                        "RowItemType": rowitemtype,
+                    };
+
+                    try {
+
+                        dotNetHelper.invokeMethodAsync('OnItemRemoved', jsonParameter).then(data => {
+
+                            console.log(data);
+                        });
+                    }
+                    catch (e) {
+                        console.log("FAIL: " + e);
+                    }
+
+                }
+                catch (e) {
+                    alert(e);
+                }
             },
 
             // Called when dragging element changes position

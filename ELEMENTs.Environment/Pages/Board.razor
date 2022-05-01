@@ -12,10 +12,12 @@ else
     @if (View.ToLower().Contains("backlog"))
     {
         <ELEMENTS.Controls.Board.Backlog Columns="@Columns" Rows="@Rows" Items="@Items"
-                                         ItemChanged="@( e => { Message = "Item Changed"; }  )"
-                                         ItemAdded="@(e => { Message = "Item Added"; })"
+                                         ItemChanged="@( e => { Message = "Item Changed"; JS.InvokeVoidAsync("alert", "Item added"); }  )"
+                                         ItemAdded="@(e => { Message = "Item Added"; JS.InvokeVoidAsync("alert", "Item added");})"
                                          SortOrderChanged="@( e => { Message = "Sort Order Changed"; 
-                                                                  JS.InvokeVoidAsync("alert", "Sort Order changed");   } )" />
+                                                                  JS.InvokeVoidAsync("alert", "Sort Order changed");   } )"
+                                         ItemRemoved="@( e => { Message = "Item Removed"; 
+                                                                  JS.InvokeVoidAsync("alert", "Item removed");   } )"/>
 
         <div class="mt-3 mb-3"></div>
         <p>@Message</p>
