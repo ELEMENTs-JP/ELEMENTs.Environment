@@ -1,59 +1,83 @@
 ﻿@page "/security"
+@page "/security/{View}"
 
 
 
-<div class="row">
-    <div class="col">
-        <h3 class="h1">Security</h3>
+@if (string.IsNullOrEmpty(View))
+{
+
+    <div class="row">
+        <div class="col">
+            <h3 class="h1">Security</h3>
+        </div>
     </div>
-</div>
 
+    <div class="row">
+        <div class="col p-3">
 
-<div class="row">
-    <div class="col p-3">
+            <ELEMENTS.Controls.Text.Label Value="Fast Login" />
+            <ELEMENTS.Controls.Security.FastLogin />
 
-        <ELEMENTS.Controls.Text.Label Value="Fast Login" />
-        <ELEMENTS.Controls.Security.FastLogin />
+            <ELEMENTS.Controls.Text.Label Value="Login" />
+            <ELEMENTS.Controls.Security.Login />
 
-        <ELEMENTS.Controls.Text.Label Value="Login" />
-        <ELEMENTS.Controls.Security.Login />
+            <ELEMENTS.Controls.Text.Label Value="Register" />
+            <ELEMENTS.Controls.Security.Registration />
 
-        <ELEMENTS.Controls.Text.Label Value="Register" />
-        <ELEMENTS.Controls.Security.Registration />
+            <ELEMENTS.Controls.Text.Label Value="Change Password" />
+            <ELEMENTS.Controls.Security.ChangePassword />
 
-        <ELEMENTS.Controls.Text.Label Value="Change Password" />
-        <ELEMENTS.Controls.Security.ChangePassword />
+        </div>
+        <div class="col p-3">
 
-    </div>
-    <div class="col p-3">
+            <ELEMENTS.Controls.Text.Label Value="Request Access" />
+            <ELEMENTS.Controls.Security.RequestAccess />
 
-        <ELEMENTS.Controls.Text.Label Value="Request Access" />
-        <ELEMENTS.Controls.Security.RequestAccess />
+            <ELEMENTS.Controls.Text.Label Value="Request new password" />
+            <ELEMENTS.Controls.Security.RequestNewPassword />
 
-        <ELEMENTS.Controls.Text.Label Value="Request new password" />
-        <ELEMENTS.Controls.Security.RequestNewPassword />
+            <ELEMENTS.Controls.Text.Label Value="Set new password" />
+            <ELEMENTS.Controls.Security.SetNewPassword />
 
-        <ELEMENTS.Controls.Text.Label Value="Set new password" />
-        <ELEMENTS.Controls.Security.SetNewPassword />
-
-        <ELEMENTS.Controls.Text.Label Value="Permissions" />
-        <ELEMENTS.Controls.Security.Permissions  PermissionItems="@( new List<Permission>() {
+            <ELEMENTS.Controls.Text.Label Value="Permissions" />
+            <ELEMENTS.Controls.Security.Permissions PermissionItems="@( new List<Permission>() {
                                             new Permission { ID = "123", Title = "Permission A", Value= false },
                                             new Permission { ID = "456", Title = "Permission B", Value= true },
                                             new Permission { ID = "789", Title = "Permission C", Value= false }
-                                            })"/>
+                                            })" />
 
+        </div>
     </div>
-</div>
 
+}
 
+@if (!string.IsNullOrEmpty(View))
+{
+    @if (View.ToLower().Contains("login"))
+    {
+        <div class="page page-center">
+            <div class="container-tight">
+        <ELEMENTS.Controls.Security.Login />
 
+            </div>
+        </div>
+    }
 
+    @if (View.ToLower().Contains("register") ||
+     View.ToLower().Contains("registration"))
+    {
+        <div class="page page-center">
+            <div class="container-tight">
+        <ELEMENTS.Controls.Security.Registration />
 
-
-
-
+            </div>
+        </div>
+    }
+}
 
 @code {
+
+    [Parameter]
+    public string View { get; set; } = string.Empty;
 
 }

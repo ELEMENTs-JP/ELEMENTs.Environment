@@ -6,9 +6,13 @@
 <ELEMENTS.Controls.Interface.WebsiteLayout>
 
     <Header>
-        <ELEMENTS.Controls.Frontpage.StickyHeader IsSticky="true" />
-        <ELEMENTS.Controls.Frontpage.StickyNavbar IsSticky="true" />
-        <ELEMENTS.Controls.Frontpage.StickySubNavbar IsSticky="true" />
+        <ELEMENTS.Controls.Frontpage.StickyHeader IsSticky="true" >
+            <SecurityContent>
+                <ELEMENTS.Controls.Security.SecurityMenu Entries="@SecurityEntries" />
+            </SecurityContent>
+        </ELEMENTS.Controls.Frontpage.StickyHeader>
+        <ELEMENTS.Controls.Frontpage.StickyNavbar IsSticky="false" />
+        <ELEMENTS.Controls.Frontpage.StickySubNavbar IsSticky="false" />
 
     </Header>
     <ChildContent>
@@ -30,9 +34,14 @@
     private IFooter DTO { get; set; }
     private List<NavigationEntry> Entries { get; set; } = new List<NavigationEntry>();
 
+    public List<MenuEntry> SecurityEntries { get; set; } = new List<MenuEntry>();
+
     protected override void OnInitialized()
     {
         base.OnInitialized();
+
+        SecurityEntries.Add(new MenuEntry() { Title = "Anmeldung", Link = "/security/login" });
+        SecurityEntries.Add(new MenuEntry() { Title = "Registrierung", Link = "/security/register" });
 
         DTO = new Footer();
 
@@ -69,7 +78,7 @@
             Console.WriteLine("FAIL: " + ex.Message);
         }
 
-        // Entries
+        // Entries 
         Entries.Add(new NavigationEntry() { Title = "Bootstrap", Link = "bootstrap", Icon = "<i class='fas fa-angle-double-right'></i>" });
         Entries.Add(new NavigationEntry() { Title = "Tabler.IO", Link = "tabler", Icon = "<i class='fas fa-angle-double-right'></i>" });
         Entries.Add(new NavigationEntry() { Title = "Navigation", Link = "/navigation", Icon = "<i class='fas fa-angle-double-right'></i>" });

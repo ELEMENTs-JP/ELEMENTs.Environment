@@ -6,15 +6,12 @@
         <ELEMENTS.Controls.Interface.MobileNavbar Repository="@Repository" />
     </Sidebar>
     <Header>
-        <div class="row">
-            <div class="col-2">
-
-            </div>
-            <div class="col-8">
+        <div class="row d-flex align-items-center">
+            <div class="col">
                 <ELEMENTS.Controls.Navigation.WebsiteNavigation Repository="@Repository" />
             </div>
-            <div class="col-2">
-
+            <div class="col-auto">
+                <ELEMENTS.Controls.Security.SecurityMenu Entries="@SecurityEntries" />
             </div>
         </div>
     
@@ -36,9 +33,14 @@
     private IFooter DTO { get; set; }
     private List<NavigationEntry> Entries { get; set; } = new List<NavigationEntry>();
 
+    public List<MenuEntry> SecurityEntries { get; set; } = new List<MenuEntry>();
+
     protected override void OnInitialized()
     {
         base.OnInitialized();
+
+        SecurityEntries.Add(new MenuEntry() { Title = "Anmeldung", Link = "/security/login" });
+        SecurityEntries.Add(new MenuEntry() { Title = "Registrierung", Link = "/security/register" });
 
         DTO = new Footer();
 

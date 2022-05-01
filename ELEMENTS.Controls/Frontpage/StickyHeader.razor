@@ -1,22 +1,27 @@
 ﻿
 
 <header style="@(((IsSticky == true) ? " position: sticky; top: 0px; z-index:1; " : ""))" class="@HeaderCSS">
-    <div class="row">
+    <div class="row d-flex align-items-center">
         @if (LogoContent != null)
         {
             <div class="col-auto">@LogoContent</div>
         }
 
-        <div class="col-auto">@Title</div>
+        <div class="col">@Title</div>
 
         @if (NavigationContent != null)
-        { 
+        {
             <div class="col">@NavigationContent</div>
         }
 
         @if (SearchContent != null)
-        { 
+        {
             <div class="col-auto">@SearchContent</div>
+        }
+
+        @if (SecurityContent != null)
+        {
+            <div class="col-auto">@SecurityContent</div>
         }
     </div>
 </header>
@@ -31,6 +36,9 @@
 
     [Parameter]
     public RenderFragment SearchContent { get; set; }
+
+    [Parameter]
+    public RenderFragment SecurityContent { get; set; }
 
     [Parameter]
     public string Title { get; set; } = "Title of the website";

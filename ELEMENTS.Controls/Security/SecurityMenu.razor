@@ -1,0 +1,50 @@
+﻿
+<div class="nav-item dropdown">
+    <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="menu">
+ 
+        @if (string.IsNullOrEmpty(Icon))
+        {
+            <i class="fas fa-shield-alt"></i>
+        }
+        else
+        { 
+            @((MarkupString)Icon)
+        }
+
+        <div class="d-none d-xl-block ps-2">
+            <div class="fw-bold">@Title</div>
+            <div class="mt-1 small text-muted">@SubTitle</div>
+        </div>
+    </a>
+    <div class="dropdown-menu dropdown-menu-start dropdown-menu-arrow">
+        <div class="px-2 pt-2 fw-bold">@Title</div>
+        <div class="px-2 mb-1 small text-muted">@SubTitle</div>
+        <div class="dropdown-divider"></div>
+
+        @foreach (MenuEntry entry in Entries)
+        {
+            <a href="@entry.Link" class="dropdown-item">@entry.Title</a>
+        }
+
+    </div>
+</div>
+
+
+
+@code {
+
+
+
+    [Parameter]
+    public string Icon { get; set; } = string.Empty;
+
+    [Parameter]
+    public string Title { get; set; } = "Security";
+
+    [Parameter]
+    public string SubTitle { get; set; } = "Login and registration";
+
+    [Parameter]
+    public List<MenuEntry> Entries { get; set; } = new List<MenuEntry>();
+
+}
