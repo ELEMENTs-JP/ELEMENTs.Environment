@@ -215,15 +215,32 @@ else
     }
     private void AddItem(string title, string content)
     {
-        Items.Add(new DTO()
+        if (View.ToLower().Contains("kanban"))
         {
-            GUID = Guid.NewGuid(),
-            MasterGUID = Guid.NewGuid(),
-            Title = title,
-            Content = content,
-            Properties = new List<IProperty>() { new PropertyDTO() { GUID = Guid.NewGuid(), MasterGUID = Guid.NewGuid(), Value = "Regular", Name = "Row" },
+            Items.Add(new DTO()
+            {
+                GUID = Guid.NewGuid(),
+                MasterGUID = Guid.NewGuid(),
+                Title = title,
+                Content = content,
+                Properties = new List<IProperty>() { new PropertyDTO() { GUID = Guid.NewGuid(), MasterGUID = Guid.NewGuid(), Value = "Kanban", Name = "Row" },
+                new PropertyDTO() { GUID = Guid.NewGuid(), MasterGUID = Guid.NewGuid(), Value = "in Refinement", Name = "Column" }, }
+            });
+        }
+        else
+        {
+            Items.Add(new DTO()
+            {
+                GUID = Guid.NewGuid(),
+                MasterGUID = Guid.NewGuid(),
+                Title = title,
+                Content = content,
+                Properties = new List<IProperty>() { new PropertyDTO() { GUID = Guid.NewGuid(), MasterGUID = Guid.NewGuid(), Value = "Regular", Name = "Row" },
                 new PropertyDTO() { GUID = Guid.NewGuid(), MasterGUID = Guid.NewGuid(), Value = "in Test", Name = "Column" }, }
-        });
+            });
+        }
+
+
 
         EntryTitle = string.Empty;
     }
