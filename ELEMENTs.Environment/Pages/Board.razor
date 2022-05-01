@@ -1,6 +1,6 @@
 ﻿@page "/Board"
 @page "/Board/{View}"
-
+@inject IJSRuntime JS
 
 
 @if (string.IsNullOrEmpty(View))
@@ -11,23 +11,24 @@ else
 {
     @if (View.ToLower().Contains("backlog"))
     {
-        <ELEMENTS.Controls.Board.Backlog Columns="@Columns" Rows="@Rows" Items="@Items" />
+        <ELEMENTS.Controls.Board.Backlog Columns="@Columns" Rows="@Rows" Items="@Items"
+                                         ItemChanged="@( e => { Message = "Item Changed"; }  )"
+                                         ItemAdded="@(e => { Message = "Item Added"; })"
+                                         SortOrderChanged="@( e => { Message = "Sort Order Changed"; 
+                                                                  JS.InvokeVoidAsync("alert", "Sort Order changed");   } )" />
 
         <div class="mt-3 mb-3"></div>
+        <p>@Message</p>
     }
 }
-
-
-
-
-
-
 
 
 @code
 {
     [Parameter]
     public string View { get; set; } = string.Empty;
+
+    string Message = string.Empty;
 
     List<IDTO> Columns { get; set; } = new List<IDTO>();
     List<IDTO> Rows { get; set; } = new List<IDTO>();

@@ -1,14 +1,24 @@
 ﻿@using System.Linq
+@using System.Text.Json;
 @inject IJSRuntime JS
-
+@implements IDisposable
 
 <div class="container-fluid">
     <div class="card">
 
         @if (!string.IsNullOrEmpty(Title))
         {
-            <div class="card-header">
-                <h2 class="h2">@Title</h2>
+            <div class="card-header bg-light border-bottom p-3">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <div class="page-pretitle">
+                            @BoardType.ToSecureString()
+                        </div>
+                        <h2 class="page-title">
+                            @Title.ToSecureString()
+                        </h2>
+                    </div>
+                </div>
             </div>
         }
 
@@ -80,7 +90,10 @@
 
     // Properties
     [Parameter]
-    public string Title { get; set; } = "Backlog";
+    public string Title { get; set; } = "Product";
+
+    [Parameter]
+    public string BoardType { get; set; } = "Backlog";
 
     [Parameter]
     public List<IDTO> Columns { get; set; } = new List<IDTO>();
@@ -120,6 +133,60 @@
         }
     }
 
+    // JS Methods
+    [JSInvokable]
+    public async void OnSortOrderChanged(JsonElement json)
+    {
+        try
+        {
+            // string div = json.GetProperty("DIV").GetString();
+            await SortOrderChanged.InvokeAsync("OK");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("FAIL: " + ex.Message);
+        }
+
+    }
+
+    [JSInvokable]
+    public async void OnItemAdded(JsonElement json)
+    {
+        try
+        {
+            // string div = json.GetProperty("DIV").GetString();
+            await ItemAdded.InvokeAsync("OK");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("FAIL: " + ex.Message);
+        }
+    }
+
+    [JSInvokable]
+    public async void OnItemChanged(JsonElement json)
+    {
+        try
+        {
+            // string div = json.GetProperty("DIV").GetString();
+            await ItemChanged.InvokeAsync("OK");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("FAIL: " + ex.Message);
+        }
+    }
+
+    // Callback 
+    [Parameter]
+    public EventCallback<string> ItemChanged { get; set; }
+
+    [Parameter]
+    public EventCallback<string> ItemAdded { get; set; }
+
+    [Parameter]
+    public EventCallback<string> SortOrderChanged { get; set; }
+
     // Events
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -129,6 +196,39 @@
         {
             // assign dragdrop
             await Assign();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("FAIL: " + ex.Message);
+        }
+    }
+
+    // Dispose
+    public async ValueTask DisposeAsync()
+    {
+        try
+        {
+            if (module.IsValueCreated)
+            {
+                var dispo = await module.Value;
+                await dispo.DisposeAsync();
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("FAIL: " + ex.Message);
+        }
+    }
+
+    public void Dispose()
+    {
+        try
+        {
+            if (module.IsValueCreated)
+            {
+                var dispo = module.Value;
+                dispo.Dispose();
+            }
         }
         catch (Exception ex)
         {

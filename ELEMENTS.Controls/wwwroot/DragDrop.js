@@ -11,7 +11,7 @@ export function assignMultipleSortableJS(containerClass, draggableClass, dotNetH
             if (ele === null || ele === undefined)
                 continue;
 
-            assignSortableJS(ele, draggableClass)
+            assignSortableJS(ele, draggableClass, dotNetHelper)
         }
     }
     catch (e)
@@ -19,11 +19,11 @@ export function assignMultipleSortableJS(containerClass, draggableClass, dotNetH
         alert(e);
     }
 }
-function assignSortableJS(containerElement, dragabbleClass)
+function assignSortableJS(containerElement, dragabbleClass, dotNetHelper)
 {
     try {
 
-
+        // Init 
         var sortableDiv = new Sortable(containerElement, {
             group: 'shared',
             sort: true,  // sorting inside list
@@ -32,7 +32,7 @@ function assignSortableJS(containerElement, dragabbleClass)
             touchStartThreshold: 0, // px, how many pixels the point should move before cancelling a delayed drag event
             disabled: false, // Disables the sortable if set to true.
             store: null,  // @see Store
-            animation: 90,  // ms, animation speed moving items when sorting, `0` — without animation
+            animation: 60,  // ms, animation speed moving items when sorting, `0` — without animation
             easing: "cubic-bezier(1, 0, 0, 1)", // Easing for animation. Defaults to null. See https://easings.net/ for examples.
             handle: ".grab",  // Drag handle selector within list items
             draggable: "." + dragabbleClass,  // Specifies which items inside the element should be draggable
@@ -94,7 +94,7 @@ function assignSortableJS(containerElement, dragabbleClass)
                         let rowitemtype = getAttributeValue(item, "data-rowitemtype");
 
                         // Create Parameter 
-                        let jP = {
+                        let jsonParameter = {
                             "GUID": id,
                             "ItemType": itemtype,
                             "PPID": ppid,
@@ -102,9 +102,27 @@ function assignSortableJS(containerElement, dragabbleClass)
                             "SortOrder": sortorder,
                         };
 
-                        DotNet.invokeMethodAsync('tsp.Vision.Components', 'UpdateSortOrder', jP).then(data => {
-                            Message('Sorting gespeichert');
-                        });
+                        //try {
+
+                        //    dotNetHelper.invokeMethodAsync('OnSortOrderChanged', jsonParameter).then(data => {
+
+                        //        console.log(data);
+                        //    });
+                        //}
+                        //catch (e) {
+                        //    console.log("FAIL: " + e);
+                        //}
+
+                        try {
+
+                            dotNetHelper.invokeMethodAsync('OnItemChanged', jsonParameter).then(data => {
+
+                                console.log(data);
+                            });
+                        }
+                        catch (e) {
+                            console.log("FAIL: " + e);
+                        }
 
                     }
 
@@ -142,7 +160,7 @@ function assignSortableJS(containerElement, dragabbleClass)
                     let rowitemtype = getAttributeValue(item, "data-rowitemtype");
 
                     // Create Parameter 
-                    let jP = {
+                    let jsonParameter = {
                         "GUID": id,
                         "ItemType": itemtype,
                         "PPID": ppid,
@@ -154,9 +172,27 @@ function assignSortableJS(containerElement, dragabbleClass)
                         "RowItemType": rowitemtype,
                     };
 
-                    DotNet.invokeMethodAsync('tsp.Vision.Components', 'AssignItmToGrid', jP).then(data => {
-                        Message('Status gespeichert');
-                    });
+                    //try {
+
+                    //    dotNetHelper.invokeMethodAsync('OnSortOrderChanged', jsonParameter).then(data => {
+
+                    //        console.log(data);
+                    //    });
+                    //}
+                    //catch (e) {
+                    //    console.log("FAIL: " + e);
+                    //}
+
+                    try {
+
+                        dotNetHelper.invokeMethodAsync('OnItemAdded', jsonParameter).then(data => {
+
+                            console.log(data);
+                        });
+                    }
+                    catch (e) {
+                        console.log("FAIL: " + e);
+                    }
                 }
                 catch (e) {
                     alert(e);
@@ -191,7 +227,7 @@ function assignSortableJS(containerElement, dragabbleClass)
                     let rowitemtype = getAttributeValue(item, "data-rowitemtype");
 
                     // Create Parameter 
-                    let jP = {
+                    let jsonParameter = {
                         "GUID": id,
                         "ItemType": itemtype,
                         "PPID": ppid,
@@ -203,9 +239,34 @@ function assignSortableJS(containerElement, dragabbleClass)
                         "RowItemType": rowitemtype,
                     };
 
-                    DotNet.invokeMethodAsync('tsp.Vision.Components', 'AssignItmToGrid', jP).then(data => {
-                        alert('Sorting gespeichert');
-                    });
+
+
+
+
+                    try {
+
+                        dotNetHelper.invokeMethodAsync('OnSortOrderChanged', jsonParameter).then(data => {
+
+                            console.log(data);
+                        });
+                    }
+                    catch (e) {
+                        console.log("FAIL: " + e);
+                    }
+
+                    //try {
+
+                    //    dotNetHelper.invokeMethodAsync('OnItemChanged', jsonParameter).then(data => {
+
+                    //        console.log(data);
+                    //    });
+                    //}
+                    //catch (e) {
+                    //    console.log("FAIL: " + e);
+                    //}
+
+
+
                 }
                 catch (e)
                 {
