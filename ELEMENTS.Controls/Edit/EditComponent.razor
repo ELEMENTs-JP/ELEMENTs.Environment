@@ -1,12 +1,12 @@
 ﻿
-<label class="form-label">@Title</label>
+<label class="form-label">@Field.Title </label>
 
-@if (Type == EditFieldType.Text)
+@if (Field.Type == EditFieldType.Text)
 {
     <p class="lead">@Value.ToSecureString()</p>
 }
 
-@if (Type == EditFieldType.TextBox)
+@if (Field.Type == EditFieldType.TextBox)
 {
     <input type="text"
            @bind-value="Value"
@@ -16,13 +16,18 @@
            @onchange="@( e => { TextValueChanged(); })" />
 }
 
-@if (Type == EditFieldType.TextArea)
+@if (Field.Type == EditFieldType.TextArea)
 {
     <textarea style="min-height:120px;"
           class="@ControlCSS"
           placeholder="@Placeholder"
           @oninput="@(e => { Value = e.Value.ToSecureString(); TextValueChanged(); })"
           rows="6">@Value</textarea>
+}
+
+@if (!string.IsNullOrEmpty(Field.Description))
+{ 
+    <p class="lead"><small class="text-muted">@Field.Description.ToSecureString()</small></p>
 }
 
 @code {
@@ -40,14 +45,12 @@
     [Parameter]
     public string Placeholder { get; set; } = string.Empty;
 
-    [Parameter]
-    public string Title { get; set; } = string.Empty;
 
     [Parameter]
     public string Value { get; set; } = string.Empty;
 
     [Parameter]
-    public EditFieldType Type { get; set; } = EditFieldType.TextBox;
+    public EditField Field { get; set; } 
 
     /// <summary>
     /// Reacts when the Value property of the control is changed.

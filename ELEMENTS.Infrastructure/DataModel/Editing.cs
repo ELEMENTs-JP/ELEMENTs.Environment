@@ -9,6 +9,7 @@ namespace ELEMENTS.Infrastructure
     public class EditField
     {
         public string Title { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
         public string ColumnCSSClass { get; set; } = "col";
         public EditFieldType Type { get; set; } = EditFieldType.TextBox;
 

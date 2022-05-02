@@ -6,7 +6,7 @@
         @foreach (EditField field in Fields)
         { 
             <div class="@field.ColumnCSSClass">
-                <EditComponent Title="@field.Title" Type="@field.Type" />
+                <EditComponent Field="@field" />
             </div>
         }
 
