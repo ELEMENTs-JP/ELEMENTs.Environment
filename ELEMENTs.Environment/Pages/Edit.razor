@@ -11,7 +11,11 @@
         <ELEMENTS.Controls.Collection.AddItem Title="Eintrag hinzufügen"
                                               FieldHeader="Bezeichnung" Repository="@AddRepo" />
     </HeaderContent>
+    <ChildContent>
+        <ELEMENTS.Controls.Edit.EditArea Fields="@Fields">
 
+        </ELEMENTS.Controls.Edit.EditArea>
+    </ChildContent>
 </ELEMENTS.Controls.Layouts.ViewPageLayout>
 
 @code {
@@ -25,6 +29,7 @@
 
     private IAddItemRepository AddRepo = new AddItemRepository();
     private IEditItemRepository EditRepository = new EditItemRepository();
+    private List<EditField> Fields { get; set; } = new List<EditField>();
 
     private string Title = string.Empty;
 
@@ -41,12 +46,15 @@
             EditRepository.Service = sql;
 
             if (!string.IsNullOrEmpty(GUID))
-            { 
+            {
                 EditRepository.ItemGUID = new Guid(GUID);
             }
 
             EditRepository.Init();
         }
+
+        // Edit Fields 
+        SetFields();
     }
 
     protected override void OnParametersSet()
@@ -55,12 +63,23 @@
 
         if (EditRepository != null)
         {
-
             if (EditRepository.DTO != null)
             {
                 Title = EditRepository.DTO.Title;
             }
         }
+    }
+
+    private void SetFields()
+    {
+        Fields = new List<EditField>();
+
+        Fields.Add(new EditField() { Title = "ID", ColumnCSSClass = "col-4" });
+        Fields.Add(new EditField() { Title = "Title", ColumnCSSClass = "col-4" });
+        Fields.Add(new EditField() { Title = "Position", ColumnCSSClass = "col-4" });
+
+        Fields.Add(new EditField() { Title = "Name", ColumnCSSClass = "col-6" });
+        Fields.Add(new EditField() { Title = "Vorname", ColumnCSSClass = "col-6" });
     }
 
 }

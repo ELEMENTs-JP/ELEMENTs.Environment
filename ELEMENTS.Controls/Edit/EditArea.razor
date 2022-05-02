@@ -1,0 +1,22 @@
+﻿
+<div class="border bg-white p-3">
+
+    <div class="row">
+
+        @foreach (EditField field in Fields)
+        { 
+            <div class="@field.ColumnCSSClass">
+                <EditComponent Title="@field.Title" />
+            </div>
+        }
+
+    </div>
+</div>
+
+
+@code {
+
+    [Parameter]
+    public List<EditField> Fields { get; set; } = new List<EditField>();
+
+}
