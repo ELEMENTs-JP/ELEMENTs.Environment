@@ -74,12 +74,12 @@
     {
         Fields = new List<EditField>();
 
-        Fields.Add(new EditField() { Title = "ID", ColumnCSSClass = "col-4" });
-        Fields.Add(new EditField() { Title = "Title", ColumnCSSClass = "col-4" });
-        Fields.Add(new EditField() { Title = "Position", ColumnCSSClass = "col-4" });
+        Fields.Add(new EditField() { Title = "ID", ColumnCSSClass = "col-4", Type = EditFieldType.TextBox });
+        Fields.Add(new EditField() { Title = "Title", ColumnCSSClass = "col-4", Type = EditFieldType.TextBox });
+        Fields.Add(new EditField() { Title = "Position", ColumnCSSClass = "col-4", Type = EditFieldType.TextBox });
 
-        Fields.Add(new EditField() { Title = "Name", ColumnCSSClass = "col-6" });
-        Fields.Add(new EditField() { Title = "Vorname", ColumnCSSClass = "col-6" });
+        Fields.Add(new EditField() { Title = "Name", ColumnCSSClass = "col-6", Type = EditFieldType.TextBox });
+        Fields.Add(new EditField() { Title = "Vorname", ColumnCSSClass = "col-6", Type = EditFieldType.TextBox });
     }
 
 }

@@ -10,6 +10,15 @@ namespace ELEMENTS.Infrastructure
     {
         public string Title { get; set; } = string.Empty;
         public string ColumnCSSClass { get; set; } = "col";
-        
+        public EditFieldType Type { get; set; } = EditFieldType.TextBox;
+
+    }
+
+    public enum EditFieldType
+    { 
+        NULL = 0,
+
+        Text = 1,
+        TextBox = 10,
     }
 }
