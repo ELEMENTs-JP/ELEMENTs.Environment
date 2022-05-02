@@ -20,5 +20,6 @@ namespace ELEMENTS.Infrastructure
 
         Text = 1,
         TextBox = 10,
+        TextArea = 11,
     }
 }

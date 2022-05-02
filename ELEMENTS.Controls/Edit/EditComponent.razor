@@ -5,6 +5,7 @@
 {
     <p class="lead">@Value.ToSecureString()</p>
 }
+
 @if (Type == EditFieldType.TextBox)
 {
     <input type="text"
@@ -13,6 +14,15 @@
            placeholder="@Placeholder"
            @bind-value:event="oninput"
            @onchange="@( e => { TextValueChanged(); })" />
+}
+
+@if (Type == EditFieldType.TextArea)
+{
+    <textarea style="min-height:120px;"
+          class="@ControlCSS"
+          placeholder="@Placeholder"
+          @oninput="@(e => { Value = e.Value.ToSecureString(); TextValueChanged(); })"
+          rows="6">@Value</textarea>
 }
 
 @code {
