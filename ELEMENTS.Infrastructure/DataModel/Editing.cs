@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace ELEMENTS.Infrastructure
 {
+    public interface IEditInterfaceRepository
+    {
+        List<EditField> Fields { get; set; }
+    }
     public class EditField
     {
         public string Title { get; set; } = string.Empty;
