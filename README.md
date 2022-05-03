@@ -46,6 +46,15 @@ For the implementation of the ChartJS charts we used the following link to the s
 ```
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 ```
+
+## Edit UI
+With the "Edit Interface" we want to create possibilities to quickly and easily generate user interfaces with which data sets can be edited. Maybe you know this. You have to bind every single control, textbox, textarea, etc. individually to the repository and apply conversions or any checks each time. With the "Edit Interface" we would like to introduce a simpler and much faster methodology here. We have learned a lot about data binding from past projects and how to implement this in Blazor. Currently, the "Edit Interface" is still in a development stage. But we will continue to work on it and are sure that within a short time a few repositories and different controls will be usable.
+
+### What is included and what is not included?
+The big goal is of course the one "button" with which everything is possible. But you know yourself that this is relatively difficult. Basically, let's start with text boxes, headings and descriptions for individual text fields. Then we go on. The real goal is that we manage to minimize the workload for developers by working with json declaration files but also different templates.
+
+![Edit_UI_Interface](https://raw.githubusercontent.com/ELEMENTs-JP/the-ELEMENTs-Environment/master/ELEMENTs.Environment/Screenshots/Edit_Interface.png)
+
 ## Drag & drop user interfaces
 With the drag & drop user interfaces you can develop your own applications like Backlog or Kanban tools. We use the external library Sortable.JS for the drag & drop user interfaces. We have made good experiences with it. However, you have to integrate the external library yourself. Of course you can also look at the code and map the corresponding functionalities. At the beginning you will not see so many features. Maybe there are still some bugs in it. Please report them to us and tell us where you found a bug. We basically start with a simple backlog and a Kanban drag & drop user interface. But we will extend these user interfaces significantly over time and also attach repositories. This will give you the possibility to use the user interfaces with the ELEMENTs GO data framework.
 
