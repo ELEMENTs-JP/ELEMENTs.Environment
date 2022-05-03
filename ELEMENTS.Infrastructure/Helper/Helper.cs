@@ -306,5 +306,51 @@ namespace ELEMENTS.Infrastructure
                 return DateTime.Now;
             }
         }
+
+
+        public static string SplitGetFirst(this string text, string separator = "-")
+        {
+            List<char> cs = new List<char>();
+            if (separator.Length > 1)
+            {
+                foreach (char c in separator)
+                {
+                    cs.Add(c);
+                }
+                return text.Split(cs.ToArray(), StringSplitOptions.RemoveEmptyEntries)[0];
+            }
+            return text.Split(new string[] { separator }, StringSplitOptions.RemoveEmptyEntries)[0];
+        }
+
+        public static string[] SplitByDefault(this string text, string[] separators = null)
+        {
+            separators = separators ?? new string[] { ",", ".", ";", ";", "#", "-", "_", "+", "*", "?", "!", "@", "&", "%", " " };
+
+            try
+            {
+                if (text == null)
+                {
+                    return new string[] { };
+                }
+
+                return text.Split(separators, StringSplitOptions.RemoveEmptyEntries);
+            }
+            catch (Exception ex)
+            {
+                return new string[] { };
+            }
+        }
+        public static string[] SplitByLineBreak(this string text)
+        {
+            string lineSeparator = ((char)0x2028).ToString();
+            string paragraphSeparator = ((char)0x2029).ToString();
+
+            string _1 = "\r\n";
+            string _2 = "\n";
+            string _3 = "\r";
+
+            string[] splits = text.Split(new string[] { lineSeparator, paragraphSeparator, _1, _2, _3 }, StringSplitOptions.RemoveEmptyEntries);
+            return splits;
+        }
     }
 }

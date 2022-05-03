@@ -1,0 +1,133 @@
+﻿@using System
+@using System.Text
+
+
+
+<div class="container-flex">
+
+    <div class="card">
+        <div class="bg-light border-bottom p-3">
+            <div class="row align-items-center">
+                <div class="col">
+                    <div class="page-pretitle">Import-Tool</div>
+                    <h2 class="page-title">Data-Import</h2>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <label class="form-label">Title</label>
+                <div class="col-10">Die 1. Zeile der zu importierenden Datei enthält die Spaltenköpfe?</div>
+                <div class="col-2">
+                    <input class="form-check-input" type="checkbox"
+                           value="@FirstRowHeader"
+                           @onchange="@( e => { FirstRowHeader = ConvertToSecureBool(e.Value); })" />
+                </div>
+            </div>
+
+            <div class="row">
+                <label class="form-label">Trennzeichen</label>
+                <div class="col-10">Das Trennzeichen gibt an, mit welchem Zeichen Spalten voneinander unterschieden werden.</div>
+                <div class="col-2"><input type="text" class="form-control form-control-sm" value=";" /></div>
+            </div>
+
+            <div class="row">
+                <label class="form-label">Neue Zeile</label>
+                <div class="col-12">Zeilen werden automatisch aufgrund des Zeilenumbruches erkannt.</div>
+            </div>
+
+            <div class="row">
+                <label class="form-label">Textzeichen</label>
+                <div class="col-10">Das Symbol für Texte wird anhand des Anführungszeichen identifiziert.</div>
+                <div class="col-2"><input type="text" class="form-control form-control-sm" value="@( "" )" /></div>
+            </div>
+
+            <div class="row">
+                <label class="form-label">Dateiupload</label>
+                <div class="col">
+
+
+                    <InputFile OnChange="LoadFiles"
+                               class="form-control"
+                               style="height: 36px !important;"></InputFile>
+                </div>
+            </div>
+
+            @if (!string.IsNullOrEmpty(TextContent))
+            {
+                <div class="row">
+                    <div class="col py-2">
+                        <div>
+                            @TextContent
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="card-footer bg-light">
+
+        </div>
+    </div>
+
+</div>
+
+@code {
+
+    [Parameter]
+    public int MaxAllowedFiles { get; set; } = 1;
+    private long defaultFileSizeInBytes = 1024 * 1024 * 50;
+    private string TextContent { get; set; } = string.Empty;
+
+    private bool FirstRowHeader { get; set; } = false;
+
+    bool ConvertToSecureBool(object obj)
+    {
+        try
+        {
+            return Convert.ToBoolean(obj);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("FAIL: " + ex.Message);
+        }
+        return false;
+    }
+
+    private async Task LoadFiles(InputFileChangeEventArgs e)
+    {
+        try
+        {
+            DataImport = new DataImport();
+
+            // https://docs.microsoft.com/de-de/aspnet/core/blazor/file-uploads?view=aspnetcore-6.0&pivots=server
+            foreach (Microsoft.AspNetCore.Components.Forms.IBrowserFile file in e.GetMultipleFiles(MaxAllowedFiles))
+            {
+                try
+                {
+                    if (file != null)
+                    {
+                        using (var ms = new MemoryStream())
+                        {
+                            await file.OpenReadStream(defaultFileSizeInBytes).CopyToAsync(ms);
+                            var fileBytes = ms.ToArray();
+                            
+                            DataImport.ReadData(Encoding.Default.GetString(fileBytes));
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("FAIL: " + ex.Message);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("FAIL: " + ex.Message);
+        }
+    }
+
+    private IDataImport DataImport { get; set; } = new DataImport();
+
+
+}

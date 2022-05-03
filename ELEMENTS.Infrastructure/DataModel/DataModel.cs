@@ -75,6 +75,7 @@ namespace ELEMENTS.Infrastructure
         public string FullFilePath { get; set; }
         public Guid FileGUID { get; set; }
         public string OriginalFileName { get; set; }
+        public string FileTextContent { get; set; }
     }
     public class FileNotificationService
     {
