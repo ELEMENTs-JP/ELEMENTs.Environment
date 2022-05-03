@@ -12,10 +12,10 @@ namespace ELEMENTs
 
         public CustomerRepository()
         {
-            SetFields();
+            Init();
         }
 
-        private void SetFields()
+        public void Init()
         {
             Fields = new List<EditField>();
             Fields.Clear();
