@@ -11,6 +11,10 @@
                 <ELEMENTS.Controls.Navigation.WebsiteNavigation Repository="@Repository" />
             </div>
             <div class="col-auto">
+                <ELEMENTS.Controls.Popup.MenuPopup Entries="@AdminEntries"
+                    Title="Administration" SubTitle="Administration"  />
+            </div>
+            <div class="col-auto">
                 <ELEMENTS.Controls.Security.SecurityMenu Entries="@SecurityEntries" />
             </div>
         </div>
@@ -34,14 +38,49 @@
     private List<NavigationEntry> Entries { get; set; } = new List<NavigationEntry>();
 
     public List<MenuEntry> SecurityEntries { get; set; } = new List<MenuEntry>();
+    public List<MenuEntry> AdminEntries { get; set; } = new List<MenuEntry>();
 
     protected override void OnInitialized()
     {
         base.OnInitialized();
 
+        DefaultNavigation();
+        BuildSecurityNavigation();
+        BuildAdminNavigation();
+        BuildNavigationRepository();
+        BuildFooter();
+    }
+
+    private void BuildNavigationRepository()
+    {
+        try
+        {
+            NavigationRepository repository = NavigationRepository.Load();
+
+            repository.Title = (string.IsNullOrEmpty(repository.Title)) ? "Navigation" : repository.Title;
+            repository.Text = (string.IsNullOrEmpty(repository.Text)) ? "" : repository.Text;
+
+            Repository = repository;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("FAIL: " + ex.Message);
+        }
+    }
+    private void BuildSecurityNavigation()
+    {
         SecurityEntries.Add(new MenuEntry() { Title = "Anmeldung", Link = "/security/login" });
         SecurityEntries.Add(new MenuEntry() { Title = "Registrierung", Link = "/security/register" });
+    }
 
+    private void BuildAdminNavigation()
+    {
+        AdminEntries.Add(new MenuEntry() { Title = "Datenbank", Link = "/database/db" });
+        AdminEntries.Add(new MenuEntry() { Title = "Import", Link = "/database/import" });
+    }
+
+    private void BuildFooter()
+    {
         DTO = new Footer();
 
         List<FooterGroup> Groups = new List<FooterGroup>();
@@ -61,22 +100,10 @@
             Groups.Add(fg);
         }
         DTO.Groups = Groups;
+    }
 
-
-        try
-        {
-            NavigationRepository repository = NavigationRepository.Load();
-
-            repository.Title = (string.IsNullOrEmpty(repository.Title)) ? "Navigation" : repository.Title;
-            repository.Text = (string.IsNullOrEmpty(repository.Text)) ? "" : repository.Text;
-
-            Repository = repository;
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine("FAIL: " + ex.Message);
-        }
-
+    private void DefaultNavigation()
+    {
         // Entries 
         Entries.Add(new NavigationEntry() { Title = "Bootstrap", Link = "bootstrap", Icon = "<i class='fas fa-angle-double-right'></i>" });
         Entries.Add(new NavigationEntry() { Title = "Tabler.IO", Link = "tabler", Icon = "<i class='fas fa-angle-double-right'></i>" });
@@ -89,5 +116,6 @@
         Entries.Add(new NavigationEntry() { Title = "Help UI", Link = "help", Icon = "<i class='fas fa-angle-double-right'></i>" });
         Entries.Add(new NavigationEntry() { Title = "Security", Link = "security", Icon = "<i class='fas fa-angle-double-right'></i>" });
         Entries.Add(new NavigationEntry() { Title = "Terms", Link = "terms", Icon = "<i class='fas fa-angle-double-right'></i>" });
+
     }
 }

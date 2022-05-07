@@ -37,12 +37,6 @@
             </div>
 
             <div class="row">
-                <label class="form-label">Textzeichen</label>
-                <div class="col-10">Das Symbol für Texte wird anhand des Anführungszeichen identifiziert.</div>
-                <div class="col-2"><input type="text" class="form-control form-control-sm" value="@( "" )" /></div>
-            </div>
-
-            <div class="row">
                 <label class="form-label">Dateiupload</label>
                 <div class="col">
 
@@ -110,7 +104,7 @@
                         {
                             await file.OpenReadStream(defaultFileSizeInBytes).CopyToAsync(ms);
                             var fileBytes = ms.ToArray();
-                            
+
                             DataImport.ReadData(Encoding.Default.GetString(fileBytes));
                         }
                     }
@@ -118,6 +112,21 @@
                 catch (Exception ex)
                 {
                     Console.WriteLine("FAIL: " + ex.Message);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("FAIL: " + ex.Message);
+        }
+
+        try
+        {
+            foreach (DataRow row in DataImport.Rows)
+            {
+                foreach (DataColumn column in row.Columns)
+                {
+                    TextContent += " --- " + column.Value;
                 }
             }
         }

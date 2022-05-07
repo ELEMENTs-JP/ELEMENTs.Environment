@@ -352,5 +352,34 @@ namespace ELEMENTS.Infrastructure
             string[] splits = text.Split(new string[] { lineSeparator, paragraphSeparator, _1, _2, _3 }, StringSplitOptions.RemoveEmptyEntries);
             return splits;
         }
+        public static string RemoveAtStartEnd(this string text, string start = "", string end = "")
+        {
+
+            try
+            {
+                if (text.StartsWith(start))
+                {
+                    text = text.Substring(start.Length, text.Length - start.Length - 1);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("FAIL: " + ex.Message);
+            }
+
+            try
+            {
+                if (text.EndsWith(end))
+                {
+                    text = text.Substring(text.Length - end.Length - 1, end.Length);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("FAIL: " + ex.Message);
+            }
+
+            return text;
+        }
     }
 }

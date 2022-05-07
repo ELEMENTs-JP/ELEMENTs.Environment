@@ -1,25 +1,45 @@
 ﻿@page "/database"
+@page "/database/{View}"
 
-<div class="row">
-    <div class="col p-3">
-        <ELEMENTS.Controls.Database.DatabaseManager />
-    </div>
-    <div class="col p-3">
-        <ELEMENTS.Controls.Database.DatabaseMigrator />
-    </div>
-</div>
+@if (!string.IsNullOrEmpty(View))
+{
+    @if (View.ToLower().Contains("database") ||
+     View.ToLower().Contains("db"))
+    {
+        <div class="container">
+            <div class="row">
+                <div class="col-12 p-3">
+                    <ELEMENTS.Controls.Database.DatabaseManager />
+                </div>
+                <div class="col-12 p-3">
+                    <ELEMENTS.Controls.Database.DatabaseMigrator />
+                </div>
+                <div class="col-12 p-3">
+                    <ELEMENTS.Controls.Database.CurrentDatabaseVersion />
+                </div>
+            </div>
+        </div>
+    }
 
-<div class="mt-2 mb-2 border-bottom"></div>
+    @if (View.ToLower().Contains("import"))
+    {
+        <div class="container">
+            <div class="row">
+                <div class="col p-3">
+                    <ELEMENTS.Controls.Data.ImportData />
+                </div>
+            </div>
+        </div>
+    }
+}
 
-<div class="row">
-    <div class="col p-3">
-        <ELEMENTS.Controls.Database.CurrentDatabaseVersion />
-    </div>
-    <div class="col p-3">
-        <ELEMENTS.Controls.Data.ImportData />
-    </div>
-</div>
+
+
+
 
 @code {
+
+    [Parameter]
+    public string View { get; set; } = string.Empty;
 
 }
