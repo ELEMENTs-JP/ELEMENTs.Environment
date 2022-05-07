@@ -62,6 +62,7 @@ namespace ELEMENTS.Data.SQLite
     public static partial class FactoryQuery
     {
         private static string tblShort = "s";
+
         // Query 
         public static string GetCreateQuery(IInputDTO input, string tbl)
         {
@@ -279,30 +280,6 @@ namespace ELEMENTS.Data.SQLite
         {
             string sql = string.Empty;
 
-            //// Setting 
-            //if (tbl.ToLower().Contains(ItemType.Setting.ToSecureString().ToLower()))
-            //{
-            //    // Setting 
-            //    sql += "SELECT * FROM  " + tbl + " WHERE " +
-            //        " Name = '" + input.Title + "' AND " +
-            //        " ReferenceID = '" + input.Reference + "' AND " +
-            //        " MasterGUID = '" + input.MasterGUID + "' ";
-
-            //    return sql;
-            //}
-
-            //// Property 
-            //if (tbl.ToLower().Contains(ItemType.Property.ToSecureString().ToLower()))
-            //{
-            //    // Property 
-            //    sql += "SELECT * FROM  " + tbl + " WHERE " +
-            //        " Name = '" + input.Title + "' AND " +
-            //        " RelatedItemGUID = '" + input.Reference + "' AND " +
-            //        " MasterGUID = '" + input.MasterGUID + "' ";
-
-            //    return sql;
-            //}
-
             // Content // Search // Security 
             sql += "SELECT * FROM  " + tbl + " WHERE " +
                 " GUID = '" + input.ItemGUID + "' AND " +
@@ -351,28 +328,6 @@ namespace ELEMENTS.Data.SQLite
 
             return sql;
         }
-        public static string GetModifiedTodayCountQuery(Guid MasterGUID, string tbl, string itemtype)
-        {
-            string sql = "SELECT COUNT(Title) FROM " + tbl + " WHERE MasterGUID = '" + MasterGUID + "' AND ItemType = '" + itemtype + "' ";
-
-            DateTime dt = DateTime.Now.Date;
-
-            //// Date 
-            //if (Helper.DatabaseTyp == tspDatabaseType.SQLServer)
-            //{
-            //    // SQL Server  
-            //    sql += " AND ModifiedAt between '" + dt.Month + "/" + dt.Day + "/" + dt.Year + "' AND '" + dt.Month + "/" + dt.Day + "/" + dt.Year + " 23:59:59.999' ";
-            //}
-    
-
-                // SQLITE 
-                sql += " AND ModifiedAt between '" + dt.Month + "/" + dt.Day + "/" + dt.Year + "' AND '" + dt.Month + "/" + dt.Day + "/" + dt.Year + " 23:59:59.999' ";
-                // sql += " AND ModifiedAt = '" + dt.Month + "/" + dt.Day + "/" + dt.Year + "' ";
-      
-
-            return sql;
-        }
-
 
         // SELECT 
         private static string Select(string table, Guid MasterGUID)
@@ -562,185 +517,7 @@ namespace ELEMENTS.Data.SQLite
 
             return query;
         }
-        private static string SelectAppPermissions(Guid UserGUID, Guid MasterGUID)
-        {
-            string query = string.Empty;
-
-            // TODOD: Permissions Query 
-            query = " SELECT DISTINCT " + tblShort + ".* FROM tbl_SEC_Security AS " + tblShort + " " +
-                                        " INNER JOIN tbl_TEC_Relation AS rP_UG ON(rP_UG.ChildGUID = " + tblShort + ".GUID) " +
-                                        " INNER JOIN tbl_TEC_Relation AS rUG_U ON(rUG_U.ChildGUID = '" + UserGUID + "') " +
-                                        " WHERE s.AppType = 'Security' AND (s.ItemType = 'Permission' OR  s.ItemType = 'License')  " +
-                                        " AND " + tblShort + ".MasterGUID = '" + MasterGUID + "' COLLATE NOCASE ";
-
-            return query;
-        }
-        private static string SelectChangedItemsToday(string table, Guid MasterGUID)
-        {
-            // Check 
-            if (MasterGUID == Guid.Empty)
-                throw new Exception("masterGUID GUID is empty");
-
-            DateTime dt = DateTime.Now.Date;
-
-            // Suche 
-            string query = " SELECT " + tblShort + ".* FROM " + table + " AS " + tblShort + " WHERE " + tblShort + ".MasterGUID = '" + MasterGUID.ToSecureString() + "' ";
-
-            // Date 
-            //if (Helper.DatabaseTyp == tspDatabaseType.SQLServer)
-            //{
-            //    // SQL Server  
-            //    query += " AND ( " + tblShort + ".ModifiedAt between '" + dt.Month + "/" + dt.Day + "/" + dt.Year + "' AND '" + dt.Month + "/" + dt.Day + "/" + dt.Year + " 23:59:59.999' ";
-            //    query += " OR " + tblShort + ".CreatedAt between '" + dt.Month + "/" + dt.Day + "/" + dt.Year + "' AND '" + dt.Month + "/" + dt.Day + "/" + dt.Year + " 23:59:59.999' ) ";
-            //}
-   
-       
-                // SQLITE 
-                query += " AND ( " + tblShort + ".ModifiedAt between '" + dt.Month + "/" + dt.Day + "/" + dt.Year + "' AND '" + dt.Month + "/" + dt.Day + "/" + dt.Year + " 23:59:59.999' ";
-                query += " OR " + tblShort + ".CreatedAt between '" + dt.Month + "/" + dt.Day + "/" + dt.Year + "' AND '" + dt.Month + "/" + dt.Day + "/" + dt.Year + " 23:59:59.999' ) ";
-        
-
-            return query;
-        }
-        private static string SelectNewOrChangedComments(string table, Guid MasterGUID)
-        {
-            // Check 
-            if (MasterGUID == Guid.Empty)
-                throw new Exception("masterGUID GUID is empty");
-
-            DateTime dt = DateTime.Now.Date;
-
-            // Kommentare 
-            string query = " SELECT " + tblShort + ".* FROM " + table + " AS " + tblShort + " WHERE " + tblShort + ".ItemType = 'Comment' AND " + tblShort + ".MasterGUID = '" + MasterGUID.ToSecureString() + "' ";
-
-            // Date 
-            //if (Helper.DatabaseTyp == tspDatabaseType.SQLServer)
-            //{
-            //    // SQL Server  
-            //    query += " AND ( " + tblShort + ".ModifiedAt between '" + dt.Month + "/" + dt.Day + "/" + dt.Year + "' AND '" + dt.Month + "/" + dt.Day + "/" + dt.Year + " 23:59:59.999' ";
-            //    query += " OR " + tblShort + ".CreatedAt between '" + dt.Month + "/" + dt.Day + "/" + dt.Year + "' AND '" + dt.Month + "/" + dt.Day + "/" + dt.Year + " 23:59:59.999' ) ";
-            //}
-        
-                // SQLITE 
-                query += " AND ( " + tblShort + ".ModifiedAt between '" + dt.Month + "/" + dt.Day + "/" + dt.Year + "' AND '" + dt.Month + "/" + dt.Day + "/" + dt.Year + " 23:59:59.999' ";
-                query += " OR " + tblShort + ".CreatedAt between '" + dt.Month + "/" + dt.Day + "/" + dt.Year + "' AND '" + dt.Month + "/" + dt.Day + "/" + dt.Year + " 23:59:59.999' ) ";
-         
-
-            return query;
-        }
-        private static string SelectItemsByTag(string matchcode)
-        {
-            string sql = string.Empty;
-
-            sql += " SELECT DISTINCT s.* FROM tbl_CON_Content AS s ";
-
-            sql += " LEFT JOIN tbl_TEC_Relation AS rC ON (s.GUID = rC.ChildGUID) ";
-            sql += " LEFT JOIN tbl_CON_Content as tag ON (rC.ParentGUID = tag.GUID) ";
-            sql += " LEFT JOIN tbl_TEC_Relation AS rT ON (tag.GUID = rT.ParentGUID) ";
-            sql += " LEFT JOIN tbl_CON_Content as topic ON (rT.ChildGUID = topic.GUID) ";
-
-            sql += " WHERE ( ";
-            sql += " ( tag.Title LIKE '%" + matchcode + "%' ";
-            sql += " OR topic.Title LIKE '%" + matchcode + "%' ";
-            sql += " OR s.Title LIKE '%" + matchcode + "%' ) ";
-            sql += " AND s.ItemType != 'Tag' ) ";
-
-            return sql;
-        }
-        private static string SelectTopicsByTagByItem(Guid itemGUID)
-        {
-            string sql = string.Empty;
-
-            sql += " SELECT DISTINCT s.* FROM tbl_CON_Content AS s ";
-
-            sql += " INNER JOIN tbl_TEC_Relation AS rC ON (s.GUID = rC.ChildGUID) ";
-            sql += " INNER JOIN tbl_CON_Content as tag ON (rC.ParentGUID = tag.GUID) ";
-            sql += " INNER JOIN tbl_TEC_Relation AS rT ON (tag.GUID = rT.ParentGUID) ";
-            sql += " INNER JOIN tbl_CON_Content as item ON (rT.ChildGUID = item.GUID) ";
-
-            sql += " WHERE s.ItemType = 'Tag' AND s.Typ = 'Topic' AND item.GUID = '" + itemGUID.ToSecureString() + "' ";
-
-            return sql;
-        }
-        private static string SelectCategoriesByTagByItem(Guid itemGUID)
-        {
-            string sql = string.Empty;
-
-            sql += " SELECT DISTINCT s.* FROM tbl_CON_Content AS s ";
-
-            sql += " INNER JOIN tbl_TEC_Relation AS rC ON (s.GUID = rC.ChildGUID) ";
-            sql += " INNER JOIN tbl_CON_Content as tag ON (rC.ParentGUID = tag.GUID) ";
-            sql += " INNER JOIN tbl_TEC_Relation AS rT ON (tag.GUID = rT.ParentGUID) ";
-            sql += " INNER JOIN tbl_CON_Content as item ON (rT.ChildGUID = item.GUID) ";
-
-            sql += " WHERE s.ItemType = 'Tag' AND s.Typ = 'Category' AND item.GUID = '" + itemGUID.ToSecureString() + "' ";
-
-            return sql;
-        }
-        private static string SelectUseCasesByTagByItem(Guid itemGUID)
-        {
-            string sql = string.Empty;
-
-            sql += " SELECT DISTINCT s.* FROM tbl_CON_Content AS s ";
-
-            sql += " INNER JOIN tbl_TEC_Relation AS rC ON (s.GUID = rC.ChildGUID) ";
-            sql += " INNER JOIN tbl_CON_Content as tag ON (rC.ParentGUID = tag.GUID) ";
-            sql += " INNER JOIN tbl_TEC_Relation AS rT ON (tag.GUID = rT.ParentGUID) ";
-            sql += " INNER JOIN tbl_CON_Content as item ON (rT.ChildGUID = item.GUID) ";
-
-            sql += " WHERE s.ItemType = 'Tag' AND s.Typ = 'Theme' AND item.GUID = '" + itemGUID.ToSecureString() + "' ";
-
-            return sql;
-        }
-
      
-      
-        //private static string SelectNoContent(string table, ItemType it, Guid MasterGUID)
-        //{
-        //    // Check 
-        //    if (MasterGUID == Guid.Empty)
-        //        throw new Exception("masterGUID GUID is empty");
-
-        //    //if (it == ItemType.NULL)
-        //    //    throw new Exception("ItemType not set");
-
-        //    string query = " SELECT " + tblShort + ".* FROM " + table + " AS " + tblShort + " ";
-        //    query += " WHERE " + tblShort + ".MasterGUID = '" + MasterGUID.ToSecureString() + "' "; // masterGUID 
-        //    query += " AND ( " + tblShort + ".Content IS NULL  OR  " + tblShort + ".Content = '' ) "; // Condition 
-        //    query += " AND ( " + tblShort + ".ItemType = '" + it.ToSecureString() + "' ) "; // ItemType 
-
-        //    return query;
-        //}
-        //private static string SelectNoChildItems(string table, Guid MasterGUID, ItemType it)
-        //{
-        //    // Check 
-        //    if (MasterGUID == Guid.Empty)
-        //        throw new Exception("masterGUID GUID is empty");
-
-        //    string query = " SELECT " + tblShort + ".* FROM " + table + " AS " + tblShort + " ";
-        //    query += " WHERE " + tblShort + ".MasterGUID = '" + MasterGUID.ToSecureString() + "' ";
-        //    query += " ( s.ItemType = '" + it.ToSecureString() + "' )  ";
-        //    return query;
-        //}
-        //private static string SelectParallelItemsByTag(ItemType it, Guid currentItemGUID)
-        //{
-        //    string sql = string.Empty;
-
-        //    sql += " SELECT DISTINCT s.* FROM tbl_CON_Content AS s ";
-
-        //    sql += " INNER JOIN tbl_TEC_Relation AS rC ON (s.GUID = rC.ChildGUID) ";
-        //    sql += " INNER JOIN tbl_CON_Content as tag ON (rC.ParentGUID = tag.GUID) ";
-        //    sql += " INNER JOIN tbl_TEC_Relation AS rT ON (tag.GUID = rT.ParentGUID) ";
-        //    sql += " INNER JOIN tbl_CON_Content as item ON (rT.ChildGUID = item.GUID) ";
-
-        //    sql += " WHERE tag.ItemType = 'Tag' AND tag.Typ = '' ";
-        //    sql += " AND item.GUID = '" + currentItemGUID.ToSecureString() + "' ";
-        //    sql += " AND item.ItemType = '" + it.ToSecureString() + "' ";
-        //    sql += " AND s.GUID <> '" + currentItemGUID.ToSecureString() + "' ";
-
-        //    return sql;
-        //}
-
         // Filter 
         private static string MultipleItemTypes(List<string> itemTypes, string queryItemType)
         {
@@ -870,6 +647,166 @@ namespace ELEMENTS.Data.SQLite
             }
 
             return query;
+        }
+
+    }
+
+    internal static class ObsoleteQueries
+    {
+        // OBSOLETE 
+        private static string tblShort = "s";
+        // Query 
+
+        private static string GetModifiedTodayCountQuery(Guid MasterGUID, string tbl, string itemtype)
+        {
+            string sql = "SELECT COUNT(Title) FROM " + tbl + " WHERE MasterGUID = '" + MasterGUID + "' AND ItemType = '" + itemtype + "' ";
+
+            DateTime dt = DateTime.Now.Date;
+
+            //// Date 
+            //if (Helper.DatabaseTyp == tspDatabaseType.SQLServer)
+            //{
+            //    // SQL Server  
+            //    sql += " AND ModifiedAt between '" + dt.Month + "/" + dt.Day + "/" + dt.Year + "' AND '" + dt.Month + "/" + dt.Day + "/" + dt.Year + " 23:59:59.999' ";
+            //}
+
+
+            // SQLITE 
+            sql += " AND ModifiedAt between '" + dt.Month + "/" + dt.Day + "/" + dt.Year + "' AND '" + dt.Month + "/" + dt.Day + "/" + dt.Year + " 23:59:59.999' ";
+            // sql += " AND ModifiedAt = '" + dt.Month + "/" + dt.Day + "/" + dt.Year + "' ";
+
+
+            return sql;
+        }
+        private static string SelectAppPermissions(Guid UserGUID, Guid MasterGUID)
+        {
+            string query = string.Empty;
+
+            // TODOD: Permissions Query 
+            query = " SELECT DISTINCT " + tblShort + ".* FROM tbl_SEC_Security AS " + tblShort + " " +
+                                        " INNER JOIN tbl_TEC_Relation AS rP_UG ON(rP_UG.ChildGUID = " + tblShort + ".GUID) " +
+                                        " INNER JOIN tbl_TEC_Relation AS rUG_U ON(rUG_U.ChildGUID = '" + UserGUID + "') " +
+                                        " WHERE s.AppType = 'Security' AND (s.ItemType = 'Permission' OR  s.ItemType = 'License')  " +
+                                        " AND " + tblShort + ".MasterGUID = '" + MasterGUID + "' COLLATE NOCASE ";
+
+            return query;
+        }
+        private static string SelectChangedItemsToday(string table, Guid MasterGUID)
+        {
+            // Check 
+            if (MasterGUID == Guid.Empty)
+                throw new Exception("masterGUID GUID is empty");
+
+            DateTime dt = DateTime.Now.Date;
+
+            // Suche 
+            string query = " SELECT " + tblShort + ".* FROM " + table + " AS " + tblShort + " WHERE " + tblShort + ".MasterGUID = '" + MasterGUID.ToSecureString() + "' ";
+
+            // Date 
+            //if (Helper.DatabaseTyp == tspDatabaseType.SQLServer)
+            //{
+            //    // SQL Server  
+            //    query += " AND ( " + tblShort + ".ModifiedAt between '" + dt.Month + "/" + dt.Day + "/" + dt.Year + "' AND '" + dt.Month + "/" + dt.Day + "/" + dt.Year + " 23:59:59.999' ";
+            //    query += " OR " + tblShort + ".CreatedAt between '" + dt.Month + "/" + dt.Day + "/" + dt.Year + "' AND '" + dt.Month + "/" + dt.Day + "/" + dt.Year + " 23:59:59.999' ) ";
+            //}
+
+
+            // SQLITE 
+            query += " AND ( " + tblShort + ".ModifiedAt between '" + dt.Month + "/" + dt.Day + "/" + dt.Year + "' AND '" + dt.Month + "/" + dt.Day + "/" + dt.Year + " 23:59:59.999' ";
+            query += " OR " + tblShort + ".CreatedAt between '" + dt.Month + "/" + dt.Day + "/" + dt.Year + "' AND '" + dt.Month + "/" + dt.Day + "/" + dt.Year + " 23:59:59.999' ) ";
+
+
+            return query;
+        }
+        private static string SelectNewOrChangedComments(string table, Guid MasterGUID)
+        {
+            // Check 
+            if (MasterGUID == Guid.Empty)
+                throw new Exception("masterGUID GUID is empty");
+
+            DateTime dt = DateTime.Now.Date;
+
+            // Kommentare 
+            string query = " SELECT " + tblShort + ".* FROM " + table + " AS " + tblShort + " WHERE " + tblShort + ".ItemType = 'Comment' AND " + tblShort + ".MasterGUID = '" + MasterGUID.ToSecureString() + "' ";
+
+            // Date 
+            //if (Helper.DatabaseTyp == tspDatabaseType.SQLServer)
+            //{
+            //    // SQL Server  
+            //    query += " AND ( " + tblShort + ".ModifiedAt between '" + dt.Month + "/" + dt.Day + "/" + dt.Year + "' AND '" + dt.Month + "/" + dt.Day + "/" + dt.Year + " 23:59:59.999' ";
+            //    query += " OR " + tblShort + ".CreatedAt between '" + dt.Month + "/" + dt.Day + "/" + dt.Year + "' AND '" + dt.Month + "/" + dt.Day + "/" + dt.Year + " 23:59:59.999' ) ";
+            //}
+
+            // SQLITE 
+            query += " AND ( " + tblShort + ".ModifiedAt between '" + dt.Month + "/" + dt.Day + "/" + dt.Year + "' AND '" + dt.Month + "/" + dt.Day + "/" + dt.Year + " 23:59:59.999' ";
+            query += " OR " + tblShort + ".CreatedAt between '" + dt.Month + "/" + dt.Day + "/" + dt.Year + "' AND '" + dt.Month + "/" + dt.Day + "/" + dt.Year + " 23:59:59.999' ) ";
+
+
+            return query;
+        }
+        private static string SelectItemsByTag(string matchcode)
+        {
+            string sql = string.Empty;
+
+            sql += " SELECT DISTINCT s.* FROM tbl_CON_Content AS s ";
+
+            sql += " LEFT JOIN tbl_TEC_Relation AS rC ON (s.GUID = rC.ChildGUID) ";
+            sql += " LEFT JOIN tbl_CON_Content as tag ON (rC.ParentGUID = tag.GUID) ";
+            sql += " LEFT JOIN tbl_TEC_Relation AS rT ON (tag.GUID = rT.ParentGUID) ";
+            sql += " LEFT JOIN tbl_CON_Content as topic ON (rT.ChildGUID = topic.GUID) ";
+
+            sql += " WHERE ( ";
+            sql += " ( tag.Title LIKE '%" + matchcode + "%' ";
+            sql += " OR topic.Title LIKE '%" + matchcode + "%' ";
+            sql += " OR s.Title LIKE '%" + matchcode + "%' ) ";
+            sql += " AND s.ItemType != 'Tag' ) ";
+
+            return sql;
+        }
+        private static string SelectTopicsByTagByItem(Guid itemGUID)
+        {
+            string sql = string.Empty;
+
+            sql += " SELECT DISTINCT s.* FROM tbl_CON_Content AS s ";
+
+            sql += " INNER JOIN tbl_TEC_Relation AS rC ON (s.GUID = rC.ChildGUID) ";
+            sql += " INNER JOIN tbl_CON_Content as tag ON (rC.ParentGUID = tag.GUID) ";
+            sql += " INNER JOIN tbl_TEC_Relation AS rT ON (tag.GUID = rT.ParentGUID) ";
+            sql += " INNER JOIN tbl_CON_Content as item ON (rT.ChildGUID = item.GUID) ";
+
+            sql += " WHERE s.ItemType = 'Tag' AND s.Typ = 'Topic' AND item.GUID = '" + itemGUID.ToSecureString() + "' ";
+
+            return sql;
+        }
+        private static string SelectCategoriesByTagByItem(Guid itemGUID)
+        {
+            string sql = string.Empty;
+
+            sql += " SELECT DISTINCT s.* FROM tbl_CON_Content AS s ";
+
+            sql += " INNER JOIN tbl_TEC_Relation AS rC ON (s.GUID = rC.ChildGUID) ";
+            sql += " INNER JOIN tbl_CON_Content as tag ON (rC.ParentGUID = tag.GUID) ";
+            sql += " INNER JOIN tbl_TEC_Relation AS rT ON (tag.GUID = rT.ParentGUID) ";
+            sql += " INNER JOIN tbl_CON_Content as item ON (rT.ChildGUID = item.GUID) ";
+
+            sql += " WHERE s.ItemType = 'Tag' AND s.Typ = 'Category' AND item.GUID = '" + itemGUID.ToSecureString() + "' ";
+
+            return sql;
+        }
+        private static string SelectUseCasesByTagByItem(Guid itemGUID)
+        {
+            string sql = string.Empty;
+
+            sql += " SELECT DISTINCT s.* FROM tbl_CON_Content AS s ";
+
+            sql += " INNER JOIN tbl_TEC_Relation AS rC ON (s.GUID = rC.ChildGUID) ";
+            sql += " INNER JOIN tbl_CON_Content as tag ON (rC.ParentGUID = tag.GUID) ";
+            sql += " INNER JOIN tbl_TEC_Relation AS rT ON (tag.GUID = rT.ParentGUID) ";
+            sql += " INNER JOIN tbl_CON_Content as item ON (rT.ChildGUID = item.GUID) ";
+
+            sql += " WHERE s.ItemType = 'Tag' AND s.Typ = 'Theme' AND item.GUID = '" + itemGUID.ToSecureString() + "' ";
+
+            return sql;
         }
     }
 
