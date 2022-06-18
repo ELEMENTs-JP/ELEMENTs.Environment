@@ -12,6 +12,8 @@ namespace ELEMENTS.Infrastructure
         public string Language { get; set; } = string.Empty;
         public string Version { get; set; } = string.Empty;
         public string Comments { get; set; } = string.Empty;
+        public string Tags { get; set; } = string.Empty;
+        public string Metadata { get; set; } = string.Empty;
     }
 
     public interface IItemMetadataDTO
@@ -20,5 +22,7 @@ namespace ELEMENTS.Infrastructure
         string Language { get; set; } 
         string Version { get; set; }
         string Comments { get; set; }
+        string Tags { get; set; }
+        string Metadata { get; set; }
     }
 }

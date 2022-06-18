@@ -1,10 +1,71 @@
 ﻿@page "/view"
-
+@using ELEMENTS.Infrastructure 
 
 <div class="row">
     <div class="col">
         <h3 class="h1">Container and Views</h3>
     </div>
+</div>
+
+
+<div class="row">
+
+    <div class="col p-3">
+
+        <ELEMENTS.Controls.Layouts.ContainerLayout>
+            <ChildContent>
+                <h3>Empty Page Layout</h3>
+            </ChildContent>
+            <RelatedContent>
+                <button type="button" class="btn btn-primary btn-sm">hinzufügen...</button>
+            </RelatedContent>
+        </ELEMENTS.Controls.Layouts.ContainerLayout>
+    
+    </div>
+    <div class="col p-3">
+
+        <ELEMENTS.Controls.Layouts.ContainerLayout Border="true" Rounded="true" 
+                                              BackgroundCSS="bg-white" PaddingCSS="p-3"
+                                              Title="Card Layout" PreTitle="PreTitle" SubTitle="SubTitle">
+            <ChildContent>
+                <p>Card Layout</p>
+            </ChildContent>
+            @*<RelatedContent>
+                <button type="button" class="btn btn-primary btn-sm">hinzufügen...</button>
+            </RelatedContent>*@
+        </ELEMENTS.Controls.Layouts.ContainerLayout>
+    </div>
+    <div class="col p-3">
+
+        <ELEMENTS.Controls.Layouts.ContainerLayout Border="true" Rounded="true"
+                                              BackgroundCSS="bg-white" PaddingCSS="p-2"
+                                              Title="Component Layout"  PreTitle="" SubTitle="">
+            <ChildContent>
+                <p>Component Layout</p>
+            </ChildContent>
+            <FooterContent>
+                <p>Footer</p>
+            </FooterContent>
+        </ELEMENTS.Controls.Layouts.ContainerLayout>
+
+
+
+    </div>
+    <div class="col p-3">
+
+
+        <ELEMENTS.Controls.Layouts.ContainerLayout Border="true" Rounded="true" ControlType="ELEMENTS.Infrastructure.LayoutType.ControlLayout"
+                                              BackgroundCSS="bg-white" PaddingCSS="p-1"
+                                              Title="Control Layout" PreTitle="" SubTitle="">
+            <ChildContent>
+                <p>Control Layout</p>
+            </ChildContent>
+        </ELEMENTS.Controls.Layouts.ContainerLayout>
+
+
+
+    </div>
+
 </div>
 
 
@@ -54,6 +115,15 @@
             <h1>This is the content of the sidebar</h1>
         </ELEMENTS.Controls.Container.Sidebar>
 
+      
+
+
+    </div>
+    <div class="col p-3">
+
+
+
+
         <ELEMENTS.Controls.Text.Label Value="Tab Control" />
         <ELEMENTS.Controls.Container.TabContainer>
             <ELEMENTS.Controls.Container.TabItem Text="Tab Item 1">
@@ -82,30 +152,6 @@
         </ELEMENTS.Controls.Container.Accordion>
 
 
-    </div>
-    <div class="col p-3">
-
-        <ELEMENTS.Controls.Text.Label Value="Card" />
-        <ELEMENTS.Controls.Area.Card Title="Title" Text="this is the text of the card" SubTitle="Subtitle" />
-
-        <ELEMENTS.Controls.Text.Label Value="Control Container" />
-        <ELEMENTS.Controls.Area.ControlContainer Title="Title">
-            <h1>This is a child Control</h1>
-        </ELEMENTS.Controls.Area.ControlContainer>
-
-
-        <ELEMENTS.Controls.Text.Label Value="Component Container" />
-        <ELEMENTS.Controls.Area.ComponentContainer>
-            <Header>
-                <h3>Header</h3>
-            </Header>
-            <ChildContent>
-                <h1>This is a child Control</h1>
-            </ChildContent>
-            <Footer>
-                <h4>Footer</h4>
-            </Footer>
-        </ELEMENTS.Controls.Area.ComponentContainer>
 
         <ELEMENTS.Controls.Text.Label Value="Prompt" />
         <ELEMENTS.Controls.Text.Prompt Title="How is Blazor working for you?" Content="Go here..." />

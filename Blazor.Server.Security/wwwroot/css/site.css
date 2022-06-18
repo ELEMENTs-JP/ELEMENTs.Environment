@@ -8,11 +8,11 @@ a, .btn-link {
     color: #0366d6;
 }
 
-/*.btn-primary {
+.btn-primary {
     color: #fff;
     background-color: #1b6ec2;
     border-color: #1861ac;
-}*/
+}
 
 .content {
     padding-top: 1.1rem;
@@ -48,8 +48,3 @@ a, .btn-link {
         right: 0.75rem;
         top: 0.5rem;
     }
-
-
-.dashed {
-    border-style:dashed !important;
-}

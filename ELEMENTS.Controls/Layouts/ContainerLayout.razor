@@ -1,0 +1,153 @@
+﻿
+
+<div class="@GetStyle()">
+
+    <div class="@(HeaderCSS  + " " + PaddingCSS)">
+        <div class="row align-items-center">
+            <div class="col">
+                @if (!string.IsNullOrEmpty(PreTitle))
+                {
+                    <div class="page-pretitle">
+                        @PreTitle
+                    </div>
+                }
+                @if (!string.IsNullOrEmpty(Title))
+                {
+                    @if (ControlType == LayoutType.ControlLayout)
+                    {
+                        <div class="@(""+ " " + PaddingCSS)">
+                            <strong>@Title</strong>
+                        </div>
+                    }
+                    else
+                    {
+                        <h3 class="@("page-title")">
+                            @Title
+                        </h3>
+                    }
+
+                }
+
+                @if (!string.IsNullOrEmpty(SubTitle))
+                {
+                    <div class="page-subtitle">
+                        @SubTitle
+                    </div>
+                }
+            </div>
+
+            @if (RelatedContent != null)
+            {
+                <div class="col-auto ms-auto">
+                    @RelatedContent
+                </div>
+            }
+        </div>
+    </div>
+
+    @if (MenuContent != null)
+    {
+        <div class="@(MenuCSS + " " + PaddingCSS)">
+            @MenuContent
+        </div>
+    }
+
+    @if (ChildContent != null)
+    {
+        <div class="@(ContentCSS + " " + PaddingCSS)">
+            @ChildContent
+        </div>
+    }
+
+    @if (FooterContent != null)
+    {
+        <div class="@(FooterCSS  + " " + PaddingCSS)">
+            @FooterContent
+        </div>
+    }
+
+</div>
+
+
+@code {
+
+    [Parameter]
+    public LayoutType ControlType { get; set; } = LayoutType.PageLayout;
+
+    [Parameter]
+    public string PreTitle { get; set; } = "PreTitle";
+
+    [Parameter]
+    public string Title { get; set; } = "Title";
+
+    [Parameter]
+    public string SubTitle { get; set; } = "SubTitle";
+
+    [Parameter]
+    public bool Border { get; set; } = false;
+
+    [Parameter]
+    public bool Rounded { get; set; } = false;
+
+    [Parameter]
+    public string BackgroundCSS { get; set; } = "";
+
+    [Parameter]
+    public string PaddingCSS { get; set; } = " p-3 ";
+
+    [Parameter]
+    public string ContentCSS { get; set; } = "mb-auto";
+
+    [Parameter]
+    public string HeaderCSS { get; set; } = "border-bottom";
+
+    [Parameter]
+    public string MenuCSS { get; set; } = "border-bottom";
+
+    [Parameter]
+    public string FooterCSS { get; set; } = "border-top";
+
+    [Parameter]
+    public bool Page { get; set; } = false;
+
+    [Parameter]
+    public RenderFragment FooterContent { get; set; }
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public RenderFragment RelatedContent { get; set; }
+
+    [Parameter]
+    public RenderFragment MenuContent { get; set; }
+
+    // Style
+    private string GetStyle()
+    {
+        string theStyle = "";
+
+        if (Border == true)
+        {
+            theStyle += " border ";
+        }
+
+        if (Rounded == true)
+        {
+            theStyle += " rounded ";
+        }
+
+        if (!string.IsNullOrEmpty(BackgroundCSS))
+        {
+            theStyle += " " + BackgroundCSS + " ";
+        }
+
+        if (Page == true)
+        {
+            theStyle += " page ";
+        }
+
+        return theStyle;
+    }
+
+}

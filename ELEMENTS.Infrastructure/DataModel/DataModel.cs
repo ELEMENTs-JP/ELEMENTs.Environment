@@ -9,6 +9,13 @@ using Microsoft.AspNetCore.Hosting;
 
 namespace ELEMENTS.Infrastructure
 {
+    public enum LayoutType
+    {
+        NULL = 0,
+        PageLayout = 1,
+        ComponentLayout = 2,
+        ControlLayout = 3,
+    }
     public enum TeaserDirection { Left, Right };
 
     public class NavigationEntry

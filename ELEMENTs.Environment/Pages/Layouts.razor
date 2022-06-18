@@ -1,181 +1,231 @@
 ﻿@page "/layouts"
 
 
-
 <div class="row">
     <div class="col">
-        <h3 class="h1">Page Layouts for Apps and Website</h3>
+        <h3 class="h1 text-primary">DEFAULT Page Layouts for Apps and Websites</h3>
     </div>
 </div>
 
 <div class="row">
+    <div class="col p-3 border-end">
+
+
+
+        <ELEMENTS.Controls.Layouts.ContainerLayout>
+            <ChildContent>
+                <h3>Empty Page Layout</h3>
+            </ChildContent>
+            <RelatedContent>
+                <button type="button" class="btn btn-primary btn-sm">hinzufügen...</button>
+            </RelatedContent>
+        </ELEMENTS.Controls.Layouts.ContainerLayout>
+
+
+
+    </div>
+
+    <div class="col p-3 border-end">
+
+
+
+        <ELEMENTS.Controls.Layouts.ContainerLayout Border="true">
+            <h3>Border Page Layout</h3>
+        </ELEMENTS.Controls.Layouts.ContainerLayout>
+
+
+
+    </div>
+
     <div class="col p-3">
 
-        <ELEMENTS.Controls.Text.Label Value="Empty PageLayout" />
-        <ELEMENTS.Controls.Layouts.EmptyPageLayout>
-            <h1>This is an empty PageLayout</h1>
-            <p>It has no predefined CSS classes and can be fully customized.</p>
-        </ELEMENTS.Controls.Layouts.EmptyPageLayout>
-        <ELEMENTS.Controls.Devider.TextDevider Value="" />
-
-        <ELEMENTS.Controls.Text.Label Value="Website PageLayout" />
-        <ELEMENTS.Controls.Layouts.WebsitePageLayout>
-            <h1>This is a Website PageLayout</h1>
-            <p>It has a predefined Page class and a predefined Container (container) class. However, it can be modified individually. </p>
-        </ELEMENTS.Controls.Layouts.WebsitePageLayout>
-        <ELEMENTS.Controls.Devider.TextDevider Value="" />
 
 
-        @*<ELEMENTS.Controls.Text.Label Value="App PageLayout" />*@
-
-        <ELEMENTS.Controls.Layouts.AppPageLayout>
-            <h1>This is a App PageLayout</h1>
-            <p>It has a predefined Page class and a predefined Container (container-fluid) class. However, it can be modified individually. </p>
-        </ELEMENTS.Controls.Layouts.AppPageLayout>
-        
-        <ELEMENTS.Controls.Devider.TextDevider Value="" />
-
-        <ELEMENTS.Controls.Text.Label Value="Profile PageLayout" />
-        <ELEMENTS.Controls.Layouts.ProfilePageLayout>
-            <h1>This is a Profile PageLayout</h1>
-            <p>You can use it to display user profiles.</p>
-        </ELEMENTS.Controls.Layouts.ProfilePageLayout>
-        <ELEMENTS.Controls.Devider.TextDevider Value="" />
-
-
-
-        <ELEMENTS.Controls.Text.Label Value="List (Items) PageLayout" />
-        <ELEMENTS.Controls.Layouts.ListPageLayout>
-            <HeaderContent>
-                <button type="button" class="btn btn-sm btn-primary">add</button>
-            </HeaderContent>
-            <ChildContent>
-                <p>This is the Child Content area</p>
-            </ChildContent>
-            <RelatedContent>
-                <p>This is the Related Content area</p>
-            </RelatedContent>
-            <FooterContent>
-                <p>This is the Footer Content area</p>
-            </FooterContent>
-        </ELEMENTS.Controls.Layouts.ListPageLayout>
-        <ELEMENTS.Controls.Devider.TextDevider Value="" />
-
-
-        <ELEMENTS.Controls.Text.Label Value="View (Edit View) PageLayout" />
-        <ELEMENTS.Controls.Layouts.ViewPageLayout>
-            <HeaderContent>
-                <button type="button" class="btn btn-sm btn-success">save</button>
-            </HeaderContent>
-            <ChildContent>
-                <p>Here you can display the main edit content</p>
-            </ChildContent>
-            <ParentContent>
-                <p>Here you can display parent content</p>
-            </ParentContent>
-            <ChildrenContent>
-                <p>Here you can display child content</p>
-            </ChildrenContent>
-            <RelatedContent>
-                <p>Here you can display related content</p>
-            </RelatedContent>
-            <FooterContent>
-                <p>This is the Footer Content area</p>
-            </FooterContent>
-        </ELEMENTS.Controls.Layouts.ViewPageLayout>
-        <ELEMENTS.Controls.Devider.TextDevider Value="" />
-
-
-        <ELEMENTS.Controls.Text.Label Value="Dashboard (App) PageLayout" />
-        <ELEMENTS.Controls.Layouts.DashboardPageLayout>
-            <HeaderContent>
-                <h1>This is a Dashboard PageLayout</h1>
-                <p>You can use it to display Dashboards in apps.</p>
-                <p>It is organised in rows.</p>
-            </HeaderContent>
-            <ChildContent>
-                <p>Here you can display the main edit content</p>
-            </ChildContent>
-            <ParentContent>
-                <p>Here you can display parent content</p>
-            </ParentContent>
-            <ChildrenContent>
-                <p>Here you can display child content</p>
-            </ChildrenContent>
-            <RelatedContent>
-                <p>Here you can display related content</p>
-            </RelatedContent>
-            <FooterContent>
-                <p>This is the Footer Content area</p>
-            </FooterContent>
-        </ELEMENTS.Controls.Layouts.DashboardPageLayout>
-        <ELEMENTS.Controls.Devider.TextDevider Value="" />
-
-
-        <ELEMENTS.Controls.Text.Label Value="Report (App / Website) PageLayout" />
-        <ELEMENTS.Controls.Layouts.ReportPageLayout>
-            <HeaderContent>
-                <h1>This is a Report PageLayout</h1>
-                <p>You can use it to display Reports in apps or on websites.</p>
-                <p>It is organised in rows.</p>
-            </HeaderContent>
-            <ChildContent>
-                <p>Here you can display the main edit content</p>
-            </ChildContent>
-            <ParentContent>
-                <p>Here you can display parent content</p>
-            </ParentContent>
-            <ChildrenContent>
-                <p>Here you can display child content</p>
-            </ChildrenContent>
-            <RelatedContent>
-                <p>Here you can display related content</p>
-            </RelatedContent>
-            <FooterContent>
-                <p>This is the Footer Content area</p>
-            </FooterContent>
-        </ELEMENTS.Controls.Layouts.ReportPageLayout>
-
-        <ELEMENTS.Controls.Devider.TextDevider Value="" />
-
-
-        <ELEMENTS.Controls.Text.Label Value="Print Preview PageLayout" />
-        <ELEMENTS.Controls.Layouts.PrintPreviewPageLayout>
-            <HeaderContent>
-                <h1>This is a Print Preview PageLayout</h1>
-                <p>You can use it as a preview area.</p>
-                <p>It is organised in rows.</p>
-            </HeaderContent>
-            <ChildContent>
-                <p>Here you can display the main edit content</p>
-            </ChildContent>
-            <RelatedContent>
-                <p>Here you can display related content</p>
-            </RelatedContent>
-            <FooterContent>
-                <p>This is the footer area</p>
-            </FooterContent>
-        </ELEMENTS.Controls.Layouts.PrintPreviewPageLayout>
-        <ELEMENTS.Controls.Devider.TextDevider Value="" />
-
-        <ELEMENTS.Controls.Text.Label Value="Portfolio (Web) PageLayout" />
-        <ELEMENTS.Controls.Layouts.PortfolioPageLayout>
-            <h1>This is a Portfolio PageLayout</h1>
-            <p>You can use it to display portfolios.</p>
-        </ELEMENTS.Controls.Layouts.PortfolioPageLayout>
-        <ELEMENTS.Controls.Devider.TextDevider Value="" />
-
-        <ELEMENTS.Controls.Text.Label Value="Category (App) PageLayout" />
-        <ELEMENTS.Controls.Layouts.CategoryPageLayout>
-            <h1>This is a Print Preview PageLayout</h1>
-            <p>You can use it to display categories.</p>
-        </ELEMENTS.Controls.Layouts.CategoryPageLayout>
-        <ELEMENTS.Controls.Devider.TextDevider Value="" />
+        <ELEMENTS.Controls.Layouts.ContainerLayout Border="true" Rounded="true">
+            <h3>Border Rounded Page Layout</h3>
+        </ELEMENTS.Controls.Layouts.ContainerLayout>
 
 
 
     </div>
 </div>
+
+<ELEMENTS.Controls.Devider.TextDevider Value="" />
+
+<div class="row">
+    <div class="col p-3 border-end">
+
+
+
+        <ELEMENTS.Controls.Layouts.ContainerLayout BackgroundCSS="bg-primary">
+            <h3>Empty Page Layout</h3>
+        </ELEMENTS.Controls.Layouts.ContainerLayout>
+
+
+    </div>
+
+    <div class="col p-3 border-end">
+
+
+
+        <ELEMENTS.Controls.Layouts.ContainerLayout Border="true"
+                                              BackgroundCSS="bg-white" HeaderCSS="bg-light border-bottom p-3">
+            <ChildContent>
+                <h3>Border Page Layout</h3>
+            </ChildContent>
+            <RelatedContent>
+                <button type="button" class="btn btn-primary btn-sm">hinzufügen...</button>
+            </RelatedContent>
+        </ELEMENTS.Controls.Layouts.ContainerLayout>
+
+
+
+    </div>
+
+    <div class="col p-3">
+
+
+
+        <ELEMENTS.Controls.Layouts.ContainerLayout Border="true" Rounded="true" BackgroundCSS="bg-light">
+            <h3>Border Rounded Page Layout</h3>
+        </ELEMENTS.Controls.Layouts.ContainerLayout>
+
+
+    </div>
+</div>
+
+<ELEMENTS.Controls.Devider.TextDevider Value="" />
+
+
+
+
+<div class="row">
+    <div class="col p-3 border-end">
+
+
+
+        <ELEMENTS.Controls.Layouts.ContainerLayout BackgroundCSS="bg-primary" Page="true">
+            <ChildContent>
+                <h3>Empty Page Layout</h3>
+                <h3>Page Size</h3>
+            </ChildContent>
+            <MenuContent>
+                <div class="row">
+                    <div class="col">
+                        <button type="button" class="btn btn-primary btn-sm m-1">hinzufügen...</button>
+                        <button type="button" class="btn btn-secondary btn-sm m-1">bearbeiten...</button>
+                        <button type="button" class="btn btn-danger btn-sm m-1">löschen...</button>
+                    </div>
+                </div>
+            </MenuContent>
+            <FooterContent>
+                <div class="row">
+                    <div class="col-4">
+                        <span>left</span>
+                    </div>
+                    <div class="col-4">
+                        <span>center</span>
+                    </div>
+                    <div class="col-4">
+                        <span>right</span>
+                    </div>
+                </div>
+            </FooterContent>
+        </ELEMENTS.Controls.Layouts.ContainerLayout>
+
+
+    </div>
+
+    <div class="col p-3 border-end">
+
+
+
+        <ELEMENTS.Controls.Layouts.ContainerLayout Border="true" Page="true"
+                                              BackgroundCSS="bg-white"
+                                              HeaderCSS="bg-light border-bottom p-3"
+                                              FooterCSS="bg-light border-top p-3">
+            <ChildContent>
+                <h3>Border Page Layout</h3>
+                <h3>Page Size</h3>
+            </ChildContent>
+            <RelatedContent>
+                <button type="button" class="btn btn-primary btn-sm">hinzufügen...</button>
+            </RelatedContent>
+            <MenuContent>
+                <div class="row">
+                    <div class="col">
+                        <button type="button" class="btn btn-primary btn-sm m-1">hinzufügen...</button>
+                        <button type="button" class="btn btn-secondary btn-sm m-1">bearbeiten...</button>
+                        <button type="button" class="btn btn-danger btn-sm m-1">löschen...</button>
+                    </div>
+                </div>
+            </MenuContent>
+            <FooterContent>
+                <div class="row">
+                    <div class="col-4">
+                        <span>left</span>
+                    </div>
+                    <div class="col-4">
+                        <span>center</span>
+                    </div>
+                    <div class="col-4">
+                        <span>right</span>
+                    </div>
+                </div>
+            </FooterContent>
+        </ELEMENTS.Controls.Layouts.ContainerLayout>
+
+
+
+    </div>
+
+    <div class="col p-3">
+
+
+
+        <ELEMENTS.Controls.Layouts.ContainerLayout Border="true" Rounded="true" Page="true"
+                                              BackgroundCSS="bg-light"
+                                              FooterCSS="bg-light border-top p-3">
+            <ChildContent>
+                <h3>Border Rounded Page Layout</h3>
+                <h3>Page Size</h3>
+            </ChildContent>
+            <MenuContent>
+                <div class="row">
+                    <div class="col">
+                        <button type="button" class="btn btn-primary btn-sm m-1">hinzufügen...</button>
+                        <button type="button" class="btn btn-secondary btn-sm m-1">bearbeiten...</button>
+                        <button type="button" class="btn btn-danger btn-sm m-1">löschen...</button>
+                    </div>
+                </div>
+            </MenuContent>
+            <FooterContent>
+                <div class="row">
+                    <div class="col-4">
+                        <span>left</span>
+                    </div>
+                    <div class="col-4">
+                        <span>center</span>
+                    </div>
+                    <div class="col-4">
+                        <span>right</span>
+                    </div>
+                </div>
+            </FooterContent>
+        </ELEMENTS.Controls.Layouts.ContainerLayout>
+
+
+    </div>
+</div>
+
+<ELEMENTS.Controls.Devider.TextDevider Value="" />
+
+
+
+
+
+
+
 
 
 
