@@ -47,7 +47,8 @@ namespace ELEMENTS
                 IQueryParameter qp = QueryParameter.DefaultItemsQuery(
                     Service.Factory.MasterGUID, "ELEMENTs", "Product");
                 qp.Matchcode = Matchcode;
-
+                qp.PageSize = PageSize;
+                qp.CurrentPage = CurrentPage;
 
                 // Query 
                 Items = Service.Factory.GetItems(qp);

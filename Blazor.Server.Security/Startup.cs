@@ -43,7 +43,6 @@ namespace Blazor.Server.Security
             // TODO: Security - Security Data Context
             services.AddScoped<AuthenticationStateProvider, ServerAuthenticationStateProvider>();
 
-            services.AddSingleton<WeatherForecastService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
