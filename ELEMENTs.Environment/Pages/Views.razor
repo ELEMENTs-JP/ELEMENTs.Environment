@@ -115,26 +115,6 @@
             <h1>This is the content of the sidebar</h1>
         </ELEMENTS.Controls.Container.Sidebar>
 
-      
-
-
-    </div>
-    <div class="col p-3">
-
-
-
-
-        <ELEMENTS.Controls.Text.Label Value="Tab Control" />
-        <ELEMENTS.Controls.Container.TabContainer>
-            <ELEMENTS.Controls.Container.TabItem Text="Tab Item 1">
-                <h1>This is the Content of Tab Item 1</h1>
-            </ELEMENTS.Controls.Container.TabItem>
-            <ELEMENTS.Controls.Container.TabItem Text="Tab Item 2">
-                <h1>This is the Content of Tab Item 2</h1>
-
-            </ELEMENTS.Controls.Container.TabItem>
-        </ELEMENTS.Controls.Container.TabContainer>
-
         <ELEMENTS.Controls.Text.Label Value="Accordion" />
         <ELEMENTS.Controls.Container.Accordion>
             <ELEMENTS.Controls.Container.AccordionItem Title="ASDF">
@@ -155,6 +135,42 @@
 
         <ELEMENTS.Controls.Text.Label Value="Prompt" />
         <ELEMENTS.Controls.Text.Prompt Title="How is Blazor working for you?" Content="Go here..." />
+
+
+    </div>
+    <div class="col p-3">
+
+        <ELEMENTS.Controls.Text.Label Value="Tab Control (horizontal)"  />
+        <ELEMENTS.Controls.Container.TabContainer TabOrientation="TabPosition.Top">
+            <ELEMENTS.Controls.Container.TabItem Text="Principal">
+                <h1>This is the Content of Tab Item 1</h1>
+            </ELEMENTS.Controls.Container.TabItem>
+            <ELEMENTS.Controls.Container.TabItem Text="Administration">
+                <h1>This is the Content of Tab Item 2</h1>
+            </ELEMENTS.Controls.Container.TabItem>
+            <ELEMENTS.Controls.Container.TabItem Text="Database">
+                <h1>This is the Content of Tab Item 2</h1>
+            </ELEMENTS.Controls.Container.TabItem>
+        </ELEMENTS.Controls.Container.TabContainer>
+
+
+        <ELEMENTS.Controls.Text.Label Value="Tab Control (vertical)"/>
+        <ELEMENTS.Controls.Container.TabContainer TabOrientation="TabPosition.Left">
+            <ELEMENTS.Controls.Container.TabItem Text="Principal">
+                <h1>This is the Content - Principal</h1>
+            </ELEMENTS.Controls.Container.TabItem>
+            <ELEMENTS.Controls.Container.TabItem Text="Administration">
+                <h1>This is the Content - Administration</h1>
+            </ELEMENTS.Controls.Container.TabItem>
+            <ELEMENTS.Controls.Container.TabItem Text="Database">
+                <h1>This is the Content - Database</h1>
+            </ELEMENTS.Controls.Container.TabItem>
+            <ELEMENTS.Controls.Container.TabItem Text="Security">
+                <h1>This is the Content - Security</h1>
+            </ELEMENTS.Controls.Container.TabItem>
+        </ELEMENTS.Controls.Container.TabContainer>
+
+      
 
     </div>
 </div>

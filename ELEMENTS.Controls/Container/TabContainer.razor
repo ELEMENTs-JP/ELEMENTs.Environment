@@ -1,29 +1,59 @@
 ﻿
 
-<ul class="nav nav-tabs">
-    @foreach (TabItem tabPage in Pages)
-    {
-        <li class="nav-item">
-            <span style="cursor:pointer;" class="nav-link @GetTabClass(tabPage)"
-                  aria-current="page" @onclick=@( () => ActivatePage(tabPage) )>@tabPage.Text</span>
-            </li>
-        }
-</ul>
+@if (this.TabOrientation == TabPosition.Top)
+{
+    <ul class="nav nav-tabs">
+        @foreach (TabItem tabPage in Pages)
+        {
+            <li class="nav-item">
+                <span style="cursor:pointer;" class="nav-link @GetTabClass(tabPage)"
+                      aria-current="page" @onclick=@( () => ActivatePage(tabPage) )>@tabPage.Text</span>
+                </li>
+            }
+    </ul>
 
-<CascadingValue Value="this">
-    @ChildContent
-</CascadingValue>
+    <CascadingValue Value="this">
+        @ChildContent
+    </CascadingValue>
+}
+else if (this.TabOrientation == TabPosition.Left)
+{
+    <div class="row gx-0">
+        <div class="col-auto">
+
+            <ul class="nav flex-column border-bottom">
+                @foreach (TabItem tabPage in Pages)
+                {
+                    <li class="nav-item border-top border-start">
+                        <span style="cursor:pointer;" class="nav-link @GetTabClass(tabPage)"
+                              aria-current="page" @onclick=@( () => ActivatePage(tabPage) )>@tabPage.Text</span>
+                        </li>
+                    }
+            </ul>
+        </div>
+        <div class="col border-top border-bottom border-end">
+            <CascadingValue Value="this">
+                @ChildContent
+            </CascadingValue>
+        </div>
+    </div>
+}
+else
+{
+    <p>no Tab Control Orientation selected</p>
+}
+
 
 
 @code {
 
     string GetTabClass(TabItem page)
     {
-        return page == ActivePage ? "active" : "";
+        return page == ActivePage ? " active text-primary " : "";
     }
     string GetButtonClass(TabItem page)
     {
-        return page == ActivePage ? "btn-primary" : "btn-secondary";
+        return page == ActivePage ? " btn-primary " : " btn-secondary ";
     }
     void ActivatePage(TabItem page)
     {
@@ -33,6 +63,9 @@
     // Next line is needed so we are able to add <TabPage> components inside
     [Parameter]
     public RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public TabPosition TabOrientation { get; set; } = TabPosition.Top;
 
     public TabItem ActivePage { get; set; }
     List<TabItem> Pages = new List<TabItem>();
