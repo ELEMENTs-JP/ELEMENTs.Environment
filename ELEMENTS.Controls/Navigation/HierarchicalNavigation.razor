@@ -1,0 +1,129 @@
+﻿@inject NavigationManager nm
+
+<div class="top-row px-4 navbar text-light border-bottom">
+    <h2 class="d-flex align-items-center text-center">@Title</h2>
+</div>
+
+@if (Repository != null)
+{
+    @if (Repository.Items != null)
+    {
+        <nav class="@ControlCSS">
+            <div class="container-fluid">
+                <h3 class="mt-2 text-center">Navigation</h3>
+
+                @if (Repository.Items.Count >= 1)
+                {
+                    <div class="collapse navbar-collapse" id="navbar-menu">
+                        <ul class="navbar-nav pt-lg-3">
+
+                            @foreach (NavigationEntry entry in Repository.Items)
+                            {
+                                @if (entry.Items == null || entry.Items.Count == 0)
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="@entry.Link">
+
+
+                                            <span class="nav-link-icon d-md-none d-lg-inline-block">
+
+                                                @if (string.IsNullOrEmpty(entry.Icon))
+                                                {
+                                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                                         class="icon" width="24" height="24"
+                                                         viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                                         fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                        <polyline points="5 12 3 12 12 3 21 12 19 12"></polyline>
+                                                        <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7"></path>
+                                                        <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6"></path>
+                                                    </svg>
+                                                }
+                                                else
+                                                {
+                                                    @((MarkupString)entry.Icon)
+                                                }
+
+                                            </span>
+                                            <span class="nav-link-title">@entry.Title</span>
+                                        </a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown" data-bs-auto-close="false" role="button" aria-expanded="false">
+                                            <span class="nav-link-icon d-md-none d-lg-inline-block">
+
+                                                @if (string.IsNullOrEmpty(entry.Icon))
+                                                {
+                                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                                         class="icon icon-tabler icon-tabler-grip-vertical"
+                                                         width="24" height="24" viewBox="0 0 24 24"
+                                                         stroke-width="2" stroke="currentColor" fill="none"
+                                                         stroke-linecap="round" stroke-linejoin="round">
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                        <circle cx="9" cy="5" r="1"></circle>
+                                                        <circle cx="9" cy="12" r="1"></circle>
+                                                        <circle cx="9" cy="19" r="1"></circle>
+                                                        <circle cx="15" cy="5" r="1"></circle>
+                                                        <circle cx="15" cy="12" r="1"></circle>
+                                                        <circle cx="15" cy="19" r="1"></circle>
+                                                    </svg>
+                                                }
+                                                else
+                                                {
+                                                    @((MarkupString)entry.Icon)
+                                                }
+
+                                            </span>
+                                            <span class="nav-link-title">@entry.Title</span>
+                                        </a>
+
+                                        <div class="dropdown-menu">
+
+                                            @foreach (NavigationEntry child in entry.Items)
+                                            {
+                                                <a class="dropdown-item" href="@child.Link">@child.Title</a>
+                                            }
+
+                                        </div>
+                                    </li>
+                                }
+
+                            }
+
+                        </ul>
+                    </div>
+                }
+
+            </div>
+        </nav>
+    }
+}
+
+@code {
+
+    [Parameter]
+    public INavigationRepository Repository { get; set; }
+
+    [Parameter]
+    public string ControlCSS { get; set; } = "navbar navbar-vertical navbar-expand-lg navbar-dark";
+
+    [Parameter]
+    public string NavigationItemCSS { get; set; } = "";
+
+
+    [Parameter]
+    public string Title { get; set; } = "Environment";
+
+    private bool collapseNavMenu = true;
+
+    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+
+}
