@@ -16,7 +16,25 @@ namespace ELEMENTS
     {
         public ISQLiteService Service { get; set; }
         public int PageSize { get; set; } = 10;
+        public int QueryCount { get; set; } = 0;
         public int CurrentPage { get; set; } = 1;
+
+        private int ic = 0;
+        public int ItemCount 
+        {
+            get 
+            {
+                if (ic == 0)
+                {
+                    ic = GetItemCount();
+                    return ic;
+                }
+                else
+                {
+                    return ic;
+                }
+            }
+        }
         public string Matchcode { get; set; } = string.Empty;
         public List<IDTO> Items { get; set; } = new List<IDTO>();
         public List<IDTO> Load()
@@ -28,6 +46,8 @@ namespace ELEMENTS
                     Service.Factory.MasterGUID, "ELEMENTs", "Product");
                 qp.PageSize = PageSize;
                 qp.CurrentPage = CurrentPage;
+
+                QueryCount += 1;
 
                 // Query 
                 Items = Service.Factory.GetItems(qp);
@@ -50,6 +70,8 @@ namespace ELEMENTS
                 qp.PageSize = PageSize;
                 qp.CurrentPage = CurrentPage;
 
+                QueryCount += 1;
+
                 // Query 
                 Items = Service.Factory.GetItems(qp);
             }
@@ -61,7 +83,7 @@ namespace ELEMENTS
             return new List<IDTO>();
         }
 
-        public int ItemCount()
+        int GetItemCount()
         {
             try
             {

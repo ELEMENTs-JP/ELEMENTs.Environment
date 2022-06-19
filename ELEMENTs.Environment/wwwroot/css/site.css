@@ -72,3 +72,8 @@ a, .btn-link {
 .dashed {
     border-style:dashed !important;
 }
+
+.col-05 {
+    flex: 0 0 auto;
+    width: 4.1666%;
+}

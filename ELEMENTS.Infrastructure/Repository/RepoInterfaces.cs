@@ -16,14 +16,15 @@ namespace ELEMENTS
 
     public interface IItemsRepository
     {
+        int QueryCount { get; set; }
         ISQLiteService Service { get; set; }
         string Matchcode { get; set; }
         int PageSize { get; set; }
+        int ItemCount { get; }
         int CurrentPage { get; set; }
         List<IDTO> Items { get; set; }
         List<IDTO> Load();
         List<IDTO> Search();
-        int ItemCount();
     }
 
     public interface IEditItemRepository
