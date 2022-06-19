@@ -31,7 +31,7 @@
                             {
                                 <div class="row  g-0">
                                     <div class="col  g-0 border-top">
-                                        @foreach (NavigationEntry entry in Repository.Items)
+                                        @foreach (NavigationEntry entry in Repository.Items.OrderBy(se => se.Position))
                                         {
                                         <div class="row border-bottom p-2 bg-light"
                                              style="cursor:pointer;" title="@entry.ID.ToSecureString()"
@@ -76,7 +76,7 @@
                             {
                                 @if (Entry.Items.Count >= 1)
                                 {
-                                    @foreach (NavigationEntry entry in Entry.Items)
+                                    @foreach (NavigationEntry entry in Entry.Items.OrderBy(se => se.Position))
                                     {
                                         <div class="row border-bottom p-2 bg-light"
                                              style="cursor:pointer;" title="@entry.ID.ToSecureString()"

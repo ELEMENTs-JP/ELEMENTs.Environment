@@ -8,6 +8,25 @@ a, .btn-link {
     color: #0366d6;
 }
 
+    a:link {
+        text-decoration: none;
+    }
+
+
+    a:visited {
+        text-decoration: none;
+    }
+
+
+    a:hover {
+        text-decoration: none;
+    }
+
+
+    a:active {
+        text-decoration: none;
+    }
+
 /*.btn-primary {
     color: #fff;
     background-color: #1b6ec2;

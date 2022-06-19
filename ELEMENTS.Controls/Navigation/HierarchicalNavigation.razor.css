@@ -2,6 +2,12 @@
 {
 }
 
+h2 {
+    margin: 0 !important;
+}
+.h2 {
+    margin: 0 !important;
+}
 .navbar-vertical {
     position:relative !important;
 }

@@ -18,9 +18,12 @@ namespace ELEMENTS
     {
         ISQLiteService Service { get; set; }
         string Matchcode { get; set; }
+        int PageSize { get; set; }
+        int CurrentPage { get; set; }
         List<IDTO> Items { get; set; }
         List<IDTO> Load();
         List<IDTO> Search();
+        int ItemCount();
     }
 
     public interface IEditItemRepository

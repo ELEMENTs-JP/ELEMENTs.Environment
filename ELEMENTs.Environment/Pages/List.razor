@@ -2,18 +2,21 @@
 @inject ISQLiteService sql
 @using ELEMENTS.Infrastructure
 
-<ELEMENTS.Controls.Layouts.ListPageLayout Title="Liste" SubTitle="ItemType">
-    <HeaderContent>
+<ELEMENTS.Controls.Layouts.ContainerLayout Title="Items List" SubTitle="ItemType" 
+                                           BackgroundCSS="bg-white" Border="true" Rounded="true" MenuCSS="bg-light border-bottom">
+    <MenuContent>
+        <p></p>
+    </MenuContent>
+    <RelatedContent>
         <ELEMENTS.Controls.Collection.AddItem Title="Eintrag hinzufügen"
-                                              FieldHeader="Bezeichnung" Repository="@AddRepo" OnOKClicked="LoadItems" />
-    </HeaderContent>
+                                              FieldHeader="Bezeichnung" 
+                                              Repository="@AddRepo" 
+                                              OnOKClicked="LoadItems" />
+    </RelatedContent>
     <ChildContent>
-        <ELEMENTS.Controls.Collection.ItemsCollection Items="ItemsRepo.Items" Context="IDTO">
-            <Header>
-                <h2>ItemsCollection (Template Engine)</h2>
-            </Header>
+        <ELEMENTS.Controls.Collection.ItemsCollection Items="ItemsRepo.Items" Context="IDTO" ControlCSS="" BodyCSS="">
             <RowTemplate>
-                <div class="p-2 border-bottom">
+                <div class="@( "p-2 border-bottom " + "" )">
                     <a href="@( "/edit/" + IDTO.ItemType.ToSecureString() + "/" + IDTO.GUID.ToSecureString() )">
                         <div class="row">
                             <div class="col-auto">@IDTO.ID.ToSecureString()</div>
@@ -22,14 +25,34 @@
                     </a>
                 </div>
             </RowTemplate>
-            <Footer>
-                <strong>ItemsCollection (Template Engine)</strong>
-            </Footer>
         </ELEMENTS.Controls.Collection.ItemsCollection>
     </ChildContent>
-</ELEMENTS.Controls.Layouts.ListPageLayout>
+    <FooterContent>
+        <div class="row d-flex align-items-center">
+            <div class="col-auto">
+                @if (ItemCount != 0)
+                { 
+                    <small class="text-muted text-start"><i class="fas fa-hashtag"></i><strong class="ms-1">@ItemCount</strong></small>
+                }
+            </div>
+            <div class="col">
+                <ELEMENTS.Controls.List.Pagination CurrentPage="@CurrentPage" TotaPageCount="@TotalPageCount" 
+                                                   SelectedPage="@( e => { CurrentPage = e; LoadItems(); } )" />
+            </div>
+            <div class="col-auto">
+                <small class="text-muted text-end"><i class="fas fa-hashtag"></i><strong class="ms-1">@PageSize</strong></small>
+            </div>
+        </div>
+    </FooterContent>
+</ELEMENTS.Controls.Layouts.ContainerLayout>
 
 @code {
+
+    private int ItemCount = 0;
+    public int CurrentPage { get; set; } = 1;
+    public int TotalPageCount { get; set; } = 1;
+    public int PageSize { get; set; } = 10;
+
     private IAddItemRepository AddRepo = new AddItemRepository();
     private IItemsRepository ItemsRepo = new ItemsRepository();
 
@@ -50,7 +73,6 @@
     protected override void OnParametersSet()
     {
         base.OnParametersSet();
-
     }
 
 
@@ -64,7 +86,24 @@
     {
         if (ItemsRepo != null)
         {
+            ItemsRepo.CurrentPage = this.CurrentPage;
+            ItemsRepo.PageSize = this.PageSize;
             ItemsRepo.Load();
+
+            ItemCount = ItemsRepo.ItemCount();
+
+            try
+            {
+                // Page Size 
+                long rest = 0;
+                long quotient = Math.DivRem(ItemCount, PageSize, out rest);
+                TotalPageCount = Convert.ToInt32(quotient);
+                TotalPageCount = (rest >= 1) ? TotalPageCount += 1 : TotalPageCount;
+            }
+            catch (Exception ex)
+            {
+                TotalPageCount = 1;
+            }
         }
     }
 }

@@ -15,6 +15,8 @@ namespace ELEMENTS
     public class ItemsRepository : IItemsRepository
     {
         public ISQLiteService Service { get; set; }
+        public int PageSize { get; set; } = 10;
+        public int CurrentPage { get; set; } = 1;
         public string Matchcode { get; set; } = string.Empty;
         public List<IDTO> Items { get; set; } = new List<IDTO>();
         public List<IDTO> Load()
@@ -24,7 +26,9 @@ namespace ELEMENTS
                 // Prepare 
                 IQueryParameter qp = QueryParameter.DefaultItemsQuery(
                     Service.Factory.MasterGUID, "ELEMENTs", "Product");
-                
+                qp.PageSize = PageSize;
+                qp.CurrentPage = CurrentPage;
+
                 // Query 
                 Items = Service.Factory.GetItems(qp);
             }
@@ -44,6 +48,7 @@ namespace ELEMENTS
                     Service.Factory.MasterGUID, "ELEMENTs", "Product");
                 qp.Matchcode = Matchcode;
 
+
                 // Query 
                 Items = Service.Factory.GetItems(qp);
             }
@@ -54,5 +59,25 @@ namespace ELEMENTS
 
             return new List<IDTO>();
         }
+
+        public int ItemCount()
+        {
+            try
+            {
+                // Prepare 
+                IQueryParameter qp = QueryParameter.DefaultItemsQuery(
+                    Service.Factory.MasterGUID, "ELEMENTs", "Product");
+
+                // Query 
+                return Service.Factory.GetItemsCount(qp);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("FAIL: " + ex.Message);
+            }
+
+            return 0;
+        }
+    
     }
 }

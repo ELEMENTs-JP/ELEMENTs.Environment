@@ -9,7 +9,7 @@
         <div class="@HeaderCSS">@Header</div>
     }
 
-    <div class="@BodyCSS">
+    <div class="@(BodyCSS + " " + ((Items.Count >= 1) ? " border-top " : ""))">
         @foreach (var item in Items)
         {
             @if (RowTemplate != null)
