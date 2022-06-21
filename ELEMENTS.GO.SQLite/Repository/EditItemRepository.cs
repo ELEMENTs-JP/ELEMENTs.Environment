@@ -14,6 +14,7 @@ namespace ELEMENTS
   
     public class EditItemRepository : IEditItemRepository
     {
+        public bool IsInitialized { get; set; } = false;
         public Guid ItemGUID { get; set; } = Guid.Empty;
         public ISQLiteService Service { get; set; }
         public IDTO DTO { get; set; }
@@ -26,6 +27,11 @@ namespace ELEMENTS
 
                 // Query 
                 DTO = Service.Factory.GetItemByID(input);
+
+                if (DTO != null)
+                {
+                    IsInitialized = true;
+                }
             }
             catch (Exception ex)
             {

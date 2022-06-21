@@ -1,34 +1,84 @@
 ﻿
 <label class="form-label">@Field.Title </label>
 
-@if (Field.Type == EditFieldType.Text)
+
+@* MODE *@
+
+@if (Field.Mode == EditFieldMode.NULL)
 {
-    <p class="lead">@Value.ToSecureString()</p>
+    <div class="bg-white border rounded lead">&minus;</div>
+}
+else if (Field.Mode == EditFieldMode.Hidden)
+{
+    <div class="bg-light border rounded lead">&minus;</div>
+}
+else if (Field.Mode == EditFieldMode.View)
+{
+    <div class="row g-0">
+        <div class="col">
+            <p class="lead">@Value.ToSecureString()</p>
+        </div>
+        <div class="col-auto">
+            <button type="button" class="btn btn-sm btn-outline-light" @onclick="Edit">
+                <i class="fas fa-edit"></i>
+            </button>
+        </div>
+
+    </div>
+}
+else if (Field.Mode == EditFieldMode.Edit)
+{
+    @if (Field.Type == EditFieldType.Text)
+    {
+        <p class="lead">@Value.ToSecureString()</p>
+    }
+
+    @if (Field.Type == EditFieldType.TextBox)
+    {
+        <div class="row g-0">
+            <div class="col">
+                <input type="text"
+                       @bind-value="Value"
+                       class="@ControlCSS"
+                       placeholder="@Placeholder"
+                       @bind-value:event="oninput"
+                       @onchange="@( e => { TextValueChanged(); })" />
+            </div>
+            <div class="col-auto">
+                <button type="button" class="btn btn-sm btn-outline-light" @onclick="Save">
+                    <i class="fas fa-check"></i>
+                </button>
+            </div>
+        </div>
+    }
+
+    @if (Field.Type == EditFieldType.TextArea)
+    {
+        <div class="row g-0">
+            <div class="col">
+
+                <textarea style="min-height:120px;"
+                          class="@ControlCSS"
+                          placeholder="@Placeholder"
+                          @oninput="@(e => { Value = e.Value.ToSecureString(); TextValueChanged(); })"
+                          rows="6">@Value</textarea>
+
+            </div>
+            <div class="col-auto">
+                <button type="button" class="btn btn-sm" @onclick="Save">
+                    <i class="fas fa-check"></i>
+                </button>
+            </div>
+        </div>
+    }
+
+    @if (!string.IsNullOrEmpty(Field.Description))
+    {
+        <p class="lead"><small class="text-muted">@Field.Description.ToSecureString()</small></p>
+    }
 }
 
-@if (Field.Type == EditFieldType.TextBox)
-{
-    <input type="text"
-           @bind-value="Value"
-           class="@ControlCSS"
-           placeholder="@Placeholder"
-           @bind-value:event="oninput"
-           @onchange="@( e => { TextValueChanged(); })" />
-}
 
-@if (Field.Type == EditFieldType.TextArea)
-{
-    <textarea style="min-height:120px;"
-          class="@ControlCSS"
-          placeholder="@Placeholder"
-          @oninput="@(e => { Value = e.Value.ToSecureString(); TextValueChanged(); })"
-          rows="6">@Value</textarea>
-}
-
-@if (!string.IsNullOrEmpty(Field.Description))
-{ 
-    <p class="lead"><small class="text-muted">@Field.Description.ToSecureString()</small></p>
-}
 
 @code {
 
@@ -45,12 +95,11 @@
     [Parameter]
     public string Placeholder { get; set; } = string.Empty;
 
-
     [Parameter]
     public string Value { get; set; } = string.Empty;
 
     [Parameter]
-    public EditField Field { get; set; } 
+    public EditField Field { get; set; }
 
     /// <summary>
     /// Reacts when the Value property of the control is changed.
@@ -71,6 +120,46 @@
         {
             Console.WriteLine("FAIL: " + ex.Message);
         }
+    }
+
+    [Parameter]
+    public IEditItemRepository EditRepository { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (EditRepository != null)
+        {
+            if (EditRepository.IsInitialized == true)
+            {
+                if (EditRepository.DTO != null)
+                {
+                    if (Field.Property == "Title")
+                    {
+                        this.Value = EditRepository.DTO.Title.ToSecureString();
+                    }
+                    else
+                    {
+                        this.Value = EditRepository.DTO.GetProperty(Field.Property).Value.ToSecureString();
+                    }
+                }
+            }
+        }
+
+        await base.OnParametersSetAsync();
+    }
+
+    private async Task Edit()
+    {
+        Field.Mode = EditFieldMode.Edit;
+
+        await Task.FromResult<string>("OK");
+    }
+
+    private async Task Save()
+    {
+        Field.Mode = EditFieldMode.View;
+
+        await Task.FromResult<string>("OK");
     }
 
 }

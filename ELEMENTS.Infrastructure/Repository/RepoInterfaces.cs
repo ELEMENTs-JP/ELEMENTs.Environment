@@ -16,6 +16,7 @@ namespace ELEMENTS
 
     public interface IItemsRepository
     {
+        int TotalPageCount { get; set; }
         int QueryCount { get; set; }
         ISQLiteService Service { get; set; }
         string Matchcode { get; set; }
@@ -29,6 +30,7 @@ namespace ELEMENTS
 
     public interface IEditItemRepository
     {
+        bool IsInitialized { get; set; }
         ISQLiteService Service { get; set; }
         IDTO DTO { get; set; }
         IDTO Init();

@@ -9,7 +9,7 @@
             <div class="col">
             </div>
             <div class="col">
-                <ELEMENTS.Controls.Search.SearchBox ValueInput="@( e => { ItemsRepo.Matchcode = e; SearchItems(); } )" />
+                <ELEMENTS.Controls.Search.SearchBox ValueInput="@( e => { ItemsRepo.Matchcode = e; ItemsRepo.Search(); } )" />
             </div>
             <div class="col">
                
@@ -20,7 +20,7 @@
         <ELEMENTS.Controls.Collection.AddItem Title="Eintrag hinzufügen"
                                               FieldHeader="Bezeichnung" 
                                               Repository="@AddRepo" 
-                                              OnOKClicked="LoadItems" />
+                                              OnOKClicked="@( e => { ItemsRepo.Load(); })" />
     </RelatedContent>
     <ChildContent>
         <ELEMENTS.Controls.Collection.ItemsCollection Items="ItemsRepo.Items" Context="IDTO" ControlCSS="" BodyCSS="">
@@ -46,8 +46,8 @@
                 }
             </div>
             <div class="col">
-                <ELEMENTS.Controls.List.Pagination CurrentPage="@ItemsRepo.CurrentPage" TotaPageCount="@TotalPageCount" 
-                                                   SelectedPage="@( e => { ItemsRepo.CurrentPage = e; LoadItems(); } )" />
+                <ELEMENTS.Controls.List.Pagination CurrentPage="@ItemsRepo.CurrentPage" TotaPageCount="@ItemsRepo.TotalPageCount" 
+                                                   SelectedPage="@( e => { ItemsRepo.CurrentPage = e; ItemsRepo.Load(); } )" />
             </div>
             <div class="col-auto">
                 <small class="text-muted text-end"><i class="fas fa-hashtag"></i><strong class="ms-1">@ItemsRepo.PageSize</strong></small>
@@ -58,7 +58,7 @@
 
 @code {
 
-    public int TotalPageCount { get; set; } = 1;
+
 
     private IAddItemRepository AddRepo = new AddItemRepository();
     private IItemsRepository ItemsRepo = new ItemsRepository();
@@ -84,41 +84,11 @@
 
     protected override async Task OnParametersSetAsync()
     {
-        LoadItems();
+        ItemsRepo.Load();
+
         await Task.FromResult<string>("OK");
     }
 
-    private void SearchItems()
-    {
-        if (ItemsRepo != null)
-        {
-            ItemsRepo.Search();
 
-            CalculatePaging();
-        }
-    }
-    private void LoadItems()
-    {
-        if (ItemsRepo != null)
-        {
-            ItemsRepo.Load();
 
-            CalculatePaging();
-        }
-    }
-    private void CalculatePaging()
-    {
-        try
-        {
-            // Page Size 
-            long rest = 0;
-            long quotient = Math.DivRem(ItemsRepo.ItemCount, ItemsRepo.PageSize, out rest);
-            TotalPageCount = Convert.ToInt32(quotient);
-            TotalPageCount = (rest >= 1) ? TotalPageCount += 1 : TotalPageCount;
-        }
-        catch (Exception ex)
-        {
-            TotalPageCount = 1;
-        }
-    }
 }

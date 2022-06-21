@@ -6,20 +6,20 @@
 @using ELEMENTS.Infrastructure
 
 
-<ELEMENTS.Controls.Layouts.ViewPageLayout Title="@Title" SubTitle="ItemType">
-    <HeaderContent>
+<ELEMENTS.Controls.Layouts.ContainerLayout Title="@Title" SubTitle="ItemType" PaddingCSS="px-2 py-3">
+    <RelatedContent>
         <ELEMENTS.Controls.Collection.AddItem Title="Eintrag hinzufügen"
                                               FieldHeader="Bezeichnung" Repository="@AddRepo" />
-    </HeaderContent>
+    </RelatedContent>
     <ChildContent>
-        <ELEMENTS.Controls.Edit.EditArea Repository="@UIRepo" >
-
+        <ELEMENTS.Controls.Edit.EditArea 
+                        InterfaceRepository="@UIRepo" 
+                        EditRepository="@EditRepo" >
         </ELEMENTS.Controls.Edit.EditArea>
     </ChildContent>
-</ELEMENTS.Controls.Layouts.ViewPageLayout>
+</ELEMENTS.Controls.Layouts.ContainerLayout>
 
 @code {
-
 
     [Parameter]
     public string ItemType { get; set; }
@@ -28,7 +28,7 @@
     public string GUID { get; set; }
 
     private IAddItemRepository AddRepo = new AddItemRepository();
-    private IEditItemRepository EditRepository = new EditItemRepository();
+    private IEditItemRepository EditRepo = new EditItemRepository();
     private IEditInterfaceRepository UIRepo { get; set; } = new CustomerRepository();
 
     private string Title = string.Empty;
@@ -41,16 +41,16 @@
         {
             AddRepo.Service = sql;
         }
-        if (EditRepository != null)
+        if (EditRepo != null)
         {
-            EditRepository.Service = sql;
+            EditRepo.Service = sql;
 
             if (!string.IsNullOrEmpty(GUID))
             {
-                EditRepository.ItemGUID = new Guid(GUID);
+                EditRepo.ItemGUID = new Guid(GUID);
             }
 
-            EditRepository.Init();
+            EditRepo.Init();
         }
 
         // Edit Fields 
@@ -61,11 +61,11 @@
     {
         base.OnParametersSet();
 
-        if (EditRepository != null)
+        if (EditRepo != null)
         {
-            if (EditRepository.DTO != null)
+            if (EditRepo.DTO != null)
             {
-                Title = EditRepository.DTO.Title;
+                Title = EditRepo.DTO.Title;
             }
         }
     }

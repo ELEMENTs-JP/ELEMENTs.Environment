@@ -1,14 +1,14 @@
 ﻿
-@if (Repository != null)
+@if (InterfaceRepository != null)
 {
 <div class="border bg-white p-3">
 
     <div class="row">
 
-        @foreach (EditField field in Repository.Fields)
+        @foreach (EditField field in InterfaceRepository.Fields)
         {
             <div class="@field.ColumnCSSClass">
-                <EditComponent Field="@field" />
+                <EditComponent Field="@field" EditRepository="@EditRepository" />
             </div>
         }
 
@@ -17,13 +17,16 @@
 }
 else
 { 
-    <p>Repository is empty</p>
+    <p>Interface Repository is empty</p>
 }
 
 
 @code {
 
     [Parameter]
-    public IEditInterfaceRepository Repository { get; set; }
+    public IEditInterfaceRepository InterfaceRepository { get; set; }
+
+    [Parameter]
+    public IEditItemRepository EditRepository { get; set; }
 
 }

@@ -14,6 +14,7 @@ namespace ELEMENTS
   
     public class ItemsRepository : IItemsRepository
     {
+        public int TotalPageCount { get; set; } = 1;
         public ISQLiteService Service { get; set; }
         public int PageSize { get; set; } = 10;
         public int QueryCount { get; set; } = 0;
@@ -51,6 +52,8 @@ namespace ELEMENTS
 
                 // Query 
                 Items = Service.Factory.GetItems(qp);
+
+                CalculatePaging();
             }
             catch (Exception ex)
             {
@@ -74,6 +77,8 @@ namespace ELEMENTS
 
                 // Query 
                 Items = Service.Factory.GetItems(qp);
+
+                CalculatePaging();
             }
             catch (Exception ex)
             {
@@ -101,6 +106,22 @@ namespace ELEMENTS
 
             return 0;
         }
-    
+
+        private void CalculatePaging()
+        {
+            try
+            {
+                // Page Size 
+                long rest = 0;
+                long quotient = Math.DivRem(ItemCount, PageSize, out rest);
+                TotalPageCount = Convert.ToInt32(quotient);
+                TotalPageCount = (rest >= 1) ? TotalPageCount += 1 : TotalPageCount;
+            }
+            catch (Exception ex)
+            {
+                TotalPageCount = 1;
+            }
+        }
+
     }
 }
