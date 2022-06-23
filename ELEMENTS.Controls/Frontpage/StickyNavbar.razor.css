@@ -32,6 +32,7 @@ nav {
 
                 nav ul li a:hover,
                 nav ul li a.active {
-                    background-color: #0094ff;
-                    color: #fff;
+                    /*background-color: #0094ff;*/
+                    /*color: #fff;*/
+                    border-bottom: 3px solid var(--tblr-primary);
                 }

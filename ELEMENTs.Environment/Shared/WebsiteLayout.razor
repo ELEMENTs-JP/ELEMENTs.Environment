@@ -6,7 +6,12 @@
 <ELEMENTS.Controls.Interface.WebsiteLayout>
 
     <Header>
-        <ELEMENTS.Controls.Frontpage.StickyHeader IsSticky="true" >
+        <ELEMENTS.Controls.Frontpage.StickyHeader IsSticky="true" Title="the STRIDEs Path">
+            <LogoContent>
+                <div class="bg-primary rounded p-2">
+                    <strong class="text-white">tsp</strong>
+                </div>
+            </LogoContent>
             <SecurityContent>
                 <div class="row">
                     <div class="col-auto">
@@ -18,8 +23,9 @@
                 </div>
             </SecurityContent>
         </ELEMENTS.Controls.Frontpage.StickyHeader>
-        <ELEMENTS.Controls.Frontpage.StickyNavbar IsSticky="false" />
-        <ELEMENTS.Controls.Frontpage.StickySubNavbar IsSticky="false" />
+
+        @*<ELEMENTS.Controls.Frontpage.StickyNavbar IsSticky="false" />
+        <ELEMENTS.Controls.Frontpage.StickySubNavbar IsSticky="false" />*@
 
     </Header>
     <ChildContent>
