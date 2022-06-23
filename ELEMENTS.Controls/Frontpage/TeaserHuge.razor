@@ -1,22 +1,39 @@
 ﻿
 <div class="@BackgroundCSS">
     <div class="@ContainerCSS">
-        <div class="row">
-            <div class="col">
 
-            </div>
-            <div class="col d-flex justify-content-center pt-5">
-                @if (!string.IsNullOrEmpty(LogoUrl))
-                {
+
+        @if (!string.IsNullOrEmpty(LogoUrl))
+        {
+            <div class="row">
+                <div class="col">
+
+                </div>
+                <div class="col d-flex justify-content-center pt-5">
                     <div class="hero-image mb-3"
                          style="height: @LogoHeight; width: @LogoWidth; background-image: url(@LogoUrl);">
                     </div>
-                }
-            </div>
-            <div class="col">
+                </div>
+                <div class="col">
 
+                </div>
             </div>
-        </div>
+        }
+
+        @if (@LogoContent != null)
+        {
+            <div class="row">
+                <div class="col">
+
+                </div>
+                <div class="col d-flex justify-content-center pt-5">
+                    @LogoContent
+                </div>
+                <div class="col">
+
+                </div>
+            </div>
+        }
 
         <div class="row">
             <div class="col pt-3">
@@ -61,7 +78,7 @@
         {
             <div class="row">
                 <div class="col p-3 pb-5">
-                    <div class="hero-image"
+                      <div class="@((ImageAsHero) ? "hero-image" :"" )"
                          style="height: @Height; width: @Width; background-image: url(@ImageUrl);">
                     </div>
                 </div>
@@ -84,6 +101,9 @@
     /// </summary>
     [Parameter]
     public string LogoUrl { get; set; } = string.Empty;
+
+    [Parameter]
+    public bool ImageAsHero { get; set; } = true;
 
     [Parameter]
     public string Title { get; set; } = "Components";
@@ -147,5 +167,7 @@
     [Parameter]
     public string SecondaryButtonLink { get; set; } = "https://www.google.com";
 
+    [Parameter]
+    public RenderFragment LogoContent { get; set; }
 
 }

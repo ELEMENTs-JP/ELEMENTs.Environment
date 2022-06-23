@@ -3,9 +3,13 @@
 @using ELEMENTS.Infrastructure
 
 
-<ELEMENTS.Controls.Frontpage.TeaserHuge LogoUrl="https://upload.wikimedia.org/wikipedia/commons/5/57/Google_logo_%282010-2015%29.png"
-                                        ImageUrl="https://www.w3schools.com/howto/photographer.jpg">
-
+<ELEMENTS.Controls.Frontpage.TeaserHuge ImageAsHero="false"
+    ImageUrl="/images/undraw_Engineering_team.png">
+    <LogoContent>
+        <div class="bg-primary text-white rounded p-3 px-4">
+            <p class="display-1">tsp</p>
+        </div>
+    </LogoContent>
 </ELEMENTS.Controls.Frontpage.TeaserHuge>
 
 <ELEMENTS.Controls.Frontpage.Teaser Direction="TeaserDirection.Left" BackgroundCSS="border-bottom">
@@ -14,7 +18,7 @@
     </div>
 </ELEMENTS.Controls.Frontpage.Teaser>
 
-<ELEMENTS.Controls.Frontpage.ColumnsSection ImageUrl="https://www.w3schools.com/howto/photographer.jpg">
+<ELEMENTS.Controls.Frontpage.ColumnsSection ImageUrl="/images/undraw_Engineering_team.png">
 </ELEMENTS.Controls.Frontpage.ColumnsSection>
 
 <ELEMENTS.Controls.Frontpage.Teaser Direction="TeaserDirection.Right">
