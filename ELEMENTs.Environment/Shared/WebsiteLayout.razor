@@ -8,7 +8,14 @@
     <Header>
         <ELEMENTS.Controls.Frontpage.StickyHeader IsSticky="true" >
             <SecurityContent>
-                <ELEMENTS.Controls.Security.SecurityMenu Entries="@SecurityEntries" />
+                <div class="row">
+                    <div class="col-auto">
+                        <ELEMENTS.Controls.Security.FastLogin />
+                    </div>
+                    <div class="col-auto">
+                        <ELEMENTS.Controls.Security.SecurityMenu Entries="@SecurityEntries" />
+                    </div>
+                </div>
             </SecurityContent>
         </ELEMENTS.Controls.Frontpage.StickyHeader>
         <ELEMENTS.Controls.Frontpage.StickyNavbar IsSticky="false" />

@@ -35,7 +35,7 @@ else if (Field.Mode == EditFieldMode.Edit)
 
     @if (Field.Type == EditFieldType.TextBox)
     {
-        <div class="row g-0">
+        <div class="row gx-1">
             <div class="col">
                 <input type="text"
                        @bind-value="Value"
@@ -77,7 +77,7 @@ else if (Field.Mode == EditFieldMode.Edit)
         <p class="lead"><small class="text-muted">@Field.Description.ToSecureString()</small></p>
     }
 }
-
+ 
 
 
 @code {
@@ -158,6 +158,36 @@ else if (Field.Mode == EditFieldMode.Edit)
     private async Task Save()
     {
         Field.Mode = EditFieldMode.View;
+
+        if (EditRepository != null)
+        {
+            if (EditRepository.IsInitialized == true)
+            {
+                if (EditRepository.DTO != null)
+                {
+                    if (Field.Property == "Title")
+                    {
+                        EditRepository.DTO.Title = this.Value;
+                    }
+                    else
+                    {
+                        EditRepository.DTO.SetProperty(Field.Property, this.Value.ToSecureString());
+                    }
+
+                    IFactoryStatusInfo info = EditRepository.Service.Factory.Update(EditRepository.DTO);
+                    if (info.Status == "OK")
+                    {
+                        string msg = "everthing is ok";
+
+
+                    }
+                    else
+                    {
+                        string msg = "nothing changed";
+                    }
+                }
+            }
+        }
 
         await Task.FromResult<string>("OK");
     }

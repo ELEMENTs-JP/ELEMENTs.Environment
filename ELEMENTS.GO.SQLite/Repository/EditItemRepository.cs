@@ -15,6 +15,7 @@ namespace ELEMENTS
     public class EditItemRepository : IEditItemRepository
     {
         public bool IsInitialized { get; set; } = false;
+        public string ItemType { get; set; } = string.Empty;
         public Guid ItemGUID { get; set; } = Guid.Empty;
         public ISQLiteService Service { get; set; }
         public IDTO DTO { get; set; }
@@ -22,6 +23,17 @@ namespace ELEMENTS
         {
             try
             {
+                if (string.IsNullOrEmpty(ItemType))
+                {
+                    IsInitialized = false;
+                    throw new Exception("ItemType not initialized");
+                }
+                if (ItemGUID == Guid.Empty)
+                {
+                    IsInitialized = false;
+                    throw new Exception("Item GUID not initialized");
+                }
+
                 // Prepare 
                 IInputDTO input = InputDTO.GetItemTemplate(ItemGUID, Service.Factory.MasterGUID, "ELEMENTs", "Product");
 

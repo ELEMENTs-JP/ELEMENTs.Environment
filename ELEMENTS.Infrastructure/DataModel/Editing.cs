@@ -9,6 +9,8 @@ namespace ELEMENTS.Infrastructure
     public interface IEditInterfaceRepository
     {
         void Init();
+        bool IsInitialized { get; set; }
+        string ItemType { get; set; }
         List<EditField> Fields { get; set; }
     }
     public class EditField

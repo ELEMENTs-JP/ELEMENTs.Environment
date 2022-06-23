@@ -35,5 +35,6 @@ namespace ELEMENTS
         IDTO DTO { get; set; }
         IDTO Init();
         Guid ItemGUID { get; set; }
+        string ItemType { get; set; }
     }
 }

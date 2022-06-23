@@ -6,7 +6,7 @@
 @using ELEMENTS.Infrastructure
 
 
-<ELEMENTS.Controls.Layouts.ContainerLayout Title="@Title" SubTitle="ItemType" PaddingCSS="px-2 py-3">
+<ELEMENTS.Controls.Layouts.ContainerLayout Title="@Title" SubTitle="@EditRepo.ItemType" PaddingCSS="px-2 py-3">
     <RelatedContent>
         <ELEMENTS.Controls.Collection.AddItem Title="Eintrag hinzufügen"
                                               FieldHeader="Bezeichnung" Repository="@AddRepo" />
@@ -22,14 +22,14 @@
 @code {
 
     [Parameter]
-    public string ItemType { get; set; }
+    public string ItemType { get; set; } = "Product";
 
     [Parameter]
     public string GUID { get; set; }
 
     private IAddItemRepository AddRepo = new AddItemRepository();
     private IEditItemRepository EditRepo = new EditItemRepository();
-    private IEditInterfaceRepository UIRepo { get; set; } = new CustomerRepository();
+    private IEditInterfaceRepository UIRepo { get; set; } = new EditInterfaceRepository();
 
     private string Title = string.Empty;
 
@@ -47,6 +47,7 @@
 
             if (!string.IsNullOrEmpty(GUID))
             {
+                EditRepo.ItemType = ItemType;
                 EditRepo.ItemGUID = new Guid(GUID);
             }
 
@@ -54,7 +55,9 @@
         }
 
         // Edit Fields 
-        UIRepo = new CustomerRepository();
+        UIRepo = new EditInterfaceRepository();
+        UIRepo.ItemType = this.ItemType;
+        UIRepo.Init();
     }
 
     protected override void OnParametersSet()

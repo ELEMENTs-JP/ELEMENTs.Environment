@@ -6,30 +6,5 @@ using ELEMENTS.Infrastructure;
 
 namespace ELEMENTs
 {
-    public class CustomerRepository : IEditInterfaceRepository
-    {
-        public List<EditField> Fields { get; set; } = new List<EditField>();
-
-        public CustomerRepository()
-        {
-            Init();
-        }
-
-        public void Init()
-        {
-            Fields = new List<EditField>();
-            Fields.Clear();
-
-            Fields.Add(new EditField() { Title = "ID", ColumnCSSClass = "col-4", 
-                                        Description = "No of the entry.", 
-                                        Type = EditFieldType.TextBox });
-            
-            Fields.Add(new EditField() { Title = "Title", ColumnCSSClass = "col-4", Type = EditFieldType.TextBox });
-            Fields.Add(new EditField() { Title = "Position", ColumnCSSClass = "col-4", Type = EditFieldType.TextBox });
-
-            Fields.Add(new EditField() { Title = "First Name", ColumnCSSClass = "col-6", Type = EditFieldType.TextBox });
-            Fields.Add(new EditField() { Title = "Last Name", ColumnCSSClass = "col-6", Type = EditFieldType.TextBox });
-            Fields.Add(new EditField() { Title = "Notes", ColumnCSSClass = "col-12", Type = EditFieldType.TextArea });
-        }
-    }
+   
 }
