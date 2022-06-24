@@ -13,18 +13,17 @@
                 <h3 class="h3">Search Elements</h3>
             </div>
             <div class="col-auto px-3">
-                <ELEMENTS.Controls.Search.SearchDropDown 
-                            Title="Search Scope" ControlOrientation="Orientation.Horizontal"
-                                SelectionChanged="@( e => { FilterValue = e.ToSecureString(); })"
-                                    Items="@( new List<string>() { "Applikationen", "Inhalte", "Einstellungen" })" />
+                <ELEMENTS.Controls.Search.SearchDropDown Title="Search Scope" ControlOrientation="Orientation.Horizontal"
+                        SelectionChanged="@( e => { SearchRepo.FilterValue = e.ToSecureString(); })"
+                            Items="@( new List<string>() { "Applikationen", "Inhalte", "Einstellungen" })" />
             </div>
             <div class="col">
                 <ELEMENTS.Controls.Search.SearchBox 
-                        ValueInput="@( e => { Matchcode = e.ToSecureString(); SearchItems(); })" />
+                    ValueInput="@( e => { SearchRepo.Matchcode = e.ToSecureString(); SearchRepo.SearchItems(); })" />
             </div>
             <div class="col">
-                <ELEMENTS.Controls.Search.SearchResultBox Items="@Items"
-                    ValueInput="@( e => { Matchcode = e.ToSecureString(); SearchItems(); })" />
+                <ELEMENTS.Controls.Search.SearchResultBox Items="@SearchRepo.Items"
+                    ValueInput="@( e => { SearchRepo.Matchcode = e.ToSecureString(); SearchRepo.SearchItems(); })" />
             </div>
             <div class="col-auto"></div>
         </div>
@@ -33,13 +32,13 @@
 
         <div class="row">
             <div class="col-auto pe-3">
-                <ELEMENTS.Controls.Search.SearchFilter 
-                        Items="@Filter" Title="Titel" FilterChanged="@( e => { FilterValues(e); })" />
+                <ELEMENTS.Controls.Search.SearchFilter Items="@SearchRepo.Filter" 
+                    Title="Titel" FilterChanged="@( e => { SearchRepo.FilterValues(e); })" />
 
-                <div>@FilterValue</div>
+                <div>@SearchRepo.FilterValue</div>
             </div>
             <div class="col ps-3 border-start">
-                <ELEMENTS.Controls.Search.SearchResult Items="@Items" />
+                <ELEMENTS.Controls.Search.SearchResult Items="@SearchRepo.Items" />
             </div>
         </div>
     </div>
@@ -48,66 +47,12 @@
 
 @code
 {
-    [Parameter]
-    public IList<IDTO> Items { get; set; } = new List<IDTO>();
 
-    public IList<IDTO> Store { get; set; } = new List<IDTO>();
-    public IList<string> Filter { get; set; } = new List<string>();
+    public ISearchRepository SearchRepo { get; set; } = new SearchRepository();
 
-    string Matchcode { get; set; } = string.Empty;
-
-    string FilterValue { get; set; } = string.Empty;
-
-    protected override void OnParametersSet()
+    protected override async Task OnInitializedAsync()
     {
-        base.OnParametersSet();
-
-        Load();
-    }
-
-    private void Load()
-    {
-        Store.Clear();
-
-        Store.Add(new DTO { ID = Guid.NewGuid().ToString(), Title = "New York", Content = "Content", NavigateUrl = "https://www.google.de" });
-        Store.Add(new DTO { ID = Guid.NewGuid().ToString(), Title = "Washington", Content = "Content", NavigateUrl = "https://www.google.de" });
-        Store.Add(new DTO { ID = Guid.NewGuid().ToString(), Title = "Seattle", Content = "Content", NavigateUrl = "https://www.google.de" });
-        Store.Add(new DTO { ID = Guid.NewGuid().ToString(), Title = "Chicago", Content = "Content", NavigateUrl = "https://www.google.de" });
-        Store.Add(new DTO { ID = Guid.NewGuid().ToString(), Title = "Detroit", Content = "Content", NavigateUrl = "https://www.google.de" });
-        Store.Add(new DTO { ID = Guid.NewGuid().ToString(), Title = "Texas", Content = "Content", NavigateUrl = "https://www.google.de" });
-        Store.Add(new DTO { ID = Guid.NewGuid().ToString(), Title = "Las Vegas", Content = "Content", NavigateUrl = "https://www.google.de" });
-
-        Filter.Clear();
-        Filter = Store.DistinctBy(se => se.Title).Select(se => se.Title).ToList();
-    }
-    private void SearchItems()
-    {
-        Items.Clear();
-
-        if (string.IsNullOrEmpty(Matchcode))
-        { 
-            return; 
-        }
-
-        foreach (IDTO dto in Store.Where(se => se.Title.ToLower().Contains(Matchcode.ToLower())))
-        {
-            Items.Add(dto);
-        }
-    }
-
-    private void FilterValues(KeyValuePair<string, bool> filter)
-    {
-        FilterValue = filter.Key.ToSecureString() + " - " + filter.Value.ToSecureString();
-
-        if (filter.Value == true)
-        {
-            Matchcode = filter.Key.ToSecureString();
-        }
-        else
-        {
-            Matchcode = string.Empty;
-        }
-
-        SearchItems();
+        SearchRepo.Init();
+        await base.OnInitializedAsync();
     }
 }
