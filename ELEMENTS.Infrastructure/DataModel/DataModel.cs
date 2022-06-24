@@ -9,6 +9,12 @@ using Microsoft.AspNetCore.Hosting;
 
 namespace ELEMENTS.Infrastructure
 {
+    public enum Orientation
+    { 
+        NULL = 0,
+        Vertical = 1,
+        Horizontal = 2,
+    }
     public enum TabPosition
     {
         NULL = 0,

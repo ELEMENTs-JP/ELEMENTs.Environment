@@ -9,11 +9,18 @@
 <div class="card mb-3">
     <div class="card-header">
         <div class="row">
-            <div class="col">
+            <div class="col-auto px-3">
                 <h3 class="h3">Search Elements</h3>
             </div>
+            <div class="col-auto px-3">
+                <ELEMENTS.Controls.Search.SearchDropDown 
+                            Title="Search Scope" ControlOrientation="Orientation.Horizontal"
+                                SelectionChanged="@( e => { FilterValue = e.ToSecureString(); })"
+                                    Items="@( new List<string>() { "Applikationen", "Inhalte", "Einstellungen" })" />
+            </div>
             <div class="col">
-                <ELEMENTS.Controls.Search.SearchBox ValueInput="@( e => { Matchcode = e.ToSecureString(); SearchItems(); })" />
+                <ELEMENTS.Controls.Search.SearchBox 
+                        ValueInput="@( e => { Matchcode = e.ToSecureString(); SearchItems(); })" />
             </div>
             <div class="col">
                 <ELEMENTS.Controls.Search.SearchResultBox Items="@Items"
@@ -26,13 +33,10 @@
 
         <div class="row">
             <div class="col-auto pe-3">
-                <ELEMENTS.Controls.Search.SearchFilter Items="@Filter" Title="Titel" FilterChanged="@( e => { FilterValues(e); })" />
+                <ELEMENTS.Controls.Search.SearchFilter 
+                        Items="@Filter" Title="Titel" FilterChanged="@( e => { FilterValues(e); })" />
 
                 <div>@FilterValue</div>
-
-                <ELEMENTS.Controls.Search.SearchDropDown Title="Search Scope"
-                                        SelectionChanged="@( e => { FilterValue = e.ToSecureString(); })"
-                                        Items="@( new List<string>() { "Applikationen", "Anwendungen", "Sonstiges" })" />
             </div>
             <div class="col ps-3 border-start">
                 <ELEMENTS.Controls.Search.SearchResult Items="@Items" />

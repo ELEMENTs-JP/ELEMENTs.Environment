@@ -6,23 +6,52 @@
     @if (Items.Count() >= 1)
     {
         <div class="row">
-            <div class="col">
+
+
+
+            @if (ControlOrientation == Orientation.Vertical)
+            {
+                <div class="col">
+
+                    @if (!string.IsNullOrEmpty(Title))
+                    {
+                        <strong class="d-block my-1">@Title</strong>
+                    }
+
+                    <select class="@ControlCSS"
+                            @onchange="@(e => { Value = e.Value.ToString(); onValueChanged(); onSelectionChanged(); })">
+
+                        @foreach (string item in Items)
+                        {
+                            <option value="@item.ToString()">@item.ToString()</option>
+                        }
+
+                    </select>
+                </div>
+            }
+            else
+            {
 
                 @if (!string.IsNullOrEmpty(Title))
                 {
-                    <strong class="d-block my-1">@Title</strong>
+                    <div class="col-auto pe-2">
+                        <strong class="d-block my-1">@Title</strong>
+                    </div>
                 }
 
-                <select class="@ControlCSS"  
-                        @onchange="@(e => { Value = e.Value.ToString(); onValueChanged(); onSelectionChanged(); })">
+                <div class="col">
+                    <select class="@ControlCSS"
+                            @onchange="@(e => { Value = e.Value.ToString(); onValueChanged(); onSelectionChanged(); })">
 
-                    @foreach (string item in Items)
-                    {
-                        <option value="@item.ToString()">@item.ToString()</option>
-                    }
+                        @foreach (string item in Items)
+                        {
+                            <option value="@item.ToString()">@item.ToString()</option>
+                        }
 
-                </select>
-            </div>
+                    </select>
+                </div>
+            }
+
         </div>
     }
 }
@@ -30,7 +59,7 @@
 
 @code {
 
-
+    [Parameter] public Orientation ControlOrientation { get; set; } = Orientation.Vertical;
 
     [Parameter] public string Title { get; set; } = string.Empty;
 
