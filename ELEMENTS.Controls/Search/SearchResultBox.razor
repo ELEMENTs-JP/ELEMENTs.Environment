@@ -1,0 +1,138 @@
+﻿@inject NavigationManager nm
+@inject IJSRuntime JS
+
+<div id="@("Search_Result_Box_" + ControlID.ToSecureString() + "_ID")" 
+     style="position:relative;">
+    
+    <div class="input-group">
+        <input type="text"
+               class="@ControlCSS"
+               placeholder="@Placeholder"
+               aria-label="" aria-describedby="searchIcon"
+               @oninput="@( e => {  onValueInput(e.Value.ToSecureString()); })"
+               @onchange="@( e => {  onValueChanged(e.Value.ToSecureString()); })">
+        <span class="input-group-text" id="searchIcon"><i class="fas fa-search"></i></span>
+    </div>
+
+    @if (IsListOpen)
+    {
+        <div class="@ListCSS" 
+             style="position: absolute; 
+                    inset: 0px auto auto 0px; 
+                    margin: 0px; 
+                    transform: translate(0px, 40px); 
+                    min-width: 300px;">
+            @if (Items != null)
+            {
+                @if (Items.Count >= 1)
+                {
+                    <div class="border-top">
+
+                        @foreach (IDTO item in Items)
+                        {
+                            <div class="@ItemCSS">
+                                <div class="col" style="cursor:pointer;"
+                                     @onclick="@( e => { Navigate(item.NavigateUrl); } )">
+
+                                    @if (ShowID)
+                                    {
+                                        <small class="text-muted d-block">@item.ID.ToSecureString()</small>
+                                    }
+
+                                    <strong class="d-block text-truncate fw-bold text-dark">@item.Title.ToSecureString()</strong>
+
+                                    @if (ShowContent)
+                                    {
+                                        <small class="d-block text-truncate">@item.Content.ToSecureString()</small>
+                                    }
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+            }
+        </div>
+    }
+</div>
+
+
+
+
+@code {
+
+    Guid ControlID { get; set; } = Guid.NewGuid();
+    
+    // Fields 
+    bool IsListOpen { get; set; } = false;
+
+    // Box
+    /// <summary>
+    /// Defines or sets a CSS class that controls the CSS style of the control. The default value is: form-control
+    /// </summary>
+    [Parameter]
+    public string ControlCSS { get; set; } = "form-control";
+
+    /// <summary>
+    /// Defines or sets the Placeholder text of the Placeholder property of the control.
+    /// The property is initialized with "string.Empty".
+    /// </summary>
+    [Parameter]
+    public string Placeholder { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Reacts when the Value property of the control is changed by keyboard input.
+    /// Returns the value of the control as a string. If this is not NULL.
+    /// If the Value property is NULL, the event is not thrown.
+    /// Info: If intensive operations or accesses to the hardware are implemented with this event,
+    /// delays may occur due to the roundtrip in the user interface.
+    /// </summary>
+    [Parameter]
+    public EventCallback<string> ValueChanged { get; set; }
+    private async void onValueChanged(string value)
+    {
+        // Raise Event
+        await ValueChanged.InvokeAsync(value);
+
+        // Show List
+        IsListOpen = (Items.Count >= 1) ? true : false;
+    }
+
+    [Parameter]
+    public EventCallback<string> ValueInput { get; set; }
+    private async void onValueInput(string value)
+    {
+        // Raise Event
+        await ValueInput.InvokeAsync(value);
+
+        // Show List
+        IsListOpen = (Items.Count >= 1) ? true : false;
+    }
+
+
+
+    // List
+    [Parameter]
+    public string ListCSS { get; set; } = "bg-white overflow-hidden dropdown-menu show";
+
+    [Parameter]
+    public string ItemCSS { get; set; } = "row border-bottom p-2 overflow-hidden";
+
+    [Parameter]
+    public IList<IDTO> Items { get; set; } = new List<IDTO>();
+
+    [Parameter] public bool ShowID { get; set; } = false;
+    [Parameter] public bool ShowContent { get; set; } = true;
+
+    private async Task Navigate(string url)
+    {
+        try
+        {
+            // nm.NavigateTo(url);
+            await JS.InvokeVoidAsync("open", url, "_blank");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("FAIL: " + ex.Message);
+        }
+    }
+}

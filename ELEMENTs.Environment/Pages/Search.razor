@@ -12,10 +12,14 @@
             <div class="col">
                 <h3 class="h3">Search Elements</h3>
             </div>
-            <div class="col-auto">
+            <div class="col">
                 <ELEMENTS.Controls.Search.SearchBox ValueInput="@( e => { Matchcode = e.ToSecureString(); SearchItems(); })" />
             </div>
-            <div class="col"></div>
+            <div class="col">
+                <ELEMENTS.Controls.Search.SearchResultBox Items="@Items"
+                    ValueInput="@( e => { Matchcode = e.ToSecureString(); SearchItems(); })" />
+            </div>
+            <div class="col-auto"></div>
         </div>
     </div>
     <div class="card-body">
@@ -75,6 +79,11 @@
     private void SearchItems()
     {
         Items.Clear();
+
+        if (string.IsNullOrEmpty(Matchcode))
+        { 
+            return; 
+        }
 
         foreach (IDTO dto in Store.Where(se => se.Title.ToLower().Contains(Matchcode.ToLower())))
         {
