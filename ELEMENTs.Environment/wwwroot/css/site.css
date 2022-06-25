@@ -77,3 +77,7 @@ a, .btn-link {
     flex: 0 0 auto;
     width: 4.1666%;
 }
+
+.pointer {
+    cursor:pointer;
+}

@@ -25,7 +25,14 @@
                 <ELEMENTS.Controls.Search.SearchResultBox Items="@SearchRepo.Items"
                     ValueInput="@( e => { SearchRepo.Matchcode = e.ToSecureString(); SearchRepo.SearchItems(); })" />
             </div>
+            
             <div class="col-auto"></div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <ELEMENTS.Controls.Input.InputList Items="@SearchRepo.Items"
+                            ValueInput="@( e => { SearchRepo.Matchcode = e.ToSecureString(); SearchRepo.SearchItems(); })" />
+            </div>
         </div>
     </div>
     <div class="card-body">
