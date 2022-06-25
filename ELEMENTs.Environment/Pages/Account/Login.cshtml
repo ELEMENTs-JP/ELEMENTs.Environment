@@ -1,0 +1,48 @@
+﻿@page
+@model ELEMENTs.Environment.Pages.Account.LoginModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="container border p-5">
+
+    <form method="post">
+        <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+        <div class="row">
+            <div class="col-3">
+                <label class="form-label" asp-for="Credential.UserName"></label>
+            </div>
+            <div class="col-5">
+                <input type="text" class="form-control"
+                       asp-for="Credential.UserName" />
+            </div>
+            <span class="text-danger" asp-validation-for="Credential.UserName"></span>
+        </div>
+
+        <div class="row">
+            <div class="col-3">
+                <label class="form-label" asp-for="Credential.Password"></label>
+            </div>
+            <div class="col-5">
+                <input type="password" class="form-control"
+                       asp-for="Credential.Password" />
+            </div>
+            <span class="text-danger" asp-validation-for="Credential.Password"></span>
+        </div>
+
+        <div class="row">
+            <div class="col-3">
+                <input type="submit" class="btn-link btn-primary" value="Login" />
+            </div>
+            <div class="col-5">
+            </div>
+        </div>
+
+
+    </form>
+
+</div>

@@ -2,12 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ELEMENTs.Environment.Data;
 using ELEMENTS;
 using ELEMENTS.Data.SQLite;
 using ELEMENTS.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Components.Server;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
@@ -32,8 +33,22 @@ namespace ELEMENTs.Environment
             services.AddRazorPages();
             services.AddServerSideBlazor();
 
+            // Authentication Handler (Cookie) 
+            // https://www.youtube.com/watch?v=4QBa0hRI4ds&list=PLgRlicSxjeMOxypAEL2XqIc2m_gPmoVN-&index=8 
+            services.AddAuthentication().AddCookie("tspCookieAuth", options =>
+                {
+                    options.Cookie.Name = "tspCookieAuth";
+                    options.LoginPath = "/Account/Login";
+                });
+
+            // TODO: Security - Security Data Context
+            services.AddScoped<AuthenticationStateProvider, ServerAuthenticationStateProvider>();
+
             // Database Service 
             services.AddSingleton<ISQLiteService, SQLiteService>();
+
+            // App Service 
+            services.AddSingleton<IAppRepository, AppRepository>();
 
             // File Service 
             services.AddSingleton<IFileDragDropService, FileDragDropUploadService>();
@@ -59,6 +74,11 @@ namespace ELEMENTs.Environment
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            // Security Middleware 
+            // https://www.youtube.com/watch?v=4QBa0hRI4ds&list=PLgRlicSxjeMOxypAEL2XqIc2m_gPmoVN-&index=8 
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

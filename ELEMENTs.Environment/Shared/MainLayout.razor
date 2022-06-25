@@ -4,7 +4,9 @@
 <ELEMENTS.Controls.Interface.AppLayout>
     <Sidebar>
         <ELEMENTS.Controls.Navigation.AppTitle Title="ELEMENTs" />
-        <ELEMENTS.Controls.Navigation.HierarchicalNavigation Repository="@Repository" />
+        <ELEMENTS.Controls.Navigation.HierarchicalNavigation 
+                Title="Application" Repository="@AppNavigationRepository" />
+        <ELEMENTS.Controls.Navigation.HierarchicalNavigation Title="Pages" Repository="@Repository" />
     </Sidebar>
     <Header>
         <div class="row d-flex align-items-center">
@@ -34,6 +36,9 @@
 {
     [Parameter]
     public INavigationRepository Repository { get; set; }
+
+    [Parameter]
+    public INavigationRepository AppNavigationRepository { get; set; }
 
     private IFooter DTO { get; set; }
     private List<NavigationEntry> Entries { get; set; } = new List<NavigationEntry>();

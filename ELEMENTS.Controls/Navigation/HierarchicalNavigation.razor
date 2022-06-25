@@ -1,5 +1,6 @@
 ﻿@inject NavigationManager nm
 
+<div id="@( "NAV_" + ControlID.ToSecureString() + "_ID")">
 
 @if (!string.IsNullOrEmpty(Title))
 {
@@ -110,8 +111,11 @@
         </nav>
     }
 }
+</div>
 
 @code {
+
+    Guid ControlID = Guid.NewGuid();
 
     [Parameter]
     public INavigationRepository Repository { get; set; }
