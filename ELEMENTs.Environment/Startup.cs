@@ -48,7 +48,7 @@ namespace ELEMENTs.Environment
             services.AddSingleton<ISQLiteService, SQLiteService>();
 
             // App Service 
-            services.AddSingleton<IAppRepository, AppRepository>();
+            //services.AddSingleton<IAppRepository, AppRepository>();
 
             // File Service 
             services.AddSingleton<IFileDragDropService, FileDragDropUploadService>();

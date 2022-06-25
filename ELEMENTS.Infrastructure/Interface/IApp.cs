@@ -8,11 +8,10 @@ namespace ELEMENTS.Infrastructure
 {
     public interface IApp
     {
+        Guid ID { get; set; }
         string Title { get; set; }
         string Description { get; set; }
     }
-
-    
 
     public interface IFeature
     {

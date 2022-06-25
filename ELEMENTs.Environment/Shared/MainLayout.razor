@@ -53,8 +53,25 @@
         DefaultNavigation();
         BuildSecurityNavigation();
         BuildAdminNavigation();
+
+        BuildAppNavigationRepo();
         BuildNavigationRepository();
+
         BuildFooter();
+    }
+
+    private void BuildAppNavigationRepo()
+    {
+        try
+        {
+            AppRepository appRepo = new AppRepository();
+            appRepo.Init();
+            AppNavigationRepository = appRepo;
+        }
+        catch (Exception ex)
+        {
+
+        }
     }
 
     private void BuildNavigationRepository()

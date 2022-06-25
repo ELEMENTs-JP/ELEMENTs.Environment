@@ -11,19 +11,31 @@ namespace ELEMENTS.Infrastructure
 {
     public interface IAppRepository
     {
-        List<IApp> Items { get; set; }
+        List<IApp> Apps { get; set; }
 
         void Init();
     }
-    public class AppRepository : IAppRepository
+    public class AppRepository : IAppRepository, INavigationRepository
     {
-        public List<IApp> Items { get; set; } = new List<IApp>();
+        public List<IApp> Apps { get; set; } = new List<IApp>();
 
         public void Init()
         {
+            Apps.Clear();
+            Apps.Add(new RUNer());
+            Apps.Add(new FILEster());
+
             Items.Clear();
-            Items.Add(new RUNer());
-            Items.Add(new FILEster());
+            foreach (IApp app in Apps)
+            {
+                Items.Add(new NavigationEntry() { Title = app.Title, ID = app.ID });
+            }
         }
+
+        public string Title { get; set; } = "Applications";
+        public string Text { get; set; }
+        public List<NavigationEntry> Items { get; set; } = new List<NavigationEntry>();
+        public void Save()
+        { }
     }
 }
