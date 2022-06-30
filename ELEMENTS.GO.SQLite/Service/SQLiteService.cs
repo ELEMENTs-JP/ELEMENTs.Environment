@@ -26,6 +26,48 @@ namespace ELEMENTS.Data.SQLite
 
             // 
         }
+
+        public SQLiteService(Guid MasterGUID, string DBFileName = "ELEMENTs.db")
+        {
+            if (Factory == null)
+            {
+                Factory = new SQLiteFactory();
+            }
+
+            // Master GUID 
+            Factory.MasterGUID = MasterGUID;
+
+            // DB File 
+            SQLiteContext.DbFileName = DBFileName;
+            Factory.SetDatabasePath();
+
+            // 
+        }
+        
+        // 
+        public void SetFileName(string DBFileName = "ELEMENTs.db")
+        {
+            if (Factory == null)
+            {
+                Factory = new SQLiteFactory();
+            }
+
+            // DB File 
+            SQLiteContext.DbFileName = DBFileName;
+            Factory.SetDatabasePath();
+        }
+        public void SetMasterGUID(Guid MasterGUID)
+        {
+            if (Factory == null)
+            {
+                Factory = new SQLiteFactory();
+            }
+
+            // Master GUID 
+            Factory.MasterGUID = MasterGUID;
+        }
+        
+        // Methods 
         public IFactoryStatusInfo CreateDatabase(string name)
         {
             try

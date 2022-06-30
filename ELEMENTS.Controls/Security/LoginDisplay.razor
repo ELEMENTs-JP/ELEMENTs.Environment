@@ -4,14 +4,18 @@
 
 @try
 {
+
+    // https://www.pragimtech.com/blog/blazor/authorization-in-blazor/
+    // https://gunnarpeipman.com/client-side-blazor-authorizeview/ 
+    // https://www.c-sharpcorner.com/article/understand-basic-of-authorization-in-blazor-server-app/ 
+
     <AuthorizeView>
         <Authorized>
             <div class="col-auto">
-                @*<a href="Identity/Account/Manage">Hello, @context.User.Identity.Name</a>
-                    <form method="post" action="Identity/Account/LogOut">
-                        <button type="submit" class="nav-link btn btn-link">Logout</button>
-                    </form>*@
-
+                <a href="Identity/Account/Manage">Hello, @context.User.Identity.Name</a>
+                <form method="post" action="Identity/Account/LogOut">
+                    <button type="submit" class="nav-link btn btn-link">Logout</button>
+                </form>
                 <a href="Identity/Account/Register">Register</a>
                 <a href="Identity/Account/Login">Login</a>
             </div>

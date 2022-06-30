@@ -841,7 +841,7 @@ namespace ELEMENTS.Data.SQLite
 
             return null;
         }
-        public static async void UpdateItemAsync(IDTO input)
+        public static async Task<IDTO> UpdateItemAsync(IDTO input)
         {
             try
             {
@@ -855,7 +855,9 @@ namespace ELEMENTS.Data.SQLite
                 // Content 
                 tbl_CON_Content item = input as tbl_CON_Content;
                 if (item == null)
-                    return;
+                { 
+                    return null;
+                }
 
                 // Update 
                 using (SQLiteContext context = SQLiteHelper.GetEntities())
@@ -881,14 +883,17 @@ namespace ELEMENTS.Data.SQLite
 
                         // SAVE 
                         await context.SaveChangesAsync();
+                        return dbitem as IDTO;
                     }
                 }
 
             }
             catch (Exception ex)
             {
-
+                return null;
             }
+
+            return null;
         }
         public static async Task<IDTO> GetItemByIDAsync(IInputDTO input)
         {
