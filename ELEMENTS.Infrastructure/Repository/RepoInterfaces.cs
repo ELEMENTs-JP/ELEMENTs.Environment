@@ -12,6 +12,7 @@ namespace ELEMENTS
         ISQLiteService Service { get; set; }
         string Value { get; set; }
         IDTO Create();
+        string ItemType { get; set; }
     }
 
     public interface IItemsRepository
@@ -20,6 +21,7 @@ namespace ELEMENTS
         int QueryCount { get; set; }
         ISQLiteService Service { get; set; }
         string Matchcode { get; set; }
+        string ItemType { get; set; }
         int PageSize { get; set; }
         int ItemCount { get; }
         int CurrentPage { get; set; }
@@ -36,5 +38,13 @@ namespace ELEMENTS
         IDTO Init();
         Guid ItemGUID { get; set; }
         string ItemType { get; set; }
+    }
+
+    public interface IEditInterfaceRepository
+    {
+        void Init();
+        bool IsInitialized { get; set; }
+        string ItemType { get; set; }
+        List<IField> Fields { get; set; }
     }
 }

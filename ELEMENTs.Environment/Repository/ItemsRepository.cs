@@ -19,6 +19,7 @@ namespace ELEMENTS
         public int PageSize { get; set; } = 10;
         public int QueryCount { get; set; } = 0;
         public int CurrentPage { get; set; } = 1;
+        public string ItemType { get; set; } = string.Empty;
 
         private int ic = 0;
         public int ItemCount 

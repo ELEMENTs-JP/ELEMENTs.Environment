@@ -47,5 +47,6 @@ namespace ELEMENTS
 
             return null;
         }
+        public string ItemType { get; set; } = string.Empty;
     }
 }

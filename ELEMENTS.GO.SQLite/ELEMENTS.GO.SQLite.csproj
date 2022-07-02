@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
-    <Version>0.0.46</Version>
+    <Version>0.0.50</Version>
     <Description>ELEMENTs GO is an interface based database framework. In the version available here the database SQLite is implemented as an example.</Description>
     <PackageReleaseNotes>Please visit github at: https://github.com/ELEMENTs-JP/the-ELEMENTs-Environment</PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>

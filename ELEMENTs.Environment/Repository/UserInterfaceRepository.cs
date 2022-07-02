@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ELEMENTS;
 using ELEMENTS.Infrastructure;
 
 namespace ELEMENTS
@@ -10,7 +11,7 @@ namespace ELEMENTS
     public class EditInterfaceRepository : IEditInterfaceRepository
     {
         public bool IsInitialized { get; set; } = false;
-        public List<EditField> Fields { get; set; } = new List<EditField>();
+        public List<IField> Fields { get; set; } = new List<IField>();
         public string ItemType { get; set; } = string.Empty;
         public EditInterfaceRepository()
         {
@@ -27,7 +28,7 @@ namespace ELEMENTS
 
             try
             {
-                Fields = new List<EditField>();
+                Fields = new List<IField>();
                 Fields.Clear();
 
                 Fields.Add(new EditField()
