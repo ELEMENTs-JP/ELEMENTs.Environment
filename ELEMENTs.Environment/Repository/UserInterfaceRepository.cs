@@ -8,12 +8,13 @@ using ELEMENTS.Infrastructure;
 
 namespace ELEMENTS
 {
-    public class EditInterfaceRepository : IEditInterfaceRepository
+    public class UserInterfaceRepository : IUserInterfaceRepository
     {
         public bool IsInitialized { get; set; } = false;
         public List<IField> Fields { get; set; } = new List<IField>();
+        public List<IColumn> Columns { get; set; } = new List<IColumn>();
         public string ItemType { get; set; } = string.Empty;
-        public EditInterfaceRepository()
+        public UserInterfaceRepository()
         {
             
         }
@@ -40,10 +41,8 @@ namespace ELEMENTS
                 });
 
                 Fields.Add(new EditField() { Title = "Title", ColumnCSSClass = "col-4", Type = EditFieldType.TextBox });
-                Fields.Add(new EditField() { Title = "Position", ColumnCSSClass = "col-4", Type = EditFieldType.TextBox });
+                Fields.Add(new EditField() { Title = "Position", Property = "Position", ColumnCSSClass = "col-4", Type = EditFieldType.TextBox });
 
-                Fields.Add(new EditField() { Title = "First Name", ColumnCSSClass = "col-6", Type = EditFieldType.TextBox });
-                Fields.Add(new EditField() { Title = "Last Name", ColumnCSSClass = "col-6", Type = EditFieldType.TextBox });
                 Fields.Add(new EditField() { Title = "Notes", ColumnCSSClass = "col-12", Type = EditFieldType.TextArea });
 
                 IsInitialized = true;

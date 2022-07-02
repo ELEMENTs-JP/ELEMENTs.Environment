@@ -40,11 +40,12 @@ namespace ELEMENTS
         string ItemType { get; set; }
     }
 
-    public interface IEditInterfaceRepository
+    public interface IUserInterfaceRepository
     {
         void Init();
         bool IsInitialized { get; set; }
         string ItemType { get; set; }
         List<IField> Fields { get; set; }
+        List<IColumn> Columns { get; set; }
     }
 }

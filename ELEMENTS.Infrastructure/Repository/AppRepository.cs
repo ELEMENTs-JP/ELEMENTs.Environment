@@ -12,6 +12,7 @@ namespace ELEMENTS.Infrastructure
     public interface IAppRepository
     {
         List<IApp> Apps { get; set; }
+        IItemType GetItemTypeByName(string ItemType);
 
         void Init();
     }

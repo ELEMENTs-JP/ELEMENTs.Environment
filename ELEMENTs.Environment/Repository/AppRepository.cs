@@ -28,6 +28,21 @@ namespace ELEMENTS
             }
         }
 
+        public IItemType GetItemTypeByName(string ItemType)
+        {
+            foreach (IApp a in Apps)
+            {
+                foreach (IItemType i in a.ItemTypes)
+                {
+                    if (i.Title == ItemType)
+                    {
+                        return i;
+                    }
+                }
+            }
+
+            return null;
+        }
         public string Title { get; set; } = "Applications";
         public string Text { get; set; }
         public List<NavigationEntry> Items { get; set; } = new List<NavigationEntry>();

@@ -137,6 +137,10 @@ else if (Field.Mode == EditFieldMode.Edit)
                     {
                         this.Value = EditRepository.DTO.Title.ToSecureString();
                     }
+                    else if (Field.Property == "ID")
+                    {
+                        this.Value = EditRepository.DTO.ID.ToSecureString();
+                    }
                     else
                     {
                         this.Value = EditRepository.DTO.GetProperty(Field.Property).Value.ToSecureString();
@@ -157,8 +161,6 @@ else if (Field.Mode == EditFieldMode.Edit)
 
     private async Task Save()
     {
-        Field.Mode = EditFieldMode.View;
-
         if (EditRepository != null)
         {
             if (EditRepository.IsInitialized == true)
@@ -169,25 +171,35 @@ else if (Field.Mode == EditFieldMode.Edit)
                     {
                         EditRepository.DTO.Title = this.Value;
                     }
+                    else if (Field.Property == "ID")
+                    {
+                        EditRepository.DTO.ID = this.Value;
+                    }
                     else
                     {
-                        EditRepository.DTO.SetProperty(Field.Property, this.Value.ToSecureString());
+                        EditRepository.DTO.SetProperty(this.Value.ToSecureString(), Field.Property);
                     }
 
                     IFactoryStatusInfo info = EditRepository.Service.Factory.Update(EditRepository.DTO);
                     if (info.Status == "OK")
                     {
                         string msg = "everthing is ok";
-
-
+                        Console.WriteLine(msg);
                     }
                     else
                     {
                         string msg = "nothing changed";
+                        Console.WriteLine(msg);
                     }
                 }
             }
+            else
+            {
+                Console.WriteLine("Edit Repository is not initialized");
+            }
         }
+
+        Field.Mode = EditFieldMode.View;
 
         await Task.FromResult<string>("OK");
     }

@@ -44,6 +44,8 @@ namespace ELEMENTS
                 {
                     IsInitialized = true;
                 }
+
+                return DTO;
             }
             catch (Exception ex)
             {

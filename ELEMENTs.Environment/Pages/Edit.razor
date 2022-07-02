@@ -29,7 +29,7 @@
 
     private IAddItemRepository AddRepo = new AddItemRepository();
     private IEditItemRepository EditRepo = new EditItemRepository();
-    private IEditInterfaceRepository UIRepo { get; set; } = new EditInterfaceRepository();
+    private IUserInterfaceRepository UIRepo { get; set; } = new UserInterfaceRepository();
 
     private string Title = string.Empty;
 
@@ -55,7 +55,7 @@
         }
 
         // Edit Fields 
-        UIRepo = new EditInterfaceRepository();
+        UIRepo = new UserInterfaceRepository();
         UIRepo.ItemType = this.ItemType;
         UIRepo.Init();
     }

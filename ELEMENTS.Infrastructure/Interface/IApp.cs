@@ -59,6 +59,7 @@ namespace ELEMENTS.Infrastructure
         Guid ID { get; set; }
         string Title { get; set; }
         string Description { get; set; }
+        string Property { get; set; }
         string ColumnCSSClass { get; set; }
         ColumnType Type { get; set; }
     }
@@ -68,6 +69,7 @@ namespace ELEMENTS.Infrastructure
         public string Title { get; set; }
         public string Description { get; set; }
         public string ColumnCSSClass { get; set; } = "col";
+        public string Property { get; set; }
         public ColumnType Type { get; set; }
     }
 

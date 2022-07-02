@@ -116,10 +116,14 @@ namespace ELEMENTS.Data.SQLite
             {
                 // Principal GUID 
                 if (MasterGUID == Guid.Empty)
-                { return Properties; }
+                {
+                    Console.WriteLine("MasterGUID in LoadProperties is GUID Empty");
+                    return Properties; }
 
                 if (GUID == Guid.Empty)
-                { return Properties; }
+                {
+                    Console.WriteLine("GUID in LoadProperties is GUID Empty");
+                    return Properties; }
 
                 // Context 
                 using (SQLiteContext context = SQLiteHelper.GetEntities())
@@ -145,10 +149,16 @@ namespace ELEMENTS.Data.SQLite
             {
                 // Principal GUID 
                 if (MasterGUID == Guid.Empty)
-                { return null; }
+                {
+                    Console.WriteLine("MasterGUID in GetProperty is GUID Empty");
+                    return null; 
+                }
 
                 if (GUID == Guid.Empty)
-                { return null; }
+                {
+                    Console.WriteLine("GUID in GetProperty is GUID Empty");
+                    return null; 
+                }
 
                 // Name 
                 string name = Property.ToSecureString();
@@ -177,7 +187,7 @@ namespace ELEMENTS.Data.SQLite
             }
             catch (Exception ex)
             {
-
+                Console.WriteLine("Fehler: " + ex.Message);
             }
 
             return null;
