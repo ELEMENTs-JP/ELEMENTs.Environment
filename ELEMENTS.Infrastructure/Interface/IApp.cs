@@ -41,6 +41,17 @@ namespace ELEMENTS.Infrastructure
         string Description { get; set; }
         List<IColumn> Columns { get; set; }
         List<IField> Fields { get; set; }
+
+        ItemTypeTyp Typ { get; set; }
+
+    }
+
+    public enum ItemTypeTyp
+    { 
+        NULL = 0,
+        System = 1,
+        Item = 2,
+        File = 3,
     }
 
     public class ItemType : IItemType
@@ -50,6 +61,7 @@ namespace ELEMENTS.Infrastructure
         public string Description { get; set; }
         public List<IColumn> Columns { get; set; }
         public List<IField> Fields { get; set; }
+        public ItemTypeTyp Typ { get; set; } = ItemTypeTyp.Item;
     }
 
 
