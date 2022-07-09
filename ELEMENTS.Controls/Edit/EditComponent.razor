@@ -1,86 +1,91 @@
 ﻿
-<label class="form-label">@Field.Title </label>
 
 
-@* MODE *@
+<div class="@( (Border) ? "border-bottom p-2" : "" )">
+    <label class="form-label">@Field.Title </label>
 
-@if (Field.Mode == EditFieldMode.NULL)
-{
-    <div class="bg-white border rounded lead">&minus;</div>
-}
-else if (Field.Mode == EditFieldMode.Hidden)
-{
-    <div class="bg-light border rounded lead">&minus;</div>
-}
-else if (Field.Mode == EditFieldMode.View)
-{
-    <div class="row g-0">
-        <div class="col">
-            <p class="lead">@Value.ToSecureString()</p>
-        </div>
-        <div class="col-auto">
-            <button type="button" class="btn btn-sm btn-outline-light" @onclick="Edit">
-                <i class="fas fa-edit"></i>
-            </button>
-        </div>
-
-    </div>
-}
-else if (Field.Mode == EditFieldMode.Edit)
-{
-    @if (Field.Type == EditFieldType.Text)
+    @* MODE *@
+    @if (Field.Mode == EditFieldMode.NULL)
     {
-        <p class="lead">@Value.ToSecureString()</p>
+        <div class="bg-white border rounded lead">&minus;</div>
     }
-
-    @if (Field.Type == EditFieldType.TextBox)
+    else if (Field.Mode == EditFieldMode.Hidden)
     {
-        <div class="row gx-1">
-            <div class="col">
-                <input type="text"
-                       @bind-value="Value"
-                       class="@ControlCSS"
-                       placeholder="@Placeholder"
-                       @bind-value:event="oninput"
-                       @onchange="@( e => { TextValueChanged(); })" />
-            </div>
-            <div class="col-auto">
-                <button type="button" class="btn btn-sm btn-outline-light" @onclick="Save">
-                    <i class="fas fa-check"></i>
-                </button>
-            </div>
-        </div>
+        <div class="bg-light border rounded lead">&minus;</div>
     }
-
-    @if (Field.Type == EditFieldType.TextArea)
+    else if (Field.Mode == EditFieldMode.View)
     {
         <div class="row g-0">
             <div class="col">
-
-                <textarea style="min-height:120px;"
-                          class="@ControlCSS"
-                          placeholder="@Placeholder"
-                          @oninput="@(e => { Value = e.Value.ToSecureString(); TextValueChanged(); })"
-                          rows="6">@Value</textarea>
-
+                <p class="lead">@Value.ToSecureString()</p>
             </div>
             <div class="col-auto">
-                <button type="button" class="btn btn-sm" @onclick="Save">
-                    <i class="fas fa-check"></i>
+                <button type="button" class="btn btn-sm" @onclick="Edit">
+                    <i class="fas fa-edit"></i>
                 </button>
             </div>
+
         </div>
     }
-
-    @if (!string.IsNullOrEmpty(Field.Description))
+    else if (Field.Mode == EditFieldMode.Edit)
     {
-        <p class="lead"><small class="text-muted">@Field.Description.ToSecureString()</small></p>
+        @if (Field.Type == EditFieldType.Text)
+        {
+            <p class="lead">@Value.ToSecureString()</p>
+        }
+
+        @if (Field.Type == EditFieldType.TextBox)
+        {
+            <div class="row gx-1">
+                <div class="col">
+                    <input type="text"
+                           @bind-value="Value"
+                           class="@ControlCSS"
+                           placeholder="@Placeholder"
+                           @bind-value:event="oninput"
+                           @onchange="@( e => { TextValueChanged(); })" />
+                </div>
+                <div class="col-auto">
+                    <button type="button" class="btn btn-sm" @onclick="Save">
+                        <i class="fas fa-check"></i>
+                    </button>
+                </div>
+            </div>
+        }
+
+        @if (Field.Type == EditFieldType.TextArea)
+        {
+            <div class="row g-0">
+                <div class="col">
+
+                    <textarea style="min-height:120px;"
+                              class="@ControlCSS"
+                              placeholder="@Placeholder"
+                              @oninput="@(e => { Value = e.Value.ToSecureString(); TextValueChanged(); })"
+                              rows="6">@Value</textarea>
+
+                </div>
+                <div class="col-auto">
+                    <button type="button" class="btn btn-sm" @onclick="Save">
+                        <i class="fas fa-check"></i>
+                    </button>
+                </div>
+            </div>
+        }
+
+        @if (!string.IsNullOrEmpty(Field.Description))
+        {
+            <p class="lead"><small class="text-muted">@Field.Description.ToSecureString()</small></p>
+        }
     }
-}
- 
+
+</div>
 
 
 @code {
+
+    [Parameter]
+    public bool Border { get; set; } = false;
 
     /// <summary>
     /// Defines or sets a CSS class that controls the CSS style of the control. The default value is: 'form-control'

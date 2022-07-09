@@ -3,7 +3,7 @@
 {
     @if (InterfaceRepository.IsInitialized)
     {
-        <div class="border bg-white p-3">
+        <div class="@((Border == true) ? "border bg-white p-3" : "bg-white p-3")">
 
             <div class="row">
 
@@ -31,6 +31,9 @@ else
 
     [Parameter]
     public IEditItemRepository EditRepository { get; set; }
+
+    [Parameter]
+    public bool Border { get; set; } = true;
 
 
 
