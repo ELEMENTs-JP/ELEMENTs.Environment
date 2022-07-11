@@ -34,3 +34,7 @@ h2 {
     color: #fff;
     background-color: rgba(98,105,118,.08);
 }
+
+.dropdown-toggle:after {
+    margin-right: 0.7em;
+}

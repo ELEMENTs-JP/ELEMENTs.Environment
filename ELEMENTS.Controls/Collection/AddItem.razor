@@ -6,7 +6,7 @@
     <button type="button" class="btn btn-primary"
             data-bs-toggle="modal"
             data-bs-target="@( "#modal_" + modalGUID.ToString() )">
-        @Title
+        @ButtonTitle
     </button>
 
     <!-- Modal -->
@@ -48,6 +48,9 @@
 
     [Parameter]
     public string Title { get; set; } = string.Empty;
+
+    [Parameter]
+    public string ButtonTitle { get; set; } = "...";
 
     [Parameter]
     public IAddItemRepository Repository { get; set; }

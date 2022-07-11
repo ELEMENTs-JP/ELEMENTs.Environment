@@ -13,12 +13,18 @@ namespace ELEMENTS
         string Value { get; set; }
         IDTO Create();
         string ItemType { get; set; }
+
+        string ReferenceItemType { get; set; } 
+        QueryType DataQueryType { get; set; } 
+        Guid ReferenceGUID { get; set; } 
     }
 
     public interface IItemsRepository
     {
         int TotalPageCount { get; set; }
         int QueryCount { get; set; }
+        QueryType DataQueryType { get; set; }
+        Guid ReferenceGUID { get; set; }
         ISQLiteService Service { get; set; }
         string Matchcode { get; set; }
         string ItemType { get; set; }

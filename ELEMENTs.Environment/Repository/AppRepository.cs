@@ -32,7 +32,7 @@ namespace ELEMENTS
         {
             foreach (IApp a in Apps)
             {
-                foreach (IItemType i in a.ItemTypes)
+                foreach (IItemType i in a.GetItemTypes())
                 {
                     if (i.Title == ItemType)
                     {

@@ -25,9 +25,9 @@ namespace ELEMENTS.Infrastructure
         int GetItemsCount(IQueryParameter fqp);
 
         // Assign Remove 
-        bool AssignRelation(IRelationDTO dto);
-        bool RemoveRelation(IRelationDTO dto);
-        void DeleteRelation(Guid ChildParentGUID, Guid masterGUID);
+        IFactoryStatusInfo AssignRelation(IRelationDTO dto);
+        IFactoryStatusInfo RemoveRelation(IRelationDTO dto);
+        IFactoryStatusInfo DeleteRelation(Guid ChildParentGUID, Guid masterGUID);
         IRelationDTO GetRelation(IRelationDTO dto);
     }
 

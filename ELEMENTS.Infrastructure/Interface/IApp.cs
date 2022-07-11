@@ -11,7 +11,7 @@ namespace ELEMENTS.Infrastructure
         Guid ID { get; set; }
         string Title { get; set; }
         string Description { get; set; }
-        List<IItemType> ItemTypes { get; set; }
+        List<IItemType> GetItemTypes();
         List<IFeature> Features { get; set; }
         List<IPage> Pages { get; set; }
         string Link { get; set; }
@@ -39,11 +39,16 @@ namespace ELEMENTS.Infrastructure
         Guid ID { get; set; }
         string Title { get; set; }
         string Description { get; set; }
+        ItemTypeTyp Typ { get; set; }
         List<IColumn> Columns { get; set; }
         List<IField> Fields { get; set; }
 
-        ItemTypeTyp Typ { get; set; }
-
+        // Relations 
+        // Relations 
+        List<IItemType> GetParentItemTypes();
+        List<IItemType> GetRelatedItemTypes();
+        List<IItemType> GetParallelItemTypes();
+        List<IItemType> GetChildItemTypes();
     }
 
     public enum ItemTypeTyp
@@ -62,6 +67,28 @@ namespace ELEMENTS.Infrastructure
         public List<IColumn> Columns { get; set; }
         public List<IField> Fields { get; set; }
         public ItemTypeTyp Typ { get; set; } = ItemTypeTyp.Item;
+
+        // Relations 
+        public virtual List<IItemType> GetParentItemTypes()
+        {
+            List<IItemType> itemtypes = new List<IItemType>();
+            return itemtypes;
+        }
+        public virtual List<IItemType> GetRelatedItemTypes()
+        {
+            List<IItemType> itemtypes = new List<IItemType>();
+            return itemtypes;
+        }
+        public virtual List<IItemType> GetParallelItemTypes()
+        {
+            List<IItemType> itemtypes = new List<IItemType>();
+            return itemtypes;
+        }
+        public virtual List<IItemType> GetChildItemTypes()
+        {
+            List<IItemType> itemtypes = new List<IItemType>();
+            return itemtypes;
+        }
     }
 
 

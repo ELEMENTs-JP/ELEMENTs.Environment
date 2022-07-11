@@ -20,6 +20,8 @@ namespace ELEMENTS
         public int QueryCount { get; set; } = 0;
         public int CurrentPage { get; set; } = 1;
         public string ItemType { get; set; } = string.Empty;
+        public QueryType DataQueryType { get; set; } = QueryType.List;
+        public Guid ReferenceGUID { get; set; } = Guid.Empty;
 
         private int ic = 0;
         public int ItemCount 

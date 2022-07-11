@@ -230,39 +230,73 @@ namespace ELEMENTS.Data.SQLite
     public partial class SQLiteFactory : IFactory
     {
         // Assign Remove 
-        public bool AssignRelation(IRelationDTO dto)
+        public IFactoryStatusInfo AssignRelation(IRelationDTO dto)
         {
+            IFactoryStatusInfo info = new FactoryStatusInfo();
+            info.Status = "OK";
+            info.Message = "";
+
             try
             {
                 if (dto.Validate() == false)
-                    return false;
+                {
+                    info.Status = "FAIL";
+                    info.Message = "Validation vailed";
+                    return info;
+                }
 
                 tbl_TEC_Relation.Assign(dto);
-                return true;
+                return info;
             }
             catch (Exception ex)
             {
-                return false;
+                info.Status = "FAIL";
+                info.Message = "Error: " + ex.Message;
+                return info;
             }
         }
-        public bool RemoveRelation(IRelationDTO dto)
+        public IFactoryStatusInfo RemoveRelation(IRelationDTO dto)
         {
+            IFactoryStatusInfo info = new FactoryStatusInfo();
+            info.Status = "OK";
+            info.Message = "";
+
             try
             {
                 if (dto.Validate() == false)
-                    return false;
+                {
+                    info.Status = "FAIL";
+                    info.Message = "Validation vailed";
+                    return info;
+                }
 
                 tbl_TEC_Relation.Remove(dto);
-                return true;
+                return info;
             }
             catch (Exception ex)
             {
-                return false;
+                info.Status = "FAIL";
+                info.Message = "Error: " + ex.Message;
+                return info;
             }
         }
-        public void DeleteRelation(Guid ChildParentGUID, Guid masterGUID)
+        public IFactoryStatusInfo DeleteRelation(Guid ChildParentGUID, Guid masterGUID)
         {
-            tbl_TEC_Relation.Delete(ChildParentGUID, masterGUID);
+            IFactoryStatusInfo info = new FactoryStatusInfo();
+            info.Status = "OK";
+            info.Message = "";
+
+            try
+            {
+                tbl_TEC_Relation.Delete(ChildParentGUID, masterGUID);
+                return info;
+            }
+            catch (Exception ex)
+            {
+                info.Status = "FAIL";
+                info.Message = "Error: " + ex.Message;
+                return info;
+            }
         }
         public IRelationDTO GetRelation(IRelationDTO dto)
         {

@@ -48,5 +48,9 @@ namespace ELEMENTS
             return null;
         }
         public string ItemType { get; set; } = string.Empty;
+
+        public string ReferenceItemType { get; set; } = string.Empty;
+        public QueryType DataQueryType { get; set; } = QueryType.List;
+        public Guid ReferenceGUID { get; set; } = Guid.Empty;
     }
 }

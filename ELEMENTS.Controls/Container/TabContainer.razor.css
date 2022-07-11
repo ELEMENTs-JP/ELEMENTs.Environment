@@ -2,3 +2,6 @@
 {
 }
 
+.nav-tabs .nav-item .nav-link {
+    padding: 0.25rem 0.5rem !important;
+}

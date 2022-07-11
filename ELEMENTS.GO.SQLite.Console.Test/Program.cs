@@ -374,13 +374,13 @@ namespace ELEMENTS.GO.SQLite
                 "Zuordnung",
                 masterGUID
                 );
-            bool VaterSohnErgebnis = factory.AssignRelation(VaterSohn);
-            if (VaterSohnErgebnis == false)
+            IFactoryStatusInfo VaterSohnErgebnis = factory.AssignRelation(VaterSohn);
+            if (VaterSohnErgebnis.Status == "FAIL")
             {
                 Console.WriteLine("FAIL - Vater Sohn Zuordnung wurde nicht erstellt");
                 throw new Exception("Zuordnung wurde nicht vorgenommen");
             }
-            if (VaterSohnErgebnis == true)
+            if (VaterSohnErgebnis.Status == "OK")
             {
                 Console.WriteLine("OK - Vater Sohn Zuordnung wurde erstellt");
             }
