@@ -34,6 +34,7 @@ namespace ELEMENTS
         List<IDTO> Items { get; set; }
         List<IDTO> Load();
         List<IDTO> Search();
+        IFactoryStatusInfo Delete(IDTO dto);
     }
 
     public interface IEditItemRepository
@@ -44,6 +45,7 @@ namespace ELEMENTS
         IDTO Init();
         Guid ItemGUID { get; set; }
         string ItemType { get; set; }
+        IFactoryStatusInfo DeleteItem();
     }
 
     public interface IUserInterfaceRepository

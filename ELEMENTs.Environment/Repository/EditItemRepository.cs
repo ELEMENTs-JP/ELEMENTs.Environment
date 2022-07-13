@@ -54,6 +54,35 @@ namespace ELEMENTS
 
             return null;
         }
+        public IFactoryStatusInfo DeleteItem()
+        {
+            IFactoryStatusInfo info = new FactoryStatusInfo();
+            info.Status = "OK";
+            info.Message = "";
 
+            if (DTO == null)
+            {
+                info.Status = "FAIL";
+                info.Message = "DTO = NULL";
+                return info;
+            }
+
+            try
+            {
+                // Delete 
+                IInputDTO input = InputDTO.CreateTemplate(
+                    DTO.GUID, DTO.Title,
+                    Service.Factory.MasterGUID,
+                    "ELEMENTs", this.ItemType);
+                info = Service.Factory.Delete(input);
+            }
+            catch (Exception ex)
+            {
+                info.Status = "FAIL";
+                info.Message = "Error: " + ex.Message;
+            }
+
+            return info;
+        }
     }
 }
