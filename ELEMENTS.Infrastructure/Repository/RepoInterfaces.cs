@@ -12,7 +12,7 @@ namespace ELEMENTS
         ISQLiteService Service { get; set; }
         string Value { get; set; }
         IDTO Create();
-        string ItemType { get; set; }
+        IItemType ItemType { get; set; }
 
         string ReferenceItemType { get; set; } 
         QueryType DataQueryType { get; set; } 
@@ -27,7 +27,7 @@ namespace ELEMENTS
         Guid ReferenceGUID { get; set; }
         ISQLiteService Service { get; set; }
         string Matchcode { get; set; }
-        string ItemType { get; set; }
+        IItemType ItemType { get; set; }
         int PageSize { get; set; }
         int ItemCount { get; }
         int CurrentPage { get; set; }
@@ -44,7 +44,7 @@ namespace ELEMENTS
         IDTO DTO { get; set; }
         IDTO Init();
         Guid ItemGUID { get; set; }
-        string ItemType { get; set; }
+        IItemType ItemType { get; set; }
         IFactoryStatusInfo DeleteItem();
     }
 
@@ -52,7 +52,7 @@ namespace ELEMENTS
     {
         void Init();
         bool IsInitialized { get; set; }
-        string ItemType { get; set; }
+        IItemType ItemType { get; set; }
         List<IField> Fields { get; set; }
         List<IColumn> Columns { get; set; }
     }

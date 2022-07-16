@@ -19,7 +19,7 @@ namespace ELEMENTS
         public int PageSize { get; set; } = 10;
         public int QueryCount { get; set; } = 0;
         public int CurrentPage { get; set; } = 1;
-        public string ItemType { get; set; } = string.Empty;
+        public IItemType ItemType { get; set; } 
         public QueryType DataQueryType { get; set; } = QueryType.List;
         public Guid ReferenceGUID { get; set; } = Guid.Empty;
 
@@ -110,7 +110,7 @@ namespace ELEMENTS
                 IInputDTO input = InputDTO.CreateTemplate(
                     dto.GUID, dto.Title,
                     Service.Factory.MasterGUID,
-                    "ELEMENTs", this.ItemType);
+                    "ELEMENTs", this.ItemType.Name);
                 info = Service.Factory.Delete(input);
             }
             catch (Exception ex)

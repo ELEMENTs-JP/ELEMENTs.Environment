@@ -19,13 +19,13 @@
         @if (Repository.Items != null)
         {
             <nav class="@ControlCSS">
-                <div class="container-fluid" style="max-height:320px; overflow-y:scroll;">
+                <div class="container-fluid ps-3 pe-2" style="max-height:320px; overflow-y:scroll;">
 
                     @if (Repository.Groups != null)
                     {
                         @if (Repository.Groups.Count >= 1)
                         {
-                            <div class="btn-group w-100">
+                            <div class="btn-group w-100 my-1 mb-2">
 
                                 @foreach (NavigationFilter filter in Repository.Groups)
                                 {
@@ -33,9 +33,7 @@
                                             @onclick="@( e => { Repository.Filter(filter.ID); } )"
                                             class="btn btn-sm btn-dark" 
                                             title="@filter.Name">
-                                        <div class="p-1">
-                                            <i class="@( filter.Icon + " " + "m-1" )"></i>
-                                        </div>
+                                        <i class="@( filter.Icon + " text-white " + "" )"></i>
                                     </button>
                                 }
                             </div>

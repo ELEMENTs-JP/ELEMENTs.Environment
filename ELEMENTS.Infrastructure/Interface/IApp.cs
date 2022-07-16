@@ -23,6 +23,7 @@ namespace ELEMENTS.Infrastructure
         string ColorCode { get; set; }
         AppType Type { get; set; }
         string Group { get; set; }
+        bool IsActive { get; set; }
     }
     public class BaseApp : IApp
     {
@@ -41,6 +42,7 @@ namespace ELEMENTS.Infrastructure
         public string ColorCode { get; set; } = "#cccccc";
         public AppType Type { get; set; } = AppType.App;
         public string Group { get; set; } = string.Empty;
+        public bool IsActive { get; set; } = true;
     }
 
     public interface IFeature
@@ -74,7 +76,7 @@ namespace ELEMENTS.Infrastructure
         List<IField> Fields { get; set; }
         string ColorCode { get; set; }
         string Group { get; set; } 
-        // Relations 
+
         // Relations 
         List<IItemType> GetParentItemTypes();
         List<IItemType> GetRelatedItemTypes();

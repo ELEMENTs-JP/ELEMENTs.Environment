@@ -15,7 +15,7 @@ namespace ELEMENTS
     public class EditItemRepository : IEditItemRepository
     {
         public bool IsInitialized { get; set; } = false;
-        public string ItemType { get; set; } = string.Empty;
+        public IItemType ItemType { get; set; } 
         public Guid ItemGUID { get; set; } = Guid.Empty;
         public ISQLiteService Service { get; set; }
         public IDTO DTO { get; set; }
@@ -23,7 +23,7 @@ namespace ELEMENTS
         {
             try
             {
-                if (string.IsNullOrEmpty(ItemType))
+                if (ItemType == null)
                 {
                     IsInitialized = false;
                     throw new Exception("ItemType not initialized");
@@ -73,7 +73,7 @@ namespace ELEMENTS
                 IInputDTO input = InputDTO.CreateTemplate(
                     DTO.GUID, DTO.Title,
                     Service.Factory.MasterGUID,
-                    "ELEMENTs", this.ItemType);
+                    "ELEMENTs", this.ItemType.Name);
                 info = Service.Factory.Delete(input);
             }
             catch (Exception ex)

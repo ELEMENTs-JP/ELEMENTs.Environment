@@ -3,10 +3,11 @@
 @page "/edit/{ItemType}/{GUID}"
 
 @inject ISQLiteService sql
+@inject IAppRepository app
 @using ELEMENTS.Infrastructure
 
 
-<ELEMENTS.Controls.Layouts.ContainerLayout Title="@Title" SubTitle="@EditRepo.ItemType" PaddingCSS="px-2 py-3">
+<ELEMENTS.Controls.Layouts.ContainerLayout Title="@Title" SubTitle="@EditRepo.ItemType.Title" PaddingCSS="px-2 py-3">
     <RelatedContent>
         <ELEMENTS.Controls.Collection.AddItem Title="Eintrag hinzufügen"
                                               FieldHeader="Bezeichnung" Repository="@AddRepo" />
@@ -47,7 +48,7 @@
 
             if (!string.IsNullOrEmpty(GUID))
             {
-                EditRepo.ItemType = ItemType;
+                EditRepo.ItemType = app.GetItemTypeByName(this.ItemType);
                 EditRepo.ItemGUID = new Guid(GUID);
             }
 
@@ -56,7 +57,7 @@
 
         // Edit Fields 
         UIRepo = new UserInterfaceRepository();
-        UIRepo.ItemType = this.ItemType;
+        UIRepo.ItemType = app.GetItemTypeByName(this.ItemType);
         UIRepo.Init();
     }
 

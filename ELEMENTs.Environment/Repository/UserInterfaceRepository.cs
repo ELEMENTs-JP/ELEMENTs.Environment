@@ -13,7 +13,7 @@ namespace ELEMENTS
         public bool IsInitialized { get; set; } = false;
         public List<IField> Fields { get; set; } = new List<IField>();
         public List<IColumn> Columns { get; set; } = new List<IColumn>();
-        public string ItemType { get; set; } = string.Empty;
+        public IItemType ItemType { get; set; } 
         public UserInterfaceRepository()
         {
             
@@ -21,7 +21,7 @@ namespace ELEMENTS
 
         public void Init()
         {
-            if (string.IsNullOrEmpty(ItemType))
+            if (ItemType == null)
             {
                 IsInitialized = false;
                 return;
