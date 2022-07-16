@@ -6,6 +6,15 @@ using System.Threading.Tasks;
 
 namespace ELEMENTS.Infrastructure
 {
+    public enum AppType
+    { 
+        NULL = 0,
+
+        App = 1,
+        Internal = 2,
+        System = 3,
+        Free = 4,
+    }
     public enum ElementsEntityType
     {
         NULL = 0,

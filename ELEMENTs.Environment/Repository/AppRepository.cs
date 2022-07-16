@@ -20,11 +20,18 @@ namespace ELEMENTS
         {
             Apps.Clear();
 
-
             Items.Clear();
             foreach (IApp app in Apps)
             {
-                Items.Add(new NavigationEntry() { Title = app.Title, ID = app.ID });
+                NavigationEntry entry = new NavigationEntry() 
+                { 
+                    Title = app.Title, 
+                    ID = app.ID,
+                    Group = app.Group
+                };
+
+                Store.Add(entry);
+                Items.Add(entry);
             }
         }
 
@@ -46,7 +53,22 @@ namespace ELEMENTS
         public string Title { get; set; } = "Applications";
         public string Text { get; set; }
         public List<NavigationEntry> Items { get; set; } = new List<NavigationEntry>();
+        public List<NavigationEntry> Store { get; set; } = new List<NavigationEntry>();
         public void Save()
         { }
+
+        public List<NavigationFilter> Groups { get; set; } = new List<NavigationFilter>();
+        public void Filter(string GroupID)
+        {
+            try
+            {
+                Items.Clear();
+                Items = Store.Where(se => se.Group == GroupID).ToList();
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
     }
 }

@@ -13,8 +13,10 @@ namespace ELEMENTS
     {
         string Title { get; set; }
         string Text { get; set; }
-
+        List<NavigationEntry> Store { get; set; }
         List<NavigationEntry> Items { get; set; }
+        List<NavigationFilter> Groups { get; set; }
+        void Filter(string FilterID);
         void Save();
     }
     public class NavigationRepository : INavigationRepository
@@ -22,7 +24,20 @@ namespace ELEMENTS
         public string Title { get; set; }
         public string Text { get; set; }
 
+        public List<NavigationEntry> Store { get; set; } = new List<NavigationEntry>();
         public List<NavigationEntry> Items { get; set; } = new List<NavigationEntry>();
+        public List<NavigationFilter> Groups { get; set; } = new List<NavigationFilter>();
+        public void Filter(string GroupID)
+        {
+            try
+            {
+                Items = Store.Where(se => se.Group == GroupID).ToList();
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
 
         // Load // Save 
         private static string relativeFilePath = "./Configuration";
@@ -86,7 +101,7 @@ namespace ELEMENTS
             return new NavigationRepository();
         }
 
-        // JSON
+        // JSON 
         string ToJsonString(NavigationRepository theObject)
         {
             string json = string.Empty;
@@ -123,5 +138,12 @@ namespace ELEMENTS
             }
             return obj;
         }
+    }
+
+    public class NavigationFilter
+    {
+        public string ID { get; set; } = string.Empty;
+        public string Name { get; set; } = string.Empty;
+        public string Icon { get; set; } = string.Empty;
     }
 }

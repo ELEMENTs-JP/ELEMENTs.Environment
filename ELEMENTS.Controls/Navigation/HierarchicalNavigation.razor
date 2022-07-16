@@ -2,115 +2,136 @@
 
 <div id="@( "NAV_" + ControlID.ToSecureString() + "_ID")" class="@( FrameCSS )">
 
-@if (!string.IsNullOrEmpty(Title))
-{
-    <h4 class="mt-3 px-3">@Title</h4>
-}
-
-@if (!string.IsNullOrEmpty(SubTitle))
-{
-    <div class="px-3 pb-2">
-        <small class="text-muted">@SubTitle</small>
-    </div>
-}
-
-@if (Repository != null)
-{
-    @if (Repository.Items != null)
+    @if (!string.IsNullOrEmpty(Title))
     {
-        <nav class="@ControlCSS">
-            <div class="container-fluid">
-
-                @if (Repository.Items.Count >= 1)
-                {
-                    <div class="overflow-auto">
-                        <div class="collapse navbar-collapse" id="navbar-menu">
-                        <ul class="navbar-nav">
-
-                            @foreach (NavigationEntry entry in Repository.Items.OrderBy(se => se.Position))
-                            {
-                                @if (entry.Items == null || entry.Items.Count == 0)
-                                {
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="@entry.Link">
-
-
-                                            <span class="nav-link-icon d-md-none d-lg-inline-block">
-
-                                                @if (string.IsNullOrEmpty(entry.Icon))
-                                                {
-                                                <svg xmlns="http://www.w3.org/2000/svg" 
-                                                     class="icon icon-tabler icon-tabler-square" 
-                                                     width="24" height="24" viewBox="0 0 24 24" 
-                                                     stroke-width="2" stroke="currentColor" fill="none" 
-                                                     stroke-linecap="round" stroke-linejoin="round">
-                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                                    <rect x="4" y="4" width="12" height="12" rx="2"></rect>
-                                                </svg>
-                                                }
-                                                else
-                                                {
-                                                    @((MarkupString)entry.Icon)
-                                                }
-
-                                            </span>
-                                            <span class="nav-link-title">@entry.Title</span>
-                                        </a>
-                                    </li>
-                                }
-                                else
-                                {
-                                    <li class="nav-item dropdown">
-                                        <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown" data-bs-auto-close="false" role="button" aria-expanded="false">
-                                            <span class="nav-link-icon d-md-none d-lg-inline-block">
-
-                                                @if (string.IsNullOrEmpty(entry.Icon))
-                                                {
-                                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                                         class="icon icon-tabler icon-tabler-grip-vertical"
-                                                         width="24" height="24" viewBox="0 0 24 24"
-                                                         stroke-width="2" stroke="currentColor" fill="none"
-                                                         stroke-linecap="round" stroke-linejoin="round">
-                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                                        <circle cx="9" cy="5" r="1"></circle>
-                                                        <circle cx="9" cy="12" r="1"></circle>
-                                                        <circle cx="9" cy="19" r="1"></circle>
-                                                        <circle cx="15" cy="5" r="1"></circle>
-                                                        <circle cx="15" cy="12" r="1"></circle>
-                                                        <circle cx="15" cy="19" r="1"></circle>
-                                                    </svg>
-                                                }
-                                                else
-                                                {
-                                                    @((MarkupString)entry.Icon)
-                                                }
-
-                                            </span>
-                                            <span class="nav-link-title">@entry.Title</span>
-                                        </a>
-
-                                        <div class="dropdown-menu">
-
-                                            @foreach (NavigationEntry child in entry.Items.OrderBy(se => se.Position))
-                                            {
-                                                <a class="dropdown-item" href="@child.Link">@child.Title</a>
-                                            }
-
-                                        </div>
-                                    </li>
-                                }
-
-                            }
-
-                        </ul>
-                    </div>
-                    </div>
-                }
-
-            </div>
-        </nav>
+        <h4 class="mt-3 px-3">@Title</h4>
     }
-}
+
+    @if (!string.IsNullOrEmpty(SubTitle))
+    {
+        <div class="px-3 pb-2">
+            <small class="text-muted">@SubTitle</small>
+        </div>
+    }
+
+    @if (Repository != null)
+    {
+        @if (Repository.Items != null)
+        {
+            <nav class="@ControlCSS">
+                <div class="container-fluid" style="max-height:320px; overflow-y:scroll;">
+
+                    @if (Repository.Groups != null)
+                    {
+                        @if (Repository.Groups.Count >= 1)
+                        {
+                            <div class="btn-group w-100">
+
+                                @foreach (NavigationFilter filter in Repository.Groups)
+                                {
+                                    <button type="button" 
+                                            @onclick="@( e => { Repository.Filter(filter.ID); } )"
+                                            class="btn btn-sm btn-dark" 
+                                            title="@filter.Name">
+                                        <div class="p-1">
+                                            <i class="@( filter.Icon + " " + "m-1" )"></i>
+                                        </div>
+                                    </button>
+                                }
+                            </div>
+                        }
+                    }
+
+                    @if (Repository.Items.Count >= 1)
+                    {
+                        <div class="overflow-auto">
+                            <div class="collapse navbar-collapse" id="navbar-menu">
+                                <ul class="navbar-nav">
+
+                                    @foreach (NavigationEntry entry in Repository.Items.OrderBy(se => se.Position))
+                                    {
+                                        @if (entry.Items == null || entry.Items.Count == 0)
+                                        {
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="@entry.Link">
+
+
+                                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
+
+                                                        @if (string.IsNullOrEmpty(entry.Icon))
+                                                        {
+                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                 class="icon icon-tabler icon-tabler-square"
+                                                                 width="24" height="24" viewBox="0 0 24 24"
+                                                                 stroke-width="2" stroke="currentColor" fill="none"
+                                                                 stroke-linecap="round" stroke-linejoin="round">
+                                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                                <rect x="4" y="4" width="12" height="12" rx="2"></rect>
+                                                            </svg>
+                                                        }
+                                                        else
+                                                        {
+                                                            @((MarkupString)entry.Icon)
+                                                        }
+
+                                                    </span>
+                                                    <span class="nav-link-title">@entry.Title</span>
+                                                </a>
+                                            </li>
+                                        }
+                                        else
+                                        {
+                                            <li class="nav-item dropdown">
+                                                <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown" data-bs-auto-close="false" role="button" aria-expanded="false">
+                                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
+
+                                                        @if (string.IsNullOrEmpty(entry.Icon))
+                                                        {
+                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                 class="icon icon-tabler icon-tabler-grip-vertical"
+                                                                 width="24" height="24" viewBox="0 0 24 24"
+                                                                 stroke-width="2" stroke="currentColor" fill="none"
+                                                                 stroke-linecap="round" stroke-linejoin="round">
+                                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                                <circle cx="9" cy="5" r="1"></circle>
+                                                                <circle cx="9" cy="12" r="1"></circle>
+                                                                <circle cx="9" cy="19" r="1"></circle>
+                                                                <circle cx="15" cy="5" r="1"></circle>
+                                                                <circle cx="15" cy="12" r="1"></circle>
+                                                                <circle cx="15" cy="19" r="1"></circle>
+                                                            </svg>
+                                                        }
+                                                        else
+                                                        {
+                                                            @((MarkupString)entry.Icon)
+                                                        }
+
+                                                    </span>
+                                                    <span class="nav-link-title">@entry.Title</span>
+                                                </a>
+
+                                                <div class="dropdown-menu">
+
+                                                    @foreach (NavigationEntry child in entry.Items.OrderBy(se => se.Position))
+                                                    {
+                                                        <a class="dropdown-item" href="@child.Link">@child.Title</a>
+                                                    }
+
+                                                </div>
+                                            </li>
+                                        }
+
+                                    }
+
+                                </ul>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            </nav>
+        }
+    }
 </div>
 
 @code {
@@ -135,7 +156,5 @@
 
     [Parameter]
     public string SubTitle { get; set; } = string.Empty;
-
-
 
 }
