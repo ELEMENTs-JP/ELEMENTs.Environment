@@ -1,12 +1,12 @@
 ﻿
 <div class="input-group">
     <input type="text"
-           class="@ControlCSS"
+           class="@( ControlCSS )"
            placeholder="@Placeholder"
            aria-label="" aria-describedby="searchIcon"
            @oninput="@( e => {  onValueInput(e.Value.ToSecureString()); })"
            @onchange="@( e => {  onValueChanged(e.Value.ToSecureString()); })">
-    <span class="input-group-text" id="searchIcon"><i class="fas fa-search"></i></span>
+    <span class="@(InputGroupCSS)" id="searchIcon"><i class="fas fa-search"></i></span>
 </div>
 
 
@@ -20,6 +20,9 @@
     /// </summary>
     [Parameter]
     public string ControlCSS { get; set; } = "form-control";
+
+    [Parameter]
+    public string InputGroupCSS { get; set; } = "input-group-text";
 
     /// <summary>
     /// Defines or sets the Placeholder text of the Placeholder property of the control.

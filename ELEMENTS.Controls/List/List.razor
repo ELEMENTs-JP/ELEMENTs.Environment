@@ -1,6 +1,7 @@
 ﻿
 
 
+
 @if (Items != null)
 {
     @if (Items.Count >= 1)
@@ -23,7 +24,7 @@
     public List<string> Items { get; set; } = new List<string>();
 
     [Parameter]
-    public string ListCSS { get; set; } = "bg-white list-group"; // list-group-flush 
+    public string ListCSS { get; set; } = "bg-white list-group"; // list-group-flush
 
     [Parameter]
     public string ItemCSS { get; set; } = "list-group-item p-2";

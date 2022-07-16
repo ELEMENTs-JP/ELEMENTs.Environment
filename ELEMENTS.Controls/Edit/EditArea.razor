@@ -3,14 +3,14 @@
 {
     @if (InterfaceRepository.IsInitialized)
     {
-        <div class="@((Border == true) ? "border bg-white p-3" : "bg-white p-3")">
+        <div class="@((Border == true) ? " border bg-white " : " bg-white ")">
 
             <div class="row">
 
                 @foreach (EditField field in InterfaceRepository.Fields)
                 {
                     <div class="@field.ColumnCSSClass">
-                        <EditComponent Field="@field" EditRepository="@EditRepository" />
+                        <EditComponent Field="@field" EditRepository="@EditRepository" Border="@ItemBorder" />
                     </div>
                 }
 
@@ -35,6 +35,7 @@ else
     [Parameter]
     public bool Border { get; set; } = true;
 
-
+    [Parameter]
+    public bool ItemBorder { get; set; } = false;
 
 }

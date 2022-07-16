@@ -184,6 +184,14 @@ namespace ELEMENTS.Infrastructure
         Text = 1,
         TextBox = 10,
         TextArea = 11,
+
+        MoneyBox = 21,
+        IntegerBox = 22,
+        DecimalBox = 23,
+
+        DateBox = 31,
+        TimeBox = 32,
+        DateTimeBox = 33,
     }
 
     public enum EditFieldMode

@@ -14,7 +14,7 @@ namespace ELEMENTS
         IDTO Create();
         IItemType ItemType { get; set; }
 
-        string ReferenceItemType { get; set; } 
+        IItemType ReferenceItemType { get; set; } 
         QueryType DataQueryType { get; set; } 
         Guid ReferenceGUID { get; set; } 
     }

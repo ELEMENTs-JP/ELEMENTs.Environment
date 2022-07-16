@@ -15,13 +15,13 @@
                 {
                     @if (ControlType == LayoutType.ControlLayout)
                     {
-                        <div class="@(""+ " " + PaddingCSS)">
+                        <div class="@(TitleCSS + " " + PaddingCSS)">
                             <strong>@Title</strong>
                         </div>
                     }
                     else
                     {
-                        <h3 class="@("page-title")">
+                        <h3 class="@(TitleCSS + " " + "page-title")">
                             @Title
                         </h3>
                     }
@@ -30,10 +30,23 @@
 
                 @if (!string.IsNullOrEmpty(SubTitle))
                 {
-                    <div class="page-subtitle">
-                        @SubTitle
-                    </div>
+                    @if (!string.IsNullOrEmpty(Link))
+                    {
+                        <a href="@Link">
+                            <small class="page-subtitle">
+                                @SubTitle
+                            </small>
+                        </a>
+                    }
+                    else
+                    {
+                        <small class="page-subtitle">
+                            @SubTitle
+                        </small>
+                    }
                 }
+
+
             </div>
 
             @if (RelatedContent != null)
@@ -81,7 +94,13 @@
     public string Title { get; set; } = "Layout Title";
 
     [Parameter]
+    public string TitleCSS { get; set; } = "";
+
+    [Parameter]
     public string SubTitle { get; set; } = "";
+
+    [Parameter]
+    public string Link { get; set; } = "";
 
     [Parameter]
     public bool Border { get; set; } = false;

@@ -1,0 +1,60 @@
+﻿
+@if (Column != null)
+{
+    @if (DTO != null)
+    {
+        <div class="@ColumnCSS">
+
+            @if (Column.Type == ColumnType.Text)
+            {
+                @Value.ToSecureString()
+            }
+
+        </div>
+    }
+}
+
+@code {
+
+    [Parameter]
+    public string ColumnCSS { get; set; } = "col"; // list-group-flush
+
+
+    [Parameter]
+    public Column Column { get; set; }
+
+    [Parameter]
+    public IDTO DTO { get; set; }
+
+    [Parameter]
+    public string Value { get; set; } = string.Empty;
+
+    [Parameter]
+    public int IntValue { get; set; } = 0;
+
+    [Parameter]
+    public decimal DecValue { get; set; } = 0;
+
+    [Parameter]
+    public DateTime DateTimeValue { get; set; } = DateTime.Now;
+
+    protected override void OnParametersSet()
+    {
+        try
+        {
+            if (Column != null)
+            {
+                if (DTO != null)
+                {
+                    this.Value = DTO.GetProperty(Column.Property).Value.ToSecureString();
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Fehler: " + ex.Message);
+        }
+
+        base.OnParametersSet();
+    }
+}

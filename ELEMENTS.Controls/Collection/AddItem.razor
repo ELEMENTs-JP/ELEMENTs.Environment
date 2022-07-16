@@ -3,7 +3,7 @@
 
 @if (Repository != null)
 {
-    <button type="button" class="btn btn-primary"
+    <button type="button" class="@( ButtonTitleCSS )"
             data-bs-toggle="modal"
             data-bs-target="@( "#modal_" + modalGUID.ToString() )">
         @ButtonTitle
@@ -34,8 +34,8 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @onclick="cancelclick">@CancelTitle</button>
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" @onclick="okclick">@OKTitle</button>
+                    <button type="button" class="@( CancelButtonCSS )" data-bs-dismiss="modal" @onclick="cancelclick">@CancelTitle</button>
+                    <button type="button" class="@( OKButtonCSS )" data-bs-dismiss="modal" @onclick="okclick">@OKTitle</button>
                 </div>
             </div>
         </div>
@@ -51,6 +51,9 @@
 
     [Parameter]
     public string ButtonTitle { get; set; } = "...";
+
+    [Parameter]
+    public string ButtonTitleCSS { get; set; } = "btn btn-primary";
 
     [Parameter]
     public IAddItemRepository Repository { get; set; }
@@ -129,12 +132,20 @@
     public string OKTitle { get; set; } = "OK";
 
     [Parameter]
+    public string OKButtonCSS { get; set; } = "btn btn-primary";
+
+    [Parameter]
     public string CancelTitle { get; set; } = "Cancel";
+
+    [Parameter]
+    public string CancelButtonCSS { get; set; } = "btn btn-secondary";
 
     [Parameter]
     public string FieldHeader { get; set; } = "Title";
 
     [Parameter]
     public string InputCSS { get; set; } = "form-control";
+
+
 
 }

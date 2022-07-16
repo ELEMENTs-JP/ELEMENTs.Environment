@@ -49,7 +49,7 @@ namespace ELEMENTS
         }
         public IItemType ItemType { get; set; } 
 
-        public string ReferenceItemType { get; set; } = string.Empty;
+        public IItemType ReferenceItemType { get; set; } 
         public QueryType DataQueryType { get; set; } = QueryType.List;
         public Guid ReferenceGUID { get; set; } = Guid.Empty;
     }

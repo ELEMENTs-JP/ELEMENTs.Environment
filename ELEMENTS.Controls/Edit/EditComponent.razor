@@ -17,7 +17,32 @@
     {
         <div class="row g-0">
             <div class="col">
-                <p class="lead">@Value.ToSecureString()</p>
+
+                @if (Field.Type == EditFieldType.Text ||
+                    Field.Type == EditFieldType.TextBox ||
+                 Field.Type == EditFieldType.TextArea)
+                {
+                    <div class="lead">@Value.ToSecureString()</div>
+                }
+
+                @if (Field.Type == EditFieldType.MoneyBox ||
+                 Field.Type == EditFieldType.DecimalBox)
+                {
+                    <div class="lead">@DecValue.ToSecureString()</div>
+                }
+
+                @if (Field.Type == EditFieldType.IntegerBox)
+                {
+                    <div class="lead">@IntValue.ToSecureString()</div>
+                }
+
+                @if (Field.Type == EditFieldType.DateBox ||
+                 Field.Type == EditFieldType.TimeBox ||
+                 Field.Type == EditFieldType.DateTimeBox)
+                {
+                    <div class="lead">@DateTimeValue.ToSecureString()</div>
+                }
+
             </div>
             <div class="col-auto">
                 <button type="button" class="btn btn-sm" @onclick="Edit">
@@ -43,7 +68,7 @@
                            class="@ControlCSS"
                            placeholder="@Placeholder"
                            @bind-value:event="oninput"
-                           @onchange="@( e => { TextValueChanged(); })" />
+                           @onchange="@( e => { ValueChanged(); })" />
                 </div>
                 <div class="col-auto">
                     <button type="button" class="btn btn-sm" @onclick="Save">
@@ -55,13 +80,13 @@
 
         @if (Field.Type == EditFieldType.TextArea)
         {
-            <div class="row g-0">
+            <div class="row gx-1">
                 <div class="col">
 
                     <textarea style="min-height:120px;"
                               class="@ControlCSS"
                               placeholder="@Placeholder"
-                              @oninput="@(e => { Value = e.Value.ToSecureString(); TextValueChanged(); })"
+                              @oninput="@(e => { Value = e.Value.ToSecureString(); ValueChanged(); })"
                               rows="6">@Value</textarea>
 
                 </div>
@@ -73,9 +98,148 @@
             </div>
         }
 
+        @if (Field.Type == EditFieldType.MoneyBox)
+        {
+            <div class="row gx-1">
+                <div class="col">
+                    <div class="input-group">
+
+                        <input type="number" step="0.01"
+                               @bind-value="DecValue"
+                               class="@ControlCSS"
+                               placeholder="@Placeholder"
+                               @bind-value:event="oninput"
+                               @onchange="@( e => { ValueChanged(e.Value); })" />
+
+                        @if (!string.IsNullOrEmpty(Symbol))
+                        {
+                            <span class="input-group-text">
+                                @((MarkupString)Symbol)
+                            </span>
+                        }
+
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <button type="button" class="btn btn-sm" @onclick="Save">
+                        <i class="fas fa-check"></i>
+                    </button>
+                </div>
+            </div>
+
+
+        }
+
+        @if (Field.Type == EditFieldType.DecimalBox)
+        {
+
+            <div class="row gx-1">
+                <div class="col">
+                    <input type="number" step="0.01"
+                           @bind-value="DecValue"
+                           class="@ControlCSS"
+                           placeholder="@Placeholder"
+                           @bind-value:event="oninput"
+                           @onchange="@( e => { ValueChanged(e.Value); })" />
+                </div>
+                <div class="col-auto">
+                    <button type="button" class="btn btn-sm" @onclick="Save">
+                        <i class="fas fa-check"></i>
+                    </button>
+                </div>
+            </div>
+
+        }
+
+        @if (Field.Type == EditFieldType.IntegerBox)
+        {
+            <div class="row gx-1">
+                <div class="col">
+                    <input type="number"
+                           @bind-value="IntValue"
+                           class="@ControlCSS"
+                           placeholder="@Placeholder"
+                           @bind-value:event="oninput"
+                           @onchange="@( e => { ValueChanged(e.Value); })" />
+                </div>
+                <div class="col-auto">
+                    <button type="button" class="btn btn-sm" @onclick="Save">
+                        <i class="fas fa-check"></i>
+                    </button>
+                </div>
+            </div>
+
+
+
+        }
+
+        @if (Field.Type == EditFieldType.DateBox)
+        {
+            <div class="row gx-1">
+                <div class="col">
+                    <input type="date"
+                           @bind-value="DateTimeValue"
+                           class="@ControlCSS"
+                           placeholder="@Placeholder"
+                           @bind-value:event="oninput"
+                           @onchange="@( e => { ValueChanged(e.Value); })" />
+                </div>
+                <div class="col-auto">
+                    <button type="button" class="btn btn-sm" @onclick="Save">
+                        <i class="fas fa-check"></i>
+                    </button>
+                </div>
+            </div>
+
+
+
+        }
+
+        @if (Field.Type == EditFieldType.DateTimeBox)
+        {
+            <div class="row gx-1">
+                <div class="col">
+
+                    <input type="datetime-local"
+                           @bind-value="DateTimeValue"
+                           class="@ControlCSS"
+                           placeholder="@Placeholder"
+                           @bind-value:event="oninput"
+                           @onchange="@( e => { ValueChanged(e.Value); })" />
+                </div>
+                <div class="col-auto">
+                    <button type="button" class="btn btn-sm" @onclick="Save">
+                        <i class="fas fa-check"></i>
+                    </button>
+                </div>
+            </div>
+
+        }
+
+        @if (Field.Type == EditFieldType.TimeBox)
+        {
+            <div class="row gx-1">
+                <div class="col">
+                    <input type="time"
+                           @bind-value="DateTimeValue"
+                           class="@ControlCSS"
+                           placeholder="@Placeholder"
+                           @bind-value:event="oninput"
+                           @onchange="@( e => { ValueChanged(e.Value); })" />
+                </div>
+                <div class="col-auto">
+                    <button type="button" class="btn btn-sm" @onclick="Save">
+                        <i class="fas fa-check"></i>
+                    </button>
+                </div>
+            </div>
+
+
+        }
+
         @if (!string.IsNullOrEmpty(Field.Description))
         {
-            <p class="lead"><small class="text-muted">@Field.Description.ToSecureString()</small></p>
+            <div><small class="text-muted">@Field.Description.ToSecureString()</small></div>
         }
     }
 
@@ -104,6 +268,15 @@
     public string Value { get; set; } = string.Empty;
 
     [Parameter]
+    public int IntValue { get; set; } = 0;
+
+    [Parameter]
+    public decimal DecValue { get; set; } = 0;
+
+    [Parameter]
+    public DateTime DateTimeValue { get; set; } = DateTime.Now;
+
+    [Parameter]
     public EditField Field { get; set; }
 
     /// <summary>
@@ -115,7 +288,7 @@
     /// </summary>
     [Parameter]
     public EventCallback<string> OnTextValueChanged { get; set; }
-    private async void TextValueChanged()
+    private async void ValueChanged()
     {
         try
         {
@@ -126,12 +299,83 @@
             Console.WriteLine("FAIL: " + ex.Message);
         }
     }
+    private async void ValueChanged(object value)
+    {
+        try
+        {
+            switch (Field.Type)
+            {
+                case EditFieldType.Text:
+                    {
+                        this.Value = value.ToSecureString();
+                        break;
+                    }
+                case EditFieldType.TextArea:
+                    {
+                        this.Value = value.ToSecureString();
+                        break;
+                    }
+                case EditFieldType.MoneyBox:
+                    {
+                        this.DecValue = value.ToSecureDecimal();
+                        break;
+                    }
+                case EditFieldType.DecimalBox:
+                    {
+                        this.DecValue = value.ToSecureDecimal();
+                        break;
+                    }
+                case EditFieldType.IntegerBox:
+                    {
+                        this.IntValue = value.ToSecureInt();
+                        break;
+                    }
+
+                case EditFieldType.DateBox:
+                    {
+                        this.DateTimeValue = value.ToSecureDateTime();
+                        break;
+                    }
+                case EditFieldType.DateTimeBox:
+                    {
+                        this.DateTimeValue = value.ToSecureDateTime();
+                        break;
+                    }
+                case EditFieldType.TimeBox:
+                    {
+                        this.DateTimeValue = value.ToSecureDateTime();
+                        break;
+                    }
+
+                default:
+                    {
+                        this.Value = value.ToSecureString();
+                        break;
+                    }
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("FAIL: " + ex.Message);
+        }
+
+        try
+        {
+            await OnTextValueChanged.InvokeAsync(value.ToSecureString());
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("FAIL: " + ex.Message);
+        }
+    }
 
     [Parameter]
     public IEditItemRepository EditRepository { get; set; }
 
-    protected override async Task OnParametersSetAsync()
+    protected override void OnParametersSet()
     {
+        base.OnParametersSet();
+
         if (EditRepository != null)
         {
             if (EditRepository.IsInitialized == true)
@@ -148,13 +392,48 @@
                     }
                     else
                     {
-                        this.Value = EditRepository.DTO.GetProperty(Field.Property).Value.ToSecureString();
+                        try
+                        {
+                            // Text // TextArea
+                            if (Field.Type == EditFieldType.Text ||
+                                Field.Type == EditFieldType.TextBox ||
+                                Field.Type == EditFieldType.TextArea)
+                            {
+                                this.Value = EditRepository.DTO.GetProperty(Field.Property).Value.ToSecureString();
+                            }
+
+                            // Money // Decimal
+                            if (Field.Type == EditFieldType.MoneyBox ||
+                                Field.Type == EditFieldType.DecimalBox)
+                            {
+                                this.DecValue = EditRepository.DTO.GetProperty(Field.Property).Value.ToSecureDecimal();
+                            }
+
+                            // Int
+                            if (Field.Type == EditFieldType.IntegerBox)
+                            {
+                                this.IntValue = EditRepository.DTO.GetProperty(Field.Property).Value.ToSecureInt();
+                            }
+
+                            // Date, Time, DateTime
+                            if (Field.Type == EditFieldType.DateBox ||
+                                Field.Type == EditFieldType.TimeBox ||
+                                Field.Type == EditFieldType.DateTimeBox)
+                            {
+                                this.DateTimeValue = EditRepository.DTO.GetProperty(Field.Property).Value.ToSecureDateTime();
+                            }
+
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine("FAIL: " + ex.Message);
+                        }
+
+
                     }
                 }
             }
         }
-
-        await base.OnParametersSetAsync();
     }
 
     private async Task Edit()
@@ -182,7 +461,44 @@
                     }
                     else
                     {
-                        EditRepository.DTO.SetProperty(this.Value.ToSecureString(), Field.Property);
+                        try
+                        {
+                            // Text // TextArea
+                            if (Field.Type == EditFieldType.Text ||
+                                Field.Type == EditFieldType.TextBox ||
+                                Field.Type == EditFieldType.TextArea)
+                            {
+                                EditRepository.DTO.SetProperty(this.Value.ToSecureString(), Field.Property);
+                            }
+
+                            // Money // Decimal
+                            if (Field.Type == EditFieldType.MoneyBox ||
+                                Field.Type == EditFieldType.DecimalBox)
+                            {
+                                EditRepository.DTO.SetProperty(this.DecValue.ToSecureString(), Field.Property);
+                            }
+
+                            // Int
+                            if (Field.Type == EditFieldType.IntegerBox)
+                            {
+                                EditRepository.DTO.SetProperty(this.IntValue.ToSecureString(), Field.Property);
+                            }
+
+                            // Date, Time, DateTime
+                            if (Field.Type == EditFieldType.DateBox ||
+                                Field.Type == EditFieldType.TimeBox ||
+                                Field.Type == EditFieldType.DateTimeBox)
+                            {
+                                EditRepository.DTO.SetProperty(this.DateTimeValue.ToSecureString(), Field.Property);
+                            }
+
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine("FAIL: " + ex.Message);
+                        }
+
+
                     }
 
                     IFactoryStatusInfo info = EditRepository.Service.Factory.Update(EditRepository.DTO);
@@ -209,4 +525,6 @@
         await Task.FromResult<string>("OK");
     }
 
+    [Parameter]
+    public string Symbol { get; set; } = "<i class='fas fa-euro-sign'></i>";
 }
