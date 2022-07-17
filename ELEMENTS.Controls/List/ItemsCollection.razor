@@ -9,21 +9,28 @@
         <div class="@HeaderCSS">@Header</div>
     }
 
-    <div class="@BodyCSS">
-        @foreach (var item in Items)
+<div class="@BodyCSS">
+    @foreach (var item in Items)
+    {
+        @if (RowTemplate != null)
         {
-            @if (RowTemplate != null)
-            {
-                @RowTemplate(item)
-            }
-            @if (RowTemplate == null)
-            {
-                <div class="row">
-                    <div class="col">Row Template is null</div>
-                </div>
-            }
+            @RowTemplate(item)
         }
-    </div>
+        @if (RowTemplate == null)
+        {
+            <div class="row">
+                <div class="col">Row Template is null</div>
+            </div>
+        }
+    }
+
+    @if (Items == null || Items.Count() == 0)
+    {
+        <div class="row border rounded p-2 m-2 bg-light">
+            <div class="col">No Entries available.</div>
+        </div>
+    }
+</div>
 
     @if (Footer != null)
     {

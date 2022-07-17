@@ -19,36 +19,41 @@
             <div class="col">
 
                 @if (Field.Type == EditFieldType.Text ||
-                    Field.Type == EditFieldType.TextBox ||
-                 Field.Type == EditFieldType.TextArea)
+                        Field.Type == EditFieldType.TextBox ||
+                    Field.Type == EditFieldType.TextArea)
                 {
                     <div class="lead">@Value.ToSecureString()</div>
                 }
 
                 @if (Field.Type == EditFieldType.MoneyBox ||
-                 Field.Type == EditFieldType.DecimalBox)
+                    Field.Type == EditFieldType.DecimalBox)
                 {
                     <div class="lead">@DecValue.ToSecureString()</div>
                 }
 
-                @if (Field.Type == EditFieldType.IntegerBox)
+                @if (Field.Type == EditFieldType.IntegerBox ||
+                  Field.Type == EditFieldType.PercentBox)
                 {
                     <div class="lead">@IntValue.ToSecureString()</div>
                 }
 
                 @if (Field.Type == EditFieldType.DateBox ||
-                 Field.Type == EditFieldType.TimeBox ||
-                 Field.Type == EditFieldType.DateTimeBox)
+                  Field.Type == EditFieldType.TimeBox ||
+                  Field.Type == EditFieldType.DateTimeBox)
                 {
                     <div class="lead">@DateTimeValue.ToSecureString()</div>
                 }
 
             </div>
-            <div class="col-auto">
-                <button type="button" class="btn btn-sm" @onclick="Edit">
-                    <i class="fas fa-edit"></i>
-                </button>
-            </div>
+
+            @if (Field.Type != EditFieldType.Text)
+            {
+                <div class="col-auto">
+                    <button type="button" class="btn btn-sm" @onclick="Edit">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                </div>
+            }
 
         </div>
     }
@@ -171,6 +176,36 @@
 
 
 
+        }
+
+        @if (Field.Type == EditFieldType.PercentBox)
+        {
+            <div class="row gx-1">
+                <div class="col">
+                    <div class="input-group">
+
+                        <input type="number" 
+                               @bind-value="IntValue"
+                               class="@ControlCSS"
+                               placeholder="@Placeholder"
+                               @bind-value:event="oninput"
+                               @onchange="@( e => { ValueChanged(e.Value); })" />
+
+                        @if (!string.IsNullOrEmpty(Symbol))
+                        {
+                            <span class="input-group-text">
+                                <i class="fas fa-percent"></i>
+                            </span>
+                        }
+
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <button type="button" class="btn btn-sm" @onclick="Save">
+                        <i class="fas fa-check"></i>
+                    </button>
+                </div>
+            </div>
         }
 
         @if (Field.Type == EditFieldType.DateBox)
@@ -330,6 +365,11 @@
                         this.IntValue = value.ToSecureInt();
                         break;
                     }
+                case EditFieldType.PercentBox:
+                    {
+                        this.IntValue = value.ToSecureInt();
+                        break;
+                    }
 
                 case EditFieldType.DateBox:
                     {
@@ -395,8 +435,7 @@
                         try
                         {
                             // Text // TextArea
-                            if (Field.Type == EditFieldType.Text ||
-                                Field.Type == EditFieldType.TextBox ||
+                            if (Field.Type == EditFieldType.TextBox ||
                                 Field.Type == EditFieldType.TextArea)
                             {
                                 this.Value = EditRepository.DTO.GetProperty(Field.Property).Value.ToSecureString();
@@ -410,7 +449,8 @@
                             }
 
                             // Int
-                            if (Field.Type == EditFieldType.IntegerBox)
+                            if (Field.Type == EditFieldType.IntegerBox ||
+                                Field.Type == EditFieldType.PercentBox)
                             {
                                 this.IntValue = EditRepository.DTO.GetProperty(Field.Property).Value.ToSecureInt();
                             }
@@ -464,8 +504,7 @@
                         try
                         {
                             // Text // TextArea
-                            if (Field.Type == EditFieldType.Text ||
-                                Field.Type == EditFieldType.TextBox ||
+                            if (Field.Type == EditFieldType.TextBox ||
                                 Field.Type == EditFieldType.TextArea)
                             {
                                 EditRepository.DTO.SetProperty(this.Value.ToSecureString(), Field.Property);
@@ -478,8 +517,9 @@
                                 EditRepository.DTO.SetProperty(this.DecValue.ToSecureString(), Field.Property);
                             }
 
-                            // Int
-                            if (Field.Type == EditFieldType.IntegerBox)
+                            // Int // Percent 
+                            if (Field.Type == EditFieldType.IntegerBox ||
+                                Field.Type == EditFieldType.PercentBox)
                             {
                                 EditRepository.DTO.SetProperty(this.IntValue.ToSecureString(), Field.Property);
                             }
@@ -497,8 +537,6 @@
                         {
                             Console.WriteLine("FAIL: " + ex.Message);
                         }
-
-
                     }
 
                     IFactoryStatusInfo info = EditRepository.Service.Factory.Update(EditRepository.DTO);

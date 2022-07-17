@@ -1,0 +1,41 @@
+﻿
+@if (Columns != null)
+{
+    @if (Columns.Count() >= 1)
+    {
+        <div class="row">
+            @foreach (IColumn col in Columns)
+            {
+                <div class="@col.ColumnCSSClass">
+                    <strong>@col.Title.ToSecureString()</strong>
+                </div>
+            }
+        </div>
+    }
+}
+
+@code {
+
+    [Parameter]
+    public List<IColumn> Columns { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        try
+        {
+            if (Columns != null)
+            {
+                if (Columns.Count() >= 1)
+                {
+
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Fehler: " + ex.Message);
+        }
+
+        base.OnParametersSet();
+    }
+}

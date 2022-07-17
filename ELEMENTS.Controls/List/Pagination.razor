@@ -1,7 +1,7 @@
 ﻿@inject IJSRuntime JS
 @using System.Linq
 
-<ul class="pagination justify-content-center">
+<ul class="pagination align-items-center justify-content-center">
     @foreach (LinkModel link in links)
     {
         <li style="cursor: pointer;" @onclick="@( e => { SelectedPageInternal(link); }  )"

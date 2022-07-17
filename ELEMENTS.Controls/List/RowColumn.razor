@@ -19,9 +19,8 @@
     [Parameter]
     public string ColumnCSS { get; set; } = "col"; // list-group-flush
 
-
     [Parameter]
-    public Column Column { get; set; }
+    public IColumn Column { get; set; }
 
     [Parameter]
     public IDTO DTO { get; set; }

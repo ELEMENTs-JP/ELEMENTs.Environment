@@ -9,7 +9,7 @@
         <div class="@HeaderCSS">@Header</div>
     }
 
-    <div class="@(BodyCSS + " " + ((Items.Count >= 1) ? " border-top " : ""))">
+    <div class="@(BodyCSS + " " + ((Items.Count >= 1) ? ((ShowFirstBorder) ? " border-top " : "") : ""))">
         @foreach (var item in Items)
         {
             @if (RowTemplate != null)
@@ -34,6 +34,8 @@
 @code
 {
 
+    [Parameter]
+    public bool ShowFirstBorder { get; set; } = false;
 
     [Parameter]
     public string ControlCSS { get; set; } = "card";

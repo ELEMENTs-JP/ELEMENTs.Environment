@@ -187,7 +187,8 @@ namespace ELEMENTS.Infrastructure
 
         MoneyBox = 21,
         IntegerBox = 22,
-        DecimalBox = 23,
+        PercentBox = 23,
+        DecimalBox = 24,
 
         DateBox = 31,
         TimeBox = 32,
