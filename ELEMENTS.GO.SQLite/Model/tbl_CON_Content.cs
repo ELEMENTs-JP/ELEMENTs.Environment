@@ -794,6 +794,74 @@ namespace ELEMENTS.Data.SQLite
 
             return 0;
         }
+        public static int GetChildrenItemsCount(IInputDTO input)
+        {
+            try
+            {
+                FactoryStructure structure = FactoryStructure.GetClientMapping(ElementsEntityType.Content);
+                string tbl = structure.Class;
+
+                string sql = string.Empty;
+                sql = FactoryQuery.GetChildrenCountQuery(input.MasterGUID, input.ItemGUID, tbl, input.ItemType);
+
+                using (SQLiteContext context = SQLiteHelper.GetEntities())
+                {
+                    int count;
+                    using (var connection = context.Database.GetDbConnection())
+                    {
+                        connection.Open();
+
+                        using (var command = connection.CreateCommand())
+                        {
+                            command.CommandText = sql;
+                            object result = command.ExecuteScalar();
+                            count = Convert.ToInt32(result);
+                        }
+                    }
+                    return count;
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            return 0;
+        }
+        public static int GetParentsItemsCount(IInputDTO input)
+        {
+            try
+            {
+                FactoryStructure structure = FactoryStructure.GetClientMapping(ElementsEntityType.Content);
+                string tbl = structure.Class;
+
+                string sql = string.Empty;
+                sql = FactoryQuery.GetParentsCountQuery(input.MasterGUID, input.ItemGUID, tbl, input.ItemType);
+
+                using (SQLiteContext context = SQLiteHelper.GetEntities())
+                {
+                    int count;
+                    using (var connection = context.Database.GetDbConnection())
+                    {
+                        connection.Open();
+
+                        using (var command = connection.CreateCommand())
+                        {
+                            command.CommandText = sql;
+                            object result = command.ExecuteScalar();
+                            count = Convert.ToInt32(result);
+                        }
+                    }
+                    return count;
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            return 0;
+        }
     }
 
     public partial class tbl_CON_Content : IDTO
@@ -964,7 +1032,7 @@ namespace ELEMENTS.Data.SQLite
 
             return result;
         }
-
+      
         // Count 
         public static async Task<int> GetAllItemsCountAsync(IInputDTO input)
         {

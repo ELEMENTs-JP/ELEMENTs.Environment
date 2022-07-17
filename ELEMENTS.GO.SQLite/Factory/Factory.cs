@@ -218,7 +218,24 @@ namespace ELEMENTS.Data.SQLite
                     ItemGUID = fqp.UserGUID,
                 };
 
-                return tbl_CON_Content.GetAllItemsCount(input);
+                if (fqp.TypeOfQuery == QueryType.List)
+                {
+                    return tbl_CON_Content.GetAllItemsCount(input);
+                }
+                else if (fqp.TypeOfQuery == QueryType.ChildrenByParent)
+                {
+                    fqp.ParentGUID = fqp.ParentGUID;
+                    return tbl_CON_Content.GetChildrenItemsCount(input);
+                }
+                else if (fqp.TypeOfQuery == QueryType.ParentsByChild)
+                {
+                    fqp.ChildGUID = fqp.ChildGUID;
+                    return tbl_CON_Content.GetParentsItemsCount(input);
+                }
+                else
+                {
+                    return tbl_CON_Content.GetAllItemsCount(input);
+                }
             }
             catch (Exception ex)
             {

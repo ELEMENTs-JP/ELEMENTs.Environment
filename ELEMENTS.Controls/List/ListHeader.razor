@@ -3,10 +3,19 @@
 {
     @if (Columns.Count() >= 1)
     {
-        <div class="row">
+        <div class="row g-0 py-2 border-bottom overflow">
+
+            <div class="col-auto px-2">
+                <strong>ID</strong>
+            </div>
+
+            <div class="col px-2">
+                <strong>Titel</strong>
+            </div>
+
             @foreach (IColumn col in Columns)
             {
-                <div class="@col.ColumnCSSClass">
+                <div class="@col.ColumnCSSClass.ToSecureString()">
                     <strong>@col.Title.ToSecureString()</strong>
                 </div>
             }
@@ -17,7 +26,7 @@
 @code {
 
     [Parameter]
-    public List<IColumn> Columns { get; set; }
+    public List<IColumn> Columns { get; set; } = new List<IColumn>();
 
     protected override void OnParametersSet()
     {

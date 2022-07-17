@@ -324,7 +324,17 @@ namespace ELEMENTS.Data.SQLite
         {
             string sql = "SELECT COUNT(Title) FROM tbl_CON_Content as s INNER JOIN tbl_TEC_Relation as r on(s.GUID = r.ChildGUID) ";
             sql += " WHERE r.ParentGUID = '" + parentGUID + "' ";
+            sql += " AND MasterGUID = '" + MasterGUID + "'  ";
             sql += " AND ItemType = '" + childItemType + "' ";
+
+            return sql;
+        }
+        public static string GetParentsCountQuery(Guid MasterGUID, Guid childGUID, string tbl, string parentItemType)
+        {
+            string sql = "SELECT COUNT(Title) FROM tbl_CON_Content as s INNER JOIN tbl_TEC_Relation as r on(s.GUID = r.ParentGUID) ";
+            sql += " WHERE r.ChildGUID = '" + childGUID + "' ";
+            sql += " AND MasterGUID = '" + MasterGUID + "'  ";
+            sql += " AND ItemType = '" + parentItemType + "' ";
 
             return sql;
         }
