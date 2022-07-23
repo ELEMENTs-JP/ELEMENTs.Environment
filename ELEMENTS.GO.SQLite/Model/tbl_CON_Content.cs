@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using ELEMENTS.Infrastructure;
+using System.Diagnostics;
 
 namespace ELEMENTS.Data.SQLite
 {
@@ -741,6 +742,9 @@ namespace ELEMENTS.Data.SQLite
                 // Query 
                 string query = FactoryQuery.GetItemsQuery(fqp);
 
+                // Message Logging 
+                Debug.WriteLine(query);
+
                 // Context 
                 using (SQLiteContext context = SQLiteHelper.GetEntities())
                 {
@@ -768,7 +772,10 @@ namespace ELEMENTS.Data.SQLite
                 string sql = string.Empty;
 
                 // ItemGUID == User GUID für parametrisierte Count Abfrage  CreatedBy ModifiedBy 
-                sql = FactoryQuery.GetCountQuery(input.MasterGUID, tbl, input.ItemType, input.ItemGUID);
+                sql = FactoryQuery.GetCountQuery(input.MasterGUID, tbl, input.ItemType, input.UserGUID);
+
+                // Message Logging 
+                Debug.WriteLine(sql);
 
                 using (SQLiteContext context = SQLiteHelper.GetEntities())
                 {
@@ -804,6 +811,9 @@ namespace ELEMENTS.Data.SQLite
                 string sql = string.Empty;
                 sql = FactoryQuery.GetChildrenCountQuery(input.MasterGUID, input.ItemGUID, tbl, input.ItemType);
 
+                // Message Logging 
+                Debug.WriteLine(sql);
+
                 using (SQLiteContext context = SQLiteHelper.GetEntities())
                 {
                     int count;
@@ -823,7 +833,7 @@ namespace ELEMENTS.Data.SQLite
             }
             catch (Exception ex)
             {
-
+                ex.LogException();
             }
 
             return 0;
@@ -837,6 +847,9 @@ namespace ELEMENTS.Data.SQLite
 
                 string sql = string.Empty;
                 sql = FactoryQuery.GetParentsCountQuery(input.MasterGUID, input.ItemGUID, tbl, input.ItemType);
+
+                // Message Logging 
+                Debug.WriteLine(sql);
 
                 using (SQLiteContext context = SQLiteHelper.GetEntities())
                 {

@@ -9,6 +9,11 @@
         <div class="@HeaderCSS">@Header</div>
     }
 
+    @if (Info != null)
+    {
+        <div class="@InfoCSS">@Info</div>
+    }
+
     <div class="@(BodyCSS + " " + ((Items.Count >= 1) ? ((ShowFirstBorder) ? " border-top " : "") : ""))">
         @foreach (var item in Items)
         {
@@ -24,6 +29,11 @@
             }
         }
     </div>
+
+    @if (Secondary != null)
+    {
+        <div class="@SecondaryCSS">@Secondary</div>
+    }
 
     @if (Footer != null)
     {
@@ -44,6 +54,12 @@
     public string HeaderCSS { get; set; } = "card-header";
 
     [Parameter]
+    public string InfoCSS { get; set; } = "";
+
+    [Parameter]
+    public string SecondaryCSS { get; set; } = "";
+
+    [Parameter]
     public string FooterCSS { get; set; } = "bg-light p-2 border-top";
 
     [Parameter]
@@ -51,6 +67,12 @@
 
     [Parameter, AllowNull]
     public RenderFragment Header { get; set; }
+
+    [Parameter, AllowNull]
+    public RenderFragment Info { get; set; }
+
+    [Parameter, AllowNull]
+    public RenderFragment Secondary { get; set; }
 
     [Parameter, AllowNull]
     public RenderFragment Footer { get; set; }

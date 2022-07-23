@@ -216,6 +216,7 @@ namespace ELEMENTS.Data.SQLite
                     MasterGUID = fqp.MasterGUID,
                     ItemType = fqp.QueryItemType,
                     ItemGUID = fqp.UserGUID,
+                    UserGUID = fqp.UserGUID,
                 };
 
                 if (fqp.TypeOfQuery == QueryType.List)
@@ -224,12 +225,12 @@ namespace ELEMENTS.Data.SQLite
                 }
                 else if (fqp.TypeOfQuery == QueryType.ChildrenByParent)
                 {
-                    fqp.ParentGUID = fqp.ParentGUID;
+                    input.ItemGUID = fqp.ParentGUID;
                     return tbl_CON_Content.GetChildrenItemsCount(input);
                 }
                 else if (fqp.TypeOfQuery == QueryType.ParentsByChild)
                 {
-                    fqp.ChildGUID = fqp.ChildGUID;
+                    input.ItemGUID = fqp.ChildGUID;
                     return tbl_CON_Content.GetParentsItemsCount(input);
                 }
                 else
@@ -239,6 +240,7 @@ namespace ELEMENTS.Data.SQLite
             }
             catch (Exception ex)
             {
+                ex.LogException();
                 return 0;
             }
         }

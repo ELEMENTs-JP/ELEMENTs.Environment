@@ -5,34 +5,27 @@
     <label class="form-label">@Field.Title </label>
 
     @* MODE *@
-    @if (Field.Mode == EditFieldMode.NULL)
-    {
-        <div class="bg-white border rounded lead">&minus;</div>
-    }
-    else if (Field.Mode == EditFieldMode.Hidden)
-    {
-        <div class="bg-light border rounded lead">&minus;</div>
-    }
-    else if (Field.Mode == EditFieldMode.View)
+    @if (Field.Mode == EditFieldMode.View)
     {
         <div class="row g-0">
             <div class="col">
 
                 @if (Field.Type == EditFieldType.Text ||
-                        Field.Type == EditFieldType.TextBox ||
-                    Field.Type == EditFieldType.TextArea)
+                    Field.Type == EditFieldType.TextBox ||
+                    Field.Type == EditFieldType.TextArea ||
+                    Field.Type == EditFieldType.DropDownItems)
                 {
                     <div class="lead">@Value.ToSecureString()</div>
                 }
 
                 @if (Field.Type == EditFieldType.MoneyBox ||
-                    Field.Type == EditFieldType.DecimalBox)
+                   Field.Type == EditFieldType.DecimalBox)
                 {
                     <div class="lead">@DecValue.ToSecureString()</div>
                 }
 
                 @if (Field.Type == EditFieldType.IntegerBox ||
-                  Field.Type == EditFieldType.PercentBox)
+                   Field.Type == EditFieldType.PercentBox)
                 {
                     <div class="lead">@IntValue.ToSecureString()</div>
                 }
@@ -93,6 +86,47 @@
                               placeholder="@Placeholder"
                               @oninput="@(e => { Value = e.Value.ToSecureString(); ValueChanged(); })"
                               rows="6">@Value</textarea>
+
+                </div>
+                <div class="col-auto">
+                    <button type="button" class="btn btn-sm" @onclick="Save">
+                        <i class="fas fa-check"></i>
+                    </button>
+                </div>
+            </div>
+        }
+
+        @if (Field.Type == EditFieldType.DropDownItems)
+        {
+            <div class="row gx-1">
+                <div class="col">
+                    
+                    @* --- SELECT DROP DOWN --- *@
+                    <select class="form-select"
+                            @onchange="@(e => { Value = e.Value.ToSecureString(); ValueChanged(); })">
+
+                        <option class="@OptionItemCSS" value="---">--- bitte wählen ---</option>
+
+                        @if (Items.Count >= 1)
+                        {
+                            @foreach (IDTO item in Items)
+                            {
+                                @if (this.Value.ToSecureString() == item.ID.ToSecureString())
+                                {
+                                    item.Checked = true;
+                                }
+
+                                @if (item.Checked)
+                                {
+                                    <option class="@OptionItemCSS" value="@item.ID.ToSecureString()" selected>@item.Title.ToSecureString()</option>
+                                }
+                                else
+                                {
+                                    <option class="@OptionItemCSS" value="@item.ID.ToSecureString()">@item.Title.ToSecureString()</option>
+                                }
+                            }
+                        }
+                    </select>
 
                 </div>
                 <div class="col-auto">
@@ -184,7 +218,7 @@
                 <div class="col">
                     <div class="input-group">
 
-                        <input type="number" 
+                        <input type="number"
                                @bind-value="IntValue"
                                class="@ControlCSS"
                                placeholder="@Placeholder"
@@ -277,7 +311,10 @@
             <div><small class="text-muted">@Field.Description.ToSecureString()</small></div>
         }
     }
-
+    else
+    {
+        <div class="bg-light border rounded lead">&minus;</div>
+    }
 </div>
 
 
@@ -291,6 +328,12 @@
     /// </summary>
     [Parameter]
     public string ControlCSS { get; set; } = "form-control";
+
+    /// <summary>
+    /// Defines or sets a CSS class that controls the CSS style of the control. The default value is: form-control
+    /// </summary>
+    [Parameter]
+    public string OptionItemCSS { get; set; } = "dropdown-item";
 
     /// <summary>
     /// Defines or sets the Placeholder text of the Placeholder property of the control.
@@ -310,6 +353,9 @@
 
     [Parameter]
     public DateTime DateTimeValue { get; set; } = DateTime.Now;
+
+    [Parameter]
+    public List<IDTO> Items { get; set; } = new List<IDTO>();
 
     [Parameter]
     public EditField Field { get; set; }
@@ -441,6 +487,14 @@
                                 this.Value = EditRepository.DTO.GetProperty(Field.Property).Value.ToSecureString();
                             }
 
+                            // Drop Down Items List 
+                            if (Field.Type == EditFieldType.DropDownItems)
+                            {
+                                this.Value = EditRepository.DTO.GetProperty(Field.Property).Value.ToSecureString();
+
+                                LoadItems();
+                            }
+
                             // Money // Decimal
                             if (Field.Type == EditFieldType.MoneyBox ||
                                 Field.Type == EditFieldType.DecimalBox)
@@ -505,7 +559,8 @@
                         {
                             // Text // TextArea
                             if (Field.Type == EditFieldType.TextBox ||
-                                Field.Type == EditFieldType.TextArea)
+                                Field.Type == EditFieldType.TextArea ||
+                                Field.Type == EditFieldType.DropDownItems)
                             {
                                 EditRepository.DTO.SetProperty(this.Value.ToSecureString(), Field.Property);
                             }
@@ -561,6 +616,21 @@
         Field.Mode = EditFieldMode.View;
 
         await Task.FromResult<string>("OK");
+    }
+
+    private void LoadItems()
+    {
+        if (Field.Type == EditFieldType.DropDownItems)
+        {
+            if (this.Field.ItemType != null)
+            {
+                Items = EditRepository.ItemsByItemType(this.Field.ItemType);
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine("ItemType is null in Drop Down Items Loading");
+            }
+        }
     }
 
     [Parameter]

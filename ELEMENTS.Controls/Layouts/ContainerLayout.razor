@@ -4,6 +4,14 @@
 
     <div class="@(HeaderCSS  + " " + PaddingCSS)">
         <div class="row align-items-center">
+
+            @if (Avatar == true)
+            {
+                <div class="col-auto">
+                    <span class="@( AvatarCSS )" style="@( AvatarStyleSheet )"></span>
+                </div>
+            }
+
             <div class="col">
                 @if (!string.IsNullOrEmpty(PreTitle))
                 {
@@ -101,6 +109,15 @@
 
     [Parameter]
     public string Link { get; set; } = "";
+
+    [Parameter]
+    public bool Avatar { get; set; } = false;
+
+    [Parameter]
+    public string AvatarCSS { get; set; } = "avatar avatar-md";
+
+    [Parameter]
+    public string AvatarStyleSheet { get; set; } = "";
 
     [Parameter]
     public bool Border { get; set; } = false;

@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace ELEMENTS.Infrastructure
 {
+
+
     public class FactoryStatusInfo : IFactoryStatusInfo
     {
         public string Status { get; set; }

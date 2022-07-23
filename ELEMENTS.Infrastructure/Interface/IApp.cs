@@ -165,6 +165,7 @@ namespace ELEMENTS.Infrastructure
         string Property { get; set; }
         EditFieldType Type { get; set; }
         EditFieldMode Mode { get; set; }
+        string ItemType { get; set; } 
     }
 
     public class EditField : IField
@@ -175,6 +176,7 @@ namespace ELEMENTS.Infrastructure
         public string Property { get; set; } = "Title";
         public EditFieldType Type { get; set; } = EditFieldType.TextBox;
         public EditFieldMode Mode { get; set; } = EditFieldMode.View;
+        public string ItemType { get; set; } = string.Empty;
     }
 
     public enum EditFieldType
@@ -193,6 +195,8 @@ namespace ELEMENTS.Infrastructure
         DateBox = 31,
         TimeBox = 32,
         DateTimeBox = 33,
+
+        DropDownItems = 41,
     }
 
     public enum EditFieldMode

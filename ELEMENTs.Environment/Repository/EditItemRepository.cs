@@ -11,11 +11,11 @@ using ELEMENTS.Infrastructure;
 
 namespace ELEMENTS
 {
-  
+
     public class EditItemRepository : IEditItemRepository
     {
         public bool IsInitialized { get; set; } = false;
-        public IItemType ItemType { get; set; } 
+        public IItemType ItemType { get; set; }
         public Guid ItemGUID { get; set; } = Guid.Empty;
         public ISQLiteService Service { get; set; }
         public IDTO DTO { get; set; }
@@ -83,6 +83,30 @@ namespace ELEMENTS
             }
 
             return info;
+        }
+
+        public List<IDTO> ItemsByItemType(string ItemTypeName)
+        {
+            try
+            {
+                if (ItemType != null)
+                {
+                    // Prepare 
+                    IQueryParameter qp = QueryParameter.DefaultItemsQuery(
+                        Service.Factory.MasterGUID, "ELEMENTs", ItemTypeName);
+                    qp.PageSize = 999;
+                    qp.CurrentPage = 1;
+
+                    // Query 
+                    return Service.Factory.GetItems(qp);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("FAIL while ItemType Loading in DropDownList: " + ex.Message);
+            }
+
+            return new List<IDTO>();
         }
     }
 }

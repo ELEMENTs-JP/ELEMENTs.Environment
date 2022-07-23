@@ -1,6 +1,6 @@
 ﻿
 <div class="@(InputGroupCSS)">
-    <input type="text"
+    <input type="text" id="@ControlID"
            class="@( ControlCSS )"
            placeholder="@Placeholder"
            aria-label="" aria-describedby="searchIcon"
@@ -14,6 +14,8 @@
 @code {
 
 
+    [Parameter]
+    public string ControlID { get; set; } = "SearchBoxCTL";
 
     /// <summary>
     /// Defines or sets a CSS class that controls the CSS style of the control. The default value is: form-control

@@ -2,15 +2,17 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ELEMENTS.Infrastructure
 {
-    public static class Helper
+    public static partial class Helper
     {
         public static IEnumerable<TSource> DistinctBy<TSource, TKey>
        (this IEnumerable<TSource> source, Func<TSource, TKey> keySelector)
@@ -380,6 +382,167 @@ namespace ELEMENTS.Infrastructure
             }
 
             return text;
+        }
+    }
+
+
+    public static partial class Helper
+    {
+        // Logging 
+        public static void LogMessage(this string msg)
+        {
+            try
+            {
+                string message = "Message: " + msg;
+
+                Thread thr = new Thread(new ParameterizedThreadStart(Helper.Log));
+                thr.Start(message);
+            }
+            catch (Exception exOuter)
+            {
+                Console.WriteLine("Fehler: " + exOuter.Message);
+            }
+        }
+        public static void LogException(this Exception ex)
+        {
+            try
+            {
+                string msg = (ex.StackTrace != null) ? ex.Message + " - " + ex.StackTrace.ToString() : ex.Message;
+
+                try
+                {
+                    if (ex.InnerException != null)
+                    {
+                        msg += (ex.InnerException.StackTrace != null) ? " - " + ex.InnerException.StackTrace : "";
+                    }
+                }
+                catch (Exception exOuter)
+                {
+                    Console.WriteLine("Fehler: " + exOuter.Message);
+                }
+
+                Thread thr = new Thread(new ParameterizedThreadStart(Helper.Log));
+                thr.Start(msg);
+            }
+            catch (Exception exOuter)
+            {
+                Console.WriteLine("Fehler: " + exOuter.Message);
+            }
+        }
+        public static void LogAsync(string text)
+        {
+            try
+            {
+                Thread thr = new Thread(new ParameterizedThreadStart(Helper.Log));
+                thr.Start(text);
+            }
+            catch (Exception exOuter)
+            {
+                Console.WriteLine("Fehler: " + exOuter.Message);
+            }
+        }
+        private static void Log(object obj)
+        {
+            try
+            {
+                // Text 
+                string errorMsg = obj.ToSecureString();
+
+                string date = DateTime.Now.ToShortDateString() + " - " + DateTime.Now.ToShortTimeString();
+                errorMsg = date + " - " + errorMsg;
+
+                Console.WriteLine("ERROR --- " + errorMsg);
+
+                // Path 
+                #region Path
+                string basePath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+
+                if (!Directory.Exists(basePath))
+                    Directory.CreateDirectory(basePath);
+
+                if (!basePath.EndsWith("\\"))
+                {
+                    basePath += "\\";
+                }
+
+                string errorPath = "Error_Logging_Files";
+                if (!basePath.ToLower().Contains(errorPath))
+                {
+                    basePath += "\\" + errorPath + "\\";
+                }
+
+                if (!Directory.Exists(basePath))
+                    Directory.CreateDirectory(basePath);
+                #endregion
+
+                // FileName 
+                #region FileName
+                string year = DateTime.Now.Year.ToString();
+                string month = DateTime.Now.Month.ToString();
+                string day = DateTime.Now.Day.ToString();
+
+                basePath += "Logging_" + year + "_" + month + "_" + day + ".txt";
+                #endregion
+
+                // File 
+                if (!File.Exists(basePath))
+                {
+                    using (StreamWriter sw = File.CreateText(basePath))
+                    {
+                        sw.WriteLine(errorMsg);
+                        sw.Close();
+                        sw.Dispose();
+                    }
+                }
+                else
+                {
+                    using (StreamWriter sw = File.AppendText(basePath))
+                    {
+                        sw.WriteLine(errorMsg);
+                        sw.Close();
+                        sw.Dispose();
+                    }
+                }
+            }
+            catch (Exception exOuter)
+            {
+                Console.WriteLine("Fehler: " + exOuter.Message);
+            }
+        }
+
+        public static List<FileInfo> GetLogFiles()
+        {
+            List<FileInfo> files = new List<FileInfo>();
+
+            // Path 
+            #region Path
+            string basePath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+
+            if (!Directory.Exists(basePath))
+                Directory.CreateDirectory(basePath);
+
+            if (!basePath.EndsWith("\\"))
+            {
+                basePath += "\\";
+            }
+
+            string errorPath = "Error_Logging_Files";
+            if (!basePath.ToLower().Contains(errorPath))
+            {
+                basePath += "\\" + errorPath + "\\";
+            }
+
+            if (!Directory.Exists(basePath))
+                Directory.CreateDirectory(basePath);
+            #endregion
+
+            foreach (string file in Directory.GetFiles(basePath))
+            {
+                FileInfo fi = new FileInfo(file);
+                files.Add(fi);
+            }
+
+            return files;
         }
     }
 }

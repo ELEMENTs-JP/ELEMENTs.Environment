@@ -324,8 +324,8 @@ namespace ELEMENTS.Data.SQLite
         {
             string sql = "SELECT COUNT(Title) FROM tbl_CON_Content as s INNER JOIN tbl_TEC_Relation as r on(s.GUID = r.ChildGUID) ";
             sql += " WHERE r.ParentGUID = '" + parentGUID + "' ";
-            sql += " AND MasterGUID = '" + MasterGUID + "'  ";
-            sql += " AND ItemType = '" + childItemType + "' ";
+            sql += " AND s.MasterGUID = '" + MasterGUID + "'  ";
+            sql += " AND s.ItemType = '" + childItemType + "' ";
 
             return sql;
         }
@@ -333,8 +333,8 @@ namespace ELEMENTS.Data.SQLite
         {
             string sql = "SELECT COUNT(Title) FROM tbl_CON_Content as s INNER JOIN tbl_TEC_Relation as r on(s.GUID = r.ParentGUID) ";
             sql += " WHERE r.ChildGUID = '" + childGUID + "' ";
-            sql += " AND MasterGUID = '" + MasterGUID + "'  ";
-            sql += " AND ItemType = '" + parentItemType + "' ";
+            sql += " AND s.MasterGUID = '" + MasterGUID + "'  ";
+            sql += " AND s.ItemType = '" + parentItemType + "' ";
 
             return sql;
         }

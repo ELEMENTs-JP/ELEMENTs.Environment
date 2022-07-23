@@ -7,6 +7,7 @@ using ELEMENTS.Infrastructure;
 
 namespace ELEMENTS
 {
+    
     public interface IAddItemRepository
     {
         ISQLiteService Service { get; set; }
@@ -46,7 +47,9 @@ namespace ELEMENTS
         Guid ItemGUID { get; set; }
         IItemType ItemType { get; set; }
         IFactoryStatusInfo DeleteItem();
+        List<IDTO> ItemsByItemType(string ItemTypeName);
     }
+
 
     public interface IUserInterfaceRepository
     {
