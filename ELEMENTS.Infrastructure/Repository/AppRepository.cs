@@ -13,7 +13,8 @@ namespace ELEMENTS.Infrastructure
     {
         List<IApp> Apps { get; set; }
         IItemType GetItemTypeByName(string ItemType);
-
+        IApp GetAppByItemTypeName(string ItemType);
+        
         void Init();
     }
  

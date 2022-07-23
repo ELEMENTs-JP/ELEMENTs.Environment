@@ -1,52 +1,82 @@
 ﻿
 
 
-<div class="@( (Border) ? "border-bottom p-2" : "" )">
+<div class="@( (Border) ? "border-bottom p-2 hover" : "hover" )">
     <label class="form-label">@Field.Title </label>
 
     @* MODE *@
     @if (Field.Mode == EditFieldMode.View)
     {
-        <div class="row g-0">
+        <div class="@( (Field.Type != EditFieldType.Text) ? " row pointer " : " row ")"
+              @onclick="@( e => { if (Field.Type != EditFieldType.Text) { Edit(); } })">
+            
             <div class="col">
 
                 @if (Field.Type == EditFieldType.Text ||
-                    Field.Type == EditFieldType.TextBox ||
-                    Field.Type == EditFieldType.TextArea ||
-                    Field.Type == EditFieldType.DropDownItems)
+                 Field.Type == EditFieldType.TextBox ||
+                 Field.Type == EditFieldType.TextArea ||
+                 Field.Type == EditFieldType.DropDownItems)
                 {
                     <div class="lead">@Value.ToSecureString()</div>
                 }
 
                 @if (Field.Type == EditFieldType.MoneyBox ||
-                   Field.Type == EditFieldType.DecimalBox)
+                Field.Type == EditFieldType.DecimalBox)
                 {
                     <div class="lead">@DecValue.ToSecureString()</div>
                 }
 
                 @if (Field.Type == EditFieldType.IntegerBox ||
-                   Field.Type == EditFieldType.PercentBox)
+                Field.Type == EditFieldType.PercentBox)
                 {
                     <div class="lead">@IntValue.ToSecureString()</div>
                 }
 
-                @if (Field.Type == EditFieldType.DateBox ||
-                  Field.Type == EditFieldType.TimeBox ||
-                  Field.Type == EditFieldType.DateTimeBox)
+                @if (Field.Type == EditFieldType.DateBox)
                 {
-                    <div class="lead">@DateTimeValue.ToSecureString()</div>
+                    <div class="lead">
+                        <div class="row g-0">
+                            <div class="col-auto pe-2"><i class="far fa-calendar-alt"></i></div>
+                            <div class="col">@DateTimeValue.ToSecureDateTime().ToShortDateString()</div>
+                        </div>
+                    </div>
+                }
+                @if (Field.Type == EditFieldType.DateTimeBox)
+                {
+                    <div class="lead">
+                        <div class="row g-0">
+                            <div class="col-auto pe-2"><i class="far fa-calendar-alt"></i></div>
+                            <div class="col">
+                                @( DateTimeValue.ToSecureDateTime().ToShortDateString() )
+                            </div>
+
+                            <div class="col-auto px-2"><i class="far fa-clock"></i></div>
+                            <div class="col">
+                                @( DateTimeValue.ToSecureDateTime().ToShortTimeString() )
+                            </div>
+                        </div>
+                    </div>
+                }
+                @if (Field.Type == EditFieldType.TimeBox)
+                {
+                    <div class="lead">
+                        <div class="row g-0">
+                            <div class="col-auto pe-2"><i class="far fa-clock"></i></div>
+                            <div class="col">@DateTimeValue.ToSecureDateTime().ToShortTimeString()</div>
+                        </div>
+                    </div>
                 }
 
             </div>
 
-            @if (Field.Type != EditFieldType.Text)
+            @*@if (Field.Type != EditFieldType.Text)
             {
                 <div class="col-auto">
                     <button type="button" class="btn btn-sm" @onclick="Edit">
                         <i class="fas fa-edit"></i>
                     </button>
                 </div>
-            }
+            }*@
 
         </div>
     }
@@ -100,7 +130,7 @@
         {
             <div class="row gx-1">
                 <div class="col">
-                    
+
                     @* --- SELECT DROP DOWN --- *@
                     <select class="form-select"
                             @onchange="@(e => { Value = e.Value.ToSecureString(); ValueChanged(); })">
@@ -462,71 +492,78 @@
     {
         base.OnParametersSet();
 
-        if (EditRepository != null)
+        try
         {
-            if (EditRepository.IsInitialized == true)
+            if (EditRepository != null)
             {
-                if (EditRepository.DTO != null)
+                if (EditRepository.IsInitialized == true)
                 {
-                    if (Field.Property == "Title")
+                    if (EditRepository.DTO != null)
                     {
-                        this.Value = EditRepository.DTO.Title.ToSecureString();
-                    }
-                    else if (Field.Property == "ID")
-                    {
-                        this.Value = EditRepository.DTO.ID.ToSecureString();
-                    }
-                    else
-                    {
-                        try
+                        if (Field.Property == "Title")
                         {
-                            // Text // TextArea
-                            if (Field.Type == EditFieldType.TextBox ||
-                                Field.Type == EditFieldType.TextArea)
+                            this.Value = EditRepository.DTO.Title.ToSecureString();
+                        }
+                        else if (Field.Property == "ID")
+                        {
+                            this.Value = EditRepository.DTO.ID.ToSecureString();
+                        }
+                        else
+                        {
+                            try
                             {
-                                this.Value = EditRepository.DTO.GetProperty(Field.Property).Value.ToSecureString();
+                                // Text // TextArea
+                                if (Field.Type == EditFieldType.TextBox ||
+                                    Field.Type == EditFieldType.TextArea)
+                                {
+                                    this.Value = EditRepository.DTO.GetProperty(Field.Property).Value.ToSecureString();
+                                }
+
+                                // Drop Down Items List
+                                if (Field.Type == EditFieldType.DropDownItems)
+                                {
+                                    this.Value = EditRepository.DTO.GetProperty(Field.Property).Value.ToSecureString();
+
+                                    LoadItems();
+                                }
+
+                                // Money // Decimal
+                                if (Field.Type == EditFieldType.MoneyBox ||
+                                    Field.Type == EditFieldType.DecimalBox)
+                                {
+                                    this.DecValue = EditRepository.DTO.GetProperty(Field.Property).Value.ToSecureDecimal();
+                                }
+
+                                // Int
+                                if (Field.Type == EditFieldType.IntegerBox ||
+                                    Field.Type == EditFieldType.PercentBox)
+                                {
+                                    this.IntValue = EditRepository.DTO.GetProperty(Field.Property).Value.ToSecureInt();
+                                }
+
+                                // Date, Time, DateTime
+                                if (Field.Type == EditFieldType.DateBox ||
+                                    Field.Type == EditFieldType.TimeBox ||
+                                    Field.Type == EditFieldType.DateTimeBox)
+                                {
+                                    this.DateTimeValue = EditRepository.DTO.GetProperty(Field.Property).Value.ToSecureDateTime();
+                                }
+
+                            }
+                            catch (Exception ex)
+                            {
+                                System.Diagnostics.Debug.WriteLine("FAIL: " + ex.Message);
                             }
 
-                            // Drop Down Items List 
-                            if (Field.Type == EditFieldType.DropDownItems)
-                            {
-                                this.Value = EditRepository.DTO.GetProperty(Field.Property).Value.ToSecureString();
-
-                                LoadItems();
-                            }
-
-                            // Money // Decimal
-                            if (Field.Type == EditFieldType.MoneyBox ||
-                                Field.Type == EditFieldType.DecimalBox)
-                            {
-                                this.DecValue = EditRepository.DTO.GetProperty(Field.Property).Value.ToSecureDecimal();
-                            }
-
-                            // Int
-                            if (Field.Type == EditFieldType.IntegerBox ||
-                                Field.Type == EditFieldType.PercentBox)
-                            {
-                                this.IntValue = EditRepository.DTO.GetProperty(Field.Property).Value.ToSecureInt();
-                            }
-
-                            // Date, Time, DateTime
-                            if (Field.Type == EditFieldType.DateBox ||
-                                Field.Type == EditFieldType.TimeBox ||
-                                Field.Type == EditFieldType.DateTimeBox)
-                            {
-                                this.DateTimeValue = EditRepository.DTO.GetProperty(Field.Property).Value.ToSecureDateTime();
-                            }
 
                         }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine("FAIL: " + ex.Message);
-                        }
-
-
                     }
                 }
             }
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine("Fehler: " + ex.Message);
         }
     }
 
@@ -539,97 +576,111 @@
 
     private async Task Save()
     {
-        if (EditRepository != null)
+        try
         {
-            if (EditRepository.IsInitialized == true)
+            if (EditRepository != null)
             {
-                if (EditRepository.DTO != null)
+                if (EditRepository.IsInitialized == true)
                 {
-                    if (Field.Property == "Title")
+                    if (EditRepository.DTO != null)
                     {
-                        EditRepository.DTO.Title = this.Value;
-                    }
-                    else if (Field.Property == "ID")
-                    {
-                        EditRepository.DTO.ID = this.Value;
-                    }
-                    else
-                    {
-                        try
+                        if (Field.Property == "Title")
                         {
-                            // Text // TextArea
-                            if (Field.Type == EditFieldType.TextBox ||
-                                Field.Type == EditFieldType.TextArea ||
-                                Field.Type == EditFieldType.DropDownItems)
-                            {
-                                EditRepository.DTO.SetProperty(this.Value.ToSecureString(), Field.Property);
-                            }
-
-                            // Money // Decimal
-                            if (Field.Type == EditFieldType.MoneyBox ||
-                                Field.Type == EditFieldType.DecimalBox)
-                            {
-                                EditRepository.DTO.SetProperty(this.DecValue.ToSecureString(), Field.Property);
-                            }
-
-                            // Int // Percent 
-                            if (Field.Type == EditFieldType.IntegerBox ||
-                                Field.Type == EditFieldType.PercentBox)
-                            {
-                                EditRepository.DTO.SetProperty(this.IntValue.ToSecureString(), Field.Property);
-                            }
-
-                            // Date, Time, DateTime
-                            if (Field.Type == EditFieldType.DateBox ||
-                                Field.Type == EditFieldType.TimeBox ||
-                                Field.Type == EditFieldType.DateTimeBox)
-                            {
-                                EditRepository.DTO.SetProperty(this.DateTimeValue.ToSecureString(), Field.Property);
-                            }
-
+                            EditRepository.DTO.Title = this.Value;
                         }
-                        catch (Exception ex)
+                        else if (Field.Property == "ID")
                         {
-                            Console.WriteLine("FAIL: " + ex.Message);
+                            EditRepository.DTO.ID = this.Value;
                         }
-                    }
+                        else
+                        {
+                            try
+                            {
+                                // Text // TextArea
+                                if (Field.Type == EditFieldType.TextBox ||
+                                    Field.Type == EditFieldType.TextArea ||
+                                    Field.Type == EditFieldType.DropDownItems)
+                                {
+                                    EditRepository.DTO.SetProperty(this.Value.ToSecureString(), Field.Property);
+                                }
 
-                    IFactoryStatusInfo info = EditRepository.Service.Factory.Update(EditRepository.DTO);
-                    if (info.Status == "OK")
-                    {
-                        string msg = "everthing is ok";
-                        Console.WriteLine(msg);
-                    }
-                    else
-                    {
-                        string msg = "nothing changed";
-                        Console.WriteLine(msg);
+                                // Money // Decimal
+                                if (Field.Type == EditFieldType.MoneyBox ||
+                                    Field.Type == EditFieldType.DecimalBox)
+                                {
+                                    EditRepository.DTO.SetProperty(this.DecValue.ToSecureString(), Field.Property);
+                                }
+
+                                // Int // Percent
+                                if (Field.Type == EditFieldType.IntegerBox ||
+                                    Field.Type == EditFieldType.PercentBox)
+                                {
+                                    EditRepository.DTO.SetProperty(this.IntValue.ToSecureString(), Field.Property);
+                                }
+
+                                // Date, Time, DateTime
+                                if (Field.Type == EditFieldType.DateBox ||
+                                    Field.Type == EditFieldType.TimeBox ||
+                                    Field.Type == EditFieldType.DateTimeBox)
+                                {
+                                    EditRepository.DTO.SetProperty(this.DateTimeValue.ToSecureString(), Field.Property);
+                                }
+
+                            }
+                            catch (Exception ex)
+                            {
+                                System.Diagnostics.Debug.WriteLine("FAIL: " + ex.Message);
+                            }
+                        }
+
+                        IFactoryStatusInfo info = EditRepository.Service.Factory.Update(EditRepository.DTO);
+                        if (info.Status == "OK")
+                        {
+                            string msg = "everthing is ok";
+                            System.Diagnostics.Debug.WriteLine(msg);
+                        }
+                        else
+                        {
+                            string msg = "nothing changed";
+                            System.Diagnostics.Debug.WriteLine(msg);
+                        }
                     }
                 }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine("Edit Repository is not initialized");
+                }
             }
-            else
-            {
-                Console.WriteLine("Edit Repository is not initialized");
-            }
-        }
 
-        Field.Mode = EditFieldMode.View;
+            Field.Mode = EditFieldMode.View;
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine("Fehler: " + ex.Message);
+        }
 
         await Task.FromResult<string>("OK");
     }
 
     private void LoadItems()
     {
-        if (Field.Type == EditFieldType.DropDownItems)
+        try
         {
-            if (this.Field.ItemType != null)
+            if (Field.Type == EditFieldType.DropDownItems)
             {
-                Items = EditRepository.ItemsByItemType(this.Field.ItemType);
+                if (this.Field.ItemType != null)
+                {
+                    Items = EditRepository.ItemsByItemType(this.Field.ItemType);
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine("ItemType is null in Drop Down Items Loading");
+                }
             }
-            else
-            {
-                System.Diagnostics.Debug.WriteLine("ItemType is null in Drop Down Items Loading");
-            }
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine("Fehler: " + ex.Message);
         }
     }
 

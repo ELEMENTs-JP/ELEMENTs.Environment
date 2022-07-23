@@ -7,11 +7,14 @@
 
             <div class="row">
 
-                @foreach (EditField field in InterfaceRepository.Fields)
+                @if (InterfaceRepository.Fields != null)
                 {
-                    <div class="@field.ColumnCSSClass">
-                        <EditComponent Field="@field" EditRepository="@EditRepository" Border="@ItemBorder" />
-                    </div>
+                    @foreach (EditField field in InterfaceRepository.Fields)
+                    {
+                        <div class="@field.ColumnCSSClass">
+                            <EditComponent Field="@field" EditRepository="@EditRepository" Border="@ItemBorder" />
+                        </div>
+                    }
                 }
 
             </div>

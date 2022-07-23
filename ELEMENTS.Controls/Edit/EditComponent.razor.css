@@ -13,3 +13,11 @@ label {
     margin-bottom: 0.15rem !important;
     margin-top: 0.5rem !important;
 }
+
+.hover:hover {
+    background-color: var(--tblr-gray-400);
+}
+
+.pointer:hover {
+    cursor: pointer;
+}

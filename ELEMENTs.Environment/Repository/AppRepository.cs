@@ -16,36 +16,78 @@ namespace ELEMENTS
     {
         public List<IApp> Apps { get; set; } = new List<IApp>();
 
+        public AppRepository()
+        {
+            Init();
+        }
         public void Init()
         {
-            Apps.Clear();
-
-            Items.Clear();
-            foreach (IApp app in Apps)
+            try
             {
-                NavigationEntry entry = new NavigationEntry() 
-                { 
-                    Title = app.Title, 
-                    ID = app.ID,
-                    Group = app.Group
-                };
+                Apps.Clear();
 
-                Store.Add(entry);
-                Items.Add(entry);
+                Apps.Add(new DEFAULT());
+
+                Items.Clear();
+                foreach (IApp app in Apps)
+                {
+                    NavigationEntry entry = new NavigationEntry()
+                    {
+                        Title = app.Title,
+                        ID = app.ID,
+                        Group = app.Group
+                    };
+
+                    Store.Add(entry);
+                    Items.Add(entry);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Fehler: " + ex.Message);
             }
         }
 
-        public IItemType GetItemTypeByName(string ItemType)
+        public IItemType GetItemTypeByName(string ItemTypeName)
         {
-            foreach (IApp a in Apps)
+            try
             {
-                foreach (IItemType i in a.GetItemTypes())
+                foreach (IApp a in Apps)
                 {
-                    if (i.Title == ItemType)
+                    foreach (IItemType i in a.GetItemTypes())
                     {
-                        return i;
+                        if (i.Title == ItemTypeName)
+                        {
+                            return i;
+                        }
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Fehler: " + ex.Message);
+            }
+
+            return null;
+        }
+        public IApp GetAppByItemTypeName(string ItemTypeName)
+        {
+            try
+            {
+                foreach (IApp a in Apps)
+                {
+                    foreach (IItemType i in a.GetItemTypes())
+                    {
+                        if (i.Title == ItemTypeName)
+                        {
+                            return a;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Fehler: " + ex.Message);
             }
 
             return null;
@@ -67,7 +109,7 @@ namespace ELEMENTS
             }
             catch (Exception ex)
             {
-
+                System.Diagnostics.Debug.WriteLine("Fehler: " + ex.Message);
             }
         }
     }

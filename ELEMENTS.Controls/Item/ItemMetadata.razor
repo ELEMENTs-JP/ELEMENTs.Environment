@@ -1,0 +1,57 @@
+﻿
+
+@if(DTO != null)
+{
+    <ELEMENTS.Controls.Layouts.ContainerLayout Title="Metadaten" 
+                    PaddingCSS=" px-3 py-2 " BackgroundCSS=" bg-white " Border="true" >
+        <div class="row align-items-center border-bottom">
+            <div class="col-3 p-1">
+                <strong>Autor:in</strong>
+            </div>
+            <div class="col-1 p-1">
+                <i class="far fa-user"></i>
+            </div>
+            <div class="col p-1">
+                <small><span>@DTO.Creator.ToSecureString()</span></small>
+            </div>
+            <div class="col-1 p-1">
+                <i class="far fa-calendar-alt"></i>
+            </div>
+            <div class="col p-1">
+                <small><span>@DTO.CreatedAt.ToSecureDateTime().ToShortDateString()</span></small>
+            </div>
+        </div>
+
+        <div class="row align-items-center">
+            <div class="col-3 p-1">
+                <strong>Editor:in</strong>
+            </div>
+            <div class="col-1 p-1">
+                <i class="far fa-user"></i>
+            </div>
+            <div class="col p-1">
+                <small>
+                    <span>@DTO.Modifier.ToSecureString()</span>
+                </small>
+            </div>
+            <div class="col-1 p-1">
+                <i class="far fa-calendar-alt"></i>
+            </div>
+            <div class="col p-1">
+                <small>
+                    <span>@DTO.ModifiedAt.ToSecureDateTime().ToShortDateString()</span>
+                </small>
+            </div>
+        </div>
+
+    </ELEMENTS.Controls.Layouts.ContainerLayout>
+}
+
+
+
+@code {
+
+    [Parameter]
+    public IDTO DTO { get; set; }
+
+}

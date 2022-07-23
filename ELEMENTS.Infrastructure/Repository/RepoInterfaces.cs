@@ -26,6 +26,7 @@ namespace ELEMENTS
         int QueryCount { get; set; }
         QueryType DataQueryType { get; set; }
         Guid ReferenceGUID { get; set; }
+        IItemType ReferenceItemType { get; set; }
         ISQLiteService Service { get; set; }
         string Matchcode { get; set; }
         IItemType ItemType { get; set; }
@@ -36,6 +37,7 @@ namespace ELEMENTS
         List<IDTO> Load();
         List<IDTO> Search();
         IFactoryStatusInfo Delete(IDTO dto);
+        IFactoryStatusInfo UnlinkItem(IDTO item);
     }
 
     public interface IEditItemRepository

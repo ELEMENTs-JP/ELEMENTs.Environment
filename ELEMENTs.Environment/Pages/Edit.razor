@@ -38,39 +38,53 @@
     {
         base.OnInitialized();
 
-        if (AddRepo != null)
+        try
         {
-            AddRepo.Service = sql;
-        }
-        if (EditRepo != null)
-        {
-            EditRepo.Service = sql;
-
-            if (!string.IsNullOrEmpty(GUID))
+            if (AddRepo != null)
             {
-                EditRepo.ItemType = app.GetItemTypeByName(this.ItemType);
-                EditRepo.ItemGUID = new Guid(GUID);
+                AddRepo.Service = sql;
+            }
+            if (EditRepo != null)
+            {
+                EditRepo.Service = sql;
+
+                if (!string.IsNullOrEmpty(GUID))
+                {
+                    EditRepo.ItemType = app.GetItemTypeByName(this.ItemType);
+                    EditRepo.ItemGUID = new Guid(GUID);
+                }
+
+                EditRepo.Init();
             }
 
-            EditRepo.Init();
+            // Edit Fields 
+            UIRepo = new UserInterfaceRepository();
+            UIRepo.ItemType = app.GetItemTypeByName(this.ItemType);
+            UIRepo.Init();
         }
-
-        // Edit Fields 
-        UIRepo = new UserInterfaceRepository();
-        UIRepo.ItemType = app.GetItemTypeByName(this.ItemType);
-        UIRepo.Init();
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine("Fehler: " + ex.Message);
+        }
     }
 
     protected override void OnParametersSet()
     {
         base.OnParametersSet();
 
-        if (EditRepo != null)
+        try
         {
-            if (EditRepo.DTO != null)
+            if (EditRepo != null)
             {
-                Title = EditRepo.DTO.Title;
+                if (EditRepo.DTO != null)
+                {
+                    Title = EditRepo.DTO.Title;
+                }
             }
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine("Fehler: " + ex.Message);
         }
     }
 

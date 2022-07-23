@@ -19,6 +19,7 @@ namespace ELEMENTS
         public int PageSize { get; set; } = 10;
         public int QueryCount { get; set; } = 0;
         public int CurrentPage { get; set; } = 1;
+        public IItemType ReferenceItemType { get; set; } 
         public IItemType ItemType { get; set; } 
         public QueryType DataQueryType { get; set; } = QueryType.List;
         public Guid ReferenceGUID { get; set; } = Guid.Empty;
@@ -139,7 +140,61 @@ namespace ELEMENTS
 
             return 0;
         }
+        public IFactoryStatusInfo UnlinkItem(IDTO item)
+        {
+            IFactoryStatusInfo info = new FactoryStatusInfo();
+            info.Status = "OK";
+            info.Message = string.Empty;
 
+            try
+            {
+                if (ReferenceGUID != Guid.Empty &&
+                    ReferenceItemType != null)
+                {
+                    if (item != null)
+                    {
+                        IRelationDTO relation = null;
+
+                        // Parent
+                        if (DataQueryType == QueryType.ParentsByChild)
+                        {
+                            relation = RelationDTO.CreateTemplate(
+                                item.GUID, item.ItemType,
+                                ReferenceGUID, ReferenceItemType.Name,
+                                "Association", Service.Factory.MasterGUID);
+                        }
+
+                        // Child
+                        if (DataQueryType == QueryType.ChildrenByParent)
+                        {
+                            relation = RelationDTO.CreateTemplate(
+                                ReferenceGUID, ReferenceItemType.Name,
+                                item.GUID, item.ItemType,
+                                "Association", Service.Factory.MasterGUID);
+                        }
+
+                        // Remove
+                        if (relation != null)
+                        {
+                            info = Service.Factory.RemoveRelation(relation);
+                            if (info.Status != "OK")
+                            {
+                                System.Diagnostics.Debug.WriteLine("Fehler beim Remove: " + info.Message);
+                            }
+
+                            Matchcode = string.Empty;
+                            return info;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("");
+            }
+
+            return info;
+        }
         private void CalculatePaging()
         {
             try
