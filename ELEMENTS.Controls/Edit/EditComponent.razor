@@ -1,8 +1,18 @@
 ﻿
 
 
-<div class="@( (Border) ? "border-bottom p-1 hover" : "hover" )">
-    <label class="form-label">@Field.Title </label>
+<div class="@( (Border) ? 
+               ((Field.Type == EditFieldType.Divider) ? "p-1" : "border-bottom p-1 hover") 
+               : "hover" )">
+
+
+    @if (Field.Type == EditFieldType.Divider)
+    {
+    }
+    else
+    { 
+        <label class="form-label">@Field.Title.ToSecureString()</label>
+    }
 
     @* MODE *@
     @if (Field.Mode == EditFieldMode.View)
@@ -12,26 +22,31 @@
 
             <div class="col py-1">
 
+                @if (Field.Type == EditFieldType.Divider)
+                {
+                    <div class="hr-text">@Field.Title.ToSecureString()</div>
+                }
+
                 @if (Field.Type == EditFieldType.Text ||
-               Field.Type == EditFieldType.TextBox ||
-               Field.Type == EditFieldType.TextArea ||
-               Field.Type == EditFieldType.DropDownItems)
+              Field.Type == EditFieldType.TextBox ||
+              Field.Type == EditFieldType.TextArea ||
+              Field.Type == EditFieldType.DropDownItems)
                 {
                     @Value.ToSecureString()
                 }
 
                 @if (Field.Type == EditFieldType.MoneyBox)
                 {
-                 
-                        <div class="row">
-                            <div class="col">
-                                @DecValue.ToSecureDecimal().ToSecureString()
-                            </div>
-                            <div class="col-auto ps-2">
-                                <i class="fas fa-money-bill"></i>
-                            </div>
+
+                    <div class="row">
+                        <div class="col">
+                            @DecValue.ToSecureDecimal().ToSecureString()
                         </div>
-                 
+                        <div class="col-auto ps-2">
+                            <i class="fas fa-money-bill"></i>
+                        </div>
+                    </div>
+
 
                 }
 
@@ -41,44 +56,44 @@
                 }
 
                 @if (Field.Type == EditFieldType.IntegerBox ||
-              Field.Type == EditFieldType.PercentBox)
+             Field.Type == EditFieldType.PercentBox)
                 {
                     @IntValue.ToSecureString()
                 }
 
                 @if (Field.Type == EditFieldType.DateBox)
                 {
-                 
-                        <div class="row g-0">
-                            <div class="col-auto pe-2"><i class="far fa-calendar-alt"></i></div>
-                            <div class="col">@DateTimeValue.ToSecureDateTime().ToShortDateString()</div>
-                        </div>
-                  
+
+                    <div class="row g-0">
+                        <div class="col-auto pe-2"><i class="far fa-calendar-alt"></i></div>
+                        <div class="col">@DateTimeValue.ToSecureDateTime().ToShortDateString()</div>
+                    </div>
+
                 }
                 @if (Field.Type == EditFieldType.DateTimeBox)
                 {
-                  
-                        <div class="row g-0">
-                            <div class="col-auto pe-2"><i class="far fa-calendar-alt"></i></div>
-                            <div class="col">
-                                @( DateTimeValue.ToSecureDateTime().ToShortDateString() )
-                            </div>
 
-                            <div class="col-auto px-2"><i class="far fa-clock"></i></div>
-                            <div class="col">
-                                @( DateTimeValue.ToSecureDateTime().ToShortTimeString() )
-                            </div>
+                    <div class="row g-0">
+                        <div class="col-auto pe-2"><i class="far fa-calendar-alt"></i></div>
+                        <div class="col">
+                            @( DateTimeValue.ToSecureDateTime().ToShortDateString() )
                         </div>
-              
+
+                        <div class="col-auto px-2"><i class="far fa-clock"></i></div>
+                        <div class="col">
+                            @( DateTimeValue.ToSecureDateTime().ToShortTimeString() )
+                        </div>
+                    </div>
+
                 }
                 @if (Field.Type == EditFieldType.TimeBox)
                 {
-               
-                        <div class="row g-0">
-                            <div class="col-auto pe-2"><i class="far fa-clock"></i></div>
-                            <div class="col">@DateTimeValue.ToSecureDateTime().ToShortTimeString()</div>
-                        </div>
-                 
+
+                    <div class="row g-0">
+                        <div class="col-auto pe-2"><i class="far fa-clock"></i></div>
+                        <div class="col">@DateTimeValue.ToSecureDateTime().ToShortTimeString()</div>
+                    </div>
+
                 }
 
             </div>
@@ -96,6 +111,11 @@
     }
     else if (Field.Mode == EditFieldMode.Edit)
     {
+        @if (Field.Type == EditFieldType.Divider)
+        {
+            <div class="hr-text">@Field.Title.ToSecureString()</div>
+        }
+
         @if (Field.Type == EditFieldType.Text)
         {
             <p class="lead">@Value.ToSecureString()</p>
@@ -666,6 +686,7 @@
                 }
             }
 
+            // Set Field Modeo to -> VIEW 
             Field.Mode = EditFieldMode.View;
         }
         catch (Exception ex)

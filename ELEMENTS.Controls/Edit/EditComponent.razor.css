@@ -21,3 +21,16 @@ label {
 .pointer:hover {
     cursor: pointer;
 }
+
+.hr-text {
+    display: flex;
+    align-items: center;
+    margin: 1rem 0;
+    font-size: .625rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    line-height: 1.4;
+    color: #626976;
+    height: 1px;
+}
