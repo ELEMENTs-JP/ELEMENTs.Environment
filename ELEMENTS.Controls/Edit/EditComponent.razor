@@ -11,7 +11,7 @@
     }
     else
     { 
-        <label class="form-label">@Field.Title.ToSecureString()</label>
+        <label class="form-label text-dark">@Field.Title.ToSecureString()</label>
     }
 
     @* MODE *@
@@ -24,13 +24,13 @@
 
                 @if (Field.Type == EditFieldType.Divider)
                 {
-                    <div class="hr-text">@Field.Title.ToSecureString()</div>
+                    <div class="hr-text text-primary">@Field.Title.ToSecureString()</div>
                 }
 
                 @if (Field.Type == EditFieldType.Text ||
-              Field.Type == EditFieldType.TextBox ||
-              Field.Type == EditFieldType.TextArea ||
-              Field.Type == EditFieldType.DropDownItems)
+            Field.Type == EditFieldType.TextBox ||
+            Field.Type == EditFieldType.TextArea ||
+            Field.Type == EditFieldType.DropDownItems)
                 {
                     @Value.ToSecureString()
                 }
@@ -55,10 +55,21 @@
                     @DecValue.ToSecureString()
                 }
 
-                @if (Field.Type == EditFieldType.IntegerBox ||
-             Field.Type == EditFieldType.PercentBox)
+                @if (Field.Type == EditFieldType.IntegerBox)
                 {
                     @IntValue.ToSecureString()
+                }
+
+                @if (Field.Type == EditFieldType.PercentBox)
+                {
+                    <div class="row g-0">
+                        <div class="col">
+                            @IntValue.ToSecureString()
+                        </div>
+                        <div class="col-auto ps-2">
+                            <i class="fas fa-percent"></i>
+                        </div>
+                    </div>
                 }
 
                 @if (Field.Type == EditFieldType.DateBox)

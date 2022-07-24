@@ -75,7 +75,9 @@ namespace ELEMENTS.Infrastructure
         List<IColumn> Columns { get; set; }
         List<IField> Fields { get; set; }
         string ColorCode { get; set; }
-        string Group { get; set; } 
+        string Group { get; set; }
+        int Sorting { get; set; }
+        bool InMenu { get; set; }
 
         // Relations 
         List<IItemType> GetParentItemTypes();
@@ -106,6 +108,10 @@ namespace ELEMENTS.Infrastructure
         public ItemTypeTyp Typ { get; set; } = ItemTypeTyp.Item;
         public string ColorCode { get; set; } = "#cccccc";
         public string Group { get; set; } = string.Empty;
+
+        public int Sorting { get; set; } = 1;
+        public bool InMenu { get; set; } = true;
+
         // Relations 
         public virtual List<IItemType> GetParentItemTypes()
         {

@@ -15,7 +15,7 @@ label {
 }
 
 .hover:hover {
-    background-color: var(--tblr-gray-400);
+    background-color: var(--tblr-gray-300);
 }
 
 .pointer:hover {
@@ -23,14 +23,14 @@ label {
 }
 
 .hr-text {
-    display: flex;
-    align-items: center;
+  /*  display: flex;
+    align-items: center;*/
     margin: 1rem 0;
-    font-size: .625rem;
+ /*   font-size: .625rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: .04em;
     line-height: 1.4;
     color: #626976;
-    height: 1px;
+    height: 1px;*/
 }
