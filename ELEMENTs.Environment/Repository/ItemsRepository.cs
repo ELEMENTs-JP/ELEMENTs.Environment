@@ -14,6 +14,8 @@ namespace ELEMENTS
   
     public class ItemsRepository : IItemsRepository
     {
+        public string Information { get; set; } = string.Empty;
+        public bool AssignItems { get; set; } = false;
         public int TotalPageCount { get; set; } = 1;
         public ISQLiteService Service { get; set; }
         public int PageSize { get; set; } = 10;
@@ -177,6 +179,61 @@ namespace ELEMENTS
                         if (relation != null)
                         {
                             info = Service.Factory.RemoveRelation(relation);
+                            if (info.Status != "OK")
+                            {
+                                System.Diagnostics.Debug.WriteLine("Fehler beim Remove: " + info.Message);
+                            }
+
+                            Matchcode = string.Empty;
+                            return info;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("");
+            }
+
+            return info;
+        }
+        public IFactoryStatusInfo LinkItem(IDTO item)
+        {
+            IFactoryStatusInfo info = new FactoryStatusInfo();
+            info.Status = "OK";
+            info.Message = string.Empty;
+
+            try
+            {
+                if (ReferenceGUID != Guid.Empty &&
+                    ReferenceItemType != null)
+                {
+                    if (item != null)
+                    {
+                        IRelationDTO relation = null;
+
+                        // Parent
+                        if (DataQueryType == QueryType.ParentsByChild)
+                        {
+                            relation = RelationDTO.CreateTemplate(
+                                item.GUID, item.ItemType,
+                                ReferenceGUID, ReferenceItemType.Name,
+                                "Association", Service.Factory.MasterGUID);
+                        }
+
+                        // Child
+                        if (DataQueryType == QueryType.ChildrenByParent)
+                        {
+                            relation = RelationDTO.CreateTemplate(
+                                ReferenceGUID, ReferenceItemType.Name,
+                                item.GUID, item.ItemType,
+                                "Association", Service.Factory.MasterGUID);
+                        }
+
+                        // Remove
+                        if (relation != null)
+                        {
+                            info = Service.Factory.AssignRelation(relation);
                             if (info.Status != "OK")
                             {
                                 System.Diagnostics.Debug.WriteLine("Fehler beim Remove: " + info.Message);

@@ -184,6 +184,8 @@ namespace ELEMENTS.Infrastructure
         NULL = 0,
 
         Text = 1,
+        Divider = 2,
+
         TextBox = 10,
         TextArea = 11,
 

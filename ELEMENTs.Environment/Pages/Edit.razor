@@ -7,18 +7,27 @@
 @using ELEMENTS.Infrastructure
 
 
-<ELEMENTS.Controls.Layouts.ContainerLayout Title="@Title" SubTitle="@EditRepo.ItemType.Title" PaddingCSS="px-2 py-3">
-    <RelatedContent>
-        <ELEMENTS.Controls.Collection.AddItem Title="Eintrag hinzufügen"
-                                              FieldHeader="Bezeichnung" Repository="@AddRepo" />
-    </RelatedContent>
-    <ChildContent>
-        <ELEMENTS.Controls.Edit.EditArea 
-                        InterfaceRepository="@UIRepo" 
-                        EditRepository="@EditRepo" >
-        </ELEMENTS.Controls.Edit.EditArea>
-    </ChildContent>
-</ELEMENTS.Controls.Layouts.ContainerLayout>
+<div class="row">
+    <div class="col-7">
+        <ELEMENTS.Controls.Layouts.ContainerLayout Title="@Title" SubTitle="@EditRepo.ItemType.Title" PaddingCSS="px-2 py-3">
+            <RelatedContent>
+                <ELEMENTS.Controls.Collection.AddItem Title="Eintrag hinzufügen"
+                                                      FieldHeader="Bezeichnung" Repository="@AddRepo" />
+            </RelatedContent>
+            <ChildContent>
+                <ELEMENTS.Controls.Edit.EditArea InterfaceRepository="@UIRepo"
+                                                 EditRepository="@EditRepo">
+                </ELEMENTS.Controls.Edit.EditArea>
+            </ChildContent>
+        </ELEMENTS.Controls.Layouts.ContainerLayout>
+    </div>
+    <div class="col-5">
+        <ELEMENTS.Controls.Item.ItemMetadata DTO="@EditRepo.DTO" />
+        <div class="mb-2"></div>
+    </div>
+</div>
+
+
 
 @code {
 

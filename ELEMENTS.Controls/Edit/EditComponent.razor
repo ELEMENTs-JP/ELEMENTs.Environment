@@ -1,49 +1,63 @@
 ﻿
 
 
-<div class="@( (Border) ? "border-bottom p-2 hover" : "hover" )">
+<div class="@( (Border) ? "border-bottom p-1 hover" : "hover" )">
     <label class="form-label">@Field.Title </label>
 
     @* MODE *@
     @if (Field.Mode == EditFieldMode.View)
     {
-        <div class="@( (Field.Type != EditFieldType.Text) ? " row pointer " : " row ")"
-              @onclick="@( e => { if (Field.Type != EditFieldType.Text) { Edit(); } })">
-            
-            <div class="col">
+        <div class="@( (IsJustViewableType(Field.Type)) ? " row g-0 " : " row g-0 pointer ")"
+             @onclick="@( e => { if (!IsJustViewableType(Field.Type)) { Edit(); } })">
+
+            <div class="col py-1">
 
                 @if (Field.Type == EditFieldType.Text ||
-                 Field.Type == EditFieldType.TextBox ||
-                 Field.Type == EditFieldType.TextArea ||
-                 Field.Type == EditFieldType.DropDownItems)
+               Field.Type == EditFieldType.TextBox ||
+               Field.Type == EditFieldType.TextArea ||
+               Field.Type == EditFieldType.DropDownItems)
                 {
-                    <div class="lead">@Value.ToSecureString()</div>
+                    @Value.ToSecureString()
                 }
 
-                @if (Field.Type == EditFieldType.MoneyBox ||
-                Field.Type == EditFieldType.DecimalBox)
+                @if (Field.Type == EditFieldType.MoneyBox)
                 {
-                    <div class="lead">@DecValue.ToSecureString()</div>
+                 
+                        <div class="row">
+                            <div class="col">
+                                @DecValue.ToSecureDecimal().ToSecureString()
+                            </div>
+                            <div class="col-auto ps-2">
+                                <i class="fas fa-money-bill"></i>
+                            </div>
+                        </div>
+                 
+
+                }
+
+                @if (Field.Type == EditFieldType.DecimalBox)
+                {
+                    @DecValue.ToSecureString()
                 }
 
                 @if (Field.Type == EditFieldType.IntegerBox ||
-                Field.Type == EditFieldType.PercentBox)
+              Field.Type == EditFieldType.PercentBox)
                 {
-                    <div class="lead">@IntValue.ToSecureString()</div>
+                    @IntValue.ToSecureString()
                 }
 
                 @if (Field.Type == EditFieldType.DateBox)
                 {
-                    <div class="lead">
+                 
                         <div class="row g-0">
                             <div class="col-auto pe-2"><i class="far fa-calendar-alt"></i></div>
                             <div class="col">@DateTimeValue.ToSecureDateTime().ToShortDateString()</div>
                         </div>
-                    </div>
+                  
                 }
                 @if (Field.Type == EditFieldType.DateTimeBox)
                 {
-                    <div class="lead">
+                  
                         <div class="row g-0">
                             <div class="col-auto pe-2"><i class="far fa-calendar-alt"></i></div>
                             <div class="col">
@@ -55,28 +69,28 @@
                                 @( DateTimeValue.ToSecureDateTime().ToShortTimeString() )
                             </div>
                         </div>
-                    </div>
+              
                 }
                 @if (Field.Type == EditFieldType.TimeBox)
                 {
-                    <div class="lead">
+               
                         <div class="row g-0">
                             <div class="col-auto pe-2"><i class="far fa-clock"></i></div>
                             <div class="col">@DateTimeValue.ToSecureDateTime().ToShortTimeString()</div>
                         </div>
-                    </div>
+                 
                 }
 
             </div>
 
             @*@if (Field.Type != EditFieldType.Text)
-            {
-                <div class="col-auto">
-                    <button type="button" class="btn btn-sm" @onclick="Edit">
-                        <i class="fas fa-edit"></i>
-                    </button>
-                </div>
-            }*@
+                {
+                    <div class="col-auto">
+                        <button type="button" class="btn btn-sm" @onclick="Edit">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                    </div>
+                }*@
 
         </div>
     }
@@ -681,6 +695,20 @@
         catch (Exception ex)
         {
             System.Diagnostics.Debug.WriteLine("Fehler: " + ex.Message);
+        }
+    }
+
+    private bool IsJustViewableType(EditFieldType type)
+    {
+        switch (type)
+        {
+            case EditFieldType.Text:
+                { return true; }
+            case EditFieldType.Divider:
+                { return true; }
+            default:
+                { return false; }
+
         }
     }
 

@@ -23,12 +23,14 @@ namespace ELEMENTS
     public interface IItemsRepository
     {
         int TotalPageCount { get; set; }
-        int QueryCount { get; set; }
+        //int QueryCount { get; set; }
         QueryType DataQueryType { get; set; }
         Guid ReferenceGUID { get; set; }
         IItemType ReferenceItemType { get; set; }
         ISQLiteService Service { get; set; }
         string Matchcode { get; set; }
+        string Information { get; set; } 
+        bool AssignItems { get; set; } 
         IItemType ItemType { get; set; }
         int PageSize { get; set; }
         int ItemCount { get; }
@@ -38,6 +40,7 @@ namespace ELEMENTS
         List<IDTO> Search();
         IFactoryStatusInfo Delete(IDTO dto);
         IFactoryStatusInfo UnlinkItem(IDTO item);
+        IFactoryStatusInfo LinkItem(IDTO item);
     }
 
     public interface IEditItemRepository

@@ -12,50 +12,55 @@
                 </div>
             }
 
-            <div class="col">
-                @if (!string.IsNullOrEmpty(PreTitle))
+        <div class="col">
+            @if (!string.IsNullOrEmpty(PreTitle))
+            {
+                <div class="page-pretitle">
+                    @PreTitle
+                </div>
+            }
+            @if (!string.IsNullOrEmpty(Title))
+            {
+                @if (ControlType == LayoutType.ControlLayout)
                 {
-                    <div class="page-pretitle">
-                        @PreTitle
+                    <div class="@(TitleCSS + " " + PaddingCSS)">
+                        <strong>@Title</strong>
                     </div>
                 }
-                @if (!string.IsNullOrEmpty(Title))
+                else if (ControlType == LayoutType.ComponentLayout)
                 {
-                    @if (ControlType == LayoutType.ControlLayout)
-                    {
-                        <div class="@(TitleCSS + " " + PaddingCSS)">
-                            <strong>@Title</strong>
-                        </div>
-                    }
-                    else
-                    {
-                        <h3 class="@(TitleCSS + " " + "page-title")">
-                            @Title
-                        </h3>
-                    }
-
+                    <h4 class="@(TitleCSS + " " + "page-title")">
+                        @Title
+                    </h4>
                 }
-
-                @if (!string.IsNullOrEmpty(SubTitle))
+                else
                 {
-                    @if (!string.IsNullOrEmpty(Link))
-                    {
-                        <a href="@Link">
-                            <small class="page-subtitle">
-                                @SubTitle
-                            </small>
-                        </a>
-                    }
-                    else
-                    {
+                    <h3 class="@(TitleCSS + " " + "page-title")">
+                        @Title
+                    </h3>
+                }
+            }
+
+            @if (!string.IsNullOrEmpty(SubTitle))
+            {
+                @if (!string.IsNullOrEmpty(Link))
+                {
+                    <a href="@Link">
                         <small class="page-subtitle">
                             @SubTitle
                         </small>
-                    }
+                    </a>
                 }
+                else
+                {
+                    <small class="page-subtitle">
+                        @SubTitle
+                    </small>
+                }
+            }
 
 
-            </div>
+        </div>
 
             @if (RelatedContent != null)
             {
