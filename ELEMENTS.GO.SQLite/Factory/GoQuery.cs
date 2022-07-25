@@ -130,6 +130,25 @@ namespace ELEMENTS.Data.SQLite
                     sql += SelectParents(tbl, fqp.ChildGUID, fqp.MasterGUID, fqp.AssociationType);
                 }
 
+                // Default Children 
+                if (fqp.TypeOfQuery == QueryType.DefaultChildren && fqp.ParentGUID != Guid.Empty)
+                {
+                    // Association Type 
+                    sql += SelectChildren(tbl, fqp.ParentGUID, fqp.MasterGUID, fqp.AssociationType);
+                }
+                // Related Items  
+                if (fqp.TypeOfQuery == QueryType.RelatedItems && fqp.ParentGUID != Guid.Empty)
+                {
+                    // Association Type 
+                    sql += SelectChildren(tbl, fqp.ParentGUID, fqp.MasterGUID, fqp.AssociationType);
+                }
+                // Parallel Items  
+                if (fqp.TypeOfQuery == QueryType.ParallelItems && fqp.ParentGUID != Guid.Empty)
+                {
+                    // Association Type 
+                    sql += SelectChildren(tbl, fqp.ParentGUID, fqp.MasterGUID, fqp.AssociationType);
+                }
+
                 // ME Personal Query Select 
                 if (fqp.TypeOfQuery == QueryType.Personal)
                 {

@@ -5,11 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using ELEMENTS.Infrastructure;
 
-namespace ELEMENTS
+namespace tsp.DEFAULT
 {
-    public class ProductItemType : ItemType, IItemType
+    public class SystemProductItemType : ItemType, IItemType
     {
-        public ProductItemType()
+        public SystemProductItemType()
         {
             this.Title = "Product";
             this.Name = "Product";

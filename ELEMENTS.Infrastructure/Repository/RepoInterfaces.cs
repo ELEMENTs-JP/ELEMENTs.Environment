@@ -52,7 +52,7 @@ namespace ELEMENTS
         Guid ItemGUID { get; set; }
         IItemType ItemType { get; set; }
         IFactoryStatusInfo DeleteItem();
-        List<IDTO> ItemsByItemType(string ItemTypeName);
+        List<IDTO> ItemsByItemType(string ItemTypeName, string FilterProperty, string FilterValue);
     }
 
 

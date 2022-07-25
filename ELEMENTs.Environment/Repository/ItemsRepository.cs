@@ -21,8 +21,8 @@ namespace ELEMENTS
         public int PageSize { get; set; } = 10;
         public int QueryCount { get; set; } = 0;
         public int CurrentPage { get; set; } = 1;
-        public IItemType ReferenceItemType { get; set; } 
-        public IItemType ItemType { get; set; } 
+        public IItemType ReferenceItemType { get; set; }
+        public IItemType ItemType { get; set; } = new tsp.DEFAULT.SystemFileItemType();
         public QueryType DataQueryType { get; set; } = QueryType.List;
         public Guid ReferenceGUID { get; set; } = Guid.Empty;
 
@@ -50,7 +50,7 @@ namespace ELEMENTS
             {
                 // Prepare 
                 IQueryParameter qp = QueryParameter.DefaultItemsQuery(
-                    Service.Factory.MasterGUID, "ELEMENTs", "Product");
+                    Service.Factory.MasterGUID, "ELEMENTs", this.ItemType.Name);
                 qp.PageSize = PageSize;
                 qp.CurrentPage = CurrentPage;
 
@@ -74,7 +74,7 @@ namespace ELEMENTS
             {
                 // Prepare 
                 IQueryParameter qp = QueryParameter.DefaultItemsQuery(
-                    Service.Factory.MasterGUID, "ELEMENTs", "Product");
+                    Service.Factory.MasterGUID, "ELEMENTs", this.ItemType.Name);
                 qp.Matchcode = Matchcode;
                 qp.PageSize = PageSize;
                 qp.CurrentPage = CurrentPage;

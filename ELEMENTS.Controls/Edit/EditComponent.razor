@@ -30,7 +30,7 @@
                 @if (Field.Type == EditFieldType.Text ||
             Field.Type == EditFieldType.TextBox ||
             Field.Type == EditFieldType.TextArea ||
-            Field.Type == EditFieldType.DropDownItems)
+            Field.Type == EditFieldType.LookupItems)
                 {
                     @Value.ToSecureString()
                 }
@@ -171,7 +171,7 @@
             </div>
         }
 
-        @if (Field.Type == EditFieldType.DropDownItems)
+        @if (Field.Type == EditFieldType.LookupItems)
         {
             <div class="row gx-1">
                 <div class="col">
@@ -565,7 +565,7 @@
                                 }
 
                                 // Drop Down Items List
-                                if (Field.Type == EditFieldType.DropDownItems)
+                                if (Field.Type == EditFieldType.LookupItems)
                                 {
                                     this.Value = EditRepository.DTO.GetProperty(Field.Property).Value.ToSecureString();
 
@@ -644,7 +644,7 @@
                                 // Text // TextArea
                                 if (Field.Type == EditFieldType.TextBox ||
                                     Field.Type == EditFieldType.TextArea ||
-                                    Field.Type == EditFieldType.DropDownItems)
+                                    Field.Type == EditFieldType.LookupItems)
                                 {
                                     EditRepository.DTO.SetProperty(this.Value.ToSecureString(), Field.Property);
                                 }
@@ -712,11 +712,12 @@
     {
         try
         {
-            if (Field.Type == EditFieldType.DropDownItems)
+            if (Field.Type == EditFieldType.LookupItems)
             {
                 if (this.Field.ItemType != null)
                 {
-                    Items = EditRepository.ItemsByItemType(this.Field.ItemType);
+                    Items = EditRepository.ItemsByItemType(
+                        this.Field.ItemType, this.Field.FilterProperty, this.Field.FilterValue);
                 }
                 else
                 {

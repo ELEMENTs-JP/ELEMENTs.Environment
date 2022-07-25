@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Hosting;
 
 namespace ELEMENTS.Infrastructure
 {
-
     public interface IFileUploadService
     {
         string GetContentRootPath();
@@ -21,7 +20,7 @@ namespace ELEMENTS.Infrastructure
         // https://docs.microsoft.com/de-de/aspnet/core/blazor/file-uploads?view=aspnetcore-6.0&pivots=server 
 
         public static string defaultFilePath = "FILES";
-        private long defaultFileSizeInBytes = 1024 * 1024 * 50;
+        private long defaultFileSizeInBytes = 1024 * 1024 * 100;
         private readonly IWebHostEnvironment _environment;
         public FileUploadService(IWebHostEnvironment environment)
         {
@@ -48,6 +47,8 @@ namespace ELEMENTS.Infrastructure
 
                 string contentRootPath = _environment.ContentRootPath;
 
+                System.Diagnostics.Debug.WriteLine("Root: " + contentRootPath);
+
                 Guid itemGUID = Guid.NewGuid();
                 string relativeSaveFilePath =
                     contentRootPath.ToString() + "\\" +
@@ -65,23 +66,31 @@ namespace ELEMENTS.Infrastructure
                 var extension = Helper.SplitGetLast(file.Name);
                 var fullFilePath = Path.Combine(relativeSaveFilePath, itemGUID.ToString() + "." + extension);
 
+                System.Diagnostics.Debug.WriteLine("Extension: " + extension);
+                System.Diagnostics.Debug.WriteLine("Path: " + fullFilePath);
+
                 // Write DOWN 
                 await using FileStream fs = new(fullFilePath, FileMode.Create);
                 Task f = file.OpenReadStream(defaultFileSizeInBytes).CopyToAsync(fs);
                 await f;
 
-                // Notification 
-                FileNotification token = new FileNotification();
-                token.FileGUID = itemGUID;
-                token.FullFilePath = fullFilePath;
-                token.OriginalFileName = file.Name;
-                NotificationService.NotifySync(token);
+                if (NotificationService != null)
+                {
+                    // Notification 
+                    FileNotification token = new FileNotification();
+                    token.FileGUID = itemGUID;
+                    token.FullFilePath = fullFilePath;
+                    token.OriginalFileName = file.Name;
+                    NotificationService.Notify(token);
+
+                    System.Diagnostics.Debug.WriteLine("Notification");
+                }
 
                 await Task.FromResult<string>("OK");
             }
             catch (Exception ex)
             {
-                Console.WriteLine("FAIL: " + ex.Message);
+                System.Diagnostics.Debug.WriteLine("FAIL: " + ex.Message);
             }
         }
 
@@ -148,23 +157,23 @@ namespace ELEMENTS.Infrastructure
                 Task f = file.OpenReadStream(defaultFileSizeInBytes).CopyToAsync(fs);
                 await f;
 
-                // Notification 
-                FileNotification token = new FileNotification();
-                token.FileGUID = itemGUID;
-                token.FullFilePath = fullFilePath;
-                token.OriginalFileName = file.Name;
-                NotificationService.NotifySync(token);
+                if (NotificationService != null)
+                {
+                    // Notification 
+                    FileNotification token = new FileNotification();
+                    token.FileGUID = itemGUID;
+                    token.FullFilePath = fullFilePath;
+                    token.OriginalFileName = file.Name;
+                    NotificationService.Notify(token);
+                }
 
                 // Feedback 
                 await Task.FromResult<string>("OK");
             }
             catch (Exception ex)
             {
-                Console.WriteLine("FAIL: " + ex.Message);
+                System.Diagnostics.Debug.WriteLine("FAIL: " + ex.Message);
             }
         }
-
-
     }
-
 }

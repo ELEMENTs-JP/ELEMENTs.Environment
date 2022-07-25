@@ -84,6 +84,7 @@ namespace ELEMENTS.Infrastructure
         List<IItemType> GetRelatedItemTypes();
         List<IItemType> GetParallelItemTypes();
         List<IItemType> GetChildItemTypes();
+        List<IItemType> GetDefaultItemTypes();
     }
 
     public enum ItemTypeTyp
@@ -133,6 +134,11 @@ namespace ELEMENTS.Infrastructure
             List<IItemType> itemtypes = new List<IItemType>();
             return itemtypes;
         }
+        public virtual List<IItemType> GetDefaultItemTypes()
+        {
+            List<IItemType> itemtypes = new List<IItemType>();
+            return itemtypes;
+        }
     }
 
 
@@ -160,6 +166,13 @@ namespace ELEMENTS.Infrastructure
     {
         NULL = 0,
         Text = 1,
+        Link = 2,
+        Percent = 3,
+        Money = 4,
+
+        Date = 11,
+        DateTime = 12,
+        Time = 14,
     }
 
     // Edit Field 
@@ -171,7 +184,9 @@ namespace ELEMENTS.Infrastructure
         string Property { get; set; }
         EditFieldType Type { get; set; }
         EditFieldMode Mode { get; set; }
-        string ItemType { get; set; } 
+        string ItemType { get; set; }
+        string FilterProperty { get; set; }
+        string FilterValue { get; set; }
     }
 
     public class EditField : IField
@@ -183,6 +198,15 @@ namespace ELEMENTS.Infrastructure
         public EditFieldType Type { get; set; } = EditFieldType.TextBox;
         public EditFieldMode Mode { get; set; } = EditFieldMode.View;
         public string ItemType { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Filter Property for Lookup
+        /// </summary>
+        public string FilterProperty { get; set; } = string.Empty; // Lookup 
+        /// <summary>
+        /// Filter Property Value for Lookup
+        /// </summary>
+        public string FilterValue { get; set; } = string.Empty; // Lookup 
     }
 
     public enum EditFieldType
@@ -204,7 +228,7 @@ namespace ELEMENTS.Infrastructure
         TimeBox = 32,
         DateTimeBox = 33,
 
-        DropDownItems = 41,
+        LookupItems = 41,
     }
 
     public enum EditFieldMode

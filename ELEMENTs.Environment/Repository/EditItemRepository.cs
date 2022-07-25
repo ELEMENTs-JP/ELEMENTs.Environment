@@ -85,7 +85,7 @@ namespace ELEMENTS
             return info;
         }
 
-        public List<IDTO> ItemsByItemType(string ItemTypeName)
+        public List<IDTO> ItemsByItemType(string ItemTypeName, string FilterProperty = "", string FilterValue = "")
         {
             try
             {
@@ -96,6 +96,15 @@ namespace ELEMENTS
                         Service.Factory.MasterGUID, "ELEMENTs", ItemTypeName);
                     qp.PageSize = 999;
                     qp.CurrentPage = 1;
+
+                    if (!string.IsNullOrEmpty(FilterProperty) && 
+                        !string.IsNullOrEmpty(FilterValue))
+                    {
+                        FilterByClauseDTO filter = new FilterByClauseDTO();
+                        filter.Property = FilterProperty;
+                        filter.Value = FilterValue;
+                        qp.JoinFilter.Add(filter);
+                    }
 
                     // Query 
                     return Service.Factory.GetItems(qp);

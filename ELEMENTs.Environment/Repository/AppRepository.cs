@@ -26,7 +26,7 @@ namespace ELEMENTS
             {
                 Apps.Clear();
 
-                Apps.Add(new DEFAULT());
+                Apps.Add(new tsp.DEFAULT.DEFAULT());
 
                 Items.Clear();
                 foreach (IApp app in Apps)

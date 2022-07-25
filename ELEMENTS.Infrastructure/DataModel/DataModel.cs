@@ -70,15 +70,16 @@ namespace ELEMENTS.Infrastructure
     }
     public class FileNotificationService
     {
-        public event Func<FileNotification, Task> Notify;
+        public event Func<FileNotification, Task> Notification;
 
-        public void NotifySync(FileNotification notification)
+        public void Notify(FileNotification notification)
         {
-            if (Notify != null)
+            if (Notification != null)
             {
-                Notify.Invoke(notification);
+                Notification.Invoke(notification);
             }
         }
+
     }
 
 

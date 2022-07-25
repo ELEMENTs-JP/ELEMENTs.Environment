@@ -83,10 +83,9 @@
         <ELEMENTS.Controls.Text.Label>Hyperlink Box</ELEMENTS.Controls.Text.Label>
         <ELEMENTS.Controls.Input.HyperlinkBox Value="https://www.google.com" />
 
-
         <ELEMENTS.Controls.Text.Label>File Input</ELEMENTS.Controls.Text.Label>
-        <ELEMENTS.Controls.Input.FileInputBox />
-
+        <ELEMENTS.Controls.Input.FileInputBox OnFileUploaded="@( e => { FileUploaded(e); })"/>
+        <span>@FILE</span>
 
         <ELEMENTS.Controls.Text.Label>File DropZone</ELEMENTS.Controls.Text.Label>
         <ELEMENTS.Controls.Input.FileDragDropBox />
@@ -109,5 +108,16 @@
 
 
 @code {
+
+    [Parameter]
+    public string FILE { get; set; } = string.Empty;
+
+    private void FileUploaded(FileNotification e)
+    {
+        if (e != null)
+        {
+            FILE = e.OriginalFileName;
+        }
+    }
 
 }

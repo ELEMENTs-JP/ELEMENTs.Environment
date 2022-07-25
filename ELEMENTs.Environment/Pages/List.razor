@@ -1,8 +1,9 @@
 ﻿@page "/list"
+@page "/list/{ItemType}"
 @inject ISQLiteService sql
 @using ELEMENTS.Infrastructure
 
-<ELEMENTS.Controls.Layouts.ContainerLayout Title="Items List" SubTitle="ItemType" 
+<ELEMENTS.Controls.Layouts.ContainerLayout Title="Items List" SubTitle="@ItemType"
                                            BackgroundCSS="bg-white" Border="true" Rounded="true" PaddingCSS="px-3 py-2" MenuCSS="bg-light border-bottom">
     <MenuContent>
         <div class="row d-flex align-items-center">
@@ -12,14 +13,14 @@
                 <ELEMENTS.Controls.Search.SearchBox ValueInput="@( e => { ItemsRepo.Matchcode = e; ItemsRepo.Search(); } )" />
             </div>
             <div class="col">
-               
+
             </div>
         </div>
     </MenuContent>
     <RelatedContent>
         <ELEMENTS.Controls.Collection.AddItem Title="Eintrag hinzufügen"
-                                              FieldHeader="Bezeichnung" 
-                                              Repository="@AddRepo" 
+                                              FieldHeader="Bezeichnung"
+                                              Repository="@AddRepo"
                                               OnOKClicked="@( e => { ItemsRepo.Load(); })" />
     </RelatedContent>
     <ChildContent>
@@ -41,12 +42,12 @@
         <div class="row d-flex align-items-center">
             <div class="col-auto">
                 @if (ItemsRepo.ItemCount != 0)
-                { 
+                {
                     <small class="text-muted text-start"><i class="fas fa-hashtag"></i><strong class="ms-1">@ItemsRepo.ItemCount</strong></small>
                 }
             </div>
             <div class="col">
-                <ELEMENTS.Controls.List.Pagination CurrentPage="@ItemsRepo.CurrentPage" TotaPageCount="@ItemsRepo.TotalPageCount" 
+                <ELEMENTS.Controls.List.Pagination CurrentPage="@ItemsRepo.CurrentPage" TotaPageCount="@ItemsRepo.TotalPageCount"
                                                    SelectedPage="@( e => { ItemsRepo.CurrentPage = e; ItemsRepo.Load(); } )" />
             </div>
             <div class="col-auto">
@@ -58,7 +59,8 @@
 
 @code {
 
-
+    [Parameter]
+    public string ItemType { get; set; } = string.Empty;
 
     private IAddItemRepository AddRepo = new AddItemRepository();
     private IItemsRepository ItemsRepo = new ItemsRepository();
@@ -80,6 +82,9 @@
     protected override void OnParametersSet()
     {
         base.OnParametersSet();
+
+        AddRepo = new AddItemRepository();
+        ItemsRepo = new ItemsRepository();
     }
 
     protected override async Task OnParametersSetAsync()

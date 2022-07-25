@@ -5,9 +5,102 @@
     {
         <div class="@ColumnCSS">
 
-            @if (Column.Type == ColumnType.Text)
+            @if (Column.Property == "ID")
             {
-                @Value.ToSecureString()
+                @DTO.ID.ToSecureString()
+            }
+            else if (Column.Property == "Title")
+            {
+                @if (Column.Type == ColumnType.Text)
+                {
+                    @DTO.Title.ToSecureString()
+                }
+                else if (Column.Type == ColumnType.Link)
+                {
+                    <a class="fw-bold text-dark"
+                       href="@( "/Item/" + DTO.ItemType.ToSecureString() + "/" + DTO.GUID.ToSecureString() )">
+                        @DTO.Title.ToSecureString()
+                    </a>
+                }
+                else
+                {
+                    @DTO.Title.ToSecureString()
+                }
+            }
+            else
+            {
+                @if (Column.Type == ColumnType.Text)
+                {
+                    @Value.ToSecureString()
+                }
+                else if (Column.Type == ColumnType.Percent)
+                {
+                    <div class="row g-0">
+                        <div class="col">
+                            @Value.ToSecureString()
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-percent"></i>
+                        </div>
+                    </div>
+                }
+                else if (Column.Type == ColumnType.Money)
+                {
+                    <div class="row g-0">
+                        <div class="col">
+                            @Value.ToSecureDecimal().ToSecureString()
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-money-bill"></i>
+                        </div>
+                    </div>
+                }
+                else if (Column.Type == ColumnType.Date)
+                {
+                    <div class="row g-0">
+                        <div class="col-auto pe-1">
+                            <i class="far fa-calendar-alt"></i>
+                        </div>
+                        <div class="col">
+                            @Value.ToSecureString().ToSecureDateTime().ToShortDateString()
+                        </div>
+
+                    </div>
+                }
+                else if (Column.Type == ColumnType.DateTime)
+                {
+                    <div class="row g-0">
+                        <div class="col-auto pe-1">
+                            <i class="far fa-calendar-alt"></i>
+                        </div>
+                        <div class="col">
+                            @Value.ToSecureString().ToSecureDateTime().ToShortDateString()
+                        </div>
+                        <div class="col-auto pe-1">
+                            <i class="far fa-clock"></i>
+                        </div>
+                        <div class="col">
+                            @Value.ToSecureString().ToSecureDateTime().ToShortTimeString()
+                        </div>
+
+                    </div>
+                }
+                else if (Column.Type == ColumnType.Time)
+                {
+                    <div class="row g-0">
+                        <div class="col-auto pe-1">
+                            <i class="far fa-clock"></i>
+                        </div>
+                        <div class="col">
+                            @Value.ToSecureString().ToSecureDateTime().ToShortTimeString();
+                        </div>
+
+                    </div>
+                }
+                else
+                {
+                    @Value.ToSecureString()
+                }
             }
 
         </div>

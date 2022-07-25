@@ -3,15 +3,7 @@
 {
     @if (Columns.Count() >= 1)
     {
-        <div class="row g-0 py-2 border-bottom overflow">
-
-            <div class="col-auto px-2">
-                <strong>ID</strong>
-            </div>
-
-            <div class="col px-2">
-                <strong>Titel</strong>
-            </div>
+        <div class="@ControlCSS">
 
             @foreach (IColumn col in Columns)
             {
@@ -27,6 +19,9 @@
 
     [Parameter]
     public List<IColumn> Columns { get; set; } = new List<IColumn>();
+
+    [Parameter]
+    public string ControlCSS { get; set; } = "row g-0 p-2 text-primary pe-5 border-bottom";
 
     protected override void OnParametersSet()
     {

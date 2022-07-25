@@ -254,17 +254,28 @@ namespace ELEMENTS.Infrastructure
         }
         public static int ToSecureInt(this object text)
         {
+            int value = 0;
+
             try
             {
                 if (text == null)
                     return 0;
 
-                return Convert.ToInt32(text.ToString());
+                value = Convert.ToInt32(text);
             }
             catch (Exception ex)
             {
-                return 0;
+                try
+                {
+                    value = Int32.Parse(text.ToSecureString());
+                }
+                catch (Exception exInner)
+                {
+                    System.Diagnostics.Debug.WriteLine("Fail Conversion: " + exInner.Message);
+                }
             }
+
+            return value;
         }
         public static decimal ToSecureDecimal(this object text)
         {

@@ -217,20 +217,30 @@ namespace ELEMENTS.Infrastructure
     // Table 
     public enum QueryType
     {
+        // Default 
         NULL = 0,
+        
+        // 
         List = 1,
         ChildrenByParent = 2,
         ParentsByChild = 3,
+
+        // 
         Personal = 4,
         Join = 5,
         PropertyJoin = 6,
         NoJoin = 7,
 
         // 
-        CreatedBy = 8,
-        ModifiedBy = 9,
-        NewestItems = 10,
-        ParallelItemsByTag = 11,
+        DefaultChildren = 8,
+        ParallelItems = 9,
+        RelatedItems = 10,
+
+        // 
+        CreatedBy = 11,
+        ModifiedBy = 12,
+        NewestItems = 13,
+        ParallelItemsByTag = 14,
     }
     // Filter 
     public class FilterByClauseDTO

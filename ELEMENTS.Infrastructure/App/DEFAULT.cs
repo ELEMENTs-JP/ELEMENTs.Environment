@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ELEMENTS.Infrastructure;
 
-namespace ELEMENTS
+namespace tsp.DEFAULT
 {
     public class DEFAULT : BaseApp, IApp
     {
@@ -24,7 +24,8 @@ namespace ELEMENTS
             ItemTypes.Clear();
 
             // Add ItemTypes 
-            ItemTypes.Add(new ProductItemType());
+            ItemTypes.Add(new tsp.DEFAULT.SystemProductItemType());
+            ItemTypes.Add(new tsp.DEFAULT.SystemFileItemType());
             
             return ItemTypes;
         }
