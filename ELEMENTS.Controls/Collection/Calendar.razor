@@ -1,0 +1,136 @@
+﻿@inject NavigationManager nm
+
+
+<div style="@ControlStyle">
+
+    <div class="row">
+        <div class="col-auto">
+            <button class="btn btn-secondary btn-sm" @onclick="PreMonth"><i class="fa-solid fa-angle-left"></i></button>
+        </div>
+        <div class="col text-center">
+            <small>@CurrentDate.ToLongDateString()</small>
+        </div>
+        <div class="col-auto">
+            <button class="btn btn-secondary btn-sm" @onclick="NextMonth"><i class="fa-solid fa-angle-right"></i></button>
+        </div>
+    </div>
+
+    <div class="row seven-cols mt-1">
+        <div class="col-md-1 border-bottom border-top border-end border-start">Mo</div>
+        <div class="col-md-1 border-bottom border-top border-end">Di</div>
+        <div class="col-md-1 border-bottom border-top border-end">Mi</div>
+        <div class="col-md-1 border-bottom border-top border-end">Do</div>
+        <div class="col-md-1 border-bottom border-top border-end">Fr</div>
+        <div class="col-md-1 border-bottom border-top border-end">Sa</div>
+        <div class="col-md-1 border-bottom border-top border-end">So</div>
+    </div>
+
+    <div class="row seven-cols border-start">
+
+        @foreach (DateTime date in DatesInMonth)
+        {
+            if (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday)
+            {
+                <div class="col-md-1 border-bottom border-end bg-light">@date.ToString("dd")</div>
+            }
+            else if (date.Month != CurrentDate.Month)
+            {
+                <div class="col-md-1 border-bottom border-end bg-light">@date.ToString("dd")</div>
+            }
+            else
+            {
+                <div class="col-md-1 border-bottom border-end bg-white" style="@ControlStyle">@date.ToString("dd")</div>
+            }
+        }
+
+    </div>
+</div>
+
+
+@code {
+
+
+    // Fields
+
+    private string ControlStyle = "";
+
+
+    // Events
+    protected override void OnInitialized()
+    {
+       
+    }
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+
+        DatesInMonth = GetDates(CurrentDate.Year, CurrentDate.Month);
+    }
+ 
+
+    private List<DateTime> DatesInMonth = new List<DateTime>();
+
+    [Parameter]
+    public DateTime CurrentDate { get; set; } = DateTime.Now.Date;
+
+    private void NextMonth()
+    {
+        CurrentDate = CurrentDate.AddMonths(1);
+        DatesInMonth = GetDates(CurrentDate.Year, CurrentDate.Month);
+    }
+    private void PreMonth()
+    {
+        CurrentDate = CurrentDate.AddMonths(-1);
+        DatesInMonth = GetDates(CurrentDate.Year, CurrentDate.Month);
+    }
+
+    // Helper Methods
+    List<DateTime> GetDates(int year, int month)
+    {
+        List<DateTime> dates = Enumerable.Range(1, DateTime.DaysInMonth(year, month))  // Days: 1, 2 ... 31 etc.
+                         .Select(day => new DateTime(year, month, day)) // Map each day to a date
+                         .ToList(); // Load dates into a list
+
+
+        // Vorher
+        DateTime first = dates.FirstOrDefault();
+        int before = GetDayOfWeek(first.DayOfWeek) - 1;
+        for (int b = 0; b < before; b++)
+        {
+            dates.Insert(0, first.AddDays(-b - 1));
+        }
+
+        // Nachher
+        DateTime last = dates.LastOrDefault();
+        int after = 7 - GetDayOfWeek(last.DayOfWeek);
+        for (int a = 0; a < after; a++)
+        {
+            dates.Add(last.AddDays(a + 1));
+        }
+
+        // return
+        return dates;
+    }
+    int GetDayOfWeek(DayOfWeek dow)
+    {
+        switch (dow)
+        {
+            case DayOfWeek.Monday:
+                { return 1; }
+            case DayOfWeek.Tuesday:
+                { return 2; }
+            case DayOfWeek.Wednesday:
+                { return 3; }
+            case DayOfWeek.Thursday:
+                { return 4; }
+            case DayOfWeek.Friday:
+                { return 5; }
+            case DayOfWeek.Saturday:
+                { return 6; }
+            case DayOfWeek.Sunday:
+                { return 7; }
+        }
+
+        return 0;
+    }
+}

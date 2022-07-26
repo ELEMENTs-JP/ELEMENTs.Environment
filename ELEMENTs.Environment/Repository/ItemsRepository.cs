@@ -11,7 +11,7 @@ using ELEMENTS.Infrastructure;
 
 namespace ELEMENTS
 {
-  
+
     public class ItemsRepository : IItemsRepository
     {
         public string Information { get; set; } = string.Empty;
@@ -27,9 +27,9 @@ namespace ELEMENTS
         public Guid ReferenceGUID { get; set; } = Guid.Empty;
 
         private int ic = 0;
-        public int ItemCount 
+        public int ItemCount
         {
-            get 
+            get
             {
                 if (ic == 0)
                 {
@@ -48,18 +48,21 @@ namespace ELEMENTS
         {
             try
             {
-                // Prepare 
-                IQueryParameter qp = QueryParameter.DefaultItemsQuery(
-                    Service.Factory.MasterGUID, "ELEMENTs", this.ItemType.Name);
-                qp.PageSize = PageSize;
-                qp.CurrentPage = CurrentPage;
+                if (Service != null)
+                {
+                    // Prepare 
+                    IQueryParameter qp = QueryParameter.DefaultItemsQuery(
+                        Service.Factory.MasterGUID, "ELEMENTs", this.ItemType.Name);
+                    qp.PageSize = PageSize;
+                    qp.CurrentPage = CurrentPage;
 
-                QueryCount += 1;
+                    QueryCount += 1;
 
-                // Query 
-                Items = Service.Factory.GetItems(qp);
+                    // Query 
+                    Items = Service.Factory.GetItems(qp);
 
-                CalculatePaging();
+                    CalculatePaging();
+                }
             }
             catch (Exception ex)
             {
