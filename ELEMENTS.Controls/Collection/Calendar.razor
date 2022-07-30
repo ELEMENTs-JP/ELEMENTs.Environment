@@ -5,13 +5,13 @@
 
     <div class="row">
         <div class="col-auto">
-            <button class="btn btn-secondary btn-sm" @onclick="PreMonth"><i class="fa-solid fa-angle-left"></i></button>
+            <button class="btn btn-outline-secondary btn-sm" @onclick="PreMonth"><i class="fa-solid fa-angle-left"></i></button>
         </div>
         <div class="col text-center">
             <small>@CurrentDate.ToLongDateString()</small>
         </div>
         <div class="col-auto">
-            <button class="btn btn-secondary btn-sm" @onclick="NextMonth"><i class="fa-solid fa-angle-right"></i></button>
+            <button class="btn btn-outline-secondary btn-sm" @onclick="NextMonth"><i class="fa-solid fa-angle-right"></i></button>
         </div>
     </div>
 
@@ -44,6 +44,7 @@
         }
 
     </div>
+
 </div>
 
 
@@ -133,4 +134,6 @@
 
         return 0;
     }
+
+
 }

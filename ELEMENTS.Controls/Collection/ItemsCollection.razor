@@ -9,24 +9,33 @@
         <div class="@HeaderCSS">@Header</div>
     }
 
+    @if (Filter != null)
+    {
+        <div class="@FilterCSS">@Info</div>
+    }
+
     @if (Info != null)
     {
         <div class="@InfoCSS">@Info</div>
     }
 
     <div class="@(BodyCSS + " " + ((Items.Count >= 1) ? ((ShowFirstBorder) ? " border-top " : "") : ""))">
-        @foreach (var item in Items)
+        @if (RowTemplate != null)
         {
-            @if (RowTemplate != null)
+            @foreach (var item in Items)
             {
                 @RowTemplate(item)
             }
-            @if (RowTemplate == null)
-            {
-                <div class="row">
-                    <div class="col">Row Template is null</div>
-                </div>
-            }
+        }
+
+        @if (ColumnTemplate != null)
+        {
+            <div class="row">
+                @foreach (var item in Items)
+                {
+                    @ColumnTemplate(item)
+                }
+            </div>
         }
     </div>
 
@@ -57,6 +66,9 @@
     public string InfoCSS { get; set; } = "";
 
     [Parameter]
+    public string FilterCSS { get; set; } = "";
+
+    [Parameter]
     public string SecondaryCSS { get; set; } = "";
 
     [Parameter]
@@ -69,6 +81,11 @@
     public RenderFragment Header { get; set; }
 
     [Parameter, AllowNull]
+    public RenderFragment Filter { get; set; }
+
+
+
+    [Parameter, AllowNull]
     public RenderFragment Info { get; set; }
 
     [Parameter, AllowNull]
@@ -79,6 +96,9 @@
 
     [Parameter, AllowNull]
     public RenderFragment<TItem> RowTemplate { get; set; }
+
+    [Parameter, AllowNull]
+    public RenderFragment<TItem> ColumnTemplate { get; set; }
 
     [Parameter, AllowNull]
     public IReadOnlyList<TItem> Items { get; set; }
