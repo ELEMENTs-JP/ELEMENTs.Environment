@@ -18,7 +18,7 @@
             {
                 @foreach (IColumn col in Columns)
                 {
-                    <div class="col.ColumnCSSClass.ToSecureString()">
+                    <div class="@col.ColumnCSSClass.ToSecureString()">
                         <small><strong>@col.Title.ToSecureString()</strong></small>
                     </div>
                 }

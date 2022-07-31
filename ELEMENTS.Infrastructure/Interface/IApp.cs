@@ -17,8 +17,8 @@ namespace ELEMENTS.Infrastructure
         string Title { get; set; }
         string Description { get; set; }
         List<IItemType> GetItemTypes();
-        List<IFeature> Features { get; set; }
-        List<IPage> Pages { get; set; }
+        List<IFeature> GetFeatures();
+        List<IPage> GetPages();
         string Link { get; set; }
         string ColorCode { get; set; }
         AppType Type { get; set; }
@@ -38,8 +38,16 @@ namespace ELEMENTS.Infrastructure
             List<IItemType> it = new List<IItemType>();
             return it;
         }
-        public List<IFeature> Features { get; set; } = new List<IFeature>();
-        public List<IPage> Pages { get; set; } = new List<IPage>();
+        public List<IFeature> GetFeatures()
+        {
+            List<IFeature> it = new List<IFeature>();
+            return it;
+        }
+        public List<IPage> GetPages()
+        {
+            List<IPage> it = new List<IPage>();
+            return it;
+        }
         public string Link { get; set; } = string.Empty;
         public string ColorCode { get; set; } = "#cccccc";
         public AppType Type { get; set; } = AppType.App;
@@ -53,6 +61,23 @@ namespace ELEMENTS.Infrastructure
         string Title { get; set; }
         string Description { get; set; }
         string Link { get; set; }
+        string IconHTML { get; set; }
+
+        public IItemType GetItemType();
+    }
+
+    public class BaseFeature : IFeature
+    {
+        public Guid ID { get; set; }
+        public string Title { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
+        public string Link { get; set; } = string.Empty;
+        public string IconHTML { get; set; } = string.Empty;
+
+        public IItemType GetItemType()
+        {
+            return null;
+        }
     }
 
     public interface IPage
@@ -61,6 +86,21 @@ namespace ELEMENTS.Infrastructure
         string Title { get; set; }
         string Description { get; set; }
         string Link { get; set; }
+        string IconHTML { get; set; }
+        public IItemType GetItemType();
+    }
+
+    public class BasePage : IPage
+    {
+        public Guid ID { get; set; }
+        public string Title { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
+        public string Link { get; set; } = string.Empty;
+        public string IconHTML { get; set; } = string.Empty;
+        public IItemType GetItemType()
+        {
+            return null;
+        }
     }
 
     // ItemType 
