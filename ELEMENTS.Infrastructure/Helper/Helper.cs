@@ -320,7 +320,14 @@ namespace ELEMENTS.Infrastructure
             }
         }
 
-
+        public static string ToMonthYear(this DateTime date)
+        {
+            return date.Date.Month + "" + date.Date.Year;
+        }
+        public static string ToYearMonth(this DateTime date)
+        {
+            return date.Date.Year + "" + date.Date.Month;
+        }
         public static string SplitGetFirst(this string text, string separator = "-")
         {
             List<char> cs = new List<char>();

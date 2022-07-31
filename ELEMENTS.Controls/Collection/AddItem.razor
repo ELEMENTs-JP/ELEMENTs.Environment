@@ -1,4 +1,5 @@
-﻿@inject IJSRuntime JS
+﻿ @using System.Diagnostics.CodeAnalysis
+@inject IJSRuntime JS
 @inject ISQLiteService db
 
 @if (Repository != null)
@@ -22,6 +23,11 @@
                 </div>
                 <div class="modal-body">
 
+                    @if (MenuContent != null)
+                    { 
+                        @MenuContent
+                    }
+
                     <div class="row">
                         <div class="col-12">
                             <label class="form-label">@FieldHeader</label>
@@ -31,6 +37,11 @@
                                    @bind-value:event="oninput" />
                         </div>
                     </div>
+
+                    @if (ChildContent != null)
+                    { 
+                        @ChildContent
+                    }
 
                 </div>
                 <div class="modal-footer">
@@ -59,20 +70,20 @@
     public IAddItemRepository Repository { get; set; }
 
     [Parameter]
-    public EventCallback<string> OnOKClicked { get; set; }
+    public EventCallback<IDTO> OnOKClicked { get; set; }
 
     private void okclick()
     {
         try
         {
-            // Repository 
+            // Repository
             if (Repository == null)
             {
                 JS.InvokeVoidAsync("alert", "Repository is null");
                 return;
             }
 
-            // Check Value 
+            // Check Value
             if (string.IsNullOrEmpty(Repository.Value))
             {
                 JS.InvokeVoidAsync("alert", "No Value added");
@@ -82,11 +93,11 @@
             IDTO dto = Repository.Create();
             if (dto != null)
             {
-                OnOKClicked.InvokeAsync("OK");
+                OnOKClicked.InvokeAsync(dto);
             }
             if (dto == null)
             {
-                OnOKClicked.InvokeAsync("FAIL");
+                OnOKClicked.InvokeAsync(null);
                 JS.InvokeVoidAsync("alert", "Entry creation failed");
             }
 
@@ -146,6 +157,10 @@
     [Parameter]
     public string InputCSS { get; set; } = "form-control";
 
+    [Parameter, AllowNull]
+    public RenderFragment ChildContent { get; set; }
 
+    [Parameter, AllowNull]
+    public RenderFragment MenuContent { get; set; }
 
 }

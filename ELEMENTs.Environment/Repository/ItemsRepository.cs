@@ -127,6 +127,33 @@ namespace ELEMENTS
 
             return info;
         }
+        public IFactoryStatusInfo SaveItem(IDTO dto)
+        {
+
+            IFactoryStatusInfo info = new FactoryStatusInfo();
+            info.Status = "OK";
+            info.Message = "";
+
+            if (dto == null)
+            {
+                info.Status = "FAIL";
+                info.Message = "DTO = NULL";
+                return info;
+            }
+
+            try
+            {
+                // Update 
+                info = Service.Factory.Update(dto);
+            }
+            catch (Exception ex)
+            {
+                info.Status = "FAIL";
+                info.Message = "Error: " + ex.Message;
+            }
+
+            return info;
+        }
         int GetItemCount()
         {
             try

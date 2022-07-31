@@ -41,6 +41,7 @@ namespace ELEMENTS
         IFactoryStatusInfo Delete(IDTO dto);
         IFactoryStatusInfo UnlinkItem(IDTO item);
         IFactoryStatusInfo LinkItem(IDTO item);
+        IFactoryStatusInfo SaveItem(IDTO dto);
     }
 
     public interface IEditItemRepository

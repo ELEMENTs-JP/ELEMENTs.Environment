@@ -5,11 +5,23 @@
     {
         <div class="@ControlCSS">
 
-            @foreach (IColumn col in Columns)
+            @if (DataQueryType == QueryType.List)
             {
-                <div class="@col.ColumnCSSClass.ToSecureString()">
-                    <strong>@col.Title.ToSecureString()</strong>
-                </div>
+                @foreach (IColumn col in Columns)
+                {
+                    <div class="@col.ColumnCSSClass.ToSecureString()">
+                        <strong>@col.Title.ToSecureString()</strong>
+                    </div>
+                }
+            }
+            else
+            {
+                @foreach (IColumn col in Columns)
+                {
+                    <div class="col.ColumnCSSClass.ToSecureString()">
+                        <small><strong>@col.Title.ToSecureString()</strong></small>
+                    </div>
+                }
             }
         </div>
     }
@@ -22,6 +34,9 @@
 
     [Parameter]
     public string ControlCSS { get; set; } = "row g-0 p-2 text-primary pe-5 border-bottom";
+
+    [Parameter]
+    public QueryType DataQueryType { get; set; } = QueryType.List;
 
     protected override void OnParametersSet()
     {

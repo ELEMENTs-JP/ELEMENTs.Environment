@@ -1,4 +1,4 @@
-﻿
+﻿@using System.Globalization 
 
 
 <div class="@( (Border) ? 
@@ -28,9 +28,9 @@
                 }
 
                 @if (Field.Type == EditFieldType.Text ||
-            Field.Type == EditFieldType.TextBox ||
-            Field.Type == EditFieldType.TextArea ||
-            Field.Type == EditFieldType.LookupItems)
+                    Field.Type == EditFieldType.TextBox ||
+                    Field.Type == EditFieldType.TextArea ||
+                    Field.Type == EditFieldType.LookupItems)
                 {
                     @Value.ToSecureString()
                 }
@@ -39,10 +39,10 @@
                 {
 
                     <div class="row">
-                        <div class="col">
-                            @DecValue.ToSecureDecimal().ToSecureString()
+                        <div class="col-auto">
+                            @DecValue.ToSecureDecimal().ToString("C3", CultureInfo.CurrentCulture)
                         </div>
-                        <div class="col-auto ps-2">
+                        <div class="col-auto ps-2 me-auto">
                             <i class="fas fa-money-bill"></i>
                         </div>
                     </div>
@@ -154,7 +154,7 @@
         @if (Field.Type == EditFieldType.TextArea)
         {
             <div class="row gx-1">
-                <div class="col">
+                <div class="col-12">
 
                     <textarea style="min-height:120px;"
                               class="@ControlCSS"
@@ -163,9 +163,10 @@
                               rows="6">@Value</textarea>
 
                 </div>
-                <div class="col-auto">
-                    <button type="button" class="btn btn-sm" @onclick="Save">
-                        <i class="fas fa-check"></i>
+                <div class="col"></div>
+                <div class="col-auto pt-1">
+                    <button type="button" class="btn btn-sm btn-ghost-primary" @onclick="Save">
+                        speichern...
                     </button>
                 </div>
             </div>
@@ -186,18 +187,18 @@
                         {
                             @foreach (IDTO item in Items)
                             {
-                                @if (this.Value.ToSecureString() == item.ID.ToSecureString())
+                                @if (this.Value.ToSecureString() == item.Title.ToSecureString())
                                 {
                                     item.Checked = true;
                                 }
 
                                 @if (item.Checked)
                                 {
-                                    <option class="@OptionItemCSS" value="@item.ID.ToSecureString()" selected>@item.Title.ToSecureString()</option>
+                                    <option class="@OptionItemCSS" value="@item.Title.ToSecureString()" selected>@item.Title.ToSecureString()</option>
                                 }
                                 else
                                 {
-                                    <option class="@OptionItemCSS" value="@item.ID.ToSecureString()">@item.Title.ToSecureString()</option>
+                                    <option class="@OptionItemCSS" value="@item.Title.ToSecureString()">@item.Title.ToSecureString()</option>
                                 }
                             }
                         }
@@ -553,6 +554,10 @@
                         {
                             this.Value = EditRepository.DTO.ID.ToSecureString();
                         }
+                        else if (Field.Property == "Content")
+                        {
+                            this.Value = EditRepository.DTO.Content.ToSecureString();
+                        }
                         else
                         {
                             try
@@ -636,6 +641,10 @@
                         else if (Field.Property == "ID")
                         {
                             EditRepository.DTO.ID = this.Value;
+                        }
+                        else if (Field.Property == "Content")
+                        {
+                            EditRepository.DTO.Content = this.Value;
                         }
                         else
                         {

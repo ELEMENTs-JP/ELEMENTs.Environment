@@ -24,6 +24,7 @@ namespace ELEMENTS.Infrastructure
         AppType Type { get; set; }
         string Group { get; set; }
         bool IsActive { get; set; }
+        string IconHTML { get; set; } 
     }
     public class BaseApp : IApp
     {
@@ -31,6 +32,7 @@ namespace ELEMENTS.Infrastructure
         public string Name { get; set; } = "Base-App";
         public string Title { get; set; } = "Base App";
         public string Description { get; set; } = string.Empty;
+        public string IconHTML { get; set; } = string.Empty;
         public List<IItemType> GetItemTypes()
         {
             List<IItemType> it = new List<IItemType>();
@@ -78,6 +80,8 @@ namespace ELEMENTS.Infrastructure
         string Group { get; set; }
         int Sorting { get; set; }
         bool InMenu { get; set; }
+        string IconHTML { get; set; }
+
 
         // Relations 
         List<IItemType> GetParentItemTypes();
@@ -96,6 +100,8 @@ namespace ELEMENTS.Infrastructure
         Date = 4, // basiert auf einem Datum
         Related = 5, // Untergeordneter bzw. verknüpfter 
         Internal = 6, // Interner ItemTye 
+        Notice = 7,
+        Table = 8,
     }
 
     public class ItemType : IItemType
@@ -112,6 +118,8 @@ namespace ELEMENTS.Infrastructure
 
         public int Sorting { get; set; } = 1;
         public bool InMenu { get; set; } = true;
+        public string IconHTML { get; set; } = string.Empty;
+
 
         // Relations 
         public virtual List<IItemType> GetParentItemTypes()

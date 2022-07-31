@@ -4,11 +4,13 @@
 
     @if (!string.IsNullOrEmpty(Title))
     {
+        // Title 
         <h4 class="mt-3 px-3">@Title</h4>
     }
 
     @if (!string.IsNullOrEmpty(SubTitle))
     {
+        // SubTitle 
         <div class="px-3 pb-2">
             <small class="text-muted">@SubTitle</small>
         </div>
@@ -19,8 +21,9 @@
         @if (Repository.Items != null)
         {
             <nav class="@ControlCSS">
-                <div class="container-fluid ps-3 pe-2" style="max-height:320px; overflow-y:scroll;">
+                <div class="container-fluid ps-2 pe-2" >
 
+                    @* --- Filter --- *@
                     @if (Repository.Groups != null)
                     {
                         @if (Repository.Groups.Count >= 1)
@@ -40,18 +43,21 @@
                         }
                     }
 
+                    @* --- Items --- *@
                     @if (Repository.Items.Count >= 1)
                     {
-                        <div class="overflow-auto">
-                            <div class="collapse navbar-collapse" id="navbar-menu">
-                                <ul class="navbar-nav">
+                            <div class="collapse navbar-collapse" 
+                                 style="max-height:360px; overflow-y:scroll;"
+                                 id="navbar-menu">
+                                
+                                <ul class="navbar-nav g-0">
 
                                     @foreach (NavigationEntry entry in Repository.Items.OrderBy(se => se.Position))
                                     {
                                         @if (entry.Items == null || entry.Items.Count == 0)
                                         {
                                             <li class="nav-item">
-                                                <a class="nav-link" href="@entry.Link">
+                                                <a class="nav-link px-2" href="@entry.Link">
 
 
                                                     <span class="nav-link-icon d-md-none d-lg-inline-block">
@@ -80,7 +86,7 @@
                                         else
                                         {
                                             <li class="nav-item dropdown">
-                                                <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown" data-bs-auto-close="false" role="button" aria-expanded="false">
+                                                <a class="nav-link dropdown-toggle px-2" href="#navbar-base" data-bs-toggle="dropdown" data-bs-auto-close="false" role="button" aria-expanded="false">
                                                     <span class="nav-link-icon d-md-none d-lg-inline-block">
 
                                                         @if (string.IsNullOrEmpty(entry.Icon))
@@ -98,6 +104,8 @@
                                                                 <circle cx="15" cy="12" r="1"></circle>
                                                                 <circle cx="15" cy="19" r="1"></circle>
                                                             </svg>
+
+                                                            
                                                         }
                                                         else
                                                         {
@@ -122,8 +130,9 @@
                                     }
 
                                 </ul>
+                            
                             </div>
-                        </div>
+               
                     }
 
                 </div>
