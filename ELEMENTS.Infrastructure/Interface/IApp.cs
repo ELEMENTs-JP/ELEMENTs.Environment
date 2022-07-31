@@ -189,6 +189,23 @@ namespace ELEMENTS.Infrastructure
         }
     }
 
+    // Board 
+    public interface IBoardInterfaceRepository
+    {
+        bool IsInitialized { get; set; }
+        List<IDTO> Columns { get; set; }
+        List<IDTO> Rows { get; set; }
+        IItemType ItemType { get; set; }
+    }
+
+    public enum BoardType
+    { 
+        NULL = 0,
+
+        Roadmap = 1,
+        Backlog = 2,
+        Kanban = 3,
+    }
 
     // COLUMNS 
     public interface IColumn

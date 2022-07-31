@@ -3,7 +3,7 @@
 @inject IJSRuntime JS
 @implements IDisposable
 
-<div class="container-fluid">
+<div class="@FrameCSS">
     <div class="card">
 
         @if (!string.IsNullOrEmpty(Title))
@@ -60,6 +60,9 @@
 
 
 @code {
+
+    [Parameter]
+    public string FrameCSS { get; set; } = "container-fluid";
 
     // Objects
     private Lazy<Task<IJSObjectReference>> module;
@@ -125,7 +128,7 @@
         try
         {
             // string div = json.GetProperty("DIV").GetString();
-            await SortOrderChanged.InvokeAsync("OK");
+            await SortOrderChanged.InvokeAsync(json);
         }
         catch (Exception ex)
         {
@@ -140,7 +143,7 @@
         try
         {
             // string div = json.GetProperty("DIV").GetString();
-            await ItemAdded.InvokeAsync("OK");
+            await ItemAdded.InvokeAsync(json);
         }
         catch (Exception ex)
         {
@@ -154,7 +157,7 @@
         try
         {
             // string div = json.GetProperty("DIV").GetString();
-            await ItemChanged.InvokeAsync("OK");
+            await ItemChanged.InvokeAsync(json);
         }
         catch (Exception ex)
         {
@@ -168,7 +171,7 @@
         try
         {
             // string div = json.GetProperty("DIV").GetString();
-            await DragEnd.InvokeAsync("OK");
+            await DragEnd.InvokeAsync(json);
         }
         catch (Exception ex)
         {
@@ -182,7 +185,7 @@
         try
         {
             // string div = json.GetProperty("DIV").GetString();
-            await ItemRemoved.InvokeAsync("OK");
+            await ItemRemoved.InvokeAsync(json);
         }
         catch (Exception ex)
         {
@@ -192,19 +195,19 @@
 
     // Callback
     [Parameter]
-    public EventCallback<string> ItemChanged { get; set; }
+    public EventCallback<JsonElement> ItemChanged { get; set; }
 
     [Parameter]
-    public EventCallback<string> ItemAdded { get; set; }
+    public EventCallback<JsonElement> ItemAdded { get; set; }
 
     [Parameter]
-    public EventCallback<string> SortOrderChanged { get; set; }
+    public EventCallback<JsonElement> SortOrderChanged { get; set; }
 
     [Parameter]
-    public EventCallback<string> DragEnd { get; set; }
+    public EventCallback<JsonElement> DragEnd { get; set; }
 
     [Parameter]
-    public EventCallback<string> ItemRemoved { get; set; }
+    public EventCallback<JsonElement> ItemRemoved { get; set; }
 
     // Events
     protected override async Task OnAfterRenderAsync(bool firstRender)
