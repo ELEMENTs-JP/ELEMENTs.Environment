@@ -93,6 +93,13 @@
             <h1>this is the content of the modal</h1>
         </ELEMENTS.Controls.Popup.Modal>
 
+        <ELEMENTS.Controls.Popup.ModalForm Title="Modal Form" 
+                                           OnCancelClicked="@( e => { Value = e.ToString(); })"
+                                           OnOKClicked="@( e => { Value = e.ToString(); })">
+            <h1>this is the content of the modal</h1>
+
+        </ELEMENTS.Controls.Popup.ModalForm>
+
         <ELEMENTS.Controls.Text.Label Value="Popup" />
         <ELEMENTS.Controls.Popup.Popup />
 

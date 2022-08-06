@@ -56,6 +56,7 @@
                                 {
                                     @if (entry.Items == null || entry.Items.Count == 0)
                                     {
+                                        // Link 
                                         <li class="nav-item">
                                             <a class="nav-link px-2" href="@entry.Link">
 
@@ -85,8 +86,11 @@
                                     }
                                     else
                                     {
+                                        // Drop Down Hauptelement 
                                         <li class="nav-item dropdown">
-                                            <a class="nav-link dropdown-toggle px-2" href="#navbar-base" data-bs-toggle="dropdown" data-bs-auto-close="false" role="button" aria-expanded="false">
+                                            <a class="nav-link dropdown-toggle px-2" href="#navbar-base" 
+                                               data-bs-toggle="dropdown" data-bs-auto-close="@(AutoClose.ToSecureString())" 
+                                               role="button" aria-expanded="false">
                                                 <span class="nav-link-icon d-md-none d-lg-inline-block">
 
                                                     @if (string.IsNullOrEmpty(entry.Icon))
@@ -151,7 +155,6 @@
                             </ul>
 
                         </div>
-
                     }
 
                 </div>
@@ -176,6 +179,8 @@
     [Parameter]
     public string NavigationItemCSS { get; set; } = "";
 
+    [Parameter]
+    public bool AutoClose { get; set; } = true;
 
     [Parameter]
     public string Title { get; set; } = "Navigation";

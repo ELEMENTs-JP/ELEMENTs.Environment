@@ -62,8 +62,8 @@ namespace ELEMENTS.Infrastructure
         string Description { get; set; }
         string Link { get; set; }
         string IconHTML { get; set; }
-
-        public IItemType GetItemType();
+        BoardType BoardType { get; set; }
+        IItemType ItemType { get; set; }
     }
 
     public class BaseFeature : IFeature
@@ -74,10 +74,8 @@ namespace ELEMENTS.Infrastructure
         public string Link { get; set; } = string.Empty;
         public string IconHTML { get; set; } = string.Empty;
 
-        public IItemType GetItemType()
-        {
-            return null;
-        }
+        public IItemType ItemType { get; set; }
+        public BoardType BoardType { get; set; }
     }
 
     public interface IPage
@@ -135,13 +133,15 @@ namespace ELEMENTS.Infrastructure
     { 
         NULL = 0,
         System = 1, // Systemnavigation 
-        Item = 2, // Basiert auf einem Item 
-        File = 3, // basiert auf einer Datei
-        Date = 4, // basiert auf einem Datum
-        Related = 5, // Untergeordneter bzw. verknüpfter 
-        Internal = 6, // Interner ItemTye 
-        Notice = 7,
-        Table = 8,
+        Item = 2, // Listenansicht 
+        File = 3, // Datei Ansicht
+        Date = 4, // Kalender Ansicht
+        Portfolio = 5, // Portfolio Ansicht
+        Collection = 6, // Collection Ansicht 
+        Internal = 7, // Interner ItemTye 
+        Notice = 8,
+        Table = 9,
+        Related = 10, // Untergeordneter bzw. verknüpfter 
     }
 
     public class ItemType : IItemType
