@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
-    <Version>0.1.41</Version>
+    <Version>0.1.43</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Description>The ELEMENTs Infrastructure Library is a set of helper methods, enums and interfaces for the ELEMENTs GO Data Framework and the ELEMENTs Controls UI Framework</Description>
     <Copyright>Jürgen Pott 2022</Copyright>

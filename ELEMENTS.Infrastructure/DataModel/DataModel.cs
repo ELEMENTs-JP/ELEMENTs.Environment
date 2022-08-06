@@ -79,8 +79,30 @@ namespace ELEMENTS.Infrastructure
                 Notification.Invoke(notification);
             }
         }
-
     }
+
+
+
+    public class InformationNotification
+    {
+        public string Title { get; set; }
+        public string Information { get; set; }
+        public string Filter { get; set; }
+    }
+    public class InformationNotificationService
+    {
+        public event Func<InformationNotification, Task> Notification;
+
+        public void Notify(InformationNotification notification)
+        {
+            if (Notification != null)
+            {
+                Notification.Invoke(notification);
+            }
+        }
+    }
+
+
 
 
     public class Entry : IEntry

@@ -1,13 +1,6 @@
 ﻿
-
-
 @inject IJSRuntime JS
 @implements IDisposable
-
-
-
-
-
 
 
     <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
@@ -33,8 +26,6 @@
     IJSObjectReference _jsModule;
     IJSObjectReference _toastInstance;
 
-
-
     Guid toastGUID { get; set; } = Guid.NewGuid();
     Guid buttonGUID { get; set; } = Guid.NewGuid();
 
@@ -47,6 +38,36 @@
     [Parameter]
     public string Content { get; set; } = string.Empty;
 
+    public static InformationNotificationService NotificationService { get; } = new InformationNotificationService();
+
+    // Notification 
+    protected override void OnInitialized()
+    {
+        try
+        {
+            NotificationService.Notification += internalNotifyAsync;
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine("FAIL: " + ex.Message);
+        }
+    }
+    public async Task internalNotifyAsync(InformationNotification notification)
+    {
+        try
+        {
+            if (notification != null)
+            {
+                await ShowToast(notification.Title, notification.Information);
+            }
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine("FAIL: " + ex.Message);
+        }
+    }
+
+    // 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
@@ -59,7 +80,6 @@
             _toastInstance = await _jsModule.InvokeAsync<IJSObjectReference>("initShow", buttonGUID.ToString(), toastGUID.ToString(), objRef);
         }
     }
-
 
     public async Task ShowToast(string Title, string Message)
     {
@@ -74,7 +94,7 @@
         }
         catch (Exception ex)
         {
-
+            System.Diagnostics.Debug.WriteLine("FAIL: " + ex.Message);
         }
     }
     private async Task click()
@@ -86,7 +106,7 @@
         }
         catch (Exception ex)
         {
-
+            System.Diagnostics.Debug.WriteLine("FAIL: " + ex.Message);
         }
     }
 
@@ -101,7 +121,7 @@
         }
         catch (Exception ex)
         {
-            string msg = ex.Message;
+            System.Diagnostics.Debug.WriteLine("FAIL: " + ex.Message);
         }
     }
 
