@@ -37,15 +37,15 @@
 
                     @foreach (IDTO dto in Items)
                     {
-                        @*@if (dto.GetProperty("Column").Value == "Backlog")
+                        @if (dto.GetProperty("Column").Value == "Backlog")
                             {
                                 @if (dto.GetProperty("Row").Value == "Backlog")
-                                {*@
+                                {
                         <FlexItem DTO="@dto" DragableItemClass="@draggableItemClass"
                                   RowItemType="Category" ColumnItemType="Status"
                                   BoardType="Backlog" Row="Backlog" Column="Backlog" />
-                        @*}
-                            }*@
+                        }
+                            }
                     }
 
                 </div>

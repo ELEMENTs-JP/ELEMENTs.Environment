@@ -39,11 +39,57 @@ namespace ELEMENTS.Data.SQLite
             return SQLiteHelper.GetMigrationVersion();
         }
         public Guid MasterGUID { get; set; } = Guid.Empty;
+        public string MasterAppType { get; set; } = "ELEMENTs";
     }
 
     public partial class SQLiteFactory : IFactory
     {
         // Content 
+        public IDTO CreateDirect(string Title, string ItemType)
+        {
+            try
+            {
+                Guid itemGUID = Guid.NewGuid();
+                IInputDTO input = InputDTO.CreateTemplate(
+                    itemGUID, Title, this.MasterGUID, this.MasterAppType, ItemType);
+                
+                // Check 
+                if (input.Validate() == false)
+                {
+                    throw new Exception("Die Validierung schlug fehl");
+                }
+
+                IDTO dto = null;
+
+                // Prüfung auf Existinz 
+                if (input.CheckIfAlreadyExists == true)
+                {
+                    // Bei Titel holen 
+                    dto = tbl_CON_Content.GetItemByTitle(input);
+
+                    // wenn NICHT NULL -> wenn EXISTIERT 
+                    if (dto != null)
+                    {
+                        // Wenn geprüft werden soll,
+                        // dann wird existierendes zurückgegeben 
+                        return dto;
+                    }
+                }
+
+                // DTO 
+                dto = tbl_CON_Content.CreateItem(input);
+                if (dto == null)
+                {
+                    throw new Exception("Das Item konnte nicht erzeugt werden.");
+                }
+
+                return dto;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
         public IDTO Create(IInputDTO input)
         {
             try

@@ -31,68 +31,90 @@
         }
 
         <div class="card-body">
-            <div class="row">
-                <div class="col-auto p-3" style="width:50px;"></div>
-                @foreach (IDTO column in Columns)
-                {
-                    <div class="col p-3 bg-light border-bottom">
-                        <strong class="text-muted">@column.Title.ToSecureString()</strong>
-                    </div>
-                }
-            </div>
 
-            @foreach (IDTO row in Rows)
+            @if (Columns.Count >= 1 && Rows.Count >= 1)
             {
                 <div class="row">
-
-                    <div class="col-auto p-3 bg-light border-end" style="width:50px;">
-                        <strong class="text-muted verticalText">@row.Title.ToSecureString()</strong>
-                    </div>
-
+                    <div class="col-auto p-3" style="width:50px;"></div>
                     @foreach (IDTO column in Columns)
                     {
-                        <div data-column="@column.Title.ToSecureString()"
-                             data-row="@row.Title.ToSecureString()"
-                             class="mhpx-150 col border-end border-bottom p-3 @dropableContainerClass">
-
-                            @foreach (IDTO dto in Items)
-                            {
-                                @if (dto.GetProperty("Column").Value == column.Title)
-                                {
-                                    @if (dto.GetProperty("Row").Value == row.Title)
-                                    {
-                                        <FlexItem DTO="@dto" DragableItemClass="@draggableItemClass"
-                                                  RowItemType="Category" ColumnItemType="Status"
-                                                  BoardType="Backlog" Row="@row.Title" Column="@column.Title" />
-                                    }
-                                }
-                            }
-
+                        <div class="col p-3 bg-light border-bottom">
+                            <strong class="text-muted">@column.Title.ToSecureString()</strong>
                         </div>
                     }
                 </div>
+
+                @foreach (IDTO row in Rows)
+                {
+                    <div class="row">
+
+                        <div class="col-auto p-3 bg-light border-end" style="width:50px;">
+                            <strong class="text-muted verticalText">@row.Title.ToSecureString()</strong>
+                        </div>
+
+                        @foreach (IDTO column in Columns)
+                        {
+                            <div data-column="@column.Title.ToSecureString()"
+                                 data-row="@row.Title.ToSecureString()"
+                                 class="mhpx-150 col border-end border-bottom p-3 @dropableContainerClass">
+
+                                @foreach (IDTO dto in Items)
+                                {
+                                    @if (dto.GetProperty("Column").Value == column.Title)
+                                    {
+                                        @if (dto.GetProperty("Row").Value == row.Title)
+                                        {
+                                            <FlexItem DTO="@dto" DragableItemClass="@draggableItemClass"
+                                                      RowItemType="Category" ColumnItemType="Status"
+                                                      BoardType="Backlog" Row="@row.Title" Column="@column.Title" />
+                                        }
+                                    }
+                                }
+
+                            </div>
+                        }
+                    </div>
+                }
+            }
+            else
+            {
+                <div>
+                    <p>Bitte wähle ein Board und konfiguriere es</p>
+                </div>
             }
 
-            <div class="row p-1 mb-3">
-                <strong class="text-muted m-1">Backlog</strong>
-                <div data-column="Backlog" data-row="Backlog"
-                     class="border rounded mhpx-150 bg-light p-3 col @dropableContainerClass">
 
-                    @foreach (IDTO dto in Items)
-                    {
-                        @if (dto.GetProperty("Column").Value == "Backlog")
+            @if (Items.Count >= 1)
+            {
+                <div class="row p-1 mb-3">
+                    <strong class="text-muted m-1">Backlog</strong>
+                    <div data-column="Backlog" data-row="Backlog"
+                         class="border rounded mhpx-150 bg-light p-3 col @dropableContainerClass">
+
+                        @foreach (IDTO dto in Items)
                         {
-                            @if (dto.GetProperty("Row").Value == "Backlog")
+                            @if (dto.GetProperty("Column").Value == "Backlog")
                             {
-                                <FlexItem DTO="@dto" DragableItemClass="@draggableItemClass"
-                                          RowItemType="Category" ColumnItemType="Status"
-                                          BoardType="Backlog" Row="Backlog" Column="Backlog" />
+                                @if (dto.GetProperty("Row").Value == "Backlog")
+                                {
+                                    <FlexItem DTO="@dto" DragableItemClass="@draggableItemClass"
+                                              RowItemType="Category" ColumnItemType="Status"
+                                              BoardType="Backlog" Row="Backlog" Column="Backlog" />
+                                }
                             }
                         }
-                    }
 
+                    </div>
                 </div>
-            </div>
+            }
+            else
+            {
+                <div>
+                    <p>Es befinden sich derzeit keine Einträge im Backlog</p>
+                </div>
+            }
+
+
 
         </div>
         <div class="card-footer">

@@ -68,7 +68,8 @@ function assignSortableJS(containerElement, dragabbleClass, dotNetHelper)
                 {
 
                     var allitems = evt.to.children; // all items of parent 
-                    for (var i = 0; i < allitems.length; i++) {
+                    for (var i = 0; i < allitems.length; i++)
+                    {
                         let item = allitems[i];
                         if (item === null)
                             continue;
@@ -107,7 +108,8 @@ function assignSortableJS(containerElement, dragabbleClass, dotNetHelper)
 
                     }
 
-                } catch (e)
+                }
+                catch (e)
                 {
                     alert(e);
                 }

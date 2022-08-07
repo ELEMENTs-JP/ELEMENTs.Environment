@@ -192,6 +192,7 @@ namespace ELEMENTS.Data.SQLite
                 System.Diagnostics.Debug.WriteLine("Fehler: " + ex.Message);
             }
 
+            System.Diagnostics.Debug.WriteLine("FAIL: Property was not created and give back.");
             return null;
         }
         public IProperty SetProperty(string Value, string Property)

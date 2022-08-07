@@ -14,9 +14,11 @@ namespace ELEMENTS.Infrastructure
         IFactoryStatusInfo MigrateDatabase();
         string GetDatabaseVersion();
         void SetDatabasePath();
-        Guid MasterGUID { get; set; } 
+        Guid MasterGUID { get; set; }
+        string MasterAppType { get; set; }
 
         // Factory 
+        IDTO CreateDirect(string Title, string ItemType);
         IDTO Create(IInputDTO input);
         IDTO GetItemByID(IInputDTO input);
         IDTO GetItemDirectByGUID(IInputDTO input);
