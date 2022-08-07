@@ -319,7 +319,19 @@ namespace ELEMENTS.Infrastructure
                 return DateTime.Now;
             }
         }
+        public static Guid ToSecureGUID(this object text)
+        {
+            try
+            {
+                return new Guid(text.ToSecureString());
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("FAIL: " + ex.Message);
+            }
 
+            return Guid.Empty;
+        }
         public static string ToMonthYear(this DateTime date)
         {
             return date.Date.Month + "" + date.Date.Year;

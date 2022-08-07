@@ -308,6 +308,16 @@ namespace ELEMENTS.Data.SQLite
 
             return sql;
         }
+        public static string GetItemDirectByGUIDWithoutParameter(IInputDTO input, string tbl)
+        {
+            string sql = string.Empty;
+
+            // Content // Search // Security 
+            sql += "SELECT * FROM  " + tbl + " WHERE " +
+                " GUID = '" + input.ItemGUID + "' ";
+
+            return sql;
+        }
         public static string GetItemByTitleQuery(IInputDTO input, string tbl)
         {
             string sql = string.Empty;

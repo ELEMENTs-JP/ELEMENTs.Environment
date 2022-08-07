@@ -57,25 +57,35 @@ namespace ELEMENTS.Infrastructure
 
     public interface IFeature
     {
-        Guid ID { get; set; }
         string Title { get; set; }
         string Description { get; set; }
         string Link { get; set; }
         string IconHTML { get; set; }
         BoardType BoardType { get; set; }
+        
+        Guid GUID { get; set; }
         IItemType ItemType { get; set; }
+        public IItemType GetItemsItemType();
     }
 
     public class BaseFeature : IFeature
     {
-        public Guid ID { get; set; }
         public string Title { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public string Link { get; set; } = string.Empty;
         public string IconHTML { get; set; } = string.Empty;
-
+        
+        /// <summary>
+        /// Guid of the Item
+        /// </summary>
+        public Guid GUID { get; set; }
         public IItemType ItemType { get; set; }
+        public virtual IItemType GetItemsItemType()
+        {
+            return null;
+        }
         public BoardType BoardType { get; set; }
+        
     }
 
     public interface IPage
@@ -193,9 +203,18 @@ namespace ELEMENTS.Infrastructure
     public interface IBoardInterfaceRepository
     {
         bool IsInitialized { get; set; }
+        ISQLiteService Service { get; set; }
+
+        IDTO CurrentBoard { get; set; }
+        List<IDTO> Boards { get; set; }
+        void Init();
         List<IDTO> Columns { get; set; }
         List<IDTO> Rows { get; set; }
         IItemType ItemType { get; set; }
+        void AddRow(string title);
+        void AddColumn(string title);
+        void RemoveRow(IDTO row);
+        void RemoveColumn(IDTO column);
     }
 
     public enum BoardType

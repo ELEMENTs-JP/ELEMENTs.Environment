@@ -189,6 +189,27 @@ namespace ELEMENTS.Data.SQLite
                 return null;
             }
         }
+        public IDTO GetItemDirectByGUID(IInputDTO input)
+        {
+            try
+            {
+                // Check 
+                if (input.Validate() == false)
+                    return null;
+
+                // DTO 
+                IDTO dto = tbl_CON_Content.GetItemDirectByGUID(input);
+                if (dto == null)
+                {
+                    throw new Exception("Das Item konnte nicht geladen werden.");
+                }
+                return dto;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
         public List<IDTO> GetItems(IQueryParameter fqp)
         {
             List<IDTO> allItems = new List<IDTO>();

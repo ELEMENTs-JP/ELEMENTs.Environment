@@ -79,6 +79,7 @@ function assignSortableJS(containerElement, dragabbleClass, dotNetHelper)
                         let sortorder = (i + 1).toString();
                         let columnitemtype = getAttributeValue(item, "data-columnitemtype");
                         let rowitemtype = getAttributeValue(item, "data-rowitemtype");
+                        let filter = getAttributeValue(item, "data-filter");
 
                         // Create Parameter 
                         let jsonParameter = {
@@ -87,6 +88,9 @@ function assignSortableJS(containerElement, dragabbleClass, dotNetHelper)
                             "PPID": ppid,
                             "BoardType": boardtype,
                             "SortOrder": sortorder,
+                            "ColumnItemType": columnitemtype,
+                            "RowItemType": rowitemtype,
+                            "Filter": filter,
                         };
 
                         try {
@@ -134,6 +138,7 @@ function assignSortableJS(containerElement, dragabbleClass, dotNetHelper)
                     let sortorder = "1";
                     let columnitemtype = getAttributeValue(item, "data-columnitemtype");
                     let rowitemtype = getAttributeValue(item, "data-rowitemtype");
+                    let filter = getAttributeValue(item, "data-filter");
 
                     // Create Parameter 
                     let jsonParameter = {
@@ -146,6 +151,7 @@ function assignSortableJS(containerElement, dragabbleClass, dotNetHelper)
                         "SortOrder": sortorder,
                         "ColumnItemType": columnitemtype,
                         "RowItemType": rowitemtype,
+                        "Filter": filter,
                     };
 
                     try {
@@ -190,6 +196,7 @@ function assignSortableJS(containerElement, dragabbleClass, dotNetHelper)
                     let sortorder = newIndex;
                     let columnitemtype = getAttributeValue(item, "data-columnitemtype");
                     let rowitemtype = getAttributeValue(item, "data-rowitemtype");
+                    let filter = getAttributeValue(item, "data-filter");
 
                     // Create Parameter 
                     let jsonParameter = {
@@ -202,6 +209,7 @@ function assignSortableJS(containerElement, dragabbleClass, dotNetHelper)
                         "SortOrder": sortorder,
                         "ColumnItemType": columnitemtype,
                         "RowItemType": rowitemtype,
+                        "Filter" : filter,
                     };
 
                     try {
@@ -248,6 +256,7 @@ function assignSortableJS(containerElement, dragabbleClass, dotNetHelper)
                     let sortorder = newIndex;
                     let columnitemtype = getAttributeValue(item, "data-columnitemtype");
                     let rowitemtype = getAttributeValue(item, "data-rowitemtype");
+                    let filter = getAttributeValue(item, "data-filter");
 
                     // Create Parameter 
                     let jsonParameter = {
@@ -260,6 +269,7 @@ function assignSortableJS(containerElement, dragabbleClass, dotNetHelper)
                         "SortOrder": sortorder,
                         "ColumnItemType": columnitemtype,
                         "RowItemType": rowitemtype,
+                        "Filter": filter,
                     };
 
                     try {

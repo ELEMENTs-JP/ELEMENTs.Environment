@@ -694,6 +694,42 @@ namespace ELEMENTS.Data.SQLite
 
             return null;
         }
+        public static IDTO GetItemDirectByGUID(IInputDTO input)
+        {
+            try
+            {
+                // Validate 
+                if (input.Validate() == false)
+                {
+                    throw new Exception("Validierung des Input beim Get Item");
+                }
+
+                string table = FactoryStructure.GetClientMapping(ElementsEntityType.Content).Class;
+                string query = FactoryQuery.GetItemDirectByGUIDWithoutParameter(input, table);
+
+                IDTO dbitem = null;
+
+                // Content -> Apps 
+                using (SQLiteContext context = SQLiteHelper.GetEntities())
+                {
+                    // Query 
+                    dbitem = context.tbl_CON_Content.FromSqlRaw(query).FirstOrDefault();
+                }
+
+                if (dbitem == null)
+                {
+                    throw new Exception("Das Item konnte nicht geladen werden.");
+                }
+
+                return dbitem as IDTO;
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            return null;
+        }
         public static IDTO GetItemByTitle(IInputDTO input)
         {
             try

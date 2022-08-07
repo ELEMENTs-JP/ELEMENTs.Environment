@@ -19,6 +19,7 @@ namespace ELEMENTS.Infrastructure
         // Factory 
         IDTO Create(IInputDTO input);
         IDTO GetItemByID(IInputDTO input);
+        IDTO GetItemDirectByGUID(IInputDTO input);
         IFactoryStatusInfo Update(IDTO dto);
         IFactoryStatusInfo Delete(IInputDTO input);
         List<IDTO> GetItems(IQueryParameter fqp);

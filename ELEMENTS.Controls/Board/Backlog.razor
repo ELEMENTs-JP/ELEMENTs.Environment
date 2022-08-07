@@ -21,7 +21,7 @@
 
                     @if (RelatedContent != null)
                     {
-                        <div class="col-auto ps-3">
+                        <div class="col-auto ps-3 d-flex">
                             @RelatedContent
                         </div>
                     }
@@ -79,16 +79,13 @@
     // Properties
     [Parameter]
     public string Title { get; set; } = "Product";
-
     [Parameter]
     public string BoardType { get; set; } = "Backlog";
 
     [Parameter]
     public List<IDTO> Columns { get; set; } = new List<IDTO>();
-
     [Parameter]
     public List<IDTO> Rows { get; set; } = new List<IDTO>();
-
     [Parameter]
     public List<IDTO> Items { get; set; } = new List<IDTO>();
 

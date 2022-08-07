@@ -18,6 +18,14 @@
                             @Title.ToSecureString()
                         </h2>
                     </div>
+
+                    @if (RelatedContent != null)
+                    {
+                        <div class="col-auto ps-3 d-flex">
+                            @RelatedContent
+                        </div>
+                    }
+
                 </div>
             </div>
         }
@@ -123,6 +131,9 @@
     [Parameter]
     public List<IDTO> Items { get; set; } = new List<IDTO>();
 
+    // Areas
+    [Parameter]
+    public RenderFragment RelatedContent { get; set; }
 
     // CTR
     protected override void OnInitialized()

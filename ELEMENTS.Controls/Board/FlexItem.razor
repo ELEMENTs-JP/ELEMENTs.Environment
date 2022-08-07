@@ -9,6 +9,7 @@
          data-columnitemtype="@ColumnItemType.ToSecureString()"
          data-rowitemtype="@RowItemType.ToSecureString()"
          data-boardtype="@BoardType.ToSecureString()"
+         data-filter="@Filter.ToSecureString()"
          class="@( DragableItemClass + " bg-white border rounded mb-2 ")">
         <div class="text-truncate p-1 row align-items-center">
             <div class="col-auto me-3">
@@ -18,18 +19,43 @@
                 <a href="@Link" class="text-body d-block mw-85 overflow-hidden">@DTO.Title</a>
                 <small class="d-block text-muted text-truncate mt-n1 mw-85 overflow-hidden">@DTO.Content</small>
             </div>
+
+            @if (Properties != null)
+            {
+                @if (Properties.Count >= 1)
+                {
+                    @foreach (string property in Properties)
+                    {
+                        <div class="col-auto px-2 border-start">
+                            <small class="text-muted">
+                                @DTO.GetProperty(property).Value.ToSecureString()
+                            </small>
+                        </div>
+                    }
+                }
+            }
+
+            @if (ShowDeleteButton == true)
+            {
+                <div class="col-auto me-3 border-start overflow-hidden">
+                    <button type="button" class="btn btn-sm btn-ghost-danger" @onclick="DeleteItem">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            }
+
         </div>
     </div>
 }
-else
-{
-    <div class="border p-2"><strong>DTO is NULL</strong></div>
-}
+
 
 @code {
 
     [Parameter]
     public IDTO DTO { get; set; }
+
+    [Parameter]
+    public List<string> Properties { get; set; } = new List<string>();
 
     [Parameter]
     public string Link { get; set; } = string.Empty;
@@ -51,5 +77,20 @@ else
 
     [Parameter]
     public string BoardType { get; set; } = string.Empty;
+
+    [Parameter]
+    public string Filter { get; set; } = string.Empty;
+
+    [Parameter]
+    public bool ShowDeleteButton { get; set; } = false;
+
+    [Parameter] public EventCallback<IDTO> OnItemDeleted { get; set; }
+    private async Task DeleteItem()
+    {
+        if (DTO != null)
+        {
+            await OnItemDeleted.InvokeAsync(DTO);
+        }
+    }
 
 }

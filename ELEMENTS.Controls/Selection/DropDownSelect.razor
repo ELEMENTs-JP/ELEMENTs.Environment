@@ -98,8 +98,28 @@
         }
         catch (Exception ex)
         {
-            Console.WriteLine("FAIL: " + ex.Message);
+            System.Diagnostics.Debug.WriteLine("FAIL: " + ex.Message);
         }
     }
 
+    public static List<OptionItem> ToOptionItems(List<IDTO> Items)
+    {
+        List<OptionItem> options = new List<OptionItem>();
+        foreach (IDTO dto in Items)
+        {
+            try
+            {
+                OptionItem item = new OptionItem();
+                item.ID = dto.GUID.ToSecureString();
+                item.Text = dto.Title.ToSecureString();
+                options.Add(item);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("FAIL: " + ex.Message);
+            }
+        }
+
+        return options;
+    }
 }

@@ -9,7 +9,7 @@
     <PackageProjectUrl>https://github.com/ELEMENTs-JP</PackageProjectUrl>
     <RepositoryUrl>https://github.com/ELEMENTs-JP</RepositoryUrl>
     <PackageTags>Microsoft, Blazor, Razor, Bootstrap, Tabler.IO, Controls, Library, C#</PackageTags>
-    <Version>0.1.43</Version>
+    <Version>0.1.49</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
