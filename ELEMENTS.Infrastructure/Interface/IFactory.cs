@@ -185,6 +185,7 @@ namespace ELEMENTS.Infrastructure
 
         // List 
         List<string> ItemTypes { get; set; }
+        List<string> ItemTypeExcludes { get; set; }
         string ItemState { get; set; }
 
         // Matchcode 
@@ -227,23 +228,24 @@ namespace ELEMENTS.Infrastructure
         List = 1,
         ChildrenByParent = 2,
         ParentsByChild = 3,
+        Search = 4,
 
         // 
-        Personal = 4,
-        Join = 5,
-        PropertyJoin = 6,
-        NoJoin = 7,
+        Personal = 11,
+        Join = 12,
+        PropertyJoin = 13,
+        NoJoin = 14,
 
         // 
-        DefaultChildren = 8,
-        ParallelItems = 9,
-        RelatedItems = 10,
+        DefaultChildren = 21,
+        ParallelItems = 22,
+        RelatedItems = 23,
 
         // 
-        CreatedBy = 11,
-        ModifiedBy = 12,
-        NewestItems = 13,
-        ParallelItemsByTag = 14,
+        CreatedBy = 31,
+        ModifiedBy = 32,
+        NewestItems = 33,
+        ParallelItemsByTag = 34,
     }
     // Filter 
     public class FilterByClauseDTO

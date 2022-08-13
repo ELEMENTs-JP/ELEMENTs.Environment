@@ -1,0 +1,63 @@
+﻿
+
+@if (Actions != null)
+{
+    @if (Actions.Count >= 1)
+    {
+        <div class="@ButtonGroupCSS">
+            @foreach (IAction item in Actions)
+            {
+                <button type="button" @onclick="@( e => { SetAction(item);  } )"
+                        class="@ButtonCSS">
+                    @item.Title.ToSecureString()
+                </button>
+            }
+
+            @if (Actions.Count > 3)
+            {
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-sm dropdown-toggle"
+                            data-bs-toggle="dropdown">
+                        ...
+                    </button>
+
+                    <div class="dropdown-menu dropdown-menu-end" style="">
+
+                        @foreach (IAction item in Actions.FromTo<IAction>(3, 12))
+                        {
+                            <div class="dropdown-item"
+                                 @onclick="@( e => { SetAction(item); } )">
+                                @item.Title.ToSecureString()
+                            </div>
+                        }
+
+                    </div>
+                </div>
+            }
+        </div>
+    }
+}
+
+
+
+@code {
+
+    [Parameter]
+    public string ButtonGroupCSS { get; set; } = "btn-group w-100";
+
+    [Parameter]
+    public string ButtonCSS { get; set; } = "btn btn-sm btn-primary";
+
+    [Parameter]
+    public List<IAction> Actions { get; set; } = new List<IAction>();
+
+    [Parameter]
+    public EventCallback<IAction> OnActionSet { get; set; }
+    private async Task SetAction(IAction action)
+    {
+        if (action != null)
+        {
+            await OnActionSet.InvokeAsync(action);
+        }
+    }
+}

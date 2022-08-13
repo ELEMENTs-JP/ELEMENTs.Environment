@@ -1,13 +1,14 @@
 ﻿@using System.Security.Claims
 @using Microsoft.AspNetCore.Components.Authorization
 @inject AuthenticationStateProvider AuthenticationStateProvider
+@inject ISecurityService SecurityService
 
 @try
 {
 
     // https://www.pragimtech.com/blog/blazor/authorization-in-blazor/
-    // https://gunnarpeipman.com/client-side-blazor-authorizeview/ 
-    // https://www.c-sharpcorner.com/article/understand-basic-of-authorization-in-blazor-server-app/ 
+    // https://gunnarpeipman.com/client-side-blazor-authorizeview/
+    // https://www.c-sharpcorner.com/article/understand-basic-of-authorization-in-blazor-server-app/
 
     <AuthorizeView>
         <Authorized>
@@ -36,5 +37,24 @@ catch (Exception ex)
 
 
 @code {
+
+    
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+
+        try
+        {
+            if (SecurityService != null)
+            { 
+                
+            }
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine("FAIL: " + ex.Message);
+        }
+    }
 
 }

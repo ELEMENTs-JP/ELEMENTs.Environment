@@ -1,8 +1,8 @@
-﻿@using System.Globalization 
+﻿@using System.Globalization
 
 
-<div class="@( (Border) ? 
-               ((Field.Type == EditFieldType.Divider) ? "p-1" : "border-bottom p-1 hover") 
+<div class="@( (Border) ?
+               ((Field.Type == EditFieldType.Divider) ? "p-1" : "border-bottom p-1 hover")
                : "hover" )">
 
 
@@ -10,7 +10,7 @@
     {
     }
     else
-    { 
+    {
         <label class="form-label text-dark">@Field.Title.ToSecureString()</label>
     }
 
@@ -28,9 +28,9 @@
                 }
 
                 @if (Field.Type == EditFieldType.Text ||
-                    Field.Type == EditFieldType.TextBox ||
-                    Field.Type == EditFieldType.TextArea ||
-                    Field.Type == EditFieldType.LookupItems)
+                   Field.Type == EditFieldType.TextBox ||
+                   Field.Type == EditFieldType.TextArea ||
+                   Field.Type == EditFieldType.LookupItems)
                 {
                     @Value.ToSecureString()
                 }
@@ -534,6 +534,12 @@
     [Parameter]
     public IEditItemRepository EditRepository { get; set; }
 
+    
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+    }
+
     protected override void OnParametersSet()
     {
         base.OnParametersSet();
@@ -706,7 +712,7 @@
                 }
             }
 
-            // Set Field Modeo to -> VIEW 
+            // Set Field Modeo to -> VIEW
             Field.Mode = EditFieldMode.View;
         }
         catch (Exception ex)

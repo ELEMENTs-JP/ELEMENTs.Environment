@@ -1,9 +1,9 @@
 ﻿@inject NavigationManager nm
 @inject IJSRuntime JS
 
-<div id="@("Search_Result_Box_" + ControlID.ToSecureString() + "_ID")" 
+<div id="@("Search_Result_Box_" + ControlID.ToSecureString() + "_ID")"
      style="position:relative;">
-    
+
     <div class="input-group">
         <input type="text"
                class="@ControlCSS"
@@ -16,12 +16,7 @@
 
     @if (IsListOpen)
     {
-        <div class="@ListCSS" 
-             style="position: absolute; 
-                    inset: 0px auto auto 0px; 
-                    margin: 0px; 
-                    transform: translate(0px, 40px); 
-                    min-width: 300px;">
+        <div class="@ListCSS" style="@ListStyle">
             @if (Items != null)
             {
                 @if (Items.Count >= 1)
@@ -46,6 +41,14 @@
                                         <small class="d-block text-truncate">@item.Content.ToSecureString()</small>
                                     }
                                 </div>
+
+                                @if (ShowItemType)
+                                {
+                                    <div class="col-auto">
+                                        <small class="text-muted d-block">@item.ItemType.ToSecureString()</small>
+                                    </div>
+                                }
+
                             </div>
                         }
                     </div>
@@ -61,9 +64,10 @@
 @code {
 
     Guid ControlID { get; set; } = Guid.NewGuid();
-    
-    // Fields 
-    bool IsListOpen { get; set; } = false;
+
+    // Fields
+    [Parameter]
+    public bool IsListOpen { get; set; } = false;
 
     // Box
     /// <summary>
@@ -94,7 +98,7 @@
         await ValueChanged.InvokeAsync(value);
 
         // Show List
-        IsListOpen = (Items.Count >= 1) ? true : false;
+        // IsListOpen = (Items.Count >= 1) ? true : false;
     }
 
     [Parameter]
@@ -105,24 +109,25 @@
         await ValueInput.InvokeAsync(value);
 
         // Show List
-        IsListOpen = (Items.Count >= 1) ? true : false;
+        // IsListOpen = (Items.Count >= 1) ? true : false;
     }
-
-
-
 
     // List
     [Parameter]
     public string ListCSS { get; set; } = "bg-white overflow-hidden dropdown-menu show";
 
     [Parameter]
-    public string ItemCSS { get; set; } = "row border-bottom p-2 overflow-hidden";
+    public string ListStyle { get; set; } = "position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(0px, 40px); min-width: 400px;";
+
+    [Parameter]
+    public string ItemCSS { get; set; } = "row g-0 border-bottom p-2 align-items-center";
 
     [Parameter]
     public IList<IDTO> Items { get; set; } = new List<IDTO>();
 
     [Parameter] public bool ShowID { get; set; } = false;
     [Parameter] public bool ShowContent { get; set; } = true;
+    [Parameter] public bool ShowItemType { get; set; } = false;
 
     private async Task Navigate(string url)
     {

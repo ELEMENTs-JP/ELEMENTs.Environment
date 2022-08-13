@@ -25,7 +25,7 @@ function assignSortableJS(containerElement, dragabbleClass, dotNetHelper)
 
         // Init 
         var sortableDiv = new Sortable(containerElement, {
-            group: 'shared',
+            group: '' + dragabbleClass.toString() + '', // Identifier for multiple divs -> 'shared'
             swapThreshold: 0.50,
             sort: true,  // sorting inside list
             delay: 0, // time in milliseconds to define when the sorting should start

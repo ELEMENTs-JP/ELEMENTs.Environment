@@ -7,9 +7,9 @@
     </button>
 
     <!-- Modal -->
-    <div class="modal modal-blur fade" id="@( "modal_" + modalGUID.ToString() )" tabindex="-1" 
+    <div class="@FormCSS" id="@( "modal_" + modalGUID.ToString() )" tabindex="-1" 
          aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="@( ModalCSS + " " + SetSize() )">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">@Title</h5>
@@ -29,16 +29,18 @@
     </div>
 
 
- 
-
-
-
 @code {
 
     private Guid modalGUID = Guid.NewGuid();
 
     [Parameter]
     public string Title { get; set; } = string.Empty;
+
+    [Parameter]
+    public string FormCSS { get; set; } = "modal fade"; // modal modal-blur fade
+
+    [Parameter]
+    public string ModalCSS { get; set; } = "modal-dialog modal-dialog-centered modal-dialog-scrollable";
 
     [Parameter]
     public RenderFragment ChildContent { get; set; }
@@ -93,5 +95,22 @@
 
     [Parameter]
     public string CancelTitle { get; set; } = "Cancel";
+
+    [Parameter]
+    public ModalFormSize Size { get; set; } = ModalFormSize.Large;
+
+    private string SetSize()
+    {
+        if (Size == ModalFormSize.Small)
+        { return "modal-sm"; }
+        else if (Size == ModalFormSize.Large)
+        { return "modal-lg"; }
+        else if (Size == ModalFormSize.Extra)
+        { return "modal-xl"; }
+        else
+        {
+            return "";
+        }
+    }
 
 }

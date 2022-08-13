@@ -34,7 +34,7 @@
                                 {
                                     <button type="button"
                                             @onclick="@( e => { Repository.Filter(filter.ID); } )"
-                                            class="btn btn-sm btn-dark"
+                                            class="btn btn-sm btn-ghost-primary"
                                             title="@filter.Name">
                                         <i class="@( filter.Icon + " text-white " + "" )"></i>
                                     </button>
@@ -47,7 +47,7 @@
                     @if (Repository.Items.Count >= 1)
                     {
                         <div class="collapse navbar-collapse"
-                             style="max-height:360px; overflow-y:scroll;"
+                             style="@NavigationStyle"
                              id="navbar-menu">
 
                             <ul class="navbar-nav g-0">
@@ -175,6 +175,9 @@
 
     [Parameter]
     public string ControlCSS { get; set; } = "navbar navbar-vertical navbar-expand-lg navbar-dark";
+
+    [Parameter]
+    public string NavigationStyle { get; set; } = "max-height:420px; overflow-y:scroll;";
 
     [Parameter]
     public string NavigationItemCSS { get; set; } = "";

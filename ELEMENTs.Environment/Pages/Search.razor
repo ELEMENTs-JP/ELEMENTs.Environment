@@ -23,6 +23,7 @@
             </div>
             <div class="col">
                 <ELEMENTS.Controls.Search.SearchResultBox Items="@SearchRepo.Items"
+                                                          IsListOpen="@IsListOpen()"
                     ValueInput="@( e => { SearchRepo.Matchcode = e.ToSecureString(); SearchRepo.SearchItems(); })" />
             </div>
             
@@ -61,5 +62,9 @@
     {
         SearchRepo.Init();
         await base.OnInitializedAsync();
+    }
+    private bool IsListOpen()
+    {
+        return (SearchRepo.Items.Count >= 1) ? true : false;
     }
 }

@@ -14,6 +14,38 @@ namespace ELEMENTS.Infrastructure
 {
     public static partial class Helper
     {
+        public static IList<T> FromTo<T>(this IList<T> list, int first, int last)
+        {
+            IList<T> theNewList = new List<T>();
+
+            // BIGGER 
+            if (first > last)
+            {
+                return theNewList.ToList();
+            }
+            // SMALLER 
+            if (first < 0 || last < 0)
+            {
+                return theNewList.ToList();
+            }
+
+            // CHECK 
+            if (first >= list.Count())
+            {
+                first = list.Count() - 1;
+            }
+            if (last >= list.Count())
+            {
+                last = list.Count() - 1;
+            }
+
+            for (int i = first; i <= last; i++)
+            {
+                theNewList.Add(list[i]);
+            }
+
+            return theNewList.ToList();
+        }
         public static IEnumerable<TSource> DistinctBy<TSource, TKey>
        (this IEnumerable<TSource> source, Func<TSource, TKey> keySelector)
         {

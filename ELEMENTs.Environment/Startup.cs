@@ -45,7 +45,7 @@ namespace ELEMENTs.Environment
             services.AddScoped<AuthenticationStateProvider, ServerAuthenticationStateProvider>();
 
             // Database Service 
-            services.AddSingleton<ISQLiteService, SQLiteService>();
+            services.AddSingleton<ISqlDatabaseService, SQLiteService>();
 
             // App Service 
             services.AddSingleton<IAppRepository, AppRepository>();

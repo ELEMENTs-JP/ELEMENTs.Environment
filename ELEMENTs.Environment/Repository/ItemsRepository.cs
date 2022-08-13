@@ -14,10 +14,11 @@ namespace ELEMENTS
 
     public class ItemsRepository : IItemsRepository
     {
+        public List<FilterByClauseDTO> Filter { get; set; } = new List<FilterByClauseDTO>();
         public string Information { get; set; } = string.Empty;
         public bool AssignItems { get; set; } = false;
         public int TotalPageCount { get; set; } = 1;
-        public ISQLiteService Service { get; set; }
+        public ISqlDatabaseService Service { get; set; }
         public int PageSize { get; set; } = 10;
         public int QueryCount { get; set; } = 0;
         public int CurrentPage { get; set; } = 1;

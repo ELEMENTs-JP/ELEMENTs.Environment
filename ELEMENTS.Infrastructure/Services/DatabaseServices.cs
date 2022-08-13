@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace ELEMENTS.Infrastructure
 {
 
-    public interface ISQLiteService
+    public interface ISqlDatabaseService
     {
         void SetFileName(string DBFileName);
         void SetMasterGUID(Guid MasterGUID);
@@ -16,5 +16,7 @@ namespace ELEMENTS.Infrastructure
         IFactoryStatusInfo MigrateDatabase(string name);
         string GetMigrationVersion();
         IFactory Factory { get; set; }
+
+        InformationNotificationService DataNotifyService { get; }
     }
 }

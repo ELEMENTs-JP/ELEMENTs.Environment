@@ -10,7 +10,7 @@ namespace ELEMENTS
     
     public interface IAddItemRepository
     {
-        ISQLiteService Service { get; set; }
+        ISqlDatabaseService Service { get; set; }
         string Value { get; set; }
         IDTO Create();
         IItemType ItemType { get; set; }
@@ -22,12 +22,13 @@ namespace ELEMENTS
 
     public interface IItemsRepository
     {
+        List<FilterByClauseDTO> Filter { get; set; }
         int TotalPageCount { get; set; }
         //int QueryCount { get; set; }
         QueryType DataQueryType { get; set; }
         Guid ReferenceGUID { get; set; }
         IItemType ReferenceItemType { get; set; }
-        ISQLiteService Service { get; set; }
+        ISqlDatabaseService Service { get; set; }
         string Matchcode { get; set; }
         string Information { get; set; } 
         bool AssignItems { get; set; } 
@@ -47,7 +48,7 @@ namespace ELEMENTS
     public interface IEditItemRepository
     {
         bool IsInitialized { get; set; }
-        ISQLiteService Service { get; set; }
+        ISqlDatabaseService Service { get; set; }
         IDTO DTO { get; set; }
         IDTO Init();
         Guid ItemGUID { get; set; }

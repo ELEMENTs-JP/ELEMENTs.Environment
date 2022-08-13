@@ -203,7 +203,7 @@ namespace ELEMENTS.Infrastructure
     public interface IBoardInterfaceRepository
     {
         bool IsInitialized { get; set; }
-        ISQLiteService Service { get; set; }
+        ISqlDatabaseService Service { get; set; }
 
         IDTO CurrentBoard { get; set; }
         List<IDTO> Boards { get; set; }
@@ -322,5 +322,24 @@ namespace ELEMENTS.Infrastructure
         Hidden = 1,
         View = 2,
         Edit = 3,
+    }
+
+    public interface IAction
+    {
+        string ID { get; set; }
+        string Title { get; set; }
+        string Filter { get; set; }
+        string Command { get; set; }
+        string Link { get; set; }
+    }
+
+    public class MenuAction : IAction
+    {
+        public string ID { get; set; } = string.Empty;
+        public string Title { get; set; } = string.Empty;
+        public string Filter { get; set; } = string.Empty;
+        public string Command { get; set; } = string.Empty;
+        public string Link { get; set; } = string.Empty;
+    
     }
 }

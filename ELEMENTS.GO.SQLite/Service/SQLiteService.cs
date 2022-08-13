@@ -8,8 +8,10 @@ using ELEMENTS.Infrastructure;
 
 namespace ELEMENTS.Data.SQLite
 {
-    public class SQLiteService : ISQLiteService
+    public class SQLiteService : ISqlDatabaseService
     {
+        public InformationNotificationService DataNotifyService { get; } = new InformationNotificationService();
+
         public SQLiteService()
         {
             if (Factory == null)

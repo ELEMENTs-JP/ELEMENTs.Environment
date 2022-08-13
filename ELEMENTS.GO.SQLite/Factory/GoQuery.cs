@@ -52,7 +52,7 @@ namespace ELEMENTS.Data.SQLite
                         break;
                     }
             }
-            
+
             return fs;
         }
 
@@ -111,8 +111,9 @@ namespace ELEMENTS.Data.SQLite
 
                 // Basic Query SELECT 
                 #region Basic Query Select
-                // SELECT 
-                if (fqp.TypeOfQuery == QueryType.List && fqp.ChildGUID == Guid.Empty && fqp.ParentGUID == Guid.Empty)
+                // SELECT + SUCHE 
+                if ((fqp.TypeOfQuery == QueryType.List || fqp.TypeOfQuery == QueryType.Search) 
+                    && fqp.ChildGUID == Guid.Empty && fqp.ParentGUID == Guid.Empty)
                 {
                     sql += Select(tbl, fqp.MasterGUID);
                 }
@@ -205,22 +206,25 @@ namespace ELEMENTS.Data.SQLite
                 //    sql = SelectParallelItemsByTag(fqp.QueryItemType.ToItemType(), fqp.ItemGUID);
                 //}
 
-  
-
-       
                 // --- END of specific Queries --- //
                 #endregion
 
-            
-                    // Filter Construction 
-                    sql += MultipleFilters(fqp.Filter);
 
-                    // Exclude Construction 
-                    sql += MultipleExcludes(fqp.Filter);
+                #region FILTER
+                // Filter Construction 
+                sql += MultipleFilters(fqp.Filter);
 
-                    // Multiple ItemTypes 
-                    sql += MultipleItemTypes(fqp.ItemTypes, fqp.QueryItemType);
-           
+                // Exclude Construction 
+                sql += MultipleExcludes(fqp.Filter);
+                #endregion
+
+                // ItemTypes 
+                #region ItemTypes
+                // Multiple ItemTypes 
+                sql += MultipleItemTypes(fqp.ItemTypes, fqp.QueryItemType, fqp.TypeOfQuery);
+
+                sql += ItemTypesExcludes(fqp.ItemTypeExcludes, fqp.TypeOfQuery);
+                #endregion
 
                 // Archive 
                 if (fqp.ItemState != "All")
@@ -266,7 +270,7 @@ namespace ELEMENTS.Data.SQLite
 
                 //  COLLATE NOCASE  -> SQLITE 
                 sql += " ORDER BY " + tblShort + "." + fqp.OrderByClause + " COLLATE NOCASE " + direction + " ";
-         
+
                 #endregion
 
                 // Paging 
@@ -556,11 +560,16 @@ namespace ELEMENTS.Data.SQLite
 
             return query;
         }
-     
+
         // Filter 
-        private static string MultipleItemTypes(List<string> itemTypes, string queryItemType)
+        private static string MultipleItemTypes(List<string> itemTypes, string queryItemType, QueryType queryType)
         {
             string query = string.Empty;
+
+            // Search -> keine ItemType Berücksichtigung
+            if (queryType == QueryType.Search)
+                return query;
+
 
             try
             {
@@ -571,7 +580,10 @@ namespace ELEMENTS.Data.SQLite
                 //query += " ) ";
 
                 // Default Query ItemType hinzufügen 
-                itemTypes.Add(queryItemType);
+                if (!string.IsNullOrEmpty(queryItemType))
+                { 
+                    itemTypes.Add(queryItemType);
+                }
 
                 // zusätzliche ItemTypes 
                 if (itemTypes.Count >= 1)
@@ -618,6 +630,45 @@ namespace ELEMENTS.Data.SQLite
             return query;
 
         }
+        private static string ItemTypesExcludes(List<string> itemTypeExcludes, QueryType queryType)
+        {
+            string query = string.Empty;
+
+            try
+            {
+                // ItemTypes 
+                if (itemTypeExcludes.Count >= 1)
+                {
+                    query += " AND ( ";
+
+                    // Durch ItemTypes durchgehen 
+                    for (int i = 0; i < itemTypeExcludes.Count; i++)
+                    {
+                        // Redirect holen -> es ist kein Problem dass der Redirect evtl. doppelt ist, da es eine OR Verknüpfung ist 
+                        string it = itemTypeExcludes[i].ToSecureString();
+                        if (i == 0)
+                        {
+                            query += tblShort + ".ItemType != '" + it + "' ";
+                        }
+                        else
+                        {
+                            query += " OR " + tblShort + ".ItemType != '" + it + "' ";
+                        }
+                    }
+
+                    query += " ) ";
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("ItemTypes konnten nicht verarbeitet werden");
+            }
+
+            return query;
+
+        }
+
         private static string MultipleFilters(List<FilterByClauseDTO> filters)
         {
             string query = string.Empty;
@@ -969,7 +1020,7 @@ namespace ELEMENTS.Data.SQLite
         }
     }
 
-  
+
     public partial class QueryParameter : IQueryParameter
     {
         // Default Methods 
@@ -1005,6 +1056,8 @@ namespace ELEMENTS.Data.SQLite
 
         // List 
         public List<string> ItemTypes { get; set; } = new List<string>();
+        public List<string> ItemTypeExcludes { get; set; } = new List<string>();
+
         public string ItemState { get; set; } = "Active";
 
         // Matchcode 
@@ -1040,21 +1093,24 @@ namespace ELEMENTS.Data.SQLite
             // masterGUID 
             if (MasterGUID == Guid.Empty)
             {
-                
+
                 return false;
             }
 
             // ItemType 
             if (string.IsNullOrEmpty(QueryItemType))
             {
-                
-                return false;
+                // nur prüfen wenn es != Search ist 
+                if (TypeOfQuery != QueryType.Search)
+                {
+                    return false;
+                }
             }
 
             // Query Type 
             if (TypeOfQuery == QueryType.NULL)
             {
-                
+
                 return false;
             }
 

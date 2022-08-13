@@ -13,7 +13,7 @@ namespace ELEMENTS
    
     public class AddItemRepository : IAddItemRepository
     {
-        public ISQLiteService Service { get; set; }
+        public ISqlDatabaseService Service { get; set; }
         public string Value { get; set; }
         public IDTO Create()
         {

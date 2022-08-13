@@ -1,0 +1,21 @@
+﻿body {
+}
+
+.bg-light {
+    color: inherit !important;
+}
+
+.verticalText {
+    transform: rotate(180deg);
+    text-align: center;
+    writing-mode: vertical-lr;
+}
+
+.mhpx-150 {
+    min-height: 150px;
+}
+
+.mw-95 {
+    max-width: 95% !important;
+}
+

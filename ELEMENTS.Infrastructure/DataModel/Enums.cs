@@ -44,4 +44,6 @@ namespace ELEMENTS.Infrastructure
         ControlLayout = 3,
     }
     public enum TeaserDirection { Left, Right };
+
+    public enum ModalFormSize { Small, Normal, Large, Extra }
 }

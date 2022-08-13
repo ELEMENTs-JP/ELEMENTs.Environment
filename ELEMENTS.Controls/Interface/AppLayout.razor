@@ -8,6 +8,10 @@
             @Header
         </div>
 
+        <div class="@MenuCSS">
+            @Menu
+        </div>
+
         <div class="@ContentCSS">
             @ChildContent
         </div>
@@ -36,18 +40,24 @@
     public RenderFragment Header { get; set; }
 
     [Parameter]
-    public string HeaderCSS { get; set; } = "top-row px-4 bg-white";
+    public string HeaderCSS { get; set; } = "top-row px-3 py-2 bg-white";
 
     [Parameter]
     public RenderFragment ChildContent { get; set; }
 
     [Parameter]
-    public string ContentCSS { get; set; } = "content px-4 pb-3";
+    public string ContentCSS { get; set; } = "content px-3 pb-3";
 
     [Parameter]
     public RenderFragment Footer { get; set; }
 
     [Parameter]
     public string FooterCSS { get; set; } = "";
+
+    [Parameter]
+    public RenderFragment Menu { get; set; }
+
+    [Parameter]
+    public string MenuCSS { get; set; } = "";
 
 }

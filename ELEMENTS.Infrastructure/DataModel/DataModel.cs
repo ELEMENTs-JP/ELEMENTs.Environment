@@ -27,7 +27,6 @@ namespace ELEMENTS.Infrastructure
 
         public List<NavigationEntry> Items { get; set; } = new List<NavigationEntry>();
     }
-
   
     public class AuthentificationFeedback
     {
@@ -61,50 +60,6 @@ namespace ELEMENTS.Infrastructure
         }
     }
 
-    public class FileNotification
-    {
-        public string FullFilePath { get; set; }
-        public Guid FileGUID { get; set; }
-        public string OriginalFileName { get; set; }
-        public string FileTextContent { get; set; }
-    }
-    public class FileNotificationService
-    {
-        public event Func<FileNotification, Task> Notification;
-
-        public void Notify(FileNotification notification)
-        {
-            if (Notification != null)
-            {
-                Notification.Invoke(notification);
-            }
-        }
-    }
-
-
-
-    public class InformationNotification
-    {
-        public string Title { get; set; }
-        public string Information { get; set; }
-        public string Filter { get; set; }
-    }
-    public class InformationNotificationService
-    {
-        public event Func<InformationNotification, Task> Notification;
-
-        public void Notify(InformationNotification notification)
-        {
-            if (Notification != null)
-            {
-                Notification.Invoke(notification);
-            }
-        }
-    }
-
-
-
-
     public class Entry : IEntry
     {
         public string Title { get; set; } = string.Empty;
@@ -112,7 +67,6 @@ namespace ELEMENTS.Infrastructure
         public string Matchcode { get; set; } = string.Empty;
         public bool Checked { get; set; } = false;
     }
-
     public class Identify : Entry, IIdentify
     {
         public Guid GUID { get; set; } = Guid.Empty;

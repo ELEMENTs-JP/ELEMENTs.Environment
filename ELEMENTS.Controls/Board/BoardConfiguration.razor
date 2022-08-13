@@ -1,0 +1,309 @@
+﻿@using System.Linq
+@using System.Text.Json;
+@inject IJSRuntime JS
+@implements IDisposable
+
+@if (Typ != BoardType.NULL)
+{
+    <ModalForm Title="@( Typ.ToSecureString() + " konfigurieren" )">
+
+        @if (BoardRepository.CurrentBoard != null)
+        {
+            <Label>Titel</Label>
+            <p>@this.BoardRepository.CurrentBoard.Title.ToSecureString()</p>
+
+            <Label>Beschreibung</Label>
+            <p>@this.BoardRepository.CurrentBoard.Content.ToSecureString()</p>
+        }
+
+        @if (Typ == BoardType.Kanban || Typ == BoardType.Roadmap)
+        {
+            <div class="row align-items-center mt-2">
+                <div class="col">
+                    <Label>Spalten</Label>
+                </div>
+                <div class="col-auto">
+                    <TextBox ControlCSS="form-control form-control-sm"
+                             @bind-Value="@AddColumn" Placeholder="hinzufügen..."></TextBox>
+                </div>
+                <div class="col-auto">
+                    <button type="button" class="btn btn-sm btn-ghost-primary"
+                            @onclick="@( e => { this.BoardRepository.AddColumn(this.AddColumn); } )">
+                        +
+                    </button>
+                </div>
+            </div>
+            <div class="border-top my-2 py-2  @dropableContainerClass" style="min-height:130px">
+
+
+                @if (BoardRepository != null)
+                {
+                    @try
+                    {
+                        @if (BoardRepository.Columns != null)
+                        {
+                            @if (BoardRepository.Columns.Count >= 1)
+                            {
+                                @foreach (var item in BoardRepository.Columns)
+                                {
+                                    <FlexItem BoardType="@Typ.ToString()" DTO="@item" DragableItemClass="@draggableItemClass"
+                                              Row="Row" RowItemType="BoardRow" Column="Column" ColumnItemType="BoardColumn"
+                                              ShowDeleteButton="true"
+                                              Properties="@( new List<string> { "SortOrder" } )"
+                                              OnItemDeleted="@( e => { BoardRepository.RemoveColumn(e); } )" />
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Diagnostics.Debug.WriteLine("FAIL: " + ex.Message);
+                    }
+                }
+
+            </div>
+        }
+
+        @if (Typ == BoardType.Backlog || Typ == BoardType.Roadmap)
+        {
+            <div class="row align-items-center mt-2">
+                <div class="col">
+                    <Label>Zeilen</Label>
+                </div>
+                <div class="col-auto">
+                    <TextBox ControlCSS="form-control form-control-sm"
+                             @bind-Value="@AddRow" Placeholder="hinzufügen..."></TextBox>
+                </div>
+                <div class="col-auto">
+                    <button type="button" class="btn btn-sm btn-ghost-primary"
+                            @onclick="@( e => { this.BoardRepository.AddRow(this.AddRow); } )">
+                        +
+                    </button>
+                </div>
+            </div>
+            <div class="border-top my-2 py-2  @dropableContainerClass" style="min-height:130px">
+
+                @if (BoardRepository != null)
+                {
+                    @try
+                    {
+                        @if (BoardRepository.Rows != null)
+                        {
+                            @if (BoardRepository.Rows.Count >= 1)
+                            {
+                                @foreach (var item in BoardRepository.Rows)
+                                {
+                                    <FlexItem BoardType="@Typ.ToString()" DTO="@item" DragableItemClass="@draggableItemClass"
+                                              Row="Row" RowItemType="BoardRow" Column="Columns" ColumnItemType="BoardColumn"
+                                              ShowDeleteButton="true"
+                                              Properties="@( new List<string> { "SortOrder" } )"
+                                              OnItemDeleted="@( e => { BoardRepository.RemoveRow(e); } )" />
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Diagnostics.Debug.WriteLine("FAIL: " + ex.Message);
+                    }
+                }
+
+            </div>
+        }
+
+    </ModalForm>
+}
+
+@code {
+
+    // Objects
+    private Lazy<Task<IJSObjectReference>> module;
+    private DotNetObjectReference<BoardConfiguration>? objRef;
+
+    // Fields
+    string draggableItemClass = "dragglable_BoardConfig_ColumnRow_Item";
+    string dropableContainerClass = "dropable_BoardConfig_ColumnRow_Container";
+
+    public string AddRow { get; set; } = string.Empty;
+    public string AddColumn { get; set; } = string.Empty;
+
+    [Parameter]
+    public IBoardInterfaceRepository BoardRepository { get; set; }
+
+    [Parameter]
+    public BoardType Typ { get; set; } = BoardType.NULL;
+
+    // JS Methods
+    [JSInvokable]
+    public async void OnSortOrderChanged(JsonElement json)
+    {
+        try
+        {
+            // string div = json.GetProperty("DIV").GetString();
+            await SortOrderChanged.InvokeAsync(json);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("FAIL: " + ex.Message);
+        }
+
+    }
+
+    [JSInvokable]
+    public async void OnItemAdded(JsonElement json)
+    {
+        try
+        {
+            // string div = json.GetProperty("DIV").GetString();
+            await ItemAdded.InvokeAsync(json);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("FAIL: " + ex.Message);
+        }
+    }
+
+    [JSInvokable]
+    public async void OnItemChanged(JsonElement json)
+    {
+        try
+        {
+            // string div = json.GetProperty("DIV").GetString();
+            await ItemChanged.InvokeAsync(json);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("FAIL: " + ex.Message);
+        }
+    }
+
+    [JSInvokable]
+    public async void OnDragEnd(JsonElement json)
+    {
+        try
+        {
+            // string div = json.GetProperty("DIV").GetString();
+            await DragEnd.InvokeAsync(json);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("FAIL: " + ex.Message);
+        }
+    }
+
+    [JSInvokable]
+    public async void OnItemRemoved(JsonElement json)
+    {
+        try
+        {
+            // string div = json.GetProperty("DIV").GetString();
+            await ItemRemoved.InvokeAsync(json);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("FAIL: " + ex.Message);
+        }
+    }
+
+    // Callback
+    [Parameter]
+    public EventCallback<JsonElement> ItemChanged { get; set; }
+
+    [Parameter]
+    public EventCallback<JsonElement> ItemAdded { get; set; }
+
+    [Parameter]
+    public EventCallback<JsonElement> SortOrderChanged { get; set; }
+
+    [Parameter]
+    public EventCallback<JsonElement> DragEnd { get; set; }
+
+    [Parameter]
+    public EventCallback<JsonElement> ItemRemoved { get; set; }
+
+    // CTR
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        Init();
+    }
+
+    // Methods
+    public void Init()
+    {
+        // Import JS File
+        module = new(() => JS.InvokeAsync<IJSObjectReference>("import", "./_content/ELEMENTS.Controls/DragDrop.js").AsTask());
+    }
+
+    public async ValueTask Assign()
+    {
+        try
+        {
+            // Reference
+            objRef = DotNetObjectReference.Create(this);
+
+            // Execute function
+            if (module != null)
+            {
+                var refMethod = await module.Value;
+                await refMethod.InvokeVoidAsync("assignMultipleSortableJS",
+                    dropableContainerClass, draggableItemClass, objRef);
+            }
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine("FAIL: " + ex.Message);
+        }
+    }
+
+    // Events
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+
+        try
+        {
+            // assign dragdrop
+            await Assign();
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine("FAIL: " + ex.Message);
+        }
+    }
+
+    // Dispose
+    public async ValueTask DisposeAsync()
+    {
+        try
+        {
+            if (module.IsValueCreated)
+            {
+                var dispo = await module.Value;
+                await dispo.DisposeAsync();
+            }
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine("FAIL: " + ex.Message);
+        }
+    }
+
+    public void Dispose()
+    {
+        try
+        {
+            if (module.IsValueCreated)
+            {
+                var dispo = module.Value;
+                dispo.Dispose();
+            }
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine("FAIL: " + ex.Message);
+        }
+    }
+
+}
