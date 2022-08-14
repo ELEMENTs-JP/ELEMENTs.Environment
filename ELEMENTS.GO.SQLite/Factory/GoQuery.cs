@@ -652,7 +652,7 @@ namespace ELEMENTS.Data.SQLite
                         }
                         else
                         {
-                            query += " OR " + tblShort + ".ItemType != '" + it + "' ";
+                            query += " AND " + tblShort + ".ItemType != '" + it + "' ";
                         }
                     }
 
