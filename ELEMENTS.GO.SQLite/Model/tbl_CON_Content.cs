@@ -691,7 +691,7 @@ namespace ELEMENTS.Data.SQLite
             }
             catch (Exception ex)
             {
-
+                System.Diagnostics.Debug.WriteLine("FAIL: " + ex.Message);
             }
 
             return null;
@@ -913,6 +913,42 @@ namespace ELEMENTS.Data.SQLite
 
             return 0;
         }
+
+        // User by Mail
+        public static IDTO GetUserByMail(string Mail)
+        {
+            try
+            {
+                IInputDTO input = InputDTO.GetItemTemplate(Guid.Empty, Guid.Empty, string.Empty, "User");
+
+                string table = FactoryStructure.GetClientMapping(ElementsEntityType.Content).Class;
+                string query = FactoryQuery.GetUserByMail(input, table);
+
+                IDTO dbitem = null;
+
+                // Content -> Apps 
+                using (SQLiteContext context = SQLiteHelper.GetEntities())
+                {
+                    // Query 
+                    dbitem = context.tbl_CON_Content.FromSqlRaw(query).FirstOrDefault();
+                }
+
+                if (dbitem == null)
+                {
+                    System.Diagnostics.Debug.WriteLine("FAIL: ITEM IS NULL");
+                    throw new Exception("Das Item konnte nicht geladen werden.");
+                }
+
+                return dbitem as IDTO;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("FAIL: " + ex.Message);
+            }
+
+            return null;
+        }
+    
     }
 
     public partial class tbl_CON_Content : IDTO

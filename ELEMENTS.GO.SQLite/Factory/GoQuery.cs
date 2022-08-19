@@ -63,7 +63,7 @@ namespace ELEMENTS.Data.SQLite
     {
         private static string tblShort = "s";
 
-        // Query 
+        // CREATE 
         public static string GetCreateQuery(IInputDTO input, string tbl)
         {
             string sql = string.Empty;
@@ -96,6 +96,8 @@ namespace ELEMENTS.Data.SQLite
 
             return sql;
         }
+        
+        // ITEMS
         public static string GetItemsQuery(IQueryParameter fqp)
         {
             // Check 
@@ -299,6 +301,8 @@ namespace ELEMENTS.Data.SQLite
                 return " SELECT " + tbl + ".* FROM " + tbl + "  WHERE " + tbl + ".MasterGUID = '" + fqp.MasterGUID + "';";
             }
         }
+        
+        // SINGLE
         public static string GetItemByGUIDQuery(IInputDTO input, string tbl)
         {
             string sql = string.Empty;
@@ -334,10 +338,29 @@ namespace ELEMENTS.Data.SQLite
 
             return sql;
         }
+        public static string GetUserByMail(IInputDTO input, string tbl)
+        {
+            string query = string.Empty;
+
+            // INFO: OLD 
+            query = " SELECT DISTINCT " + tblShort + ".* FROM " + tbl + " AS " + tblShort + " ";
+
+            // Normal Query 
+            query += " INNER JOIN tbl_MTD_Property AS r " +
+                        " ON (r.RelatedItemGUID = " + tblShort + ".GUID) " +
+                        " WHERE s.ItemType = '" + input.ItemType + "' AND ";
+
+            query += " ( r.Name = 'Mail' COLLATE NOCASE AND  r.Value = 'Value' COLLATE NOCASE ) ";
+
+            return query;
+        }
+        // DELETE
         public static string GetDeleteQuery(IInputDTO input, string tbl)
         {
             return "DELETE FROM " + tbl + " WHERE GUID = '" + input.ItemGUID + "' AND MasterGUID = '" + input.MasterGUID + "'";
         }
+        
+        // COUNT
         public static string GetCountQuery(Guid MasterGUID, string tbl, string itemtype, Guid userGUID = new Guid())
         {
             // when called without parameters this will be true
@@ -383,6 +406,8 @@ namespace ELEMENTS.Data.SQLite
 
             return query;
         }
+        
+        // SELECT Children + Parents
         private static string SelectChildren(string table, Guid ParentItemGUID, Guid MasterGUID, string associationType = "")
         {
             string query = string.Empty;
@@ -416,6 +441,8 @@ namespace ELEMENTS.Data.SQLite
 
             return query;
         }
+        
+        // SELECT JOIN
         private static string SelectPropertyJOIN(string table, string itemType, List<FilterByClauseDTO> filter, Guid MasterGUID, Guid ParentItemGUID = new Guid())
         {
             string query = string.Empty;
@@ -517,6 +544,8 @@ namespace ELEMENTS.Data.SQLite
 
             return query;
         }
+        
+        // SELECT Specific
         private static string SelectNewestItems(string table, Guid MasterGUID)
         {
             // Check 
@@ -561,7 +590,7 @@ namespace ELEMENTS.Data.SQLite
             return query;
         }
 
-        // Filter 
+        // ItemType 
         private static string MultipleItemTypes(List<string> itemTypes, string queryItemType, QueryType queryType)
         {
             string query = string.Empty;
@@ -669,6 +698,7 @@ namespace ELEMENTS.Data.SQLite
 
         }
 
+        // Filters
         private static string MultipleFilters(List<FilterByClauseDTO> filters)
         {
             string query = string.Empty;

@@ -412,6 +412,30 @@ namespace ELEMENTS.Data.SQLite
 
     public partial class SQLiteFactory : IFactory
     {
+        public static IDTO GetUserByMail(string Mail)
+        {
+            try
+            {
+                // Check 
+                if (string.IsNullOrEmpty(Mail))
+                    return null;
+
+                // DTO 
+                IDTO dto = tbl_CON_Content.GetUserByMail(Mail);
+                if (dto == null)
+                {
+                    throw new Exception("Der User konnte nicht geladen werden.");
+                }
+                return dto;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+    }
+    public partial class SQLiteFactory : IFactory
+    {
         // Metadata 
     }
 
