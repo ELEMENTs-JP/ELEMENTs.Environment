@@ -112,6 +112,20 @@ namespace ELEMENTS.Infrastructure
     }
 
     // ItemType 
+    public enum ItemTypeTyp
+    { 
+        NULL = 0,
+        System = 1, // Systemnavigation 
+        Item = 2, // Listenansicht 
+        File = 3, // Datei Ansicht
+        Date = 4, // Kalender Ansicht
+        Portfolio = 5, // Portfolio Ansicht
+        Collection = 6, // Collection Ansicht 
+        Internal = 7, // Interner ItemTye 
+        Notice = 8,
+        Table = 9,
+        Related = 10, // Untergeordneter bzw. verknüpfter 
+    }
     public interface IItemType
     {
         Guid ID { get; set; }
@@ -137,21 +151,9 @@ namespace ELEMENTS.Infrastructure
         List<IItemType> GetParallelItemTypes();
         List<IItemType> GetChildItemTypes();
         List<IItemType> GetDefaultItemTypes();
-    }
 
-    public enum ItemTypeTyp
-    { 
-        NULL = 0,
-        System = 1, // Systemnavigation 
-        Item = 2, // Listenansicht 
-        File = 3, // Datei Ansicht
-        Date = 4, // Kalender Ansicht
-        Portfolio = 5, // Portfolio Ansicht
-        Collection = 6, // Collection Ansicht 
-        Internal = 7, // Interner ItemTye 
-        Notice = 8,
-        Table = 9,
-        Related = 10, // Untergeordneter bzw. verknüpfter 
+        // Permissions
+        List<IObjectPermission> GetPermissions();
     }
 
     public class ItemType : IItemType
@@ -197,6 +199,50 @@ namespace ELEMENTS.Infrastructure
             List<IItemType> itemtypes = new List<IItemType>();
             return itemtypes;
         }
+
+        // Berechtigungen
+        public virtual List<IObjectPermission> GetPermissions()
+        {
+            List<IObjectPermission> permissions = new List<IObjectPermission>();
+
+            // Base Permissions
+            permissions.Add(new ItemTypePermission() { PermissionID = "B-01", Permission = "Create", Description = "Ermöglicht das Erstellen von neuen Datensätzen." });
+            permissions.Add(new ItemTypePermission() { PermissionID = "B-02", Permission = "Read", Description = "Ermöglicht das tabellarische Lesen und Suchen nach Datensätzen." });
+            permissions.Add(new ItemTypePermission() { PermissionID = "B-03", Permission = "View", Description = "Ermöglicht das betrachten eines Datensatzes in der View." });
+            permissions.Add(new ItemTypePermission() { PermissionID = "B-04", Permission = "Update", Description = "Ermöglicht das Editieren und Speichern eines Datensatzes." });
+            permissions.Add(new ItemTypePermission() { PermissionID = "B-05", Permission = "Delete", Description = "Ermöglicht das Löschen eines Datensatzes." });
+            permissions.Add(new ItemTypePermission() { PermissionID = "B-06", Permission = "Assign", Description = "Ermöglicht das Zuordnen von fremden Datensätzen." });
+            permissions.Add(new ItemTypePermission() { PermissionID = "B-07", Permission = "Remove", Description = "Ermöglicht das Wegordnen von fremden Datensätzen." });
+
+            // Feature Permission
+            permissions.Add(new FeaturePermission() { PermissionID = "F-0001", Permission = "Comments", Description = "Ermöglicht das Erstellen, Bearbeiten und Entfernen von eigenen Kommentaren." });
+            permissions.Add(new FeaturePermission() { PermissionID = "F-0002", Permission = "Notes", Description = "Ermöglicht das Erstellen, Bearbeiten und Entfernen von eigenen Notizen." });
+            permissions.Add(new FeaturePermission() { PermissionID = "F-0003", Permission = "Dateien", Description = "Ermöglicht das Hochladen, Entfernen, Bearbeiten, Suchen und betrachten sowie das Zu- und Wegordnen von Dateien." });
+            permissions.Add(new FeaturePermission() { PermissionID = "F-0004", Permission = "Checklist", Description = "Ermöglicht das Erstellen, Bearbeiten und finalisieren von Checklisten." });
+            permissions.Add(new FeaturePermission() { PermissionID = "F-0005", Permission = "Metadaten", Description = "Ermöglicht das Einsehen und Nutzen der Metadaten Informationen." });
+
+            return permissions;
+        }
+    }
+
+    public interface IObjectPermission
+    {
+        string PermissionID { get; set; }
+        string Permission { get; set; }
+        string Description { get; set; }
+    }
+    public class ItemTypePermission : IObjectPermission
+    {
+        public string PermissionID { get; set; }
+        public string Permission { get; set; }
+        public string Description { get; set; }
+    }
+
+    public class FeaturePermission : IObjectPermission
+    {
+        public string PermissionID { get; set; }
+        public string Permission { get; set; }
+        public string Description { get; set; }
     }
 
     // Board 
@@ -253,6 +299,8 @@ namespace ELEMENTS.Infrastructure
         Link = 2,
         Percent = 3,
         Money = 4,
+        Integer = 5,
+        Decimal = 6,
 
         Date = 11,
         DateTime = 12,

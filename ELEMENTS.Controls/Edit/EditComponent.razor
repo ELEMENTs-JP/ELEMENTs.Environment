@@ -2,7 +2,7 @@
 
 
 <div class="@( (Border) ?
-               ((Field.Type == EditFieldType.Divider) ? "p-1" : "border-bottom p-1 hover")
+               ((Field.Type == EditFieldType.Divider) ? "p-1" : "p-1 hover")
                : "hover" )">
 
 
@@ -11,7 +11,7 @@
     }
     else
     {
-        <label class="form-label text-dark">@Field.Title.ToSecureString()</label>
+        <label class="form-label text-primary">@Field.Title.ToSecureString()</label>
     }
 
     @* MODE *@
@@ -569,7 +569,8 @@
                             try
                             {
                                 // Text // TextArea
-                                if (Field.Type == EditFieldType.TextBox ||
+                                if (Field.Type == EditFieldType.Text ||
+                                    Field.Type == EditFieldType.TextBox ||
                                     Field.Type == EditFieldType.TextArea)
                                 {
                                     this.Value = EditRepository.DTO.GetProperty(Field.Property).Value.ToSecureString();

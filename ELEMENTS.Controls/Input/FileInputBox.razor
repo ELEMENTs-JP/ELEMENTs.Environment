@@ -100,6 +100,7 @@
                 token.FileGUID = itemGUID;
                 token.FullFilePath = fullFilePath;
                 token.OriginalFileName = file.Name;
+                token.FileSizeInByte = file.Size;
                 await OnFileUploaded.InvokeAsync(token);
             }
             catch (Exception ex)

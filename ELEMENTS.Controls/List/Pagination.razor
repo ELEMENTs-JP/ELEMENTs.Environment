@@ -6,7 +6,7 @@
     {
         <li style="cursor: pointer;" @onclick="@( e => { SelectedPageInternal(link); }  )"
             class="page-item @(link.Enabled ? null : "disabled") @(link.Active ? "active" : null)">
-            <span class="page-link">@link.Text</span>
+            <small class="page-link">@link.Text</small>
         </li>
     }
 </ul>
