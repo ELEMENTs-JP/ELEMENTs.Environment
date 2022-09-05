@@ -4,7 +4,7 @@ let generalright = 35;
 let generaltop = 10;
 let generalbottom = 10;
 
-export function loadChart(divID, dotNetHelper)
+export function loadPieChart(divID, dotNetHelper)
 {
     // Create Parameter 
     let jsonParameter = {
@@ -37,28 +37,28 @@ export function loadChart(divID, dotNetHelper)
     
 }
 
-var chart;
+
 
 function onPieChartJSSucess(data) {
 
     try {
-        var chartType = 'pie';
-        var title = data.title.toString();
-        var CutOutPercentage = 80;
-        var legendePosition = 'right';
-        var showLegende = false;
+        let chartType = 'pie';
+        let title = data.title.toString();
+        let CutOutPercentage = 80;
+        let legendePosition = 'right';
+        let showLegende = false;
 
         // Farben 
-        var colors = getChartColors();
-        var legendTitle = '';
+        let colors = getChartColors();
+        let legendTitle = '';
 
         // Arrays 
-        var labelData = [];
-        var dataset = [];
+        let labelData = [];
+        let dataset = [];
 
         try {
-            for (var s = 0; s < data.series.length; s++) {
-                var serie = data.series[s];
+            for (let s = 0; s < data.series.length; s++) {
+                let serie = data.series[s];
                 if (serie === null)
                     continue;
 
@@ -66,10 +66,10 @@ function onPieChartJSSucess(data) {
                 legendTitle = serie.title;
 
                 // Werte 
-                for (var c = 0; c < serie.items.length; c++) {
+                for (let c = 0; c < serie.items.length; c++) {
                     try {
-                        var key = serie.items[c].key;
-                        var value = serie.items[c].value;
+                        let key = serie.items[c].key;
+                        let value = serie.items[c].value;
 
                         if (key === null)
                             key = '---';
@@ -88,7 +88,7 @@ function onPieChartJSSucess(data) {
 
 
         // Get Canvas + Check Visibility 
-        var canvas = null;
+        let canvas = null;
 
         try {
             canvas = document.getElementById(data.div);
@@ -102,8 +102,13 @@ function onPieChartJSSucess(data) {
             console.log("FAIL: " + e);
         }
 
+        let chart;
+
         try {
-            if (chart !== null && chart !== undefined) { chart.destroy(); }
+            if (chart !== null && chart !== undefined)
+            {
+                try { chart.destroy(); } catch (eInner) { alert(eInner); }
+            }
 
             // Chart
             chart = new Chart(canvas, {
@@ -144,6 +149,7 @@ function onPieChartJSSucess(data) {
                     {
                         display: showLegende,
                         position: legendePosition,
+                        align: "middle",
                         fontSize: 8,
                         strokeStyle: '#fff',
                         title: {
@@ -163,7 +169,7 @@ function onPieChartJSSucess(data) {
                     },
                     scales: {
                         yAxes: [{
-                            gridLines: {
+                            grid: {
                                 drawBorder: true,
                                 display: true,
                                 drawTicks: true
@@ -174,7 +180,7 @@ function onPieChartJSSucess(data) {
                             }
                         }],
                         xAxes: [{
-                            gridLines: {
+                            grid: {
                                 drawBorder: true,
                                 display: false
                             },
@@ -188,6 +194,10 @@ function onPieChartJSSucess(data) {
 
                 }
             });
+
+            // Update 
+            chart.options.plugins.legend.position = 'right';
+            chart.update();
         }
         catch (e) {
             console.log("FAIL: " + e);
@@ -203,7 +213,7 @@ function getChartColors() {
 
     try {
         // viele starke Farben 
-        var colors = [
+        let colors = [
             '#34A853', // green 
             '#ddd',
             '#e01256', // red 
@@ -230,7 +240,7 @@ function getChartColors() {
     } catch (e) {
 
         // viele starke Farben 
-        var cathColors = [
+        let cathColors = [
             '#34A853', // green 
             '#eee',
             '#e01256', // red 
@@ -260,9 +270,9 @@ function getChartColorsMultiple(multiply) {
 
     try {
 
-        var colors = [];
+        let colors = [];
 
-        for (var c = 0; c < multiply; c++) {
+        for (let c = 0; c < multiply; c++) {
             colors.push('#32AA50');
             colors.push('#eee');
             colors.push('#DF1455');
@@ -287,7 +297,7 @@ function getChartColorsMultiple(multiply) {
     } catch (e) {
 
         // viele starke Farben 
-        var cathColors = [
+        let cathColors = [
             '#34A853', // green 
             '#eee',
             '#e01256', // red 
@@ -318,12 +328,12 @@ function getChartColorsShuffled() {
     try {
 
         // viele starke Farben 
-        var colors = getChartColors();
+        let colors = getChartColors();
         shuffle(colors);
         return colors;
     } catch (e) {
         // viele starke Farben 
-        var theco = getChartColors();
+        let theco = getChartColors();
         shuffle(theco);
         return theco;
     }

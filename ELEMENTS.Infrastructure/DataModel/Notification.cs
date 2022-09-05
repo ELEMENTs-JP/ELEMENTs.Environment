@@ -37,6 +37,7 @@ namespace ELEMENTS.Infrastructure
         public string Information { get; set; } = string.Empty;
         public string Filter { get; set; } = string.Empty;
         public string Event { get; set; } = string.Empty;
+        public bool IsDone { get; set; } = false;
         public IDTO DTO { get; set; }
     }
     public class InformationNotificationService

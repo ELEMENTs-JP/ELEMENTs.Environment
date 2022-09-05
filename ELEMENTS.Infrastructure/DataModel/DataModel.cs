@@ -13,12 +13,12 @@ namespace ELEMENTS.Infrastructure
     {
         public NavigationEntry()
         {
-            if (ID == Guid.Empty)
+            if (string.IsNullOrEmpty(ID))
             {
-                ID = Guid.NewGuid();
+                ID = "GENERATED-" + Guid.NewGuid().ToString();
             }
         }
-        public Guid ID { get; set; }
+        public string ID { get; set; }
         public int Position { get; set; } = 1;
         public string Link { get; set; } = "/";
         public string Title { get; set; } = "Home";

@@ -1,0 +1,45 @@
+﻿@using ELEMENTS.Controls.Settings
+
+@if (InterfaceRepository != null)
+{
+    @if (InterfaceRepository.IsInitialized)
+    {
+        <div class="@((Border == true) ? " border bg-white " : " bg-white ")">
+
+            <div class="row">
+
+                @if (InterfaceRepository.Fields != null)
+                {
+                    @foreach (ISettingField field in InterfaceRepository.Fields)
+                    {
+                        <div class="@field.ColumnCSSClass">
+                            <SettingComponent Field="@field" EditRepository="@EditRepository" Border="@ItemBorder" />
+                        </div>
+                    }
+                }
+
+            </div>
+        </div>
+    }
+}
+else
+{
+    <p>Interface Repository is empty</p>
+}
+
+
+@code {
+
+    [Parameter]
+    public ISettingInterfaceRepository InterfaceRepository { get; set; }
+
+    [Parameter]
+    public IEditItemRepository EditRepository { get; set; }
+
+    [Parameter]
+    public bool Border { get; set; } = false;
+
+    [Parameter]
+    public bool ItemBorder { get; set; } = true;
+
+}

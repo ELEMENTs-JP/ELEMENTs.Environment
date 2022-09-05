@@ -350,7 +350,7 @@ namespace ELEMENTS.Data.SQLite
                         " ON (r.RelatedItemGUID = " + tblShort + ".GUID) " +
                         " WHERE s.ItemType = '" + input.ItemType + "' AND ";
 
-            query += " ( r.Name = 'Mail' COLLATE NOCASE AND  r.Value = 'Value' COLLATE NOCASE ) ";
+            query += " ( r.Name = 'Mail' COLLATE NOCASE AND  r.Value = '"+ input.Title.ToSecureString() +"' COLLATE NOCASE ) ";
 
             return query;
         }

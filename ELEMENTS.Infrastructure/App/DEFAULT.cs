@@ -11,7 +11,8 @@ namespace tsp.DEFAULT
     {
         public DEFAULT()
         {
-            ID = Guid.NewGuid();
+            GUID = Guid.NewGuid();
+            ID = "DEF-01";
             Title = "DEFAULT";
             Name = "DEFAULT";
             Description = "Default app";

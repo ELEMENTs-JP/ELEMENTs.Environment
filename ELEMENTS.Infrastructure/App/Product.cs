@@ -11,9 +11,10 @@ namespace tsp.DEFAULT
     {
         public SystemProductItemType()
         {
+            this.GUID = Guid.NewGuid();
+            this.ID = "IT-PROD-01";
             this.Title = "Product";
             this.Name = "Product";
-            this.ID = Guid.NewGuid();
 
             Init();
         }
@@ -25,12 +26,12 @@ namespace tsp.DEFAULT
             this.Fields.Add(new EditField()
             {
                 Title = "ID",
-                ColumnCSSClass = "col-4",
+                ColumnCSSClass = "col-3",
                 Description = "No of the entry.",
                 Type = EditFieldType.TextBox
             });
 
-            this.Fields.Add(new EditField() { Title = "Title", Property = "Title", ColumnCSSClass = "col-8", Type = EditFieldType.TextBox });
+            this.Fields.Add(new EditField() { Title = "Title", Property = "Title", ColumnCSSClass = "col-9", Type = EditFieldType.TextBox });
 
             // Columns 
             this.Columns = new List<IColumn>();

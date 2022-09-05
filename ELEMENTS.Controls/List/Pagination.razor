@@ -1,22 +1,26 @@
 ﻿@inject IJSRuntime JS
 @using System.Linq
 
-<ul class="pagination align-items-center justify-content-center">
-    @foreach (LinkModel link in links)
-    {
-        <li style="cursor: pointer;" @onclick="@( e => { SelectedPageInternal(link); }  )"
-            class="page-item @(link.Enabled ? null : "disabled") @(link.Active ? "active" : null)">
-            <small class="page-link">@link.Text</small>
-        </li>
-    }
-</ul>
+@if (TotalPageCount > 1)
+{
 
+    <ul class="pagination align-items-center justify-content-center">
+        @foreach (LinkModel link in links)
+        {
+            <li style="cursor: pointer;" @onclick="@( e => { SelectedPageInternal(link); }  )"
+                class="page-item @(link.Enabled ? null : "disabled") @(link.Active ? "active" : null)">
+                <small class="page-link">@link.Text</small>
+            </li>
+        }
+    </ul>
+
+}
 
 @code {
     List<LinkModel> links;
 
     [Parameter] public int CurrentPage { get; set; } = 1;
-    [Parameter] public int TotaPageCount { get; set; } = 1;
+    [Parameter] public int TotalPageCount { get; set; } = 1;
     [Parameter] public int Radius { get; set; } = 3;
 
     [Parameter] public EventCallback<int> SelectedPage { get; set; }
@@ -58,7 +62,7 @@
             var previousPage = CurrentPage - 1;
             links.Add(new LinkModel(previousPage, isPreviousPageLinkEnabled, "Previous"));
 
-            for (int i = 1; i <= TotaPageCount; i++)
+            for (int i = 1; i <= TotalPageCount; i++)
             {
                 if (i >= CurrentPage - Radius && i <= CurrentPage + Radius)
                 {
@@ -66,7 +70,7 @@
                 }
             }
 
-            var isNextPageLinkEnabled = CurrentPage != TotaPageCount;
+            var isNextPageLinkEnabled = CurrentPage != TotalPageCount;
             var nextPage = CurrentPage + 1;
             links.Add(new LinkModel(nextPage, isNextPageLinkEnabled, "Next"));
         }

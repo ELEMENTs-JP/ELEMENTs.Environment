@@ -40,7 +40,7 @@ namespace ELEMENTS.Controls.Charts
 
             // Execute function
             var module = await moduleTask.Value;
-            await module.InvokeVoidAsync("loadChart", divID, objRef);
+            await module.InvokeVoidAsync("loadProgressChart", divID, objRef);
         }
         private void LoadDefaultItems()
         {
@@ -77,6 +77,10 @@ namespace ELEMENTS.Controls.Charts
                 Configuration.Parameter = json.GetProperty("DataParameter").GetString();
                 Configuration.ChartType = json.GetProperty("ChartType").GetString();
 
+                    // Serie (max. 1 Serie in diesem Control)
+                    ChartSeriesDTO serie = new ChartSeriesDTO();
+                    serie.Title = Legende;
+
                 // Items 
                 if (this.Items == null || this.Items.Count == 0)
                 {
@@ -84,10 +88,6 @@ namespace ELEMENTS.Controls.Charts
                 }
                 else
                 {
-                    // Serie (max. 1 Serie in diesem Control)
-                    ChartSeriesDTO serie = new ChartSeriesDTO();
-                    serie.Title = Legende;
-
                     // Default Queries 
                     foreach (ChartItemDTO dto in Items)
                     {
@@ -101,7 +101,7 @@ namespace ELEMENTS.Controls.Charts
             }
             catch (Exception ex)
             {
-
+                System.Diagnostics.Debug.WriteLine("FAIL: " + ex.Message);
             }
 
             return Task.FromResult(Configuration);
@@ -120,7 +120,7 @@ namespace ELEMENTS.Controls.Charts
             }
             catch (Exception ex)
             {
-                string msg = ex.Message;
+                System.Diagnostics.Debug.WriteLine("FAIL: " + ex.Message);
             }
         }
 
@@ -136,7 +136,7 @@ namespace ELEMENTS.Controls.Charts
             }
             catch (Exception ex)
             {
-                string msg = ex.Message;
+                System.Diagnostics.Debug.WriteLine("FAIL: " + ex.Message);
             }
         }
     }

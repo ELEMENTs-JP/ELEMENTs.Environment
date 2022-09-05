@@ -412,6 +412,7 @@ namespace ELEMENTS.Data.SQLite
 
     public partial class SQLiteFactory : IFactory
     {
+        // Security // Permissions 
         public static IDTO GetUserByMail(string Mail)
         {
             try
@@ -431,6 +432,48 @@ namespace ELEMENTS.Data.SQLite
             catch (Exception ex)
             {
                 return null;
+            }
+        }
+
+        public static List<IDTO> GetUserPermissions(IDTO User)
+        {
+            List<IDTO> permissions = new List<IDTO>();
+            try
+            {
+                // Check 
+                if (User == null)
+                    return permissions;
+
+                // Prepare 
+                IQueryParameter qpUG = QueryParameter.DefaultItemsQuery(
+                    User.MasterGUID, "ELEMENTs", "UserGroup", QueryType.ParentsByChild);
+                qpUG.PageSize = 999;
+                qpUG.CurrentPage = 1;
+                qpUG.ChildGUID = User.GUID;
+
+                // Permissions
+                IQueryParameter qpPERM = QueryParameter.DefaultItemsQuery(
+                    User.MasterGUID, "ELEMENTs", "Permission", QueryType.ChildrenByParent);
+                qpPERM.PageSize = 999;
+                qpPERM.CurrentPage = 1;
+                qpPERM.ParentGUID = Guid.Empty;
+
+                // DTO 
+                foreach (IDTO group in tbl_CON_Content.GetItems(qpUG))
+                {
+                    qpPERM.ParentGUID = group.GUID;
+
+                    foreach (IDTO permission in tbl_CON_Content.GetItems(qpPERM))
+                    {
+                        permissions.Add(permission);
+                    }
+                }
+
+                return permissions;
+            }
+            catch (Exception ex)
+            {
+                return permissions;
             }
         }
     }

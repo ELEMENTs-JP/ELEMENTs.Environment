@@ -12,7 +12,7 @@
 
 @code {
 
-    private Guid chartGUID = Guid.NewGuid();
+    private string chartGUID = "chart_pie_" + Guid.NewGuid();
 
     protected override async Task OnParametersSetAsync()
     {

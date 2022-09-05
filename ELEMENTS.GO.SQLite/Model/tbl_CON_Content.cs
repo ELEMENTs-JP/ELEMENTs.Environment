@@ -125,7 +125,8 @@ namespace ELEMENTS.Data.SQLite
                 if (GUID == Guid.Empty)
                 {
                     System.Diagnostics.Debug.WriteLine("GUID in LoadProperties is GUID Empty");
-                    return Properties; }
+                    return Properties;
+                }
 
                 // Context 
                 using (SQLiteContext context = SQLiteHelper.GetEntities())
@@ -271,10 +272,16 @@ namespace ELEMENTS.Data.SQLite
             {
                 // Principal GUID 
                 if (MasterGUID == Guid.Empty)
-                { return Settings; }
+                {
+                    System.Diagnostics.Debug.WriteLine("MasterGUID in LoadProperties is GUID Empty");
+                    return Settings;
+                }
 
                 if (GUID == Guid.Empty)
-                { return Settings; }
+                {
+                    System.Diagnostics.Debug.WriteLine("GUID in LoadProperties is GUID Empty");
+                    return Settings;
+                }
 
                 // Context 
                 using (SQLiteContext context = SQLiteHelper.GetEntities())
@@ -300,24 +307,55 @@ namespace ELEMENTS.Data.SQLite
             {
                 // Principal GUID 
                 if (MasterGUID == Guid.Empty)
-                { return null; }
+                {
+                    System.Diagnostics.Debug.WriteLine("MasterGUID in GetProperty is GUID Empty");
+                    throw new Exception("MasterGUID in GetProperty is GUID Empty");
+                }
 
                 if (GUID == Guid.Empty)
-                { return null; }
+                {
+                    System.Diagnostics.Debug.WriteLine("GUID in GetProperty is GUID Empty");
+                    throw new Exception("GUID in GetProperty is GUID Empty");
+                }
 
+
+                // Name 
+                string name = Setting.ToSecureString();
+
+                // Check for NULL 
+                if (Settings == null)
+                {
+                    Settings = new List<ISetting>();
+                }
+                // Property 1.) RAM Query -> fastest as possible 
+                if (Settings.Count == 0)
+                {
+                    // alle Settings laden 
+                    LoadSettings();
+                }
+
+                // Property 2.) Full DB Query -> 1 TIME slow 
+                ISetting _prop = Settings.Where(p => p.Name == name).FirstOrDefault();
+                if (_prop == null)
+                {
+                    // LEERE Property erzeugen 
+                    _prop = SetSetting(string.Empty, Setting, Level);
+                }
+
+                return _prop;
 
                 // Context 
-                using (SQLiteContext context = SQLiteHelper.GetEntities())
-                {
-                    // Properties 
-                    ISetting setting = (from item in context.tbl_SET_Setting
-                                        where item.MasterGUID == MasterGUID
-                                          && item.ReferenceID == GUID.ToSecureString()
-                                          && item.Level == Level.ToSecureString()
-                                          && item.Name == Setting.ToSecureString()
-                                        select item).Cast<ISetting>().FirstOrDefault();
-                    return setting;
-                }
+                //using (SQLiteContext context = SQLiteHelper.GetEntities())
+                //{
+                //    // Properties 
+                //    ISetting setting = (from item in context.tbl_SET_Setting
+                //                        where item.MasterGUID == MasterGUID
+                //                          && item.ReferenceID == GUID.ToSecureString()
+                //                          && item.Level == Level.ToSecureString()
+                //                          && item.Name == Setting.ToSecureString()
+                //                        select item).Cast<ISetting>().FirstOrDefault();
+                //    return setting;
+                //}
             }
             catch (Exception ex)
             {
@@ -327,23 +365,55 @@ namespace ELEMENTS.Data.SQLite
         }
         public ISetting SetSetting(string Value, string Setting, string Level)
         {
-            // Setting erzeugen -> muss über ClientDatabaseContext geschehen 
-            // Erzeugung darf nicht in einem Control entstehen 
-            tbl_SET_Setting set = new tbl_SET_Setting();
-            set.GUID = Guid.NewGuid();
-            set.Value = Value.ToSecureString();
-            set.Name = Setting; // Search Filter 1 
-            set.Level = Level; // Search Filter 2 
-            set.ReferenceID = GUID.ToSecureString(); // Search Filter 3 
-            set.MasterGUID = MasterGUID;
+            // Name 
+            string name = Setting.ToSecureString();
 
-            // Update 
-            ISetting s = tbl_SET_Setting.SetItem(set);
+            // Check for NULL 
+            if (Settings == null)
+            {
+                Settings = new List<ISetting>();
+            }
+            // Property 1.) RAM Query -> fastest as possible 
+            if (Settings.Count == 0)
+            {
+                // alle Properties laden 
+                LoadSettings();
+            }
 
-            // Reload 
-            LoadSettings();
+            // Property 1.) RAM Query -> fastest as possible 
+            ISetting _set = Settings.Where(p => p.Name == name).FirstOrDefault();
 
-            // RETURN 
+            // Wenn weiterhin NULL -> ERZEUGEN 
+            if (_set == null)
+            {
+                // Setting erzeugen -> muss über ClientDatabaseContext geschehen 
+                // Erzeugung darf nicht in einem Control entstehen 
+                _set = new tbl_SET_Setting();
+                _set.GUID = Guid.NewGuid();
+                _set.Value = Value.ToSecureString();
+                _set.Name = Setting; // Search Filter 1 
+                _set.Level = Level; // Search Filter 2 
+                _set.ReferenceID = GUID.ToSecureString(); // Search Filter 3 
+                _set.MasterGUID = MasterGUID;
+            }
+
+            // Property 
+            ISetting s = null;
+
+            // Wenn NICHT NULL 
+            if (_set != null)
+            {
+                // Wert setzen 
+                _set.Value = Value.ToSecureString();
+
+                // Update 
+                s = tbl_SET_Setting.SetItem(_set);
+
+                // Reload 
+                LoadSettings();
+            }
+
+            // Return 
             return s;
         }
         public bool RemoveDeleteSetting(ISetting setting)
@@ -920,6 +990,7 @@ namespace ELEMENTS.Data.SQLite
             try
             {
                 IInputDTO input = InputDTO.GetItemTemplate(Guid.Empty, Guid.Empty, string.Empty, "User");
+                input.Title = Mail;
 
                 string table = FactoryStructure.GetClientMapping(ElementsEntityType.Content).Class;
                 string query = FactoryQuery.GetUserByMail(input, table);

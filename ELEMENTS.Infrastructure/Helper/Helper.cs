@@ -9,11 +9,56 @@ using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using ELEMENTS;
 
 namespace ELEMENTS.Infrastructure
 {
     public static partial class Helper
     {
+        public static void Swap<T>(ref T lhs, ref T rhs)
+        {
+            T temp;
+            temp = lhs;
+            lhs = rhs;
+            rhs = temp;
+        }
+        public static List<OptionItem> ToOptionItems(List<IDTO> Items)
+        {
+            List<OptionItem> options = new List<OptionItem>();
+            foreach (IDTO dto in Items)
+            {
+                try
+                {
+                    OptionItem item = new OptionItem();
+                    item.ID = dto.GUID.ToSecureString();
+                    item.Text = dto.Title.ToSecureString();
+                    item.Value = dto.Title.ToSecureString();
+                    options.Add(item);
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine("FAIL: " + ex.Message);
+                }
+            }
+
+            return options;
+        }
+        public static IDTO ToDTO(this OptionItem oi, List<IDTO> Items)
+        {
+            IDTO dto = null;
+            dto = Items.Where(se => se.GUID == oi.ID.ToSecureGUID()).FirstOrDefault();
+            if (dto == null)
+            {
+                dto = Items.Where(se => se.Title == oi.Value).FirstOrDefault();
+
+                if (dto == null)
+                {
+                    dto = Items.Where(se => se.Title == oi.Text).FirstOrDefault();
+                }
+            }
+
+            return dto;
+        }
         public static IList<T> FromTo<T>(this IList<T> list, int first, int last)
         {
             IList<T> theNewList = new List<T>();

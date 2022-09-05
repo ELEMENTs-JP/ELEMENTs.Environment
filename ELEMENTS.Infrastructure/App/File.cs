@@ -11,7 +11,8 @@ namespace tsp.DEFAULT
     {
         public SystemFileItemType()
         {
-            this.ID = Guid.NewGuid();
+            this.GUID = Guid.NewGuid();
+            this.ID = "IT-FI-01";
             this.Title = "File";
             this.Name = "File";
             this.Typ = ItemTypeTyp.File;

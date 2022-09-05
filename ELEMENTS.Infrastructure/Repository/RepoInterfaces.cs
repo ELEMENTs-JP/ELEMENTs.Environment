@@ -65,5 +65,16 @@ namespace ELEMENTS
         IItemType ItemType { get; set; }
         List<IField> Fields { get; set; }
         List<IColumn> Columns { get; set; }
+        string Group { get; set; }
     }
+
+    public interface ISettingInterfaceRepository
+    {
+        void Init();
+        bool IsInitialized { get; set; }
+        IItemType ItemType { get; set; }
+        List<ISettingField> Fields { get; set; }
+        string Group { get; set; }
+    }
+
 }

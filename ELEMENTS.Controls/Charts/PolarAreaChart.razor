@@ -1,10 +1,6 @@
 ﻿@inject IJSRuntime JS
 @implements IDisposable
 
-
-
-
-
     <div class="bg-light border rounded p-2" 
        style="@( "position: relative; overflow: hidden; " )">
         <div style="position: relative; overflow: hidden;">
@@ -12,14 +8,10 @@
         </div>
     </div>
 
-
-
-
 @code {
 
 
-
-    private Guid chartGUID = Guid.NewGuid();
+    private string chartGUID = "chart_polar_" + Guid.NewGuid();
 
     protected override async Task OnParametersSetAsync()
     {

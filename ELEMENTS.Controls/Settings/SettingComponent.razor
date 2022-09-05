@@ -1,19 +1,17 @@
 ﻿@using System.Globalization
-@inject ISecurityService sec
-
+@inject ISecurityService sec 
 
 <div class="@( (Border) ?
-               ((Field.Type == EditFieldType.Divider) ? "p-1" : "p-1 hover")
-               : "hover" )">
+               ((Field.Type == EditFieldType.Divider) ? "p-1" : "p-1")
+               : " " )">
 
+    @if (Field.Orientation == FieldOrientation.Vertical)
+    {
+        <div class="row gx-1">
+            <label class="form-label text-primary">@Field.Title.ToSecureString()</label>
+        </div>
+    }
 
-    @if (Field.Type == EditFieldType.Divider)
-    {
-    }
-    else
-    {
-        <label class="form-label text-primary">@Field.Title.ToSecureString()</label>
-    }
 
     @* MODE *@
     @if (Field.Mode == EditFieldMode.View)
@@ -29,18 +27,38 @@
                 }
 
                 @if (Field.Type == EditFieldType.Text ||
-            Field.Type == EditFieldType.TextBox ||
-            Field.Type == EditFieldType.TextArea ||
-            Field.Type == EditFieldType.OptionItems ||
-            Field.Type == EditFieldType.LookupItems)
+                    Field.Type == EditFieldType.TextBox ||
+                    Field.Type == EditFieldType.TextArea ||
+                    Field.Type == EditFieldType.OptionItems ||
+                    Field.Type == EditFieldType.LookupItems)
                 {
-                    @Value.ToSecureString()
+                    <div class="row gx-1">
+
+                        @if (Field.Orientation == FieldOrientation.Horizontal)
+                        {
+                            <div class="col">
+                                <label class="form-label text-primary">@Field.Title.ToSecureString()</label>
+                            </div>
+                        }
+
+                        <div class="col">
+                            @Value.ToSecureString()
+                        </div>
+                    </div>
                 }
 
                 @if (Field.Type == EditFieldType.MoneyBox)
                 {
 
                     <div class="row">
+
+                        @if (Field.Orientation == FieldOrientation.Horizontal)
+                        {
+                            <div class="col">
+                                <label class="form-label text-primary">@Field.Title.ToSecureString()</label>
+                            </div>
+                        }
+
                         <div class="col-auto">
                             @DecValue.ToSecureDecimal().ToString("C3", CultureInfo.CurrentCulture)
                         </div>
@@ -54,18 +72,49 @@
 
                 @if (Field.Type == EditFieldType.DecimalBox)
                 {
-                    @DecValue.ToSecureString()
+                    <div class="row gx-1">
+
+                        @if (Field.Orientation == FieldOrientation.Horizontal)
+                        {
+                            <div class="col">
+                                <label class="form-label text-primary">@Field.Title.ToSecureString()</label>
+                            </div>
+                        }
+
+                        <div class="col">
+                            @DecValue.ToSecureString()
+                        </div>
+                    </div>
                 }
 
                 @if (Field.Type == EditFieldType.IntegerBox)
                 {
-                    @IntValue.ToSecureString()
+                    <div class="row gx-1">
+
+                        @if (Field.Orientation == FieldOrientation.Horizontal)
+                        {
+                            <div class="col">
+                                <label class="form-label text-primary">@Field.Title.ToSecureString()</label>
+                            </div>
+                        }
+
+                        <div class="col">
+                            @IntValue.ToSecureString()
+                        </div>
+                    </div>
                 }
 
-                @if (Field.Type == EditFieldType.PercentBox ||
-             Field.Type == EditFieldType.ProgressBox)
+                @if (Field.Type == EditFieldType.PercentBox)
                 {
                     <div class="row g-0">
+
+                        @if (Field.Orientation == FieldOrientation.Horizontal)
+                        {
+                            <div class="col">
+                                <label class="form-label text-primary">@Field.Title.ToSecureString()</label>
+                            </div>
+                        }
+
                         <div class="col">
                             @IntValue.ToSecureString()
                         </div>
@@ -78,7 +127,15 @@
                 @if (Field.Type == EditFieldType.DateBox)
                 {
 
-                    <div class="row g-0 align-items-center">
+                    <div class="row g-0">
+
+                        @if (Field.Orientation == FieldOrientation.Horizontal)
+                        {
+                            <div class="col">
+                                <label class="form-label text-primary">@Field.Title.ToSecureString()</label>
+                            </div>
+                        }
+
                         <div class="col-auto pe-2"><i class="far fa-calendar-alt"></i></div>
                         <div class="col">@DateTimeValue.ToSecureDateTime().ToShortDateString()</div>
                     </div>
@@ -87,7 +144,15 @@
                 @if (Field.Type == EditFieldType.DateTimeBox)
                 {
 
-                    <div class="row g-0 align-items-center">
+                    <div class="row g-0">
+
+                        @if (Field.Orientation == FieldOrientation.Horizontal)
+                        {
+                            <div class="col">
+                                <label class="form-label text-primary">@Field.Title.ToSecureString()</label>
+                            </div>
+                        }
+
                         <div class="col-auto pe-2"><i class="far fa-calendar-alt"></i></div>
                         <div class="col">
                             @( DateTimeValue.ToSecureDateTime().ToShortDateString() )
@@ -103,31 +168,19 @@
                 @if (Field.Type == EditFieldType.TimeBox)
                 {
 
-                    <div class="row g-0 align-items-center">
+                    <div class="row g-0">
+
+                        @if (Field.Orientation == FieldOrientation.Horizontal)
+                        {
+                            <div class="col">
+                                <label class="form-label text-primary">@Field.Title.ToSecureString()</label>
+                            </div>
+                        }
+
                         <div class="col-auto pe-2"><i class="far fa-clock"></i></div>
                         <div class="col">@DateTimeValue.ToSecureDateTime().ToShortTimeString()</div>
                     </div>
 
-                }
-
-                @if (Field.Type == EditFieldType.CheckBox)
-                {
-                    <div class="row g-0 align-items-center">
-                        <div class="col">
-                            @if (BoolValue.ToSecureBool() == true)
-                            {
-                                <span class="badge bg-green">
-                                    <i class="fas fa-check"></i>
-                                </span>
-                            }
-                            else
-                            {
-                                <span class="badge bg-red">
-                                    <i class="fas fa-times"></i>
-                                </span>
-                            }
-                        </div>
-                    </div>
                 }
 
             </div>
@@ -152,12 +205,34 @@
 
         @if (Field.Type == EditFieldType.Text)
         {
-            <p class="lead">@Value.ToSecureString()</p>
+            <div class="row gx-1">
+
+                @if (Field.Orientation == FieldOrientation.Horizontal)
+                {
+                    <div class="col">
+                        <label class="form-label text-primary">@Field.Title.ToSecureString()</label>
+                    </div>
+                }
+
+                <div class="col">
+                    <p class="lead">@Value.ToSecureString()</p>
+                </div>
+            </div>
+
+
         }
 
         @if (Field.Type == EditFieldType.TextBox)
         {
             <div class="row gx-1">
+
+                @if (Field.Orientation == FieldOrientation.Horizontal)
+                {
+                    <div class="col">
+                        <label class="form-label text-primary">@Field.Title.ToSecureString()</label>
+                    </div>
+                }
+
                 <div class="col">
                     <input type="text"
                            @bind-value="Value"
@@ -177,7 +252,15 @@
         @if (Field.Type == EditFieldType.TextArea)
         {
             <div class="row gx-1">
-                <div class="col-12">
+
+                @if (Field.Orientation == FieldOrientation.Horizontal)
+                {
+                    <div class="col">
+                        <label class="form-label text-primary">@Field.Title.ToSecureString()</label>
+                    </div>
+                }
+
+                <div class="col">
 
                     <textarea style="min-height:120px;"
                               class="@ControlCSS"
@@ -198,10 +281,18 @@
         @if (Field.Type == EditFieldType.LookupItems)
         {
             <div class="row gx-1">
+
+                @if (Field.Orientation == FieldOrientation.Horizontal)
+                {
+                    <div class="col">
+                        <label class="form-label text-primary">@Field.Title.ToSecureString()</label>
+                    </div>
+                }
+
                 <div class="col">
 
                     @* --- SELECT DROP DOWN --- *@
-                    <select class="form-select" title="@( Value.ToSecureString() )"
+                    <select class="form-select"
                             @onchange="@(e => { Value = e.Value.ToSecureString(); ValueChanged(); })">
 
                         <option class="@OptionItemCSS" value="---">--- bitte wählen ---</option>
@@ -236,9 +327,66 @@
             </div>
         }
 
+        @if (Field.Type == EditFieldType.OptionItems)
+        {
+            <div class="row gx-1">
+
+                @if (Field.Orientation == FieldOrientation.Horizontal)
+                {
+                    <div class="col">
+                        <label class="form-label text-primary">@Field.Title.ToSecureString()</label>
+                    </div>
+                }
+
+                <div class="col">
+
+                    @* --- SELECT DROP DOWN --- *@
+                    <select class="form-select"
+                            @onchange="@(e => { Value = e.Value.ToSecureString(); ValueChanged(); })">
+
+                        <option class="@OptionItemCSS" value="---">--- bitte wählen ---</option>
+
+                        @if (Field.OptionItems.Count >= 1)
+                        {
+                            @foreach (OptionItem item in Field.OptionItems)
+                            {
+                                @if (this.Value.ToSecureString() == item.Text.ToSecureString())
+                                {
+                                    item.isSelected = true;
+                                }
+
+                                @if (item.isSelected)
+                                {
+                                    <option class="@OptionItemCSS" value="@item.Text.ToSecureString()" selected>@item.Text.ToSecureString()</option>
+                                }
+                                else
+                                {
+                                    <option class="@OptionItemCSS" value="@item.Text.ToSecureString()">@item.Text.ToSecureString()</option>
+                                }
+                            }
+                        }
+                    </select>
+
+                </div>
+                <div class="col-auto">
+                    <button type="button" class="btn btn-sm" @onclick="Save">
+                        <i class="fas fa-check"></i>
+                    </button>
+                </div>
+            </div>
+        }
+
         @if (Field.Type == EditFieldType.MoneyBox)
         {
             <div class="row gx-1">
+
+                @if (Field.Orientation == FieldOrientation.Horizontal)
+                {
+                    <div class="col">
+                        <label class="form-label text-primary">@Field.Title.ToSecureString()</label>
+                    </div>
+                }
+
                 <div class="col">
                     <div class="input-group">
 
@@ -272,6 +420,14 @@
         {
 
             <div class="row gx-1">
+
+                @if (Field.Orientation == FieldOrientation.Horizontal)
+                {
+                    <div class="col">
+                        <label class="form-label text-primary">@Field.Title.ToSecureString()</label>
+                    </div>
+                }
+
                 <div class="col">
                     <input type="number" step="0.01"
                            @bind-value="DecValue"
@@ -292,6 +448,14 @@
         @if (Field.Type == EditFieldType.IntegerBox)
         {
             <div class="row gx-1">
+
+                @if (Field.Orientation == FieldOrientation.Horizontal)
+                {
+                    <div class="col">
+                        <label class="form-label text-primary">@Field.Title.ToSecureString()</label>
+                    </div>
+                }
+
                 <div class="col">
                     <input type="number"
                            @bind-value="IntValue"
@@ -311,6 +475,14 @@
         @if (Field.Type == EditFieldType.PercentBox)
         {
             <div class="row gx-1">
+
+                @if (Field.Orientation == FieldOrientation.Horizontal)
+                {
+                    <div class="col">
+                        <label class="form-label text-primary">@Field.Title.ToSecureString()</label>
+                    </div>
+                }
+
                 <div class="col">
                     <div class="input-group">
 
@@ -338,39 +510,17 @@
             </div>
         }
 
-        @if (Field.Type == EditFieldType.ProgressBox)
-        {
-            <div class="row gx-1">
-                <div class="col">
-                    <div class="input-group">
-
-                        <input type="number" min="0" max="100"
-                               @bind-value="IntValue"
-                               class="@ControlCSS"
-                               placeholder="@Placeholder"
-                               @bind-value:event="oninput"
-                               @onchange="@( e => { ValueChanged(e.Value); })" />
-
-                        @if (!string.IsNullOrEmpty(Symbol))
-                        {
-                            <span class="input-group-text">
-                                <i class="fas fa-percent"></i>
-                            </span>
-                        }
-
-                    </div>
-                </div>
-                <div class="col-auto">
-                    <button type="button" class="btn btn-sm" @onclick="Save">
-                        <i class="fas fa-check"></i>
-                    </button>
-                </div>
-            </div>
-        }
-
         @if (Field.Type == EditFieldType.DateBox)
         {
             <div class="row gx-1">
+
+                @if (Field.Orientation == FieldOrientation.Horizontal)
+                {
+                    <div class="col">
+                        <label class="form-label text-primary">@Field.Title.ToSecureString()</label>
+                    </div>
+                }
+
                 <div class="col">
                     <input type="date"
                            @bind-value="DateTimeValue"
@@ -386,13 +536,19 @@
                 </div>
             </div>
 
-
-
         }
 
         @if (Field.Type == EditFieldType.DateTimeBox)
         {
             <div class="row gx-1">
+
+                @if (Field.Orientation == FieldOrientation.Horizontal)
+                {
+                    <div class="col">
+                        <label class="form-label text-primary">@Field.Title.ToSecureString()</label>
+                    </div>
+                }
+
                 <div class="col">
 
                     <input type="datetime-local"
@@ -414,6 +570,14 @@
         @if (Field.Type == EditFieldType.TimeBox)
         {
             <div class="row gx-1">
+
+                @if (Field.Orientation == FieldOrientation.Horizontal)
+                {
+                    <div class="col">
+                        <label class="form-label text-primary">@Field.Title.ToSecureString()</label>
+                    </div>
+                }
+
                 <div class="col">
                     <input type="time"
                            @bind-value="DateTimeValue"
@@ -428,29 +592,9 @@
                     </button>
                 </div>
             </div>
-
-
         }
 
-        @if (Field.Type == EditFieldType.CheckBox)
-        {
-            <div class="row gx-1">
-                <div class="col">
-
-                    <CheckBox Title="@Field.Title.ToSecureString()" 
-                              Description="@Field.Description.ToSecureString()"
-                              Value="@BoolValue" 
-                              ValueChanged="@( e => { BoolValue = e; })" />
-
-                </div>
-                <div class="col-auto">
-                    <button type="button" class="btn btn-sm" @onclick="Save">
-                        <i class="fas fa-check"></i>
-                    </button>
-                </div>
-            </div>
-        }
-
+        // Beschreibung / Description
         @if (!string.IsNullOrEmpty(Field.Description))
         {
             <div><small class="text-muted">@Field.Description.ToSecureString()</small></div>
@@ -497,16 +641,13 @@
     public decimal DecValue { get; set; } = 0;
 
     [Parameter]
-    public bool BoolValue { get; set; } = false;
-
-    [Parameter]
     public DateTime DateTimeValue { get; set; } = DateTime.Now;
 
     [Parameter]
     public List<IDTO> Items { get; set; } = new List<IDTO>();
 
     [Parameter]
-    public EditField Field { get; set; }
+    public ISettingField Field { get; set; }
 
     /// <summary>
     /// Reacts when the Value property of the control is changed.
@@ -564,11 +705,6 @@
                         this.IntValue = value.ToSecureInt();
                         break;
                     }
-                case EditFieldType.ProgressBox:
-                    {
-                        this.IntValue = value.ToSecureInt();
-                        break;
-                    }
 
                 case EditFieldType.DateBox:
                     {
@@ -595,8 +731,10 @@
         }
         catch (Exception ex)
         {
-            Console.WriteLine("FAIL: " + ex.Message);
+            System.Diagnostics.Debug.WriteLine("FAIL: " + ex.Message);
         }
+
+
 
         try
         {
@@ -604,21 +742,7 @@
         }
         catch (Exception ex)
         {
-            Console.WriteLine("FAIL: " + ex.Message);
-        }
-    }
-
-    [Parameter]
-    public EventCallback<string> OnPropertySaved { get; set; }
-    private async void PropertySaved()
-    {
-        try
-        {
-            await OnPropertySaved.InvokeAsync("Property: " + this.Field.Title);
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine("FAIL: " + ex.Message);
+            System.Diagnostics.Debug.WriteLine("FAIL: " + ex.Message);
         }
     }
 
@@ -643,72 +767,58 @@
                 {
                     if (EditRepository.DTO != null)
                     {
-                        if (Field.Property == "Title")
+                        try
                         {
-                            this.Value = EditRepository.DTO.Title.ToSecureString();
-                        }
-                        else if (Field.Property == "ID")
-                        {
-                            this.Value = EditRepository.DTO.ID.ToSecureString();
-                        }
-                        else if (Field.Property == "Content")
-                        {
-                            this.Value = EditRepository.DTO.Content.ToSecureString();
-                        }
-                        else
-                        {
-                            try
+                            // Text // TextArea
+                            if (Field.Type == EditFieldType.Text ||
+                                Field.Type == EditFieldType.TextBox ||
+                                Field.Type == EditFieldType.TextArea)
                             {
-                                // Text // TextArea
-                                if (Field.Type == EditFieldType.Text ||
-                                    Field.Type == EditFieldType.TextBox ||
-                                    Field.Type == EditFieldType.TextArea)
-                                {
-                                    this.Value = EditRepository.DTO.GetProperty(Field.Property).Value.ToSecureString();
-                                }
-
-                                // Drop Down Items List
-                                if (Field.Type == EditFieldType.LookupItems)
-                                {
-                                    this.Value = EditRepository.DTO.GetProperty(Field.Property).Value.ToSecureString();
-
-                                    LoadItems();
-                                }
-
-                                // Money // Decimal
-                                if (Field.Type == EditFieldType.MoneyBox ||
-                                    Field.Type == EditFieldType.DecimalBox)
-                                {
-                                    this.DecValue = EditRepository.DTO.GetProperty(Field.Property).Value.ToSecureDecimal();
-                                }
-
-                                // Int
-                                if (Field.Type == EditFieldType.IntegerBox ||
-                                    Field.Type == EditFieldType.ProgressBox ||
-                                    Field.Type == EditFieldType.PercentBox)
-                                {
-                                    this.IntValue = EditRepository.DTO.GetProperty(Field.Property).Value.ToSecureInt();
-                                }
-
-                                // Date, Time, DateTime
-                                if (Field.Type == EditFieldType.DateBox ||
-                                    Field.Type == EditFieldType.TimeBox ||
-                                    Field.Type == EditFieldType.DateTimeBox)
-                                {
-                                    this.DateTimeValue = EditRepository.DTO.GetProperty(Field.Property).Value.ToSecureDateTime();
-                                }
-
-                                // Boolean // Checkbox
-                                if (Field.Type == EditFieldType.CheckBox)
-                                {
-                                    this.BoolValue = EditRepository.DTO.GetProperty(Field.Property).Value.ToSecureBool();
-                                }
-
+                                this.Value = EditRepository.DTO.GetSetting(Field.Name, Field.Scope.ToSecureString()).Value.ToSecureString();
                             }
-                            catch (Exception ex)
+
+                            // Drop Down Items List
+                            if (Field.Type == EditFieldType.OptionItems)
                             {
-                                System.Diagnostics.Debug.WriteLine("FAIL: " + ex.Message);
+                                this.Value = EditRepository.DTO.GetSetting(Field.Name, Field.Scope.ToSecureString()).Value.ToSecureString();
+
+                                LoadItems();
                             }
+
+                            // Drop Down Items List
+                            if (Field.Type == EditFieldType.LookupItems)
+                            {
+                                this.Value = EditRepository.DTO.GetSetting(Field.Name, Field.Scope.ToSecureString()).Value.ToSecureString();
+
+                                LoadItems();
+                            }
+
+                            // Money // Decimal
+                            if (Field.Type == EditFieldType.MoneyBox ||
+                                Field.Type == EditFieldType.DecimalBox)
+                            {
+                                this.DecValue = EditRepository.DTO.GetSetting(Field.Name, Field.Scope.ToSecureString()).Value.ToSecureDecimal();
+                            }
+
+                            // Int
+                            if (Field.Type == EditFieldType.IntegerBox ||
+                                Field.Type == EditFieldType.PercentBox)
+                            {
+                                this.IntValue = EditRepository.DTO.GetSetting(Field.Name, Field.Scope.ToSecureString()).Value.ToSecureInt();
+                            }
+
+                            // Date, Time, DateTime
+                            if (Field.Type == EditFieldType.DateBox ||
+                                Field.Type == EditFieldType.TimeBox ||
+                                Field.Type == EditFieldType.DateTimeBox)
+                            {
+                                this.DateTimeValue = EditRepository.DTO.GetSetting(Field.Name, Field.Scope.ToSecureString()).Value.ToSecureDateTime();
+                            }
+
+                        }
+                        catch (Exception ex)
+                        {
+                            System.Diagnostics.Debug.WriteLine("FAIL: " + ex.Message);
                         }
                     }
                 }
@@ -737,70 +847,50 @@
                 {
                     if (EditRepository.DTO != null)
                     {
-                        if (Field.Property == "Title")
+
+                        try
                         {
-                            EditRepository.DTO.Title = this.Value;
-                        }
-                        else if (Field.Property == "ID")
-                        {
-                            EditRepository.DTO.ID = this.Value;
-                        }
-                        else if (Field.Property == "Content")
-                        {
-                            EditRepository.DTO.Content = this.Value;
-                        }
-                        else
-                        {
-                            try
+                            // Text // TextArea
+                            if (Field.Type == EditFieldType.TextBox ||
+                                Field.Type == EditFieldType.TextArea ||
+                                Field.Type == EditFieldType.OptionItems ||
+                                Field.Type == EditFieldType.LookupItems)
                             {
-                                // Text // TextArea
-                                if (Field.Type == EditFieldType.TextBox ||
-                                    Field.Type == EditFieldType.TextArea ||
-                                    Field.Type == EditFieldType.LookupItems)
-                                {
-                                    EditRepository.DTO.SetProperty(this.Value.ToSecureString(), Field.Property);
-                                }
-
-                                // Money // Decimal
-                                if (Field.Type == EditFieldType.MoneyBox ||
-                                    Field.Type == EditFieldType.DecimalBox)
-                                {
-                                    EditRepository.DTO.SetProperty(this.DecValue.ToSecureString(), Field.Property);
-                                }
-
-                                // Int // Percent
-                                if (Field.Type == EditFieldType.IntegerBox ||
-                                    Field.Type == EditFieldType.ProgressBox ||
-                                    Field.Type == EditFieldType.PercentBox)
-                                {
-                                    EditRepository.DTO.SetProperty(this.IntValue.ToSecureString(), Field.Property);
-                                }
-
-                                // Date, Time, DateTime
-                                if (Field.Type == EditFieldType.DateBox ||
-                                    Field.Type == EditFieldType.TimeBox ||
-                                    Field.Type == EditFieldType.DateTimeBox)
-                                {
-                                    EditRepository.DTO.SetProperty(this.DateTimeValue.ToSecureString(), Field.Property);
-                                }
-
-                                // Boolean // CheckBox
-                                if (Field.Type == EditFieldType.CheckBox)
-                                {
-                                    EditRepository.DTO.SetProperty(this.BoolValue.ToSecureString(), Field.Property);
-                                }
-
+                                EditRepository.DTO.SetSetting(this.Value.ToSecureString(), Field.Name, Field.Scope.ToSecureString());
                             }
-                            catch (Exception ex)
+
+                            // Money // Decimal
+                            if (Field.Type == EditFieldType.MoneyBox ||
+                                Field.Type == EditFieldType.DecimalBox)
                             {
-                                System.Diagnostics.Debug.WriteLine("FAIL: " + ex.Message);
+                                EditRepository.DTO.SetSetting(this.DecValue.ToSecureString(), Field.Name, Field.Scope.ToSecureString());
                             }
+
+                            // Int // Percent
+                            if (Field.Type == EditFieldType.IntegerBox ||
+                                Field.Type == EditFieldType.PercentBox)
+                            {
+                                EditRepository.DTO.SetSetting(this.IntValue.ToSecureString(), Field.Name, Field.Scope.ToSecureString());
+                            }
+
+                            // Date, Time, DateTime
+                            if (Field.Type == EditFieldType.DateBox ||
+                                Field.Type == EditFieldType.TimeBox ||
+                                Field.Type == EditFieldType.DateTimeBox)
+                            {
+                                EditRepository.DTO.SetSetting(this.DateTimeValue.ToSecureString(), Field.Name, Field.Scope.ToSecureString());
+                            }
+
+                        }
+                        catch (Exception ex)
+                        {
+                            System.Diagnostics.Debug.WriteLine("FAIL: " + ex.Message);
                         }
 
                         IFactoryStatusInfo info = EditRepository.Service.Factory.Update(EditRepository.DTO);
                         if (info.Status == "OK")
                         {
-                            string msg = "Property saved successfully";
+                            string msg = "everthing is ok";
                             System.Diagnostics.Debug.WriteLine(msg);
                         }
                         else
@@ -811,18 +901,14 @@
 
                         try
                         {
-                            // Event Callback 
-                            PropertySaved();
-
-                            // Global Notification
                             InformationNotification n = new InformationNotification();
-                            n.Event = "Update:Item";
-                            n.Filter = this.Field.Property;
+                            n.Event = "Update:Setting";
+                            n.Filter = this.Field.Name;
                             n.Title = this.Value.ToSecureString();
-                            n.Information = "Property Changed";
+                            n.Information = "Setting Changed";
                             sec.InfoNotifyService.Notify(n);
 
-                            System.Diagnostics.Debug.WriteLine("Update:Item: " + " - Field: " + this.Field.Property + " - Value: " + this.Value.ToSecureString());
+                            System.Diagnostics.Debug.WriteLine("Update:Setting: " + " - Filter: " + this.Field.Name + " - " + this.Value.ToSecureString());
                         }
                         catch (Exception ex)
                         {
@@ -853,15 +939,28 @@
         {
             if (Field.Type == EditFieldType.LookupItems)
             {
-                if (this.Field.ItemType != null)
-                {
-                    Items = EditRepository.ItemsByItemType(
-                        this.Field.ItemType, this.Field.FilterProperty, this.Field.FilterValue);
-                }
-                else
-                {
-                    System.Diagnostics.Debug.WriteLine("ItemType is null in Drop Down Items Loading");
-                }
+                //if (this.Field.ItemType != null)
+                //{
+                //    Items = EditRepository.ItemsByItemType(
+                //        this.Field.ItemType, this.Field.FilterProperty, this.Field.FilterValue);
+                //}
+                //else
+                //{
+                //    System.Diagnostics.Debug.WriteLine("ItemType is null in Drop Down Items Loading");
+                //}
+            }
+
+            if (Field.Type == EditFieldType.OptionItems)
+            {
+                //if (this.Field.ItemType != null)
+                //{
+                //    Items = EditRepository.ItemsByItemType(
+                //        this.Field.ItemType, this.Field.FilterProperty, this.Field.FilterValue);
+                //}
+                //else
+                //{
+                //    System.Diagnostics.Debug.WriteLine("ItemType is null in Drop Down Items Loading");
+                //}
             }
         }
         catch (Exception ex)

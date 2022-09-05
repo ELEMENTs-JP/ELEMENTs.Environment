@@ -6,6 +6,11 @@
 
     @if (Items.Count >= 1)
     {
+        @if (ShowEmptyItem == true)
+        { 
+            <option class="@OptionItemCSS" value="---">--- bitte wählen ---</option>
+        }
+
         @foreach (OptionItem kvp in Items)
         {
             @if (kvp.isSelected)
@@ -30,6 +35,8 @@
     [Parameter]
     public List<OptionItem> Items { get; set; } = new List<OptionItem>();
 
+    [Parameter]
+    public bool ShowEmptyItem { get; set; } = false;
 
     /// <summary>
     /// Defines or sets a CSS class that controls the CSS style of the control. The default value is: form-control

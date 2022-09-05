@@ -5,3 +5,9 @@
 .nav-tabs .nav-item .nav-link {
     padding: 0.25rem 0.5rem !important;
 }
+
+.nav-tabs .nav-link {
+    border-top-left-radius: 0px !important;
+    border-top-right-radius: 0px !important;
+
+}

@@ -2,7 +2,8 @@
 
 
     <div class="nav-item dropdown" >
-        <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
+        <a href="#" class="nav-link d-flex lh-1 text-reset p-0" 
+           data-bs-toggle="dropdown" aria-label="Open user menu">
 
             @if (!string.IsNullOrEmpty(ImageUrl))
             {
@@ -11,10 +12,15 @@
 
             <div class="d-none d-xl-block ps-2">
                 <div class="fw-bold">@Title</div>
-                <div class="mt-1 small text-muted">@SubTitle</div>
+
+                @if (ShowSubTitle)
+                { 
+                    <div class="mt-1 small text-muted">@SubTitle</div>
+                }
             </div>
         </a>
-        <div class="dropdown-menu dropdown-menu-start dropdown-menu-arrow">
+        <div class="dropdown-menu dropdown-menu-start dropdown-menu-arrow"
+             style="@MenuStyle">
             <div class="px-2 pt-2 fw-bold">@Title</div>
             <div class="px-2 mb-1 small text-muted">@SubTitle</div>
             <div class="dropdown-divider"></div>
@@ -29,7 +35,8 @@
 
 @code {
 
-
+    [Parameter]
+    public bool ShowSubTitle { get; set; } = false;
 
     [Parameter]
     public string ImageUrl { get; set; } = string.Empty;
@@ -42,5 +49,8 @@
 
     [Parameter]
     public RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public string MenuStyle { get; set; } = "min-width:13rem;";
 
 }

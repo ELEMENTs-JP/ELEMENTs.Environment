@@ -8,8 +8,8 @@ namespace ELEMENTS.Infrastructure
 {
     public interface IApp
     {
-        Guid ID { get; set; }
-        
+        Guid GUID { get; set; } 
+        string ID { get; set; } 
         /// <summary>
         /// Internal Technical Name
         /// </summary>
@@ -28,7 +28,8 @@ namespace ELEMENTS.Infrastructure
     }
     public class BaseApp : IApp
     {
-        public Guid ID { get; set; } = Guid.NewGuid();
+        public Guid GUID { get; set; } = Guid.NewGuid();
+        public string ID { get; set; } = string.Empty;
         public string Name { get; set; } = "Base-App";
         public string Title { get; set; } = "Base App";
         public string Description { get; set; } = string.Empty;
@@ -41,6 +42,7 @@ namespace ELEMENTS.Infrastructure
         public List<IFeature> GetFeatures()
         {
             List<IFeature> it = new List<IFeature>();
+
             return it;
         }
         public List<IPage> GetPages()
@@ -61,15 +63,20 @@ namespace ELEMENTS.Infrastructure
         string Description { get; set; }
         string Link { get; set; }
         string IconHTML { get; set; }
+
+        FeatureType FeatureType { get; set; }
         BoardType BoardType { get; set; }
-        
+        DashboardType DashboardType { get; set; }
+
         Guid GUID { get; set; }
+        string ID { get; set; }
         IItemType ItemType { get; set; }
         public IItemType GetItemsItemType();
     }
 
     public class BaseFeature : IFeature
     {
+        public string ID { get; set; } = string.Empty;
         public string Title { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public string Link { get; set; } = string.Empty;
@@ -84,7 +91,10 @@ namespace ELEMENTS.Infrastructure
         {
             return null;
         }
-        public BoardType BoardType { get; set; }
+
+        public FeatureType FeatureType { get; set; } = FeatureType.NULL;
+        public BoardType BoardType { get; set; } = BoardType.NULL;
+        public DashboardType DashboardType { get; set; } = DashboardType.NULL;
         
     }
 
@@ -128,7 +138,8 @@ namespace ELEMENTS.Infrastructure
     }
     public interface IItemType
     {
-        Guid ID { get; set; }
+        Guid GUID { get; set; }
+        string ID { get; set; }
         /// <summary>
         /// Internal Technical Name
         /// </summary>
@@ -154,11 +165,15 @@ namespace ELEMENTS.Infrastructure
 
         // Permissions
         List<IObjectPermission> GetPermissions();
+
+        // Settings 
+        List<ISettingField> GetSettings();
     }
 
     public class ItemType : IItemType
     {
-        public Guid ID { get; set; } = Guid.NewGuid();
+        public Guid GUID { get; set; } = Guid.NewGuid();
+        public string ID { get; set; } = string.Empty;
         public string Name { get; set; } = string.Empty;
         public string Title { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
@@ -206,188 +221,46 @@ namespace ELEMENTS.Infrastructure
             List<IObjectPermission> permissions = new List<IObjectPermission>();
 
             // Base Permissions
-            permissions.Add(new ItemTypePermission() { PermissionID = "B-01", Permission = "Create", Description = "Ermöglicht das Erstellen von neuen Datensätzen." });
-            permissions.Add(new ItemTypePermission() { PermissionID = "B-02", Permission = "Read", Description = "Ermöglicht das tabellarische Lesen und Suchen nach Datensätzen." });
-            permissions.Add(new ItemTypePermission() { PermissionID = "B-03", Permission = "View", Description = "Ermöglicht das betrachten eines Datensatzes in der View." });
-            permissions.Add(new ItemTypePermission() { PermissionID = "B-04", Permission = "Update", Description = "Ermöglicht das Editieren und Speichern eines Datensatzes." });
-            permissions.Add(new ItemTypePermission() { PermissionID = "B-05", Permission = "Delete", Description = "Ermöglicht das Löschen eines Datensatzes." });
-            permissions.Add(new ItemTypePermission() { PermissionID = "B-06", Permission = "Assign", Description = "Ermöglicht das Zuordnen von fremden Datensätzen." });
-            permissions.Add(new ItemTypePermission() { PermissionID = "B-07", Permission = "Remove", Description = "Ermöglicht das Wegordnen von fremden Datensätzen." });
+            permissions.Add(new ItemTypePermission() { PermissionID = ((int)PermissionType.Create).ToSecureString(), Permission = PermissionType.Create.ToString(), Description = "Ermöglicht das Erstellen von neuen Datensätzen." });
+            permissions.Add(new ItemTypePermission() { PermissionID = ((int)PermissionType.Read).ToSecureString(), Permission = PermissionType.Read.ToString(), Description = "Ermöglicht das tabellarische Lesen und Suchen nach Datensätzen." });
+            permissions.Add(new ItemTypePermission() { PermissionID = ((int)PermissionType.View).ToSecureString(), Permission = PermissionType.View.ToString(), Description = "Ermöglicht das betrachten eines Datensatzes in der View." });
+            permissions.Add(new ItemTypePermission() { PermissionID = ((int)PermissionType.Update).ToSecureString(), Permission = PermissionType.Update.ToString(), Description = "Ermöglicht das Editieren und Speichern eines Datensatzes." });
+            permissions.Add(new ItemTypePermission() { PermissionID = ((int)PermissionType.Delete).ToSecureString(), Permission = PermissionType.Delete.ToString(), Description = "Ermöglicht das Löschen eines Datensatzes." });
+            permissions.Add(new ItemTypePermission() { PermissionID = ((int)PermissionType.Assign).ToSecureString(), Permission = PermissionType.Assign.ToString(), Description = "Ermöglicht das Zuordnen von fremden Datensätzen." });
+            permissions.Add(new ItemTypePermission() { PermissionID = ((int)PermissionType.Remove).ToSecureString(), Permission = PermissionType.Remove.ToString(), Description = "Ermöglicht das Wegordnen von fremden Datensätzen." });
 
             // Feature Permission
-            permissions.Add(new FeaturePermission() { PermissionID = "F-0001", Permission = "Comments", Description = "Ermöglicht das Erstellen, Bearbeiten und Entfernen von eigenen Kommentaren." });
-            permissions.Add(new FeaturePermission() { PermissionID = "F-0002", Permission = "Notes", Description = "Ermöglicht das Erstellen, Bearbeiten und Entfernen von eigenen Notizen." });
-            permissions.Add(new FeaturePermission() { PermissionID = "F-0003", Permission = "Dateien", Description = "Ermöglicht das Hochladen, Entfernen, Bearbeiten, Suchen und betrachten sowie das Zu- und Wegordnen von Dateien." });
-            permissions.Add(new FeaturePermission() { PermissionID = "F-0004", Permission = "Checklist", Description = "Ermöglicht das Erstellen, Bearbeiten und finalisieren von Checklisten." });
-            permissions.Add(new FeaturePermission() { PermissionID = "F-0005", Permission = "Metadaten", Description = "Ermöglicht das Einsehen und Nutzen der Metadaten Informationen." });
+            // permissions.Add(new FeaturePermission() { PermissionID = "FEA-BP-01", Permission = "Comments", Description = "Ermöglicht das Erstellen, Bearbeiten und Entfernen von eigenen Kommentaren." });
+            // permissions.Add(new FeaturePermission() { PermissionID = "FEA-BP-02", Permission = "Notes", Description = "Ermöglicht das Erstellen, Bearbeiten und Entfernen von eigenen Notizen." });
+            // permissions.Add(new FeaturePermission() { PermissionID = "FEA-BP-03", Permission = "Dateien", Description = "Ermöglicht das Hochladen, Entfernen, Bearbeiten, Suchen und betrachten sowie das Zu- und Wegordnen von Dateien." });
+            // permissions.Add(new FeaturePermission() { PermissionID = "FEA-BP-04", Permission = "Checklist", Description = "Ermöglicht das Erstellen, Bearbeiten und finalisieren von Checklisten." });
+            // permissions.Add(new FeaturePermission() { PermissionID = "FEA-BP-05", Permission = "Metadaten", Description = "Ermöglicht das Einsehen und Nutzen der Metadaten Informationen." });
 
             return permissions;
         }
+
+        // Settings 
+        public virtual List<ISettingField> GetSettings()
+        {
+            List<ISettingField> settings = new List<ISettingField>();
+
+            //settings.Add(new ObjectSetting() { Name = "", Title = "", Description = "", DefaultValue = string.Empty });
+
+            return settings;
+        }
     }
 
-    public interface IObjectPermission
-    {
-        string PermissionID { get; set; }
-        string Permission { get; set; }
-        string Description { get; set; }
-    }
-    public class ItemTypePermission : IObjectPermission
-    {
-        public string PermissionID { get; set; }
-        public string Permission { get; set; }
-        public string Description { get; set; }
-    }
-
-    public class FeaturePermission : IObjectPermission
-    {
-        public string PermissionID { get; set; }
-        public string Permission { get; set; }
-        public string Description { get; set; }
-    }
-
-    // Board 
-    public interface IBoardInterfaceRepository
-    {
-        bool IsInitialized { get; set; }
-        ISqlDatabaseService Service { get; set; }
-
-        IDTO CurrentBoard { get; set; }
-        List<IDTO> Boards { get; set; }
-        void Init();
-        List<IDTO> Columns { get; set; }
-        List<IDTO> Rows { get; set; }
-        IItemType ItemType { get; set; }
-        void AddRow(string title);
-        void AddColumn(string title);
-        void RemoveRow(IDTO row);
-        void RemoveColumn(IDTO column);
-    }
-
-    public enum BoardType
+    public enum PermissionType
     { 
         NULL = 0,
-
-        Roadmap = 1,
-        Backlog = 2,
-        Kanban = 3,
+        Create = 100,
+        Read = 200,
+        View = 300,
+        Update = 400,
+        Delete = 500,
+        Assign = 600,
+        Remove = 700
     }
+  
 
-    // COLUMNS 
-    public interface IColumn
-    {
-        Guid ID { get; set; }
-        string Title { get; set; }
-        string Description { get; set; }
-        string Property { get; set; }
-        string ColumnCSSClass { get; set; }
-        ColumnType Type { get; set; }
-    }
-    public class Column : IColumn
-    {
-        public Guid ID { get; set; }
-        public string Title { get; set; }
-        public string Description { get; set; }
-        public string ColumnCSSClass { get; set; } = "col";
-        public string Property { get; set; }
-        public ColumnType Type { get; set; }
-    }
-
-    public enum ColumnType
-    {
-        NULL = 0,
-        Text = 1,
-        Link = 2,
-        Percent = 3,
-        Money = 4,
-        Integer = 5,
-        Decimal = 6,
-
-        Date = 11,
-        DateTime = 12,
-        Time = 14,
-    }
-
-    // Edit Field 
-    public interface IField
-    {
-        string Title { get; set; }
-        string Description { get; set; }
-        string ColumnCSSClass { get; set; }
-        string Property { get; set; }
-        EditFieldType Type { get; set; }
-        EditFieldMode Mode { get; set; }
-        string ItemType { get; set; }
-        string FilterProperty { get; set; }
-        string FilterValue { get; set; }
-    }
-
-    public class EditField : IField
-    {
-        public string Title { get; set; } = string.Empty;
-        public string Description { get; set; } = string.Empty;
-        public string ColumnCSSClass { get; set; } = "col";
-        public string Property { get; set; } = "Title";
-        public EditFieldType Type { get; set; } = EditFieldType.TextBox;
-        public EditFieldMode Mode { get; set; } = EditFieldMode.View;
-        public string ItemType { get; set; } = string.Empty;
-
-        /// <summary>
-        /// Filter Property for Lookup
-        /// </summary>
-        public string FilterProperty { get; set; } = string.Empty; // Lookup 
-        /// <summary>
-        /// Filter Property Value for Lookup
-        /// </summary>
-        public string FilterValue { get; set; } = string.Empty; // Lookup 
-    }
-
-    public enum EditFieldType
-    {
-        NULL = 0,
-
-        Text = 1,
-        Divider = 2,
-
-        TextBox = 10,
-        TextArea = 11,
-
-        MoneyBox = 21,
-        IntegerBox = 22,
-        PercentBox = 23,
-        DecimalBox = 24,
-
-        DateBox = 31,
-        TimeBox = 32,
-        DateTimeBox = 33,
-
-        LookupItems = 41,
-    }
-
-    public enum EditFieldMode
-    {
-        NULL = 0,
-
-        Hidden = 1,
-        View = 2,
-        Edit = 3,
-    }
-
-    public interface IAction
-    {
-        string ID { get; set; }
-        string Title { get; set; }
-        string Filter { get; set; }
-        string Command { get; set; }
-        string Link { get; set; }
-    }
-
-    public class MenuAction : IAction
-    {
-        public string ID { get; set; } = string.Empty;
-        public string Title { get; set; } = string.Empty;
-        public string Filter { get; set; } = string.Empty;
-        public string Command { get; set; } = string.Empty;
-        public string Link { get; set; } = string.Empty;
-    
-    }
 }
