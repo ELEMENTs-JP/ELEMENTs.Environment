@@ -42,8 +42,27 @@ namespace ELEMENTS.Infrastructure
         PageLayout = 1,
         ComponentLayout = 2,
         ControlLayout = 3,
+        ProfileLayout = 4,
     }
     public enum TeaserDirection { Left, Right };
 
     public enum ModalFormSize { Small, Normal, Large, Extra }
+
+    public enum ImageSize
+    {
+        NULL = 0,
+        XS = 1, // Extra Small (Zeile)
+        S = 2, // Small (Header)
+        M = 3, // Medium
+        L = 4, // Lage
+        XL = 5 // Extra Large
+    }
+
+    public enum ImageForm
+    {
+        NULL = 0,
+        Round = 1,
+        Vertical = 2,
+        Horizontal = 3,
+    }
 }

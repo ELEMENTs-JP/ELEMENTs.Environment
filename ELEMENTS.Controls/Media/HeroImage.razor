@@ -1,4 +1,7 @@
-﻿
+﻿@using System
+@using System.IO
+@using Microsoft.AspNetCore.Hosting
+@inject IWebHostEnvironment env
     
     <div class="@ControlCSS hero-image"     
         style="height: @Height; width: @Width; background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(@ImageUrl);">
@@ -49,8 +52,7 @@
         // Raise Event
         try
         {
-        await ImageUrlChanged.InvokeAsync(ImageUrl);
-
+            await ImageUrlChanged.InvokeAsync(ImageUrl);
         }
         catch (Exception ex)
         {

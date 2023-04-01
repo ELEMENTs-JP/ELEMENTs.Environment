@@ -22,8 +22,9 @@ namespace tsp.DEFAULT
         private void Init()
         {
             this.Fields = new List<IField>();
-            this.Fields.Add(new EditField() { Title = "Title", ColumnCSSClass = "col-9", Mode = EditFieldMode.View, Type = EditFieldType.Text });
+            this.Fields.Add(new EditField() { Title = "Title", ColumnCSSClass = "col-6", Mode = EditFieldMode.View, Type = EditFieldType.Text });
             this.Fields.Add(new EditField() { Title = "Kategorie", Property = "Kategorie", ColumnCSSClass = "col-3", Type = EditFieldType.TextBox });
+            this.Fields.Add(new EditField() { Title = "Fortschritt", Property = "Progress", ColumnCSSClass = "col-3", Type = EditFieldType.ProgressBox });
 
             // File Properties 
             this.Fields.Add(new EditField() { Title = "ID", Property = "FileGUID", ColumnCSSClass = "col-3", Mode = EditFieldMode.View, Type = EditFieldType.Text });
@@ -35,6 +36,7 @@ namespace tsp.DEFAULT
             this.Columns = new List<IColumn>();
             this.Columns.Add(new Column() { Title = "ID", Property = "ID", ColumnCSSClass = "col-1 pe-2", Type = ColumnType.Text });
             this.Columns.Add(new Column() { Title = "Title", Property = "Title", ColumnCSSClass = "col px-2", Type = ColumnType.Link });
+            this.Columns.Add(new Column() { Title = "Fortschritt", Property = "Progress", ColumnCSSClass = "col px-2", Type = ColumnType.Progress });
             #endregion
         }
     }

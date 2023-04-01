@@ -1,4 +1,4 @@
-﻿let generalChartHeight = 285;
+﻿let generalChartHeight = 215;
 let generalleft = 15;
 let generalright = 35;
 let generaltop = 10;
@@ -33,7 +33,7 @@ export function loadDonutChart(divID, dotNetHelper)
 }
 
 
-
+let chart;
 function onDonutChartJSSucess(data) {
 
     try {
@@ -97,7 +97,7 @@ function onDonutChartJSSucess(data) {
             console.log("FAIL: " + e);
         }
 
-        let chart;
+       
 
         try {
             if (chart !== null && chart !== undefined) {

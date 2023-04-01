@@ -10,7 +10,7 @@ using ELEMENTS.Infrastructure;
 
 namespace ELEMENTS.Controls.Charts
 {
-    public partial class BarHorizontalChart : IAsyncDisposable
+    public partial class BarHorizontalChart : IAsyncDisposable, IDisposable
     {
         // Fields 
         private ChartDTO Configuration { get; set; } = new ChartDTO();
@@ -21,26 +21,41 @@ namespace ELEMENTS.Controls.Charts
         // ctr 
         public BarHorizontalChart()
         {
-
+            Helper.LogConsole("CTR");
         }
 
         // Events 
         public void Init(IJSRuntime jsRuntime)
         {
-            // Import JS File 
-            moduleTask = new(() => jsRuntime.InvokeAsync<IJSObjectReference>(
-               "import", "./_content/ELEMENTS.Controls/barhorizontalchart.js").AsTask());
+            try
+            {
+                // Import JS File 
+                moduleTask = new(() => jsRuntime.InvokeAsync<IJSObjectReference>(
+                   "import", "./_content/ELEMENTS.Controls/barhorizontalchart.js").AsTask());
+
+                // Reference 
+                objRef = DotNetObjectReference.Create(this);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Fail init Chart");
+            }
         }
 
         // Methods 
         public async ValueTask LoadChart(string divID)
         {
-            // Reference 
-            objRef = DotNetObjectReference.Create(this);
-
-            // Execute function
-            var module = await moduleTask.Value;
-            await module.InvokeVoidAsync("loadBarHorizontalChart", divID, objRef);
+            try
+            {
+                // Execute function
+                var module = await moduleTask.Value;
+                await module.InvokeVoidAsync("loadBarHorizontalChart", divID, objRef);
+                this.StateHasChanged();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Fail Invoke Chart");
+            }
         }
         private void LoadDefaultItems()
         {
@@ -84,7 +99,7 @@ namespace ELEMENTS.Controls.Charts
                 // Items 
                 if (this.Items == null || this.Items.Count == 0)
                 {
-                    LoadDefaultItems();
+                    //LoadDefaultItems();
                 }
                 else
                 {
@@ -120,7 +135,7 @@ namespace ELEMENTS.Controls.Charts
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine("FAIL: " + ex.Message);
+                System.Diagnostics.Debug.WriteLine("FAIL Dipose ASYNC: " + ex.Message);
             }
         }
 
@@ -136,7 +151,7 @@ namespace ELEMENTS.Controls.Charts
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine("FAIL: " + ex.Message);
+                System.Diagnostics.Debug.WriteLine("FAIL Dispose: " + ex.Message);
             }
         }
     }

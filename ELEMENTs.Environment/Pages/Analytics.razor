@@ -1,131 +1,116 @@
 ﻿@page "/analytics"
-
+@page "/charts"
+@using ELEMENTS.Infrastructure
 
 
 <div class="row">
     <div class="col">
         <h3 class="h1">Analytics, Charts and KPIs</h3>
+        <button type="button" class="btn btn-primary" @onclick="@( e => { ChangeData(); } )">aktualisieren...</button>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col px-3">
+
+        <ELEMENTS.Controls.Text.Label Value="Pie" />
+        <ELEMENTS.Controls.Charts.GenericChartJS @ref="@genChart"
+                                           Title="Company" 
+                                           Legende="Turnover"
+                                           Items="@Items"
+                                           Typ="ChartType.Pie" />
+
+    </div>
+    <div class="col px-3">
+        <ELEMENTS.Controls.Text.Label Value="Doughnut" />
+        <ELEMENTS.Controls.Charts.GenericChartJS @ref="@genChart"
+                                           Title="Company"
+                                           Legende="Turnover"
+                                           Items="@Items"
+                                           Typ="ChartType.Doughnut" />
+        
+    </div>
+    <div class="col px-3">
+        <ELEMENTS.Controls.Text.Label Value="Progress" />
+        <ELEMENTS.Controls.Charts.GenericChartJS @ref="@genChart"
+                                           Title="Company"
+                                           Legende="Turnover"
+                                           Items="@Items"
+                                           Typ="ChartType.Progress" />
+        
+    </div>
+</div>
+
+<div class="row">
+    <div class="col px-3">
+
+        <ELEMENTS.Controls.Text.Label Value="Line" />
+        <ELEMENTS.Controls.Charts.GenericChartJS @ref="@genChart"
+                                                 Title="Company"
+                                                 Legende="Turnover"
+                                                 Items="@Items"
+                                                 Typ="ChartType.Line" />
+
+    </div>
+    <div class="col px-3">
+        <ELEMENTS.Controls.Text.Label Value="Area" />
+        <ELEMENTS.Controls.Charts.GenericChartJS @ref="@genChart"
+                                                 Title="Company"
+                                                 Legende="Turnover"
+                                                 Items="@Items"
+                                                 Typ="ChartType.Area" />
+
+    </div>
+    <div class="col px-3">
+        <ELEMENTS.Controls.Text.Label Value="StepLine" />
+        <ELEMENTS.Controls.Charts.GenericChartJS @ref="@genChart"
+                                                 Title="Company"
+                                                 Legende="Turnover"
+                                                 Items="@Items"
+                                                 Typ="ChartType.StepLine" />
+
     </div>
 </div>
 
 <div class="row">
     <div class="col p-3">
 
-        <ELEMENTS.Controls.Text.Label Value="Line Chart" />
-        <ELEMENTS.Controls.Charts.LineChart Title="Company" Legende="Turnover"
-                                            Items="@( new List<ChartItemDTO>()  {
-                                    new ChartItemDTO { Key = "Microsoft", Value = 75 },
-                                    new ChartItemDTO { Key = "Apple", Value = 50 },
-                                    new ChartItemDTO { Key = "Oracle", Value = 45 },
-                                    new ChartItemDTO { Key = "IBM", Value = 55 },
-                                    new ChartItemDTO { Key = "TESLA", Value = 45 },
-                                    new ChartItemDTO { Key = "Space X", Value = 25 },
-                                    new ChartItemDTO { Key = "Amazon", Value = 15 },
-                                    new ChartItemDTO { Key = "NVidia", Value = 55 },
-                                })" />
-
-        <ELEMENTS.Controls.Text.Label Value="Pie Chart" />
-        <ELEMENTS.Controls.Charts.PieChart Title="Company" Legende="Turnover"
-                                           Items="@( new List<ChartItemDTO>()  {
-                                    new ChartItemDTO { Key = "Microsoft", Value = 75 },
-                                    new ChartItemDTO { Key = "Apple", Value = 50 },
-                                    new ChartItemDTO { Key = "Oracle", Value = 45 },
-                                    new ChartItemDTO { Key = "IBM", Value = 55 },
-                                    new ChartItemDTO { Key = "TESLA", Value = 45 },
-                                    new ChartItemDTO { Key = "Space X", Value = 25 },
-                                    new ChartItemDTO { Key = "Amazon", Value = 15 },
-                                    new ChartItemDTO { Key = "NVidia", Value = 55 },
-                                })" />
-
-
-        <ELEMENTS.Controls.Text.Label Value="Polar Area Chart" />
-        <ELEMENTS.Controls.Charts.PolarAreaChart Title="Company" Legende="Turnover"
-                                                 Items="@( new List<ChartItemDTO>()  {
-                                    new ChartItemDTO { Key = "Microsoft", Value = 75 },
-                                    new ChartItemDTO { Key = "Apple", Value = 50 },
-                                    new ChartItemDTO { Key = "Oracle", Value = 45 },
-                                    new ChartItemDTO { Key = "IBM", Value = 55 },
-                                    new ChartItemDTO { Key = "TESLA", Value = 45 },
-                                    new ChartItemDTO { Key = "Space X", Value = 25 },
-                                    new ChartItemDTO { Key = "Amazon", Value = 15 },
-                                    new ChartItemDTO { Key = "NVidia", Value = 55 },
-                                })" />
-
-        <ELEMENTS.Controls.Text.Label Value="Horizontal Bar Chart" />
-        <ELEMENTS.Controls.Charts.BarHorizontalChart Title="Company" Legende="Turnover"
-                                                     Items="@( new List<ChartItemDTO>()  {
-                                    new ChartItemDTO { Key = "Microsoft", Value = 75 },
-                                    new ChartItemDTO { Key = "Apple", Value = 50 },
-                                    new ChartItemDTO { Key = "Oracle", Value = 45 },
-                                    new ChartItemDTO { Key = "IBM", Value = 55 },
-                                    new ChartItemDTO { Key = "TESLA", Value = 45 },
-                                    new ChartItemDTO { Key = "Space X", Value = 25 },
-                                    new ChartItemDTO { Key = "Amazon", Value = 15 },
-                                    new ChartItemDTO { Key = "NVidia", Value = 55 },
-                                })" />
 
 
 
 
+        <ELEMENTS.Controls.Text.Label Value="Row" />
+        <ELEMENTS.Controls.Charts.GenericChartJS @ref="@genChart"
+                                                 Title="Company"
+                                                 Legende="Turnover"
+                                                 Items="@Items"
+                                                 Typ="ChartType.HorizontalBar" />
+
+        <ELEMENTS.Controls.Text.Label Value="Polar" />
+        <ELEMENTS.Controls.Charts.GenericChartJS @ref="@genChart"
+                                                 Title="Company"
+                                                 Legende="Turnover"
+                                                 Items="@Items"
+                                                 Typ="ChartType.PolarArea" />
 
 
     </div>
     <div class="col p-3">
-        <ELEMENTS.Controls.Text.Label Value="Area Chart" />
-        <ELEMENTS.Controls.Charts.AreaChart Title="Company" Legende="Turnover"
-                                            Items="@( new List<ChartItemDTO>()  {
-                                    new ChartItemDTO { Key = "Microsoft", Value = 75 },
-                                    new ChartItemDTO { Key = "Apple", Value = 50 },
-                                    new ChartItemDTO { Key = "Oracle", Value = 45 },
-                                    new ChartItemDTO { Key = "IBM", Value = 55 },
-                                    new ChartItemDTO { Key = "TESLA", Value = 45 },
-                                    new ChartItemDTO { Key = "Space X", Value = 25 },
-                                    new ChartItemDTO { Key = "Amazon", Value = 15 },
-                                    new ChartItemDTO { Key = "NVidia", Value = 55 },
-                                })" />
 
 
+        <ELEMENTS.Controls.Text.Label Value="Bar" />
+        <ELEMENTS.Controls.Charts.GenericChartJS @ref="@genChart"
+                                                 Title="Company"
+                                                 Legende="Turnover"
+                                                 Items="@Items"
+                                                 Typ="ChartType.VerticalBar" />
 
-        <ELEMENTS.Controls.Text.Label Value="Doughnut Chart" />
-        <ELEMENTS.Controls.Charts.DoughnutChart Title="Company" Legende="Turnover"
-                                                Items="@( new List<ChartItemDTO>()  {
-                                    new ChartItemDTO { Key = "Microsoft", Value = 75 },
-                                    new ChartItemDTO { Key = "Apple", Value = 50 },
-                                    new ChartItemDTO { Key = "Oracle", Value = 45 },
-                                    new ChartItemDTO { Key = "IBM", Value = 55 },
-                                    new ChartItemDTO { Key = "TESLA", Value = 45 },
-                                    new ChartItemDTO { Key = "Space X", Value = 25 },
-                                    new ChartItemDTO { Key = "Amazon", Value = 15 },
-                                    new ChartItemDTO { Key = "NVidia", Value = 55 },
-                                })" />
-
-                <ELEMENTS.Controls.Text.Label Value="Radar Chart" />
-        <ELEMENTS.Controls.Charts.RadarChart Title="Company" Legende="Turnover"
-                                             Items="@( new List<ChartItemDTO>()  {
-                                    new ChartItemDTO { Key = "Microsoft", Value = 75 },
-                                    new ChartItemDTO { Key = "Apple", Value = 50 },
-                                    new ChartItemDTO { Key = "Oracle", Value = 45 },
-                                    new ChartItemDTO { Key = "IBM", Value = 55 },
-                                    new ChartItemDTO { Key = "TESLA", Value = 45 },
-                                    new ChartItemDTO { Key = "Space X", Value = 25 },
-                                    new ChartItemDTO { Key = "Amazon", Value = 15 },
-                                    new ChartItemDTO { Key = "NVidia", Value = 55 },
-                                })" />
-
-        <ELEMENTS.Controls.Text.Label Value="Vertical Bar Chart" />
-        <ELEMENTS.Controls.Charts.BarVerticalChart Title="Company" Legende="Turnover"
-                                                   Items="@( new List<ChartItemDTO>()  {
-                                    new ChartItemDTO { Key = "Microsoft", Value = 75 },
-                                    new ChartItemDTO { Key = "Apple", Value = 50 },
-                                    new ChartItemDTO { Key = "Oracle", Value = 45 },
-                                    new ChartItemDTO { Key = "IBM", Value = 55 },
-                                    new ChartItemDTO { Key = "TESLA", Value = 45 },
-                                    new ChartItemDTO { Key = "Space X", Value = 25 },
-                                    new ChartItemDTO { Key = "Amazon", Value = 15 },
-                                    new ChartItemDTO { Key = "NVidia", Value = 55 },
-                                })" />
-
-
+          <ELEMENTS.Controls.Text.Label Value="Radar" />
+        <ELEMENTS.Controls.Charts.GenericChartJS @ref="@genChart"
+                                                 Title="Company"
+                                                 Legende="Turnover"
+                                                 Items="@Items"
+                                                 Typ="ChartType.Radar" />
 
     </div>
     <div class="col p-3">
@@ -144,9 +129,6 @@
                                     new ChartItemDTO { Key = "Amazon", Value = 15 },
                                     new ChartItemDTO { Key = "NVidia", Value = 55 },
                                 })" />
-
-        <ELEMENTS.Controls.Text.Label Value="Progress Chart" />
-        <ELEMENTS.Controls.Charts.ProgressChart Title="Progress" Legende="Status" />
 
         <ELEMENTS.Controls.Text.Label Value="KPI List" />
         <ELEMENTS.Controls.KPI.KpiList Items="@( new List<KpiListItem>()  {
@@ -186,5 +168,46 @@
 
 
 @code {
+
+    private List<ChartItemDTO> Items { get; set; } = new List<ChartItemDTO>();
+
+    private ELEMENTS.Controls.Charts.PieChart pieChart;
+    private ELEMENTS.Controls.Charts.GenericChartJS genChart;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        Items = new List<ChartItemDTO>
+        {
+                                    new ChartItemDTO { Key = "Microsoft", Value = 22 },
+                                    new ChartItemDTO { Key = "Apple", Value = 33 },
+                                    new ChartItemDTO { Key = "Oracle", Value = 44 },
+                                    new ChartItemDTO { Key = "IBM", Value = 55 },
+                                    new ChartItemDTO { Key = "TESLA", Value = 66 },
+                                    new ChartItemDTO { Key = "Space X", Value = 55 },
+                                    new ChartItemDTO { Key = "Amazon", Value = 44 },
+                                    new ChartItemDTO { Key = "NVidia", Value = 33 },
+                                };
+    }
+
+    private async Task ChangeData()
+    {
+        Items = new List<ChartItemDTO>
+        {
+                                    new ChartItemDTO { Key = "Microsoft", Value = 75 },
+                                    new ChartItemDTO { Key = "Apple", Value = 50 },
+                                    new ChartItemDTO { Key = "Oracle", Value = 45 },
+                                    new ChartItemDTO { Key = "IBM", Value = 55 },
+                                    new ChartItemDTO { Key = "TESLA", Value = 45 },
+                                    new ChartItemDTO { Key = "Space X", Value = 25 },
+                                    new ChartItemDTO { Key = "Amazon", Value = 15 },
+                                    new ChartItemDTO { Key = "NVidia", Value = 55 },
+                                };
+
+        await genChart.LoadChart();
+
+        await Task.FromResult<string>("OK");
+    }
 
 }

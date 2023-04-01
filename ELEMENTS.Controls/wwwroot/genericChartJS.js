@@ -1,4 +1,4 @@
-﻿let generalChartHeight = 215;
+﻿let generalChartHeight = 235;
 let generalleft = 15;
 let generalright = 35;
 let generaltop = 10;
@@ -6,9 +6,10 @@ let generalbottom = 10;
 
 import * as thePCKMOD from "./chartBase.js";
 
-export function loadPieChart(divID, dotNetHelper) {
+export function loadGenericChart(divID, charttyp, dotNetRef) {
     // Create Parameter 
-    let jsonParameter = {
+    let jsonParameter =
+    {
         "DIV": divID,
         "ItemType": "",
         "AppType": "",
@@ -16,14 +17,15 @@ export function loadPieChart(divID, dotNetHelper) {
         "Parameter": "",
         "DataFilter": "",
         "Filter": "",
-        "ChartType": "",
+        "ChartType": charttyp,
+        "Category": ""
     };
 
     try {
-        dotNetHelper.invokeMethodAsync('LoadChartData', jsonParameter).then(data => {
-
-            onPieChartJSSucess(data)
-        });
+        dotNetRef.invokeMethodAsync('LoadGenericChartData', jsonParameter)
+            .then(data => {
+                onGenericChartJSSucess(data)
+            });
 
         // Assembly Name + Method 
         //DotNet.invokeMethodAsync('STRIDES.PieChart', 'LoadPieChartData', jsonParameter).then(data => {
@@ -37,60 +39,168 @@ export function loadPieChart(divID, dotNetHelper) {
 
 }
 
+function getChartType(enumChartType) {
+    // https://www.w3schools.com/js/js_graphics_chartjs.asp 
+    if (enumChartType === 'Line') { return 'line'; }
+    if (enumChartType === 'Area') { return 'line'; }
+    if (enumChartType === 'StepLine') { return 'line'; }
+    if (enumChartType === 'HorizontalBar') { return 'bar'; }
+    if (enumChartType === 'VerticalBar') { return 'bar'; }
+    if (enumChartType === 'Pie') { return 'pie'; }
+    if (enumChartType === 'Doughnut') { return 'doughnut'; }
+    if (enumChartType === 'PolarArea') { return 'polarArea'; }
+    if (enumChartType === 'Radar') { return 'radar'; }
+    if (enumChartType === 'Progress') { return 'doughnut'; }
 
-function onPieChartJSSucess(data) {
+    return 'pie';
+}
+function getChartRadius(enumChartType) {
+    // https://www.w3schools.com/js/js_graphics_chartjs.asp 
+    if (enumChartType === 'Progress') { return 80; }
+    if (enumChartType === 'Doughnut') { return 50; }
 
-    try {
-        let chartType = 'pie';
+    return 0;
+}
+function getLegendPosition(enumChartType)
+{
+    // https://www.w3schools.com/js/js_graphics_chartjs.asp 
+    if (enumChartType === 'Line') { return 'top'; }
+    if (enumChartType === 'Area') { return 'top'; }
+    if (enumChartType === 'StepLine') { return 'top'; }
+    if (enumChartType === 'HorizontalBar') { return 'top'; }
+    if (enumChartType === 'VerticalBar') { return 'top'; }
+    if (enumChartType === 'Pie') { return 'right'; }
+    if (enumChartType === 'Doughnut') { return 'right'; }
+    if (enumChartType === 'PolarArea') { return 'right'; }
+    if (enumChartType === 'Radar') { return 'right'; }
+    if (enumChartType === 'Progress') { return 'right'; }
+
+    return 'right';
+}
+function getChartFillOption(enumChartType)
+{
+    // https://www.w3schools.com/js/js_graphics_chartjs.asp 
+    if (enumChartType === 'Area') { return true; }
+    if (enumChartType === 'StepLine') { return true; }
+    if (enumChartType === 'Radar') { return true; }
+
+    return false;
+}
+function getChartFillColor(enumChartType)
+{
+    // https://www.w3schools.com/js/js_graphics_chartjs.asp 
+    if (enumChartType === 'Area') { return '#cccccc99'; }
+    if (enumChartType === 'StepLine') { return '#cccccc99'; }
+    if (enumChartType === 'Radar') { return '#cccccc99'; }
+
+    return getChartColors();
+}
+function getBorderLineColor(enumChartType)
+{
+    // https://www.w3schools.com/js/js_graphics_chartjs.asp 
+    if (enumChartType === 'Line') { return '#cccccc99'; }
+    if (enumChartType === 'StepLine') { return '#cccccc99'; }
+    if (enumChartType === 'Area') { return '#cccccc99'; }
+
+    return '#ffffff';
+}
+function getChartIndexAxis(enumChartType)
+{
+    // https://www.w3schools.com/js/js_graphics_chartjs.asp 
+    if (enumChartType === 'HorizontalBar') { return 'y'; }
+
+    return 'x';
+}
+function getSteppedConfig(enumChartType) {
+    // https://www.w3schools.com/js/js_graphics_chartjs.asp 
+    if (enumChartType === 'StepLine') { return true; }
+
+    return false;
+}
+function getSteppedOption(enumChartType) {
+    // https://www.w3schools.com/js/js_graphics_chartjs.asp 
+    if (enumChartType === 'StepLine') { return 'middle'; }
+
+    return '';
+}
+function getChartPointColors(enumChartType)
+{
+    // https://www.w3schools.com/js/js_graphics_chartjs.asp 
+   
+    return getChartColors();
+}
+
+function onGenericChartJSSucess(data) {
+
+    try
+    {
+        let chartType = getChartType(data.chartType);
         let title = data.title.toString();
-        title = data.div;
-        let CutOutPercentage = 80;
-        let legendePosition = 'right';
+        let cutout = getChartRadius(data.chartType);
+        let legendePosition = getLegendPosition(data.chartType);
         let showLegende = false;
 
         // Farben 
-        let colors = getChartColors();
+        let colors = getChartPointColors(data.chartType);
         let legendTitle = '';
+        let fillChart = getChartFillOption(data.chartType);
 
         // Arrays 
         let labelData = [];
         let dataset = [];
 
-        try {
-            for (let s = 0; s < data.series.length; s++) {
-                let serie = data.series[s];
-                if (serie === null)
-                    continue;
+        // Data 
+        if (data.chartType === 'Progress') {
+            try
+            {
+                // Data 
+                let serie = data.series[0];
+                let key = "Fortschritt";
+                let value = serie.items[0].value;
+                labelData.push(key);
+                dataset.push(value);
 
-                // Legende 
-                legendTitle = serie.title;
-
-                // Werte 
-                for (let c = 0; c < serie.items.length; c++)
+                if (value < 100)
                 {
-                    try
-                    {
-                        let key = serie.items[c].key;
-                        let value = serie.items[c].value;
+                    labelData.push("offen");
+                    dataset.push(100 - value);
+                }
+            }
+            catch (e) { console.log("FAIL: " + e); }
 
-                        // Test 
-                        var randNum = Math.floor(Math.random() * 1000) + 1;
-                        value = randNum;
+        }
+        else {
+            try {
+                for (let s = 0; s < data.series.length; s++) {
+                    let serie = data.series[s];
+                    if (serie === null)
+                        continue;
 
-                        if (key === null)
-                            key = '---';
+                    // Legende 
+                    legendTitle = serie.title;
 
-                        // Data 
-                        labelData.push(key);
-                        dataset.push(value);
-                    }
-                    catch (e) {
-                        console.log("FAIL: " + e);
+                    // Werte 
+                    for (let c = 0; c < serie.items.length; c++) {
+                        try {
+                            let key = serie.items[c].key;
+                            let value = serie.items[c].value;
+
+                      
+                            if (key === null)
+                                key = '---';
+
+                            // Data 
+                            labelData.push(key);
+                            dataset.push(value);
+                        }
+                        catch (e) {
+                            console.log("FAIL: " + e);
+                        }
                     }
                 }
             }
+            catch (e) { console.log("FAIL: " + e); }
         }
-        catch (e) { console.log("FAIL: " + e); }
 
 
         // Get Canvas + Check Visibility 
@@ -103,7 +213,7 @@ function onPieChartJSSucess(data) {
             if (data.series.length === 0) {
                 canvas.style.visibility = 'hidden';
                 canvas.style.visibility = 'none';
-DIV            }
+            }
             canvas.height = generalChartHeight;
         }
         catch (e) {
@@ -112,26 +222,28 @@ DIV            }
 
         // Package 
         let chartPCK = thePCKMOD.getPackageByID(data.div);
-        if (chartPCK === null || chartPCK === undefined)
-        {
+        if (chartPCK === null || chartPCK === undefined) {
             chartPCK = new thePCKMOD.tspChart();
             chartPCK.ID = data.div;
         }
 
         // Chart 
         let chart;
-        if (chartPCK !== null && chartPCK !== undefined)
-        {
-            if (chartPCK.Chart !== null && chartPCK.Chart !== undefined)
-            {
+        if (chartPCK !== null && chartPCK !== undefined) {
+            if (chartPCK.Chart !== null && chartPCK.Chart !== undefined) {
                 chart = chartPCK.Chart;
             }
         }
 
-    /*    try { chart.destroy(); } catch (eInner) { alert(eInner); }*/
+        if (chart !== null && chart !== undefined) {
+            try { chart.destroy(); } catch (eInner) { }
+        }
+        if (grapharea !== null && grapharea !== undefined) {
+            try { grapharea.destroy(); } catch (eInner) { }
+        }
 
         try {
-            // Chart
+            // Chart 
             chart = new Chart(grapharea, {
                 type: chartType,
                 data: {
@@ -139,23 +251,26 @@ DIV            }
                     datasets: [
                         {
                             label: legendTitle,
-                            borderColor: '#fff',
+                            borderColor: getBorderLineColor(data.chartType),
                             borderWidth: 2,
 
                             pointBorderColor: colors,
                             pointBackgroundColor: colors,
 
-                            backgroundColor: colors,
+                            backgroundColor: getChartFillColor(data.chartType),
+                            fill: fillChart,
+                            stepped: getSteppedOption(data.chartType),
 
                             data: dataset
                         }
                     ]
                 },
                 options: {
+                    indexAxis: getChartIndexAxis(data.chartType),
                     color: colors,
                     drawBorder: false,
                     drawTicks: true,
-                    cutoutPercentage: CutOutPercentage,
+                    cutoutPercentage: cutout,
                     responsive: true,
                     maintainAspectRatio: false,
                     layout: {
@@ -170,7 +285,7 @@ DIV            }
                     {
                         display: showLegende,
                         position: legendePosition,
-                        align: "middle",
+                        align: 'center',
                         fontSize: 8,
                         strokeStyle: '#fff',
                         title: {
@@ -219,8 +334,14 @@ DIV            }
             // append 
             chartPCK.Chart = chart;
 
+            if (chartPCK.Zustand === "Init") {
+                chartPCK.Zustand = "Concurrent";
+                thePCKMOD.allPackages.push(chartPCK);
+            }
+
             // Update 
-            chart.options.plugins.legend.position = 'right';
+            chart.options.cutout = cutout;
+            chart.options.plugins.legend.position = legendePosition;
             chart.update();
         }
         catch (e) {

@@ -1,0 +1,127 @@
+﻿@inject IJSRuntime JS
+@using System.Text.Json
+@using ELEMENTS.Infrastructure
+
+
+<div class="bg-light border rounded p-2"
+     style="@( "position: relative; overflow: hidden; ")">
+    <div style="position: relative; overflow: hidden;">
+        <canvas id="@chartGUID" />
+    </div>
+</div>
+
+@code {
+
+    // ID 
+    private string chartGUID = "chart_generic_" + Guid.NewGuid();
+
+    // Fields
+    private ChartDTO Configuration { get; set; } = new ChartDTO();
+    private DotNetObjectReference<GenericChartJS> objRef;
+    private Lazy<Task<IJSObjectReference>> moduleJS;
+
+    // Parameter 
+    [Parameter]
+    public List<ChartItemDTO> Items { get; set; } = new List<ChartItemDTO>();
+
+    [Parameter]
+    public string Title { get; set; } = string.Empty;
+
+    [Parameter]
+    public string Legende { get; set; } = string.Empty;
+
+    [Parameter]
+    public ChartType Typ { get; set; } = ChartType.Pie;
+
+    // Events 
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        Init();
+    }
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+    }
+    protected override async Task OnParametersSetAsync()
+    {
+        await LoadChart();
+        await base.OnParametersSetAsync();
+    }
+
+    // Methods 
+    public void Init()
+    {
+        try
+        {
+            // Import JS File 
+            moduleJS = new(() => JS.InvokeAsync<IJSObjectReference>(
+               "import", "./_content/ELEMENTS.Controls/genericChartJS.js").AsTask());
+
+            // Reference 
+            objRef = DotNetObjectReference.Create(this);
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine("Fail Invoke Chart");
+        }
+    }
+    public async ValueTask LoadChart()
+    {
+        try
+        {
+            // Execute function 
+            var module = await moduleJS.Value;
+            await module.InvokeVoidAsync("loadGenericChart", chartGUID, Typ.ToString(), objRef);
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine("Fail Invoke Chart: " + ex.Message);
+        }
+    }
+
+    // JS Methods
+    [JSInvokable]
+    public Task<ChartDTO> LoadGenericChartData(JsonElement json)
+    {
+        Configuration = new ChartDTO();
+        try
+        {
+            Configuration.DIV = json.GetProperty("DIV").GetString();
+            Configuration.ItemType = json.GetProperty("ItemType").GetString();
+            Configuration.AppType = json.GetProperty("AppType").GetString();
+            Configuration.Title = this.Title;
+            Configuration.Parameter = json.GetProperty("DataParameter").GetString();
+            Configuration.ChartType = json.GetProperty("ChartType").GetString();
+
+            // Serie (max. 1 Serie in diesem Control) 
+            ChartSeriesDTO serie = new ChartSeriesDTO();
+            serie.Title = Legende;
+
+            // Items
+            if (this.Items == null || this.Items.Count == 0)
+            {
+                //LoadDefaultItems();
+            }
+            else
+            {
+                // Default Queries
+                foreach (ChartItemDTO dto in Items)
+                {
+                    serie.Items.Add(dto);
+                }
+
+                // Series Append
+                Configuration.Series.Add(serie);
+            }
+
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine("FAIL: " + ex.Message);
+        }
+
+        return Task.FromResult(Configuration);
+    }
+
+}

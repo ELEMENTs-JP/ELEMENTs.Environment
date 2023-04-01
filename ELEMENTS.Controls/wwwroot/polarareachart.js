@@ -1,4 +1,4 @@
-﻿let generalChartHeight = 285;
+﻿let generalChartHeight = 215;
 let generalleft = 15;
 let generalright = 35;
 let generaltop = 10;
@@ -38,7 +38,7 @@ export function loadPolarAreaChart(divID, dotNetHelper)
     
 }
 
-
+let chart;
 
 function onPolarAreaChartJSSucess(data) {
 
@@ -104,7 +104,7 @@ function onPolarAreaChartJSSucess(data) {
             console.log("FAIL: " + e);
         }
 
-        let chart;
+        
 
         try {
             if (chart !== null && chart !== undefined) {

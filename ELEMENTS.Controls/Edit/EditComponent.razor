@@ -3,8 +3,8 @@
 
 
 <div class="@( (Border) ?
-               ((Field.Type == EditFieldType.Divider) ? "p-1" : "p-1 hover")
-               : "hover" )">
+               ((Field.Type == EditFieldType.Divider) ? "p-1" : "p-1")
+               : "" )">
 
 
     @if (Field.Type == EditFieldType.Divider)
@@ -15,11 +15,11 @@
         <label class="form-label text-primary">@Field.Title.ToSecureString()</label>
     }
 
-    @* MODE *@
+    @* --- VIEW --- *@
     @if (Field.Mode == EditFieldMode.View)
     {
-        <div class="@( (IsJustViewableType(Field.Type)) ? " row g-0 " : " row g-0 pointer ")"
-             @onclick="@( e => { if (!IsJustViewableType(Field.Type)) { Edit(); } })">
+        <div class="@( (IsJustViewableType(Field.Type)) ? " row g-0 " : " row g-0 pointer hover")"
+         @onclick="@( e => { if (!IsJustViewableType(Field.Type)) { Edit(); } })">
 
             <div class="col py-1">
 
@@ -29,20 +29,22 @@
                 }
 
                 @if (Field.Type == EditFieldType.Text ||
-            Field.Type == EditFieldType.TextBox ||
-            Field.Type == EditFieldType.TextArea ||
-            Field.Type == EditFieldType.OptionItems ||
-            Field.Type == EditFieldType.LookupItems)
+               Field.Type == EditFieldType.TextBox ||
+               Field.Type == EditFieldType.TextArea ||
+               Field.Type == EditFieldType.OptionItems ||
+               Field.Type == EditFieldType.LookupItems)
                 {
-                    @Value.ToSecureString()
+                    <div class="min-edit-height text-muted">
+                        @Value.ToSecureString("bearbeiten...")
+                    </div>
                 }
 
                 @if (Field.Type == EditFieldType.MoneyBox)
                 {
 
-                    <div class="row">
-                        <div class="col-auto">
-                            @DecValue.ToSecureDecimal().ToString("C3", CultureInfo.CurrentCulture)
+                    <div class="row min-edit-height">
+                        <div class="col-auto text-muted">
+                            @DecValue.ToSecureDecimal().ToString("C3", CultureInfo.CurrentCulture).ToSecureString("---")
                         </div>
                         <div class="col-auto ps-2 me-auto">
                             <i class="fas fa-money-bill"></i>
@@ -54,48 +56,64 @@
 
                 @if (Field.Type == EditFieldType.DecimalBox)
                 {
-                    @DecValue.ToSecureString()
+                    <div class="min-edit-height text-muted">
+                        @DecValue.ToSecureString("---")
+                    </div>
                 }
 
                 @if (Field.Type == EditFieldType.IntegerBox)
                 {
-                    @IntValue.ToSecureString()
+
+                    <div class="min-edit-height text-muted">
+                        @IntValue.ToSecureString("---")
+                    </div>
                 }
 
                 @if (Field.Type == EditFieldType.PercentBox ||
-             Field.Type == EditFieldType.ProgressBox)
+               Field.Type == EditFieldType.ProgressBox)
                 {
-                    <div class="row g-0">
-                        <div class="col">
-                            @IntValue.ToSecureString()
+                    <div class="row g-0 min-edit-height align-items-center">
+                        <div class="col-auto text-muted">
+                            @IntValue.ToSecureString()%
                         </div>
                         <div class="col-auto ps-2">
-                            <i class="fas fa-percent"></i>
+                            <div class="progress" style="width: 5rem">
+                                <div class="progress-bar" 
+                                        style="width: @IntValue.ToSecureString()%" 
+                                        role="progressbar" 
+                                        aria-valuenow="@IntValue.ToSecureString()" 
+                                        aria-valuemin="0" 
+                                        aria-valuemax="100"
+                                        aria-label="@IntValue.ToSecureString()% Complete">
+                                    <span class="visually-hidden">@IntValue.ToSecureString()% Complete</span>
+                                </div>
+                            </div>
                         </div>
+                        <div class="col"></div>
                     </div>
                 }
 
                 @if (Field.Type == EditFieldType.DateBox)
                 {
 
-                    <div class="row g-0 align-items-center">
+                    <div class="row g-0 min-edit-edit align-items-center">
                         <div class="col-auto pe-2"><i class="far fa-calendar-alt"></i></div>
-                        <div class="col">@DateTimeValue.ToSecureDateTime().ToShortDateString()</div>
+                        <div class="col text-muted">@DateTimeValue.ToSecureDateTime().ToShortDateString().ToSecureString("---")</div>
                     </div>
 
                 }
                 @if (Field.Type == EditFieldType.DateTimeBox)
                 {
 
-                    <div class="row g-0 align-items-center">
+                    <div class="row g-0 min-edit-edit align-items-center">
                         <div class="col-auto pe-2"><i class="far fa-calendar-alt"></i></div>
-                        <div class="col">
-                            @( DateTimeValue.ToSecureDateTime().ToShortDateString() )
+                        <div class="col text-muted">
+                            @(DateTimeValue.ToSecureDateTime().ToShortDateString().ToSecureString("---"))
                         </div>
 
                         <div class="col-auto px-2"><i class="far fa-clock"></i></div>
-                        <div class="col">
-                            @( DateTimeValue.ToSecureDateTime().ToShortTimeString() )
+                        <div class="col text-muted">
+                            @(DateTimeValue.ToSecureDateTime().ToShortTimeString().ToSecureString("---"))
                         </div>
                     </div>
 
@@ -103,16 +121,16 @@
                 @if (Field.Type == EditFieldType.TimeBox)
                 {
 
-                    <div class="row g-0 align-items-center">
+                    <div class="row g-0 min-edit-edit align-items-center">
                         <div class="col-auto pe-2"><i class="far fa-clock"></i></div>
-                        <div class="col">@DateTimeValue.ToSecureDateTime().ToShortTimeString()</div>
+                        <div class="col text-muted">@DateTimeValue.ToSecureDateTime().ToShortTimeString().ToSecureString("---")</div>
                     </div>
 
                 }
 
                 @if (Field.Type == EditFieldType.CheckBox)
                 {
-                    <div class="row g-0 align-items-center">
+                    <div class="row g-0 min-edit-edit align-items-center">
                         <div class="col">
                             @if (BoolValue.ToSecureBool() == true)
                             {
@@ -133,16 +151,18 @@
             </div>
 
             @*@if (Field.Type != EditFieldType.Text)
-                {
-                    <div class="col-auto">
-                        <button type="button" class="btn btn-sm" @onclick="Edit">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                    </div>
-                }*@
+        {
+        <div class="col-auto">
+        <button type="button" class="btn btn-sm" @onclick="Edit">
+        <i class="fas fa-edit"></i>
+        </button>
+        </div>
+        }*@
 
         </div>
     }
+
+    @* --- EDIT --- *@
     else if (Field.Mode == EditFieldMode.Edit)
     {
         @if (Field.Type == EditFieldType.Divider)
@@ -157,38 +177,39 @@
 
         @if (Field.Type == EditFieldType.TextBox)
         {
-            <div class="row gx-1">
+            <div class="row gx-1 d-flex align-items-center">
                 <div class="col">
-                    <input type="text"
-                           @bind-value="Value"
-                           class="@ControlCSS"
-                           placeholder="@Placeholder"
-                           @bind-value:event="oninput"
-                           @onchange="@( e => { ValueChanged(); })" />
-                </div>
-                <div class="col-auto">
-                    <button type="button" class="btn btn-sm" @onclick="Save">
-                        <i class="fas fa-check"></i>
-                    </button>
+                    <div class="input-group">
+                        <input type="text"
+                       @bind-value="Value"
+                       class="@ControlCSS"
+                       placeholder="@Placeholder"
+                       @bind-value:event="oninput"
+                       @onchange="@( e => { ValueChanged(); })" />
+
+                        <button type="button" class="btn btn-ghost-success" @onclick="Save">
+                            <i class="fas fa-check"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
         }
 
         @if (Field.Type == EditFieldType.TextArea)
         {
-            <div class="row gx-1">
+            <div class="row gx-1 d-flex align-items-center">
                 <div class="col-12">
 
                     <textarea style="min-height:120px;"
-                              class="@ControlCSS"
-                              placeholder="@Placeholder"
-                              @oninput="@(e => { Value = e.Value.ToSecureString(); ValueChanged(); })"
-                              rows="6">@Value</textarea>
+                      class="@ControlCSS"
+                      placeholder="@Placeholder"
+                      @oninput="@(e => { Value = e.Value.ToSecureString(); ValueChanged(); })"
+                      rows="6">@Value</textarea>
 
                 </div>
                 <div class="col"></div>
                 <div class="col-auto pt-1">
-                    <button type="button" class="btn btn-sm btn-ghost-primary" @onclick="Save">
+                    <button type="button" class="btn btn-sm btn-ghost-success" @onclick="Save">
                         speichern...
                     </button>
                 </div>
@@ -197,12 +218,12 @@
 
         @if (Field.Type == EditFieldType.LookupItems)
         {
-            <div class="row gx-1">
+            <div class="row gx-1  d-flex align-items-center">
                 <div class="col">
 
                     @* --- SELECT DROP DOWN --- *@
                     <select class="form-select" title="@( Value.ToSecureString() )"
-                            @onchange="@(e => { Value = e.Value.ToSecureString(); ValueChanged(); })">
+                    @onchange="@(e => { Value = e.Value.ToSecureString(); ValueChanged(); })">
 
                         <option class="@OptionItemCSS" value="---">--- bitte wählen ---</option>
 
@@ -229,7 +250,7 @@
 
                 </div>
                 <div class="col-auto">
-                    <button type="button" class="btn btn-sm" @onclick="Save">
+                    <button type="button" class="btn btn-sm btn-ghost-success" @onclick="Save">
                         <i class="fas fa-check"></i>
                     </button>
                 </div>
@@ -238,16 +259,16 @@
 
         @if (Field.Type == EditFieldType.MoneyBox)
         {
-            <div class="row gx-1">
+            <div class="row gx-1 d-flex align-items-center">
                 <div class="col">
                     <div class="input-group">
 
                         <input type="number" step="0.01"
-                               @bind-value="DecValue"
-                               class="@ControlCSS"
-                               placeholder="@Placeholder"
-                               @bind-value:event="oninput"
-                               @onchange="@( e => { ValueChanged(e.Value); })" />
+                       @bind-value="DecValue"
+                       class="@ControlCSS"
+                       placeholder="@Placeholder"
+                       @bind-value:event="oninput"
+                       @onchange="@( e => { ValueChanged(e.Value); })" />
 
                         @if (!string.IsNullOrEmpty(Symbol))
                         {
@@ -255,13 +276,10 @@
                                 @((MarkupString)Symbol)
                             </span>
                         }
-
+                        <button type="button" class="btn btn-ghost-success" @onclick="Save">
+                            <i class="fas fa-check"></i>
+                        </button>
                     </div>
-                </div>
-                <div class="col-auto">
-                    <button type="button" class="btn btn-sm" @onclick="Save">
-                        <i class="fas fa-check"></i>
-                    </button>
                 </div>
             </div>
 
@@ -271,19 +289,19 @@
         @if (Field.Type == EditFieldType.DecimalBox)
         {
 
-            <div class="row gx-1">
+            <div class="row gx-1 d-flex align-items-center">
                 <div class="col">
-                    <input type="number" step="0.01"
-                           @bind-value="DecValue"
-                           class="@ControlCSS"
-                           placeholder="@Placeholder"
-                           @bind-value:event="oninput"
-                           @onchange="@( e => { ValueChanged(e.Value); })" />
-                </div>
-                <div class="col-auto">
-                    <button type="button" class="btn btn-sm" @onclick="Save">
-                        <i class="fas fa-check"></i>
-                    </button>
+                    <div class="input-group">
+                        <input type="number" step="0.01"
+                       @bind-value="DecValue"
+                       class="@ControlCSS"
+                       placeholder="@Placeholder"
+                       @bind-value:event="oninput"
+                       @onchange="@( e => { ValueChanged(e.Value); })" />
+                        <button type="button" class="btn btn-ghost-success" @onclick="Save">
+                            <i class="fas fa-check"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -291,35 +309,37 @@
 
         @if (Field.Type == EditFieldType.IntegerBox)
         {
-            <div class="row gx-1">
+            <div class="row gx-1 d-flex align-items-center">
                 <div class="col">
-                    <input type="number"
-                           @bind-value="IntValue"
-                           class="@ControlCSS"
-                           placeholder="@Placeholder"
-                           @bind-value:event="oninput"
-                           @onchange="@( e => { ValueChanged(e.Value); })" />
-                </div>
-                <div class="col-auto">
-                    <button type="button" class="btn btn-sm" @onclick="Save">
-                        <i class="fas fa-check"></i>
-                    </button>
+                    <div class="input-group">
+                        <input type="number"
+                       @bind-value="IntValue"
+                       class="@ControlCSS"
+                       placeholder="@Placeholder"
+                       @bind-value:event="oninput"
+                       @onchange="@( e => { ValueChanged(e.Value); })" />
+
+                        <button type="button" class="btn btn-sm btn-ghost-success" @onclick="Save">
+                            <i class="fas fa-check"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
         }
 
         @if (Field.Type == EditFieldType.PercentBox)
         {
-            <div class="row gx-1">
+
+            <div class="row gx-1 d-flex align-items-center">
                 <div class="col">
                     <div class="input-group">
 
                         <input type="number"
-                               @bind-value="IntValue"
-                               class="@ControlCSS"
-                               placeholder="@Placeholder"
-                               @bind-value:event="oninput"
-                               @onchange="@( e => { ValueChanged(e.Value); })" />
+                       @bind-value="IntValue"
+                       class="@ControlCSS"
+                       placeholder="@Placeholder"
+                       @bind-value:event="oninput"
+                       @onchange="@( e => { ValueChanged(e.Value); })" />
 
                         @if (!string.IsNullOrEmpty(Symbol))
                         {
@@ -328,28 +348,26 @@
                             </span>
                         }
 
+                        <button type="button" class="btn btn-sm btn-ghost-success" @onclick="Save">
+                            <i class="fas fa-check"></i>
+                        </button>
                     </div>
-                </div>
-                <div class="col-auto">
-                    <button type="button" class="btn btn-sm" @onclick="Save">
-                        <i class="fas fa-check"></i>
-                    </button>
                 </div>
             </div>
         }
 
         @if (Field.Type == EditFieldType.ProgressBox)
         {
-            <div class="row gx-1">
+            <div class="row gx-1 d-flex align-items-center">
                 <div class="col">
                     <div class="input-group">
 
                         <input type="number" min="0" max="100"
-                               @bind-value="IntValue"
-                               class="@ControlCSS"
-                               placeholder="@Placeholder"
-                               @bind-value:event="oninput"
-                               @onchange="@( e => { ValueChanged(e.Value); })" />
+                       @bind-value="IntValue"
+                       class="@ControlCSS"
+                       placeholder="@Placeholder"
+                       @bind-value:event="oninput"
+                       @onchange="@( e => { ValueChanged(e.Value); })" />
 
                         @if (!string.IsNullOrEmpty(Symbol))
                         {
@@ -358,31 +376,30 @@
                             </span>
                         }
 
+                        <button type="button" class="btn btn-sm btn-ghost-success" @onclick="Save">
+                            <i class="fas fa-check"></i>
+                        </button>
                     </div>
-                </div>
-                <div class="col-auto">
-                    <button type="button" class="btn btn-sm" @onclick="Save">
-                        <i class="fas fa-check"></i>
-                    </button>
                 </div>
             </div>
         }
 
         @if (Field.Type == EditFieldType.DateBox)
         {
-            <div class="row gx-1">
+            <div class="row gx-1 d-flex align-items-center">
                 <div class="col">
-                    <input type="date"
-                           @bind-value="DateTimeValue"
-                           class="@ControlCSS"
-                           placeholder="@Placeholder"
-                           @bind-value:event="oninput"
-                           @onchange="@( e => { ValueChanged(e.Value); })" />
-                </div>
-                <div class="col-auto">
-                    <button type="button" class="btn btn-sm" @onclick="Save">
-                        <i class="fas fa-check"></i>
-                    </button>
+                    <div class="input-group">
+                        <input type="date"
+                       @bind-value="DateTimeValue"
+                       class="@ControlCSS"
+                       placeholder="@Placeholder"
+                       @bind-value:event="oninput"
+                       @onchange="@( e => { ValueChanged(e.Value); })" />
+
+                        <button type="button" class="btn btn-sm btn-ghost-success" @onclick="Save">
+                            <i class="fas fa-check"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -392,20 +409,20 @@
 
         @if (Field.Type == EditFieldType.DateTimeBox)
         {
-            <div class="row gx-1">
+            <div class="row gx-1 d-flex align-items-center">
                 <div class="col">
+                    <div class="input-group">
+                        <input type="datetime-local"
+                       @bind-value="DateTimeValue"
+                       class="@ControlCSS"
+                       placeholder="@Placeholder"
+                       @bind-value:event="oninput"
+                       @onchange="@( e => { ValueChanged(e.Value); })" />
 
-                    <input type="datetime-local"
-                           @bind-value="DateTimeValue"
-                           class="@ControlCSS"
-                           placeholder="@Placeholder"
-                           @bind-value:event="oninput"
-                           @onchange="@( e => { ValueChanged(e.Value); })" />
-                </div>
-                <div class="col-auto">
-                    <button type="button" class="btn btn-sm" @onclick="Save">
-                        <i class="fas fa-check"></i>
-                    </button>
+                        <button type="button" class="btn btn-sm btn-ghost-success" @onclick="Save">
+                            <i class="fas fa-check"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -413,19 +430,20 @@
 
         @if (Field.Type == EditFieldType.TimeBox)
         {
-            <div class="row gx-1">
+            <div class="row gx-1 d-flex align-items-center">
                 <div class="col">
-                    <input type="time"
-                           @bind-value="DateTimeValue"
-                           class="@ControlCSS"
-                           placeholder="@Placeholder"
-                           @bind-value:event="oninput"
-                           @onchange="@( e => { ValueChanged(e.Value); })" />
-                </div>
-                <div class="col-auto">
-                    <button type="button" class="btn btn-sm" @onclick="Save">
-                        <i class="fas fa-check"></i>
-                    </button>
+                    <div class="input-group">
+                        <input type="time"
+                       @bind-value="DateTimeValue"
+                       class="@ControlCSS"
+                       placeholder="@Placeholder"
+                       @bind-value:event="oninput"
+                       @onchange="@( e => { ValueChanged(e.Value); })" />
+
+                        <button type="button" class="btn btn-sm btn-ghost-success" @onclick="Save">
+                            <i class="fas fa-check"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -434,19 +452,18 @@
 
         @if (Field.Type == EditFieldType.CheckBox)
         {
-            <div class="row gx-1">
+            <div class="row gx-1 d-flex align-items-center">
                 <div class="col">
+                    <div class="input-group">
+                        <CheckBox Title="@Field.Title.ToSecureString()"
+                          Description="@Field.Description.ToSecureString()"
+                          Value="@BoolValue"
+                          ValueChanged="@( e => { BoolValue = e; })" />
 
-                    <CheckBox Title="@Field.Title.ToSecureString()" 
-                              Description="@Field.Description.ToSecureString()"
-                              Value="@BoolValue" 
-                              ValueChanged="@( e => { BoolValue = e; })" />
-
-                </div>
-                <div class="col-auto">
-                    <button type="button" class="btn btn-sm" @onclick="Save">
-                        <i class="fas fa-check"></i>
-                    </button>
+                        <button type="button" class="btn btn-sm btn-ghost-success" @onclick="Save">
+                            <i class="fas fa-check"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
         }
@@ -456,6 +473,8 @@
             <div><small class="text-muted">@Field.Description.ToSecureString()</small></div>
         }
     }
+
+    @* other *@
     else
     {
         <div class="bg-light border rounded lead">&minus;</div>
@@ -811,7 +830,7 @@
 
                         try
                         {
-                            // Event Callback 
+                            // Event Callback
                             PropertySaved();
 
                             // Global Notification

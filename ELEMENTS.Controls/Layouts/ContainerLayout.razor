@@ -1,98 +1,188 @@
 ﻿
 
-<div class="@GetStyle()">
+@if (ControlType == LayoutType.ProfileLayout)
+{
+    <div class="@GetStyle()">
 
-    <div class="@(HeaderCSS  + " " + PaddingCSS)">
-        <div class="row align-items-center">
+        <div class="row g-0">
+            <div class="col-12">
 
-            @if (Avatar == true)
-            {
-                <div class="col-auto">
-                    <span class="@( AvatarCSS )" style="@( AvatarStyleSheet )"></span>
-                </div>
-            }
-
-        <div class="col">
-            @if (!string.IsNullOrEmpty(PreTitle))
-            {
-                <div class="page-pretitle">
-                    @PreTitle
-                </div>
-            }
-            @if (!string.IsNullOrEmpty(Title))
-            {
-                @if (ControlType == LayoutType.ControlLayout)
+                @if (!string.IsNullOrEmpty(BackgroundImageUrl))
                 {
-                    <div class="@(TitleCSS + " " + PaddingCSS)">
-                        <strong>@Title</strong>
+                    <div style="@( "height: 230px; background-position: center; background-repeat: no-repeat; background-size: cover; position: relative; background-image: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.35)), url(" + BackgroundImageUrl + ");" )"></div>
+                }
+                else
+                { 
+                    <div style="@( "height: 230px;" )"></div>                
+                }
+            </div>
+        </div>
+        <div class="row g-0 border-top">
+            <div class="col-2">
+
+            </div>
+
+            @if (ImageContent != null)
+            {
+                <div class="@ImageColumnCSS">
+                    <div class="@(ImageCSS  + " " + PaddingCSS)">
+                        @ImageContent
+                    </div>
+                </div>
+            }
+
+            <div class="col">
+                @if (MenuContent != null)
+                {
+                    <div class="@(MenuCSS + " " + PaddingCSS)">
+                        @MenuContent
                     </div>
                 }
-                else if (ControlType == LayoutType.ComponentLayout)
-                {
-                    <h4 class="@(TitleCSS + " " + "page-title")">
-                        @Title
-                    </h4>
-                }
-                else
-                {
-                    <h3 class="@(TitleCSS + " " + "page-title")">
-                        @Title
-                    </h3>
-                }
-            }
+            </div>
 
-            @if (!string.IsNullOrEmpty(SubTitle))
-            {
-                @if (!string.IsNullOrEmpty(Link))
-                {
-                    <a href="@Link">
-                        <small class="page-subtitle">
-                            @SubTitle
-                        </small>
-                    </a>
-                }
-                else
-                {
-                    <small class="page-subtitle">
-                        @SubTitle
-                    </small>
-                }
-            }
+            <div class="col-2">
 
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-2">
 
+            </div>
+            <div class="col-2">
+                @if (RelatedContent != null)
+                {
+                    <div class="@(RelatedCSS + " " + PaddingCSS)">
+                        @RelatedContent
+                    </div>
+                }
+            </div>
+            <div class="col-6">
+                @if (ChildContent != null)
+                {
+                    <div class="@(ContentCSS + " " + PaddingCSS)">
+                        @ChildContent
+                    </div>
+                }
+            </div>
+            <div class="col-2">
+
+            </div>
         </div>
 
-            @if (RelatedContent != null)
+        <div class="row g-0">
+            @if (FooterContent != null)
             {
-                <div class="col-auto ms-auto">
-                    @RelatedContent
+                <div class="@(FooterCSS  + " " + PaddingCSS)">
+                    @FooterContent
                 </div>
             }
         </div>
+
+    </div>
+}
+else if (ControlType == LayoutType.NULL)
+{
+
+}
+else
+{
+    <div class="@GetStyle()">
+
+        <div class="@(HeaderCSS  + " " + PaddingCSS)">
+            <div class="row align-items-center">
+
+                @if (Avatar == true)
+                {
+                    <div class="col-auto">
+                        <span class="@( AvatarCSS )" style="@( AvatarStyleSheet )"></span>
+                    </div>
+                }
+
+                <div class="col">
+                    @if (!string.IsNullOrEmpty(PreTitle))
+                    {
+                        <div class="page-pretitle">
+                            @PreTitle
+                        </div>
+                    }
+                    @if (!string.IsNullOrEmpty(Title))
+                    {
+                        @if (ControlType == LayoutType.ControlLayout)
+                        {
+                            <div class="@(TitleCSS + " " + PaddingCSS)">
+                                <strong>@Title</strong>
+                            </div>
+                        }
+                        else if (ControlType == LayoutType.ComponentLayout)
+                        {
+                            <h4 class="@(TitleCSS + " " + "page-title")">
+                                @Title
+                            </h4>
+                        }
+                        else
+                        {
+                            <h3 class="@(TitleCSS + " " + "page-title")">
+                                @Title
+                            </h3>
+                        }
+                    }
+
+                    @if (!string.IsNullOrEmpty(SubTitle))
+                    {
+                        @if (!string.IsNullOrEmpty(Link))
+                        {
+                            <a href="@Link">
+                                <small class="page-subtitle">
+                                    @SubTitle
+                                </small>
+                            </a>
+                        }
+                        else
+                        {
+                            <small class="page-subtitle">
+                                @SubTitle
+                            </small>
+                        }
+                    }
+
+
+                </div>
+
+                @if (RelatedContent != null)
+                {
+                    <div class="col-auto ms-auto">
+                        @RelatedContent
+                    </div>
+                }
+            </div>
+        </div>
+
+        @if (MenuContent != null)
+        {
+            <div class="@(MenuCSS + " " + PaddingCSS)">
+                @MenuContent
+            </div>
+        }
+
+        @if (ChildContent != null)
+        {
+            <div class="@(ContentCSS + " " + PaddingCSS)">
+                @ChildContent
+            </div>
+        }
+
+        @if (FooterContent != null)
+        {
+            <div class="@(FooterCSS  + " " + PaddingCSS)">
+                @FooterContent
+            </div>
+        }
+
     </div>
 
-    @if (MenuContent != null)
-    {
-        <div class="@(MenuCSS + " " + PaddingCSS)">
-            @MenuContent
-        </div>
-    }
+}
 
-    @if (ChildContent != null)
-    {
-        <div class="@(ContentCSS + " " + PaddingCSS)">
-            @ChildContent
-        </div>
-    }
 
-    @if (FooterContent != null)
-    {
-        <div class="@(FooterCSS  + " " + PaddingCSS)">
-            @FooterContent
-        </div>
-    }
-
-</div>
 
 
 @code {
@@ -137,10 +227,19 @@
     public string PaddingCSS { get; set; } = " p-2 ";
 
     [Parameter]
+    public string RelatedCSS { get; set; } = "mb-auto";
+
+    [Parameter]
     public string ContentCSS { get; set; } = "mb-auto";
 
     [Parameter]
     public string HeaderCSS { get; set; } = "border-bottom";
+
+    [Parameter]
+    public string ImageColumnCSS { get; set; } = "col-auto position-relative";
+
+    [Parameter]
+    public string ImageCSS { get; set; } = "translate-middle";
 
     [Parameter]
     public string MenuCSS { get; set; } = "border-bottom";
@@ -150,6 +249,9 @@
 
     [Parameter]
     public bool Page { get; set; } = false;
+
+    [Parameter]
+    public string BackgroundImageUrl { get; set; } = "";
 
     [Parameter]
     public RenderFragment FooterContent { get; set; }
@@ -162,6 +264,9 @@
 
     [Parameter]
     public RenderFragment MenuContent { get; set; }
+
+    [Parameter]
+    public RenderFragment ImageContent { get; set; }
 
     // Style
     private string GetStyle()

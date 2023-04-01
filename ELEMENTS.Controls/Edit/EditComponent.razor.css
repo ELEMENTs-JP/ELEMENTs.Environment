@@ -12,14 +12,25 @@ label {
     display: block;
     margin-bottom: 0.15rem !important;
     margin-top: 0.5rem !important;
+    padding-left: 0.25rem;
 }
 
+.hover {
+    padding-left: 0.25rem;
+    border-radius: 3px;
+}
 .hover:hover {
     background-color: var(--tblr-gray-300);
 }
 
 .pointer:hover {
     cursor: pointer;
+    
+}
+
+.min-edit-height 
+{
+    line-height: 1.2;
 }
 
 .hr-text {

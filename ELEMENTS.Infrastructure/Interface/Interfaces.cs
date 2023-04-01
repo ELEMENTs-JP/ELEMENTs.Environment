@@ -34,6 +34,7 @@ namespace ELEMENTS.Infrastructure
     }
 
 
+
     // Settings 
     public interface ISettingField
     {
@@ -133,9 +134,13 @@ namespace ELEMENTS.Infrastructure
     {
         NULL = 0,
 
-        SystemDashboard = 1,
-        AppDashboard = 2,
-        UserDashboard = 3,
+        SystemDashboard = 11,
+        
+        AppDashboard = 21,
+        
+        UserDashboard = 31,
+        
+        GeneralDashboard = 41,
     }
 
     // COLUMNS 
@@ -147,6 +152,7 @@ namespace ELEMENTS.Infrastructure
         string Property { get; set; }
         string ColumnCSSClass { get; set; }
         ColumnType Type { get; set; }
+        string RelatedItemType { get; set; }
     }
     public class Column : IColumn
     {
@@ -156,6 +162,7 @@ namespace ELEMENTS.Infrastructure
         public string ColumnCSSClass { get; set; } = "col";
         public string Property { get; set; }
         public ColumnType Type { get; set; }
+        public string RelatedItemType { get; set; }
     }
 
     public enum ColumnType
@@ -172,11 +179,14 @@ namespace ELEMENTS.Infrastructure
         Date = 11,
         DateTime = 12,
         Time = 14,
+        FromTo = 15,
 
         UserImage = 21,
         
         Parents = 31,
         Children = 32,
+        //Related = 33,
+        //Parallels = 34,
     }
 
     // Edit Field 

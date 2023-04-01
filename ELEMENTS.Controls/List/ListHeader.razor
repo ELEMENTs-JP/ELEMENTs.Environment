@@ -1,5 +1,4 @@
-﻿
-@if (Columns != null)
+﻿@if (Columns != null)
 {
     @if (Columns.Count() >= 1)
     {
@@ -23,11 +22,61 @@
                     </div>
                 }
             }
+
+            @if (DataQueryType == QueryType.ChildrenByParent ||
+           DataQueryType == QueryType.ParentsByChild ||
+           DataQueryType == QueryType.DefaultChildren)
+            {
+                @if (AllowAssignment == true)
+                {
+                    // Link
+                    <div class="col-auto px-1 border-start">
+                        <button type="button"
+                class="btn btn-sm btn-ghost-success"
+                @onclick="@( e => {  })">
+                            <small>
+                                <i class="fas fa-link"></i>
+                            </small>
+                        </button>
+                    </div>
+                }
+                else
+                {
+                    // Un-Link
+                    <div class="col-auto px-1 border-start">
+                        <button type="button"
+                class="btn btn-sm btn-ghost-warning"
+                @onclick="@( e => {  })">
+                            <small>
+                                <i class="fas fa-unlink"></i>
+                            </small>
+                        </button>
+                    </div>
+                }
+            }
+
+            @* DELETE *@
+            @if (AllowDeletion == true)
+            {
+                <div class="col-auto ps-2 border-start">
+                    <button type="button"
+                class="btn btn-sm btn-ghost-danger"
+                @onclick="@( e => {  })">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            }
         </div>
     }
 }
 
 @code {
+
+    [Parameter]
+    public bool AllowDeletion { get; set; } = false;
+
+    [Parameter]
+    public bool AllowAssignment { get; set; } = true;
 
     [Parameter]
     public List<IColumn> Columns { get; set; } = new List<IColumn>();

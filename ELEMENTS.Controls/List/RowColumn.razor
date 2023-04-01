@@ -20,7 +20,7 @@
                 else if (Column.Type == ColumnType.Link)
                 {
                     <a class="fw-bold text-dark"
-                       href="@( "/Item/" + DTO.ItemType.ToSecureString() + "/" + DTO.GUID.ToSecureString() )">
+       href="@( "/Item/" + DTO.ItemType.ToSecureString() + "/" + DTO.GUID.ToSecureString() )">
                         @DTO.Title.ToSecureString()
                     </a>
                 }
@@ -38,12 +38,13 @@
                 else if (Column.Type == ColumnType.Percent)
                 {
                     <div class="row g-0">
-                        <div class="col">
+                        <div class="col-auto">
                             @Value.ToSecureString()
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-percent"></i>
                         </div>
+                        <div class="col"></div>
                     </div>
                 }
                 else if (Column.Type == ColumnType.Money)
@@ -118,7 +119,7 @@
                 else if (Column.Type == ColumnType.UserImage)
                 {
                     <div class="@UserImageCSS"
-                         style="@( UserImageStyle + " background-image: linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05)), url(" + Base64String + "); " )">
+         style="@( UserImageStyle + " background-image: linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05)), url(" + Base64String + "); " )">
                     </div>
                 }
                 else if (Column.Type == ColumnType.Parents)
@@ -136,18 +137,62 @@
                 else if (Column.Type == ColumnType.Progress)
                 {
                     <div class="row g-0">
-                        <div class="col">
+                        <div class="col px-1" title="@("Progress: " + Value.ToSecureString() + " %")">
 
                             <div class="progress">
-                                <div class="progress-bar" style="@("width: "+Value.ToSecureString()+"%")" 
-                                     role="progressbar" aria-valuenow="@(Value.ToSecureString())" aria-valuemin="0" aria-valuemax="100" 
-                                     aria-label="@(Value.ToSecureString()+"% Complete")">
-                                    <span class="visually-hidden">@(Value.ToSecureString()+"% Complete")</span>
+                                <div class="progress-bar" style="@("width: " + Value.ToSecureString() + "%")"
+                                         role="progressbar" aria-valuenow="@(Value.ToSecureString())" aria-valuemin="0" aria-valuemax="100"
+                                         aria-label="@(Value.ToSecureString() + "% Complete")">
+                                    <span class="visually-hidden">@(Value.ToSecureString() + "% Complete")</span>
                                 </div>
                             </div>
 
                         </div>
                     </div>
+                }
+                else if (Column.Type == ColumnType.Parents)
+                {
+                    @if (RelatedDTO != null)
+                    {
+                        <div class="row g-0 align-items-center">
+                            <div class="col">
+                                <span class="badge bg-secondary">
+                                    <a href="@( "/Item/" + RelatedDTO.ItemType.ToSecureString() + "/" + RelatedDTO.GUID.ToSecureString() )">
+                                        @Value.ToSecureString()
+                                    </a>
+                                </span>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="row g-0 align-items-center">
+                            <div class="col">---</div>
+                        </div>
+                    }
+
+                }
+                else if (Column.Type == ColumnType.Children)
+                {
+                    @if (RelatedDTO != null)
+                    {
+                        <div class="row g-0 align-items-center">
+                            <div class="col">
+                                <span class="badge bg-secondary">
+                                    <a href="@( "/Item/" + RelatedDTO.ItemType.ToSecureString() + "/" + RelatedDTO.GUID.ToSecureString() )">
+                                        @Value.ToSecureString()
+                                    </a>
+                                </span>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="row g-0 align-items-center">
+                            <div class="col">---</div>
+                        </div>
+                    }
+
                 }
                 else
                 {
@@ -182,6 +227,8 @@
     [Parameter]
     public IDTO DTO { get; set; }
 
+    private IDTO RelatedDTO { get; set; }
+
     [Parameter]
     public string Value { get; set; } = string.Empty;
 
@@ -193,6 +240,9 @@
 
     [Parameter]
     public DateTime DateTimeValue { get; set; } = DateTime.Now;
+
+    [Parameter]
+    public string RelatedItemType { get; set; } = string.Empty;
 
     protected override void OnParametersSet()
     {
@@ -211,7 +261,7 @@
                 }
                 if (Column.Type == ColumnType.Parents)
                 {
-                    LoadPrents();
+                    LoadParents();
                 }
                 if (Column.Type == ColumnType.Children)
                 {
@@ -231,43 +281,13 @@
     {
         try
         {
-            if (SqlService == null)
-            {
-                await Task.FromResult<string>("OK");
-                return;
-            }
-
             if (DTO != null)
             {
-                // Prepare
-                IQueryParameter qp = QueryParameter.DefaultItemsQuery(
-                    SqlService.Factory.MasterGUID, SqlService.Factory.MasterAppType,
-                    "Image", QueryType.ChildrenByParent);
-                qp.PageSize = 1;
-                qp.CurrentPage = 1;
-
-                // Parent Child GUID
-                qp.AssociationType = "UserProfileImage";
-                qp.ParentGUID = DTO.GUID;
-                qp.ChildGUID = DTO.GUID;
-
-                // Query
-                IDTO Image = SqlService.Factory.GetItems(qp).FirstOrDefault();
-
-                if (Image != null)
+                if (SqlService != null)
                 {
-                    string FilePath = Image.GetProperty("FilePath").Value.ToSecureString(); // .Replace(@"\", "/");
-
-                    if (File.Exists(FilePath))
-                    {
-                        // Read
-                        byte[] arr = File.ReadAllBytes(FilePath);
-                        string base64String = Convert.ToBase64String(arr, 0, arr.Length);
-
-                        Base64String = "data:" + ELEMENTS.Infrastructure.Helper.SplitGetLast(FilePath) + ";base64," + base64String;
-
-                        await Task.FromResult<string>("OK");
-                    }
+                    Base64String = DTO.GetUserProfileImage(SqlService);
+                    this.StateHasChanged();
+                    await Task.FromResult<string>("OK");
                 }
             }
         }
@@ -277,22 +297,32 @@
         }
     }
 
-    private async Task LoadPrents()
+    private async Task LoadParents()
     {
         try
         {
             if (SqlService == null)
             {
+                Value = "---";
                 await Task.FromResult<string>("SQL Service = NULL");
                 return;
             }
+
+            if (string.IsNullOrEmpty(RelatedItemType))
+            {
+                Value = "---";
+                await Task.FromResult<string>("SQL Service = NULL");
+                return;
+            }
+
+            RelatedDTO = null;
 
             if (DTO != null)
             {
                 // Prepare
                 IQueryParameter qp = QueryParameter.DefaultItemsQuery(
                     SqlService.Factory.MasterGUID, SqlService.Factory.MasterAppType,
-                    "Image", QueryType.ParentsByChild);
+                    RelatedItemType, QueryType.ParentsByChild);
                 qp.PageSize = 1;
                 qp.CurrentPage = 1;
 
@@ -301,11 +331,15 @@
                 qp.ChildGUID = DTO.GUID;
 
                 // Query
-                IDTO Item = SqlService.Factory.GetItems(qp).FirstOrDefault();
+                RelatedDTO = SqlService.Factory.GetItems(qp).FirstOrDefault();
 
-                if (Item != null)
+                if (RelatedDTO != null)
                 {
-                    Value = Item.Title.ToSecureString();
+                    Value = RelatedDTO.Title.ToSecureString();
+                }
+                else
+                {
+                    Value = "---";
                 }
             }
         }
@@ -322,16 +356,26 @@
         {
             if (SqlService == null)
             {
+                Value = "---";
                 await Task.FromResult<string>("SQL Service = NULL");
                 return;
             }
+
+            if (string.IsNullOrEmpty(RelatedItemType))
+            {
+                Value = "---";
+                await Task.FromResult<string>("SQL Service = NULL");
+                return;
+            }
+
+            RelatedDTO = null;
 
             if (DTO != null)
             {
                 // Prepare
                 IQueryParameter qp = QueryParameter.DefaultItemsQuery(
                     SqlService.Factory.MasterGUID, SqlService.Factory.MasterAppType,
-                    "Image", QueryType.ChildrenByParent);
+                    RelatedItemType, QueryType.ChildrenByParent);
                 qp.PageSize = 1;
                 qp.CurrentPage = 1;
 
@@ -340,11 +384,15 @@
                 qp.ChildGUID = DTO.GUID;
 
                 // Query
-                IDTO Item = SqlService.Factory.GetItems(qp).FirstOrDefault();
+                RelatedDTO = SqlService.Factory.GetItems(qp).FirstOrDefault();
 
-                if (Item != null)
+                if (RelatedDTO != null)
                 {
-                    Value = Item.Title.ToSecureString();
+                    Value = RelatedDTO.Title.ToSecureString();
+                }
+                else
+                {
+                    Value = "---";
                 }
             }
         }
@@ -355,4 +403,5 @@
 
         await Task.FromResult<string>("OK");
     }
+
 }

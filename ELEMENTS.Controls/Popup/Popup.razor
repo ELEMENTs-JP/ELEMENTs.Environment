@@ -1,35 +1,41 @@
 ﻿
 
 
-    <div class="nav-item dropdown" >
-        <a href="#" class="nav-link d-flex lh-1 text-reset p-0" 
-           data-bs-toggle="dropdown" aria-label="Open user menu">
+<div class="nav-item dropdown">
+    <a href="#" class="nav-link d-flex lh-1 text-reset p-0"
+       data-bs-toggle="dropdown" aria-label="Open menu">
 
-            @if (!string.IsNullOrEmpty(ImageUrl))
+        @if (!string.IsNullOrEmpty(ImageUrl))
+        {
+            <span class="avatar avatar-sm" style="background-image: url(@ImageUrl)"></span>
+        }
+
+        <div class="d-none d-xl-block ps-2">
+
+            @if (!string.IsNullOrEmpty(HtmlIcon))
             {
-                <span class="avatar avatar-sm" style="background-image: url(@ImageUrl)"></span>
+                <span>
+                    @((MarkupString)HtmlIcon)
+                </span>
             }
 
-            <div class="d-none d-xl-block ps-2">
-                <div class="fw-bold">@Title</div>
+            <span class="fw-bold">@Title</span>
 
-                @if (ShowSubTitle)
-                { 
-                    <div class="mt-1 small text-muted">@SubTitle</div>
-                }
-            </div>
-        </a>
-        <div class="dropdown-menu dropdown-menu-start dropdown-menu-arrow"
-             style="@MenuStyle">
-            <div class="px-2 pt-2 fw-bold">@Title</div>
-            <div class="px-2 mb-1 small text-muted">@SubTitle</div>
-            <div class="dropdown-divider"></div>
-
-            @ChildContent
+            @if (ShowSubTitle == true)
+            {
+                <div class="mt-1 small text-muted">@SubTitle</div>
+            }
         </div>
+    </a>
+    <div class="@( "dropdown-menu " + DropDownPosition + DropDownArrow )"
+         style="@MenuStyle">
+        <div class="px-2 pt-2 fw-bold">@Title</div>
+        <div class="px-2 mb-1 small text-muted">@SubTitle</div>
+        <div class="dropdown-divider"></div>
+
+        @ChildContent
     </div>
-
-
+</div>
 
 
 
@@ -45,12 +51,21 @@
     public string Title { get; set; } = "Title";
 
     [Parameter]
-    public string SubTitle { get; set; } = "SubTitle";
+    public string SubTitle { get; set; } = "";
+
+    [Parameter]
+    public string HtmlIcon { get; set; } = "";
 
     [Parameter]
     public RenderFragment ChildContent { get; set; }
 
     [Parameter]
     public string MenuStyle { get; set; } = "min-width:13rem;";
+
+    [Parameter]
+    public string DropDownPosition { get; set; } = " dropdown-menu-end ";
+
+    [Parameter]
+    public string DropDownArrow { get; set; } = " dropdown-menu-arrow ";
 
 }

@@ -10,7 +10,7 @@ using ELEMENTS.Infrastructure;
 
 namespace ELEMENTS.Controls.Charts
 {
-    public partial class ProgressChart : IAsyncDisposable
+    public partial class ProgressChart : IAsyncDisposable, IDisposable
     {
         // Fields 
         private ChartDTO Configuration { get; set; } = new ChartDTO();
@@ -21,26 +21,40 @@ namespace ELEMENTS.Controls.Charts
         // ctr 
         public ProgressChart()
         {
-
+            Helper.LogConsole("CTR");
         }
 
         // Events 
         public void Init(IJSRuntime jsRuntime)
         {
-            // Import JS File 
-            moduleTask = new(() => jsRuntime.InvokeAsync<IJSObjectReference>(
-               "import", "./_content/ELEMENTS.Controls/progress.js").AsTask());
+            try
+            {
+                // Import JS File 
+                moduleTask = new(() => jsRuntime.InvokeAsync<IJSObjectReference>(
+                   "import", "./_content/ELEMENTS.Controls/progress.js").AsTask());
+                // Reference 
+                objRef = DotNetObjectReference.Create(this);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Fail Init Chart");
+            }
         }
 
         // Methods 
         public async ValueTask LoadChart(string divID)
         {
-            // Reference 
-            objRef = DotNetObjectReference.Create(this);
-
-            // Execute function
-            var module = await moduleTask.Value;
-            await module.InvokeVoidAsync("loadProgressChart", divID, objRef);
+            try
+            {
+                // Execute function
+                var module = await moduleTask.Value;
+                await module.InvokeVoidAsync("loadProgressChart", divID, objRef);
+                this.StateHasChanged();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Fail Invoke Chart");
+            }
         }
         private void LoadDefaultItems()
         {
@@ -78,7 +92,16 @@ namespace ELEMENTS.Controls.Charts
                 // Items 
                 if (this.Items == null || this.Items.Count == 0)
                 {
-                    LoadDefaultItems();
+                    //LoadDefaultItems();
+
+                    if (serie.Items.Count == 0)
+                    {
+                        serie.Items.Add(new ChartItemDTO() { Key = "Progress", Value = Progress, Title = "Progress" });
+                        serie.Items.Add(new ChartItemDTO() { Key = "Open", Value = (100 - Progress), Title = "Open" });
+
+                        // Series Append 
+                        Configuration.Series.Add(serie);
+                    }
                 }
                 else
                 {
@@ -86,6 +109,12 @@ namespace ELEMENTS.Controls.Charts
                     foreach (ChartItemDTO dto in Items.Take(2))
                     {
                         serie.Items.Add(dto);
+                    }
+
+                    if (serie.Items.Count == 0)
+                    {
+                        serie.Items.Add(new ChartItemDTO() { Key = "Progress", Value = Progress, Title = "Progress" });
+                        serie.Items.Add(new ChartItemDTO() { Key = "Open", Value = (100 - Progress), Title = "Open" });
                     }
 
                     // Series Append 
@@ -114,7 +143,7 @@ namespace ELEMENTS.Controls.Charts
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine("FAIL: " + ex.Message);
+                System.Diagnostics.Debug.WriteLine("FAIL Dipose ASYNC: " + ex.Message);
             }
         }
 
@@ -130,7 +159,7 @@ namespace ELEMENTS.Controls.Charts
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine("FAIL: " + ex.Message);
+                System.Diagnostics.Debug.WriteLine("FAIL Dispose: " + ex.Message);
             }
         }
     }

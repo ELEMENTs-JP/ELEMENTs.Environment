@@ -257,6 +257,11 @@
         }
     }
 
+    public void Refresh()
+    {
+        this.StateHasChanged();    
+    }
+
     // Events
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {

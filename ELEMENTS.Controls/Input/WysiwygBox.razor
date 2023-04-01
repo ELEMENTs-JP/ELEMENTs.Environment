@@ -1,0 +1,240 @@
+﻿@inject IJSRuntime JS
+@implements IDisposable
+@using System.Text.Json
+@using Microsoft.JSInterop
+@using ELEMENTS.Infrastructure
+
+<div id="@editorID" class="tsp-editor border bg-light">
+    <div class="editor-toolbar">
+        <div class="line border-bottom">
+            <div class="box">
+                <span class="editor-btn p-1" data-action="undo" title="Undo">
+                    <small><i class="fas fa-undo"></i></small>
+                </span>
+                <span class="editor-btn p-1" data-action="removeFormat" title="Remove format">
+                    <small><i class="fas fa-remove-format"></i></small>
+                </span>
+            </div>
+            <div class="box">
+                <span class="editor-btn p-1" data-action="bold" data-tag-name="b" title="Bold">
+                    <small><i class="fas fa-bold"></i></small>
+                </span>
+                <span class="editor-btn p-1" data-action="italic" data-tag-name="i" title="Italic">
+                    <small><i class="fas fa-italic"></i></small>
+                </span>
+                <span class="editor-btn p-1" data-action="underline" data-tag-name="u" title="Underline">
+                    <small><i class="fas fa-underline"></i></small>
+                </span>
+                <span class="editor-btn p-1" data-action="strikeThrough" data-tag-name="strike" title="Strike through">
+                    <small><i class="fas fa-strikethrough"></i></small>
+                </span>
+            </div>
+
+            <div class="box">
+
+                <span class="editor-btn p-1" data-action="justifyLeft" data-style="textAlign:left" title="Justify left">
+                    <small><i class="fas fa-align-left"></i></small>
+                </span>
+                <span class="editor-btn  p-1" data-action="justifyCenter" data-style="textAlign:center" title="Justify center">
+                    <small><i class="fas fa-align-center"></i></small>
+                </span>
+                <span class="editor-btn  p-1" data-action="justifyRight" data-style="textAlign:right" title="Justify right">
+                    <small><i class="fas fa-align-right"></i></small>
+                </span>
+                <span class="editor-btn p-1" data-action="formatBlock" data-style="textAlign:justify" title="Justify block">
+                    <small><i class="fas fa-align-justify"></i></small>
+                </span>
+            </div>
+            <div class="box">
+                <span class="editor-btn p-1" data-action="insertTable" data-tag-name="table" title="Insert table">
+                    <small><i class="fas fa-table"></i></small>
+                </span>
+            </div>
+            <div class="box">
+                <span class="editor-btn p-1" data-action="insertOrderedList" data-tag-name="ol" title="Insert ordered list">
+                    <small><i class="fas fa-list-ol"></i></small>
+                </span>
+                <span class="editor-btn p-1" data-action="insertUnorderedList" data-tag-name="ul" title="Insert unordered list">
+                    <small><i class="fas fa-list-ul"></i></small>
+                </span>
+            </div>
+            <div class="box">
+                <span class="editor-btn p-1" data-action="outdent" title="Outdent" data-required-tag="li">
+                    <small><i class="fas fa-outdent"></i></small>
+                </span>
+                <span class="editor-btn p-1" data-action="indent" title="Indent">
+                    <small><i class="fas fa-indent"></i></small>
+                </span>
+            </div>
+            <div class="box">
+                <span class="editor-btn p-1" data-action="insertHorizontalRule" title="Insert horizontal rule">
+                    <small><i class="fas fa-window-minimize"></i></small>
+                </span>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="content-area bg-white">
+        <div id="@visualViewID" class="visuell-view" contenteditable>
+            @HtmlContent.ToSecureString()
+        </div>
+        @*<textarea class="html-view"></textarea>*@
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+
+    </div>
+    <div class="col-auto p-1">
+        <button class="btn btn-sm btn-ghost-success" id="@saveBtnID">speichern...</button>
+    </div>
+</div>
+
+<div id="@modalID" class="modal">
+    <div class="modal-bg"></div>
+    <div class="modal-wrapper">
+        <div class="close">✖</div>
+        <div class="modal-content" id="modalCreateLink">
+            <h3>Insert Link</h3>
+            <input type="text" id="linkValue" placeholder="Link (example: https://webdeasy.de/)">
+            <div class="row">
+                <input type="checkbox" id="new-tab">
+                <label for="new-tab">Open in new Tab?</label>
+            </div>
+            <button class="done">Done</button>
+        </div>
+    </div>
+</div>
+
+
+
+@code {
+
+    private string editorID = "editor_" + Guid.NewGuid().ToSecureString();
+    private string visualViewID = "visualView_" + Guid.NewGuid().ToSecureString();
+    private string modalID = "modal_" + Guid.NewGuid().ToSecureString();
+    private string saveBtnID = "saveBtn_" + Guid.NewGuid().ToSecureString();
+
+    private DotNetObjectReference<WysiwygBox>? objRef;
+    private Lazy<Task<IJSObjectReference>> moduleTask;
+
+    private EditorDTO Configuration { get; set; } = new EditorDTO();
+
+    [Parameter]
+    public string HtmlContent { get; set; } = "";
+
+    // ctr
+    public WysiwygBox()
+    {
+
+    }
+
+    // Events
+    protected override async Task OnParametersSetAsync()
+    {
+        Init(JS);
+
+        await base.OnParametersSetAsync();
+    }
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await Configure();
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+    // Methods
+    public void Init(IJSRuntime jsRuntime)
+    {
+        try
+        {
+            // Import JS File
+            moduleTask = new(() => jsRuntime.InvokeAsync<IJSObjectReference>(
+               "import", "./_content/ELEMENTS.Controls/wysiwygbox.js").AsTask());
+
+            // Reference
+            objRef = DotNetObjectReference.Create(this);
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine("FAIL: " + ex.Message);
+        }
+    }
+    public async ValueTask Configure()
+    {
+        try
+        {
+            // Execute function
+            var module = await moduleTask.Value;
+            await module.InvokeVoidAsync("loadEditor", editorID, modalID, saveBtnID, visualViewID, objRef);
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine("FAIL: " + ex.Message);
+        }
+    }
+
+    // JS Methods
+    [JSInvokable]
+    public Task<EditorDTO> Load(JsonElement json)
+    {
+        try
+        {
+            HtmlContent = "";
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine("FAIL: " + ex.Message);
+        }
+
+        return Task.FromResult(Configuration);
+    }
+    [JSInvokable]
+    public Task<EditorDTO> Save(JsonElement json)
+    {
+        try
+        {
+            string Text = json.GetProperty("Text").GetString();
+            string HTML = json.GetProperty("HTML").GetString();
+
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine("FAIL: " + ex.Message);
+        }
+
+        return Task.FromResult(Configuration);
+    }
+
+    // Dispose
+    public async ValueTask DisposeAsync()
+    {
+        try
+        {
+            if (moduleTask.IsValueCreated)
+            {
+                var module = await moduleTask.Value;
+                await module.DisposeAsync();
+            }
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine("FAIL: " + ex.Message);
+        }
+    }
+    public void Dispose()
+    {
+        try
+        {
+            if (moduleTask.IsValueCreated)
+            {
+                var module = moduleTask.Value;
+                module.Dispose();
+            }
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine("FAIL: " + ex.Message);
+        }
+    }
+}

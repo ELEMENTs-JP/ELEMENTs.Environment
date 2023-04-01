@@ -9,7 +9,7 @@
 
 @if (Footer != null)
 {
-    <div class="container">
+    <div class="@FooterCSS">
         @Footer
     </div>
 }
@@ -24,5 +24,8 @@
 
     [Parameter]
     public RenderFragment Footer { get; set; }
+
+    [Parameter]
+    public string FooterCSS { get; set; } = "footer container-flex bg-light";
 
 }

@@ -24,7 +24,8 @@ namespace ELEMENTS.Infrastructure
         AppType Type { get; set; }
         string Group { get; set; }
         bool IsActive { get; set; }
-        string IconHTML { get; set; } 
+        string IconHTML { get; set; }
+
     }
     public class BaseApp : IApp
     {
@@ -57,6 +58,7 @@ namespace ELEMENTS.Infrastructure
         public bool IsActive { get; set; } = true;
     }
 
+    // Feature 
     public interface IFeature
     {
         string Title { get; set; }
@@ -72,8 +74,8 @@ namespace ELEMENTS.Infrastructure
         string ID { get; set; }
         IItemType ItemType { get; set; }
         public IItemType GetItemsItemType();
+      
     }
-
     public class BaseFeature : IFeature
     {
         public string ID { get; set; } = string.Empty;
@@ -95,9 +97,13 @@ namespace ELEMENTS.Infrastructure
         public FeatureType FeatureType { get; set; } = FeatureType.NULL;
         public BoardType BoardType { get; set; } = BoardType.NULL;
         public DashboardType DashboardType { get; set; } = DashboardType.NULL;
+
+ 
         
     }
 
+
+    // Page 
     public interface IPage
     {
         Guid ID { get; set; }
@@ -154,7 +160,7 @@ namespace ELEMENTS.Infrastructure
         int Sorting { get; set; }
         bool InMenu { get; set; }
         string IconHTML { get; set; }
-
+        List<DashboardConfiguration> DashboardConfigurations { get; set; }
 
         // Relations 
         List<IItemType> GetParentItemTypes();
@@ -186,7 +192,7 @@ namespace ELEMENTS.Infrastructure
         public int Sorting { get; set; } = 1;
         public bool InMenu { get; set; } = true;
         public string IconHTML { get; set; } = string.Empty;
-
+        public List<DashboardConfiguration> DashboardConfigurations { get; set; } = new List<DashboardConfiguration>();
 
         // Relations 
         public virtual List<IItemType> GetParentItemTypes()
@@ -261,6 +267,7 @@ namespace ELEMENTS.Infrastructure
         Assign = 600,
         Remove = 700
     }
-  
+
+
 
 }

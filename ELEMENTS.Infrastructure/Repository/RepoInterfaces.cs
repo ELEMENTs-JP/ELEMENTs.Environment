@@ -19,7 +19,6 @@ namespace ELEMENTS
         QueryType DataQueryType { get; set; } 
         Guid ReferenceGUID { get; set; } 
     }
-
     public interface IItemsRepository
     {
         List<FilterByClauseDTO> Filter { get; set; }
@@ -44,7 +43,6 @@ namespace ELEMENTS
         IFactoryStatusInfo LinkItem(IDTO item);
         IFactoryStatusInfo SaveItem(IDTO dto);
     }
-
     public interface IEditItemRepository
     {
         bool IsInitialized { get; set; }
@@ -53,11 +51,28 @@ namespace ELEMENTS
         IDTO Init();
         Guid ItemGUID { get; set; }
         IItemType ItemType { get; set; }
+        string Base64Image { get; set; }
         IFactoryStatusInfo DeleteItem();
         List<IDTO> ItemsByItemType(string ItemTypeName, string FilterProperty, string FilterValue);
     }
 
-
+    public interface IChartQueryRepository
+    {
+        ISqlDatabaseService Service { get; set; }
+        IList<IDTO> Items { get; set; }
+        List<IDTO> Load();
+        List<IDTO> Search();
+        IQueryParameter Query { get; set; }
+    }
+    public interface IKPIQueryRepository
+    {
+        ISqlDatabaseService Service { get; set; }
+        IList<IDTO> Items { get; set; }
+        List<IDTO> Load();
+        List<IDTO> Search();
+        IQueryParameter Query { get; set; }
+    }
+    
     public interface IUserInterfaceRepository
     {
         void Init();
@@ -67,7 +82,6 @@ namespace ELEMENTS
         List<IColumn> Columns { get; set; }
         string Group { get; set; }
     }
-
     public interface ISettingInterfaceRepository
     {
         void Init();

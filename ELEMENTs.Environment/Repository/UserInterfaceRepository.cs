@@ -14,10 +14,10 @@ namespace ELEMENTS
         public List<IField> Fields { get; set; } = new List<IField>();
         public List<IColumn> Columns { get; set; } = new List<IColumn>();
         public IItemType ItemType { get; set; }
-        public string Group { get; set; } = string.Empty; 
+        public string Group { get; set; } = string.Empty;
         public UserInterfaceRepository()
         {
-            
+
         }
 
         public void Init()
@@ -33,18 +33,28 @@ namespace ELEMENTS
                 Fields = new List<IField>();
                 Fields.Clear();
 
-                Fields.Add(new EditField()
+                if (this.ItemType != null)
                 {
-                    Title = "ID",
-                    ColumnCSSClass = "col-4",
-                    Description = "No of the entry.",
-                    Type = EditFieldType.TextBox
-                });
+                    foreach (IField field in this.ItemType.Fields)
+                    {
+                        Fields.Add(field);
+                    }
+                }
+                else
+                {
+                    Fields.Add(new EditField()
+                    {
+                        Title = "ID",
+                        ColumnCSSClass = "col-4",
+                        Description = "No of the entry.",
+                        Type = EditFieldType.TextBox
+                    });
 
-                Fields.Add(new EditField() { Title = "Title", ColumnCSSClass = "col-4", Type = EditFieldType.TextBox });
-                Fields.Add(new EditField() { Title = "Position", Property = "Position", ColumnCSSClass = "col-4", Type = EditFieldType.TextBox });
+                    Fields.Add(new EditField() { Title = "Title", ColumnCSSClass = "col-4", Type = EditFieldType.TextBox });
+                    Fields.Add(new EditField() { Title = "Position", Property = "Position", ColumnCSSClass = "col-4", Type = EditFieldType.TextBox });
 
-                Fields.Add(new EditField() { Title = "Notes", ColumnCSSClass = "col-12", Type = EditFieldType.TextArea });
+                    Fields.Add(new EditField() { Title = "Notes", ColumnCSSClass = "col-12", Type = EditFieldType.TextArea });
+                }
 
                 IsInitialized = true;
             }
@@ -63,7 +73,7 @@ namespace ELEMENTS
         public string Group { get; set; } = string.Empty;
         public SettingInterfaceRepository()
         {
-            
+
         }
 
         public void Init()

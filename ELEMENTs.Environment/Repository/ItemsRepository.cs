@@ -14,6 +14,11 @@ namespace ELEMENTS
 
     public class ItemsRepository : IItemsRepository
     {
+        public ItemsRepository(ISqlDatabaseService service, IItemType itemtype)
+        {
+            this.Service = service;
+            this.ItemType = itemtype;
+        }
         public List<FilterByClauseDTO> Filter { get; set; } = new List<FilterByClauseDTO>();
         public string Information { get; set; } = string.Empty;
         public bool AssignItems { get; set; } = false;
@@ -159,12 +164,19 @@ namespace ELEMENTS
         {
             try
             {
-                // Prepare 
-                IQueryParameter qp = QueryParameter.DefaultItemsQuery(
-                    Service.Factory.MasterGUID, "ELEMENTs", "Product");
+                int count = 0;
 
-                // Query 
-                return Service.Factory.GetItemsCount(qp);
+                if (Service != null)
+                {
+                    // Prepare 
+                    IQueryParameter qp = QueryParameter.DefaultItemsQuery(
+                        Service.Factory.MasterGUID, "ELEMENTs", "Product");
+
+                    // Query 
+                    count = Service.Factory.GetItemsCount(qp);
+                }
+
+                return count;
             }
             catch (Exception ex)
             {

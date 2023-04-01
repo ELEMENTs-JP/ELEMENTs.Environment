@@ -47,6 +47,9 @@ namespace ELEMENTs.Environment
             // Database Service 
             services.AddSingleton<ISqlDatabaseService, SQLiteService>();
 
+            // Security Service
+            services.AddSingleton<ISecurityService, SecurityService>();
+
             // App Service 
             services.AddSingleton<IAppRepository, AppRepository>();
 

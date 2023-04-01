@@ -1,0 +1,157 @@
+﻿<div class="@ControlCSS">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+
+                @foreach (IColumn column in Columns)
+                {
+                    <th class="@(column.ColumnCSSClass + " text-primary fw-bold ")">@column.Title</th>
+                }
+
+                @if (DataQueryType == QueryType.ChildrenByParent ||
+                    DataQueryType == QueryType.ParentsByChild ||
+                    DataQueryType == QueryType.DefaultChildren)
+                {
+                    @if (IsAssignOrRemove == true)
+                    {
+                        // Link
+                        <td data-cid="link-header" class="col-auto">
+                           
+                        </td>
+                    }
+                    else
+                    {
+                        // Un-Link
+                        <td data-cid="unlink-header" class="col-auto">
+                           
+                        </td>
+                    }
+                }
+
+                @* DELETE *@
+                @if (SecurityRepo.ValidatePermission(PermissionType.Delete) == false)
+                {
+                    <th data-cid="delete-header" class="col-auto"></th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (IDTO dto in Items)
+            {
+                <tr>
+                    @foreach (IColumn column in Columns)
+                    {
+                        @*  @if (column.Property == "Title")
+                {
+                <td class="@( column.ColumnCSSClass + " fw-bold " )">@dto.Title.ToSecureString()</td>
+                }
+                else if (column.Property == "Title")
+                {
+                <td class="@( column.ColumnCSSClass + " fw-bold " )">@dto.ID.ToSecureString()</td>
+                }
+                else
+                {
+                <td class="@( column.ColumnCSSClass + "" )">@dto.GetProperty(column.Property).Value.ToSecureString()</td>
+                }*@
+
+                        <td class="@( column.ColumnCSSClass + "" )">
+
+                            <ELEMENTS.Controls.List.RowColumn SqlService="@SqlService" DTO="@dto" Column="@column" />
+
+                        </td>
+                    }
+
+                    @if (DataQueryType == QueryType.ChildrenByParent ||
+                           DataQueryType == QueryType.ParentsByChild ||
+                           DataQueryType == QueryType.DefaultChildren)
+                    {
+                        @if (IsAssignOrRemove == true)
+                        {
+                            // Link
+                            <td class="col-auto text-end">
+                                <button type="button"
+                            class="btn btn-sm btn-ghost-success"
+                            @onclick="@( e => { OnLinkItemAsync(dto); })">
+                                    <small>
+                                        <i class="fas fa-link"></i>
+                                    </small>
+                                </button>
+                            </td>
+                        }
+                        else
+                        {
+                            // Un-Link
+                            <td class="col-auto text-end">
+                                <button type="button"
+                            class="btn btn-sm btn-ghost-warning"
+                            @onclick="@( e => { OnUnLinkItemAsync(dto); })">
+                                    <small>
+                                        <i class="fas fa-unlink"></i>
+                                    </small>
+                                </button>
+                            </td>
+                        }
+                    }
+
+                    @* DELETE *@
+                    @if (SecurityRepo.ValidatePermission(PermissionType.Delete) == false)
+                    {
+                        <td class="col-auto text-end">
+                            <button type="button"
+                            class="btn btn-sm btn-ghost-danger"
+                            @onclick="@( e => { OnDeleteItemAsync(dto); })">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@code {
+
+    [Parameter]
+    public QueryType DataQueryType { get; set; } = QueryType.List;
+
+    [Parameter]
+    public bool IsAssignOrRemove { get; set; } = true;
+
+    [Parameter]
+    public string ControlCSS { get; set; } = "";
+
+    [Parameter]
+    public List<IColumn> Columns { get; set; } = new List<IColumn>();
+
+    [Parameter]
+    public List<IDTO> Items { get; set; } = new List<IDTO>();
+
+    [Parameter]
+    public ISqlDatabaseService SqlService { get; set; }
+
+    [Parameter]
+    public ISecurityRepository SecurityRepo { get; set; }
+
+    [Parameter]
+    public EventCallback<IDTO> OnLinkItem { get; set; }
+    protected async Task OnLinkItemAsync(IDTO dto)
+    {
+        await OnLinkItem.InvokeAsync(dto);
+    }
+
+    [Parameter]
+    public EventCallback<IDTO> OnUnLinkItem { get; set; }
+    protected async Task OnUnLinkItemAsync(IDTO dto)
+    {
+        await OnUnLinkItem.InvokeAsync(dto);
+    }
+
+    [Parameter]
+    public EventCallback<IDTO> OnDeleteItem { get; set; }
+    protected async Task OnDeleteItemAsync(IDTO dto)
+    {
+        await OnDeleteItem.InvokeAsync(dto);
+    }
+
+}

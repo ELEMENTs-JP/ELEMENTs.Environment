@@ -2,23 +2,33 @@
 
 
 
-    <div class="col-auto bg-white border rounded overflow-hidden">
-        <div class="pt-3 ps-3 pb-1 text-dark fw-bold" >
-            @KPI
-        </div>
-        <div class="ps-3 display-6 text-dark" >
-            @Value
-        </div>
-        <div class="pb-3 ps-3 pt-1 text-muted" >
-            <small>@Description</small>
-        </div>
+<div class="col-auto bg-white border ps-3 pe-3 rounded overflow-hidden" 
+     style="@("background-color:" + HexColorCode + ";")">
+    <div class="pt-3 pb-1 text-dark fw-bold">
+        @KPI
     </div>
+    <div class="display-6 text-dark">
+        @Value
+    </div>
+    <div class="pb-3 pt-1 text-muted">
+        <small>@Description</small>
+    </div>
+
+    @if (ChildContent != null)
+    {
+        <div class="pb-3 pt-1">
+            @ChildContent
+        </div>
+    }
+
+</div>
 
 
 
 @code {
 
-
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
 
     [Parameter]
     public string KPI { get; set; } = "Umsatz";
@@ -28,5 +38,8 @@
 
     [Parameter]
     public string Description { get; set; } = "Umsatz aus dem Jahr 2022";
+
+    [Parameter]
+    public string HexColorCode { get; set; } = "";
 
 }

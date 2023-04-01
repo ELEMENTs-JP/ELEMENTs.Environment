@@ -23,7 +23,7 @@
             <nav class="@ControlCSS">
                 <div class="container-fluid ps-2 pe-2">
 
-                    @* --- Filter --- *@
+                    @* --- Quer-Filter (Buttons) --- *@
                     @if (Repository.Groups != null)
                     {
                         @if (Repository.Groups.Count >= 1)
@@ -54,6 +54,9 @@
 
                                 @foreach (NavigationEntry entry in Repository.Items.OrderBy(se => se.Position))
                                 {
+                                    if(entry.IsActive == false)
+                                        continue;
+
                                     @if (entry.Items == null || entry.Items.Count == 0)
                                     {
                                         // Link 
@@ -89,8 +92,8 @@
                                         // Drop Down Hauptelement 
                                         <li class="nav-item dropdown">
                                             <a class="nav-link dropdown-toggle px-2" href="#navbar-base" 
-                                               data-bs-toggle="dropdown" data-bs-auto-close="@(AutoClose.ToSecureString())" 
-                                               role="button" aria-expanded="false">
+                                               data-bs-toggle="dropdown" data-bs-auto-close="@(AutoClose.ToSecureString())"
+                                               role="button" aria-expanded="@(IsExpanded.ToSecureString())">
                                                 <span class="nav-link-icon d-md-none d-lg-inline-block">
 
                                                     @if (string.IsNullOrEmpty(entry.Icon))
@@ -108,8 +111,6 @@
                                                             <circle cx="15" cy="12" r="1"></circle>
                                                             <circle cx="15" cy="19" r="1"></circle>
                                                         </svg>
-
-
                                                     }
                                                     else
                                                     {
@@ -190,5 +191,8 @@
 
     [Parameter]
     public string SubTitle { get; set; } = string.Empty;
+
+    [Parameter]
+    public bool IsExpanded { get; set; } = true;
 
 }

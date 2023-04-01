@@ -13,8 +13,188 @@ using ELEMENTS;
 
 namespace ELEMENTS.Infrastructure
 {
+    public class MessageNotification
+    {
+        public string Command { get; set; } = string.Empty;
+        public string Filter { get; set; } = string.Empty;
+        public string Event { get; set; } = string.Empty;
+        public IDTO DTO { get; set; }
+        public bool IsActive { get; set; } = true;
+    }
+    public static class MessageNotificationService
+    {
+        public static event Func<MessageNotification, Task> Notification;
+
+        public static void Notify(MessageNotification notification)
+        {
+            if (Notification != null)
+            {
+                Notification.Invoke(notification);
+            }
+        }
+    }
+
+
     public static partial class Helper
     {
+        public static string GetFileAsBase64String(this IDTO file, ISqlDatabaseService service)
+        {
+            string Base64String = string.Empty;
+
+            try
+            {
+                if (file != null)
+                {
+                    // Prepare
+                    IQueryParameter qp = QueryParameter.DefaultItemsQuery(
+                        service.Factory.MasterGUID, service.Factory.MasterAppType,
+                        "Image", QueryType.List);
+                    qp.PageSize = 1;
+                    qp.CurrentPage = 1;
+
+                    // Parent Child GUID
+                    qp.AssociationType = "Association";
+                    //qp.ParentGUID = file.GUID;
+                    //qp.ChildGUID = file.GUID;
+
+                    // Query
+                    IDTO theImage = service.Factory.GetItems(qp).FirstOrDefault();
+
+                    if (theImage != null)
+                    {
+                        string FilePath = theImage.GetProperty("FilePath").Value.ToSecureString(); // .Replace(@"\", "/");
+
+                        if (File.Exists(FilePath))
+                        {
+                            // Read
+                            byte[] arr = File.ReadAllBytes(FilePath);
+                            string base64String = Convert.ToBase64String(arr, 0, arr.Length);
+
+                            Base64String = "data:" + ELEMENTS.Infrastructure.Helper.SplitGetLast(FilePath) + ";base64," + base64String;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("FAIL: " + ex.Message);
+            }
+
+            return Base64String;
+        }
+        public static string GetUserProfileImage(this IDTO user, ISqlDatabaseService service)
+        {
+            string Base64String = string.Empty;
+
+            try
+            {
+                if (user != null)
+                {
+                    // Prepare
+                    IQueryParameter qp = QueryParameter.DefaultItemsQuery(
+                        service.Factory.MasterGUID, service.Factory.MasterAppType,
+                        "Image", QueryType.ChildrenByParent);
+                    qp.PageSize = 1;
+                    qp.CurrentPage = 1;
+
+                    // Parent Child GUID
+                    qp.AssociationType = "UserProfileImage";
+                    qp.ParentGUID = user.GUID;
+                    qp.ChildGUID = user.GUID;
+
+                    // Query
+                    IDTO Image = service.Factory.GetItems(qp).FirstOrDefault();
+
+                    if (Image != null)
+                    {
+                        string FilePath = Image.GetProperty("FilePath").Value.ToSecureString(); // .Replace(@"\", "/");
+
+                        if (File.Exists(FilePath))
+                        {
+                            // Read
+                            byte[] arr = File.ReadAllBytes(FilePath);
+                            string base64String = Convert.ToBase64String(arr, 0, arr.Length);
+
+                            Base64String = "data:" + ELEMENTS.Infrastructure.Helper.SplitGetLast(FilePath) + ";base64," + base64String;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("FAIL: " + ex.Message);
+            }
+
+            return Base64String;
+        }
+        public static string NormalizeNumber(int number)
+        {
+            if (number <= 9)
+            {
+                return "0" + number.ToSecureString();
+            }
+
+            return number.ToSecureString();
+        }
+        public static string MonthNameByNumber(int month)
+        {
+            switch (month)
+            {
+                case 1:
+                    {
+                        return "Jan.";
+                    }
+                case 2:
+                    {
+                        return "Feb.";
+                    }
+                case 3:
+                    {
+                        return "Mrz.";
+                    }
+                case 4:
+                    {
+                        return "Apr.";
+                    }
+                case 5:
+                    {
+                        return "Mai";
+                    }
+                case 6:
+                    {
+                        return "Jun.";
+                    }
+                case 7:
+                    {
+                        return "Jul.";
+                    }
+                case 8:
+                    {
+                        return "Aug.";
+                    }
+                case 9:
+                    {
+                        return "Sep.";
+                    }
+                case 10:
+                    {
+                        return "Okt.";
+                    }
+                case 11:
+                    {
+                        return "Nov.";
+                    }
+                case 12:
+                    {
+                        return "Dez.";
+                    }
+                default:
+                    {
+                        return string.Empty;
+                    }
+            }
+        }
+
         public static void Swap<T>(ref T lhs, ref T rhs)
         {
             T temp;
@@ -91,18 +271,18 @@ namespace ELEMENTS.Infrastructure
 
             return theNewList.ToList();
         }
-        public static IEnumerable<TSource> DistinctBy<TSource, TKey>
-       (this IEnumerable<TSource> source, Func<TSource, TKey> keySelector)
-        {
-            HashSet<TKey> seenKeys = new HashSet<TKey>();
-            foreach (TSource element in source)
-            {
-                if (seenKeys.Add(keySelector(element)))
-                {
-                    yield return element;
-                }
-            }
-        }
+       // public static IEnumerable<TSource> DistinctBy<TSource, TKey>
+       //(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector)
+       // {
+       //     HashSet<TKey> seenKeys = new HashSet<TKey>();
+       //     foreach (TSource element in source)
+       //     {
+       //         if (seenKeys.Add(keySelector(element)))
+       //         {
+       //             yield return element;
+       //         }
+       //     }
+       // }
 
         // https://docs.microsoft.com/de-de/dotnet/standard/serialization/system-text-json-how-to?pivots=dotnet-core-3-1 
         public static object MapPropertiesByReflection(object uiObject, object dbObject)
@@ -315,12 +495,19 @@ namespace ELEMENTS.Infrastructure
                 return string.Empty;
             }
         }
-        public static string ToSecureString(this object text)
+        public static string ToSecureString(this object text, string placeholder = "")
         {
             try
             {
                 if (text == null)
-                    return string.Empty;
+                {
+                    return placeholder;
+                }
+
+                if (string.IsNullOrEmpty(text.ToString()))
+                {
+                    return placeholder;
+                }
 
                 return text.ToString();
             }
@@ -495,7 +682,42 @@ namespace ELEMENTS.Infrastructure
 
     public static partial class Helper
     {
+        
+        public static void LogConsole(this Exception ex, string msg)
+        {
+            try
+            {
+                System.Diagnostics.Debug.WriteLine(msg + " - " + ex.Message);
+            }
+            catch
+            {
+
+            }
+        }
+        
         // Logging 
+        public static void LogConsole(this Exception ex)
+        {
+            try
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
+            catch 
+            {
+
+            }
+        }
+        public static void LogConsole(this string msg)
+        {
+            try
+            {
+                System.Diagnostics.Debug.WriteLine(msg);
+            }
+            catch
+            {
+
+            }
+        }
         public static void LogMessage(this string msg)
         {
             try

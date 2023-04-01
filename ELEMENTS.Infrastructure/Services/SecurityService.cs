@@ -141,9 +141,29 @@ namespace ELEMENTS.Infrastructure
             // Permission available
             if (perm != null)
             {
-                // Allowed
-                return true;
+                if (perm.Title.ToSecureString().ToLower().Contains("Allow".ToLower()))
+                {
+                    // Allowed
+                    return true;
+                }
+                else if (perm.Title.ToSecureString().ToLower().Contains("Deny".ToLower()))
+                {
+                    // Allowed
+                    return true;
+                }
+                else
+                {
+                    // else
+                    return SecurityModeValidation();
+                }
             }
+
+            return SecurityModeValidation();
+        }
+
+        private bool SecurityModeValidation()
+        {
+            bool decision = false;
 
             // NO Permission available
             // -> check global Setting
@@ -156,22 +176,23 @@ namespace ELEMENTS.Infrastructure
                     if (mode == "Optimistisch")
                     {
                         System.Diagnostics.Debug.WriteLine("Security Mode: " + mode);
-                        return true;
+                        decision = true;
                     }
                     else
                     {
                         System.Diagnostics.Debug.WriteLine("Security Mode: " + mode);
-                        return false;
+                        decision = false;
                     }
                 }
             }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine("FAIL: " + ex.Message);
+                decision = false;
             }
 
-            // endless fallback
-            return false;
+            return decision;
         }
+    
     }
 }

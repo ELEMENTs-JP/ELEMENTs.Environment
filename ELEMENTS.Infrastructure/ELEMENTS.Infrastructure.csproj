@@ -1,15 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
-    <Version>0.2.7</Version>
+    <Version>0.2.65</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Description>The ELEMENTs Infrastructure Library is a set of helper methods, enums and interfaces for the ELEMENTs GO Data Framework and the ELEMENTs Controls UI Framework</Description>
     <Copyright>Jürgen Pott 2022</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/ELEMENTs-JP/the-ELEMENTs-Environment</RepositoryUrl>
     <PackageReleaseNotes>Please visit github at: https://github.com/ELEMENTs-JP/the-ELEMENTs-Environment</PackageReleaseNotes>
+    <FileVersion>0.2.38.0</FileVersion>
+    <AssemblyVersion>0.2.38.0</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>

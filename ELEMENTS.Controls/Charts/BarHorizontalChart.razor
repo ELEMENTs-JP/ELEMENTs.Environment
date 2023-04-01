@@ -3,21 +3,30 @@
 
 
 
-    <div class="bg-light border rounded p-2" 
-       style="@( "position: relative; overflow: hidden; ")">
-        <div style="position: relative; overflow: hidden;">
-            <canvas id="@chartGUID" />
-        </div>
+<div class="bg-light border rounded p-2"
+     style="@( "position: relative; overflow: hidden; ")">
+    <div style="position: relative; overflow: hidden;">
+        <canvas id="@chartGUID" />
     </div>
+</div>
 
 
 @code {
 
     private string chartGUID = "chart_horizontal_bar_" + Guid.NewGuid();
 
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+    }
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+        Init(JS);
+    }
     protected override async Task OnParametersSetAsync()
     {
-        Init(JS);
+      
         await LoadChart(chartGUID.ToSecureString());
         await base.OnParametersSetAsync();
     }

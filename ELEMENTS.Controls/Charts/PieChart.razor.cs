@@ -10,37 +10,70 @@ using ELEMENTS.Infrastructure;
 
 namespace ELEMENTS.Controls.Charts
 {
-    public partial class PieChart : IAsyncDisposable
+    public partial class PieChart : IAsyncDisposable, IDisposable
     {
         // Fields 
         private ChartDTO Configuration { get; set; } = new ChartDTO();
         private DotNetObjectReference<PieChart>? objRef;
         private Lazy<Task<IJSObjectReference>> moduleTask;
-
+        private IJSRuntime jsRuntime;
 
         // ctr 
         public PieChart()
         {
-
+            Helper.LogConsole("Pie Chart CSharp# CTR");
         }
 
         // Events 
         public void Init(IJSRuntime jsRuntime)
         {
-            // Import JS File 
-            moduleTask = new(() => jsRuntime.InvokeAsync<IJSObjectReference>(
-               "import", "./_content/ELEMENTS.Controls/piechart.js").AsTask());
+            try
+            {
+                this.jsRuntime = jsRuntime;
+
+                // Import JS File 
+                moduleTask = new(() => jsRuntime.InvokeAsync<IJSObjectReference>(
+                   "import", "./_content/ELEMENTS.Controls/piechart.js").AsTask());
+
+                // Reference 
+                objRef = DotNetObjectReference.Create(this);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Fail Invoke Chart");
+            }
         }
 
         // Methods 
         public async ValueTask LoadChart(string divID)
         {
-            // Reference 
-            objRef = DotNetObjectReference.Create(this);
+            try
+            {
+                // Import JS File 
+                moduleTask = new(() => this.jsRuntime.InvokeAsync<IJSObjectReference>(
+                   "import", "./_content/ELEMENTS.Controls/piechart.js").AsTask());
 
-            // Execute function
-            var module = await moduleTask.Value;
-            await module.InvokeVoidAsync("loadPieChart", divID, objRef);
+                // Execute function
+                var module = await moduleTask.Value;
+                await module.InvokeVoidAsync("loadPieChart", divID, objRef);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Fail Invoke Chart");
+            }
+        }
+        public async ValueTask Reload()
+        {
+            try
+            {
+                // Execute function
+                var module = await moduleTask.Value;
+                await module.InvokeVoidAsync("loadPieChart", chartGUID, objRef);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Fail Invoke Chart");
+            }
         }
         private void LoadDefaultItems()
         {
@@ -84,7 +117,7 @@ namespace ELEMENTS.Controls.Charts
                 // Items 
                 if (this.Items == null || this.Items.Count == 0)
                 {
-                    LoadDefaultItems();
+                    //LoadDefaultItems();
                 }
                 else
                 {
@@ -114,13 +147,13 @@ namespace ELEMENTS.Controls.Charts
             {
                 if (moduleTask.IsValueCreated)
                 {
-                    var module = await moduleTask.Value;
-                    await module.DisposeAsync();
+                    //var module = await moduleTask.Value;
+                    //await module.DisposeAsync();
                 }
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine("FAIL: " + ex.Message);
+                System.Diagnostics.Debug.WriteLine("FAIL Dipose ASYNC: " + ex.Message);
             }
         }
 
@@ -136,7 +169,7 @@ namespace ELEMENTS.Controls.Charts
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine("FAIL: " + ex.Message);
+                System.Diagnostics.Debug.WriteLine("FAIL Dispose: " + ex.Message);
             }
         }
     }

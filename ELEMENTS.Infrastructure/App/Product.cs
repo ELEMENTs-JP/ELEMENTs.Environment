@@ -31,18 +31,22 @@ namespace tsp.DEFAULT
                 Type = EditFieldType.TextBox
             });
 
-            this.Fields.Add(new EditField() { Title = "Title", Property = "Title", ColumnCSSClass = "col-9", Type = EditFieldType.TextBox });
+            this.Fields.Add(new EditField() { Title = "Title", ColumnCSSClass = "col-6", Mode = EditFieldMode.View, Type = EditFieldType.Text });
+            this.Fields.Add(new EditField() { Title = "Kategorie", Property = "Kategorie", ColumnCSSClass = "col-6", Type = EditFieldType.TextBox });
+            this.Fields.Add(new EditField() { Title = "Fortschritt", Property = "Progress", ColumnCSSClass = "col-6", Type = EditFieldType.ProgressBox });
 
             // Columns 
             this.Columns = new List<IColumn>();
+            this.Columns.Add(new Column() { Title = "ID", Property = "ID", ColumnCSSClass = "col-1 pe-2", Type = ColumnType.Text });
+            this.Columns.Add(new Column() { Title = "Title", Property = "Title", ColumnCSSClass = "col px-2", Type = ColumnType.Link });
+            this.Columns.Add(new Column() { Title = "Kategorie", Property = "Kategorie", ColumnCSSClass = "col px-2", Type = ColumnType.Text });
+            this.Columns.Add(new Column() { Title = "Fortschritt", Property = "Progress", ColumnCSSClass = "col px-2", Type = ColumnType.Progress });
+
         }
 
         public override List<IItemType> GetChildItemTypes()
         {
             List<IItemType> its = new List<IItemType>();
-
-
-
             return its;
         }
 

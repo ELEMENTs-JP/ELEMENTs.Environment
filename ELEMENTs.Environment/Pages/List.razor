@@ -47,7 +47,7 @@
                 }
             </div>
             <div class="col">
-                <ELEMENTS.Controls.List.Pagination CurrentPage="@ItemsRepo.CurrentPage" TotaPageCount="@ItemsRepo.TotalPageCount"
+                <ELEMENTS.Controls.List.Pagination CurrentPage="@ItemsRepo.CurrentPage" TotalPageCount="@ItemsRepo.TotalPageCount"
                                                    SelectedPage="@( e => { ItemsRepo.CurrentPage = e; ItemsRepo.Load(); } )" />
             </div>
             <div class="col-auto">
@@ -60,14 +60,18 @@
 @code {
 
     [Parameter]
-    public string ItemType { get; set; } = string.Empty;
+    public string ItemType { get; set; } = "Product";
 
     private IAddItemRepository AddRepo = new AddItemRepository();
-    private IItemsRepository ItemsRepo = new ItemsRepository();
+    private IItemsRepository ItemsRepo = null;
 
-    protected override void OnInitialized()
+
+    protected override void OnParametersSet()
     {
-        base.OnInitialized();
+        base.OnParametersSet();
+
+        AddRepo = new AddItemRepository();
+        ItemsRepo = new ItemsRepository(sql, new tsp.DEFAULT.SystemProductItemType());
 
         if (AddRepo != null)
         {
@@ -77,23 +81,8 @@
         {
             ItemsRepo.Service = sql;
         }
-    }
 
-    protected override void OnParametersSet()
-    {
-        base.OnParametersSet();
-
-        AddRepo = new AddItemRepository();
-        ItemsRepo = new ItemsRepository();
-    }
-
-    protected override async Task OnParametersSetAsync()
-    {
         ItemsRepo.Load();
-
-        await Task.FromResult<string>("OK");
     }
-
-
 
 }

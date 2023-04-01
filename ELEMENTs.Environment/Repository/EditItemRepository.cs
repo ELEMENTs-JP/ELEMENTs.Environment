@@ -17,6 +17,7 @@ namespace ELEMENTS
         public bool IsInitialized { get; set; } = false;
         public IItemType ItemType { get; set; }
         public Guid ItemGUID { get; set; } = Guid.Empty;
+        public string Base64Image { get; set; } = string.Empty;
         public ISqlDatabaseService Service { get; set; }
         public IDTO DTO { get; set; }
         public IDTO Init()

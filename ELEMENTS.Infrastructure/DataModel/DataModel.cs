@@ -24,7 +24,7 @@ namespace ELEMENTS.Infrastructure
         public string Title { get; set; } = "Home";
         public string Icon { get; set; } = "";
         public string Group { get; set; } = "";
-
+        public bool IsActive { get; set; } = true;
         public List<NavigationEntry> Items { get; set; } = new List<NavigationEntry>();
     }
   

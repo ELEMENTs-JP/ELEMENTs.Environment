@@ -9,7 +9,7 @@ using ELEMENTS.Infrastructure;
 
 namespace ELEMENTS.Controls.Charts
 {
-    public partial class StepLineChart : IAsyncDisposable
+    public partial class StepLineChart : IAsyncDisposable, IDisposable
     {
         // Fields 
         private ChartDTO Configuration { get; set; } = new ChartDTO();
@@ -20,26 +20,40 @@ namespace ELEMENTS.Controls.Charts
         // ctr 
         public StepLineChart()
         {
-
+            Helper.LogConsole("CTR");
         }
 
         // Events 
         public void Init(IJSRuntime jsRuntime)
         {
-            // Import JS File 
-            moduleTask = new(() => jsRuntime.InvokeAsync<IJSObjectReference>(
-               "import", "./_content/ELEMENTS.Controls/steplinechart.js").AsTask());
+            try
+            {
+                // Import JS File 
+                moduleTask = new(() => jsRuntime.InvokeAsync<IJSObjectReference>(
+                   "import", "./_content/ELEMENTS.Controls/steplinechart.js").AsTask());
+                // Reference 
+                objRef = DotNetObjectReference.Create(this);
+            }
+            catch (Exception ex)
+            {
+                ex.LogConsole("Fail Init Chart");
+            }
         }
 
         // Methods 
         public async ValueTask LoadChart(string divID)
         {
-            // Reference 
-            objRef = DotNetObjectReference.Create(this);
-
-            // Execute function
-            var module = await moduleTask.Value;
-            await module.InvokeVoidAsync("loadStepLineChart", divID, objRef);
+            try
+            {
+                // Execute function
+                var module = await moduleTask.Value;
+                await module.InvokeVoidAsync("loadStepLineChart", divID, objRef);
+                this.StateHasChanged();
+            }
+            catch (Exception ex)
+            {
+                ex.LogConsole("Fail Invoke Chart");
+            }
         }
         private void LoadDefaultItems()
         {
@@ -83,7 +97,7 @@ namespace ELEMENTS.Controls.Charts
                 // Items 
                 if (this.Items == null || this.Items.Count == 0)
                 {
-                    LoadDefaultItems();
+                    //LoadDefaultItems();
                 }
                 else
                 {
@@ -100,7 +114,7 @@ namespace ELEMENTS.Controls.Charts
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine("FAIL: " + ex.Message);
+                ex.LogConsole("FAIL: " + ex.Message);
             }
 
             return Task.FromResult(Configuration);
@@ -119,7 +133,7 @@ namespace ELEMENTS.Controls.Charts
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine("FAIL: " + ex.Message);
+                ex.LogConsole("FAIL Dipose ASYNC: " + ex.Message);
             }
         }
 
@@ -135,7 +149,7 @@ namespace ELEMENTS.Controls.Charts
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine("FAIL: " + ex.Message);
+                ex.LogConsole("FAIL Dispose: " + ex.Message);
             }
         }
     }
