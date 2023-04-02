@@ -1078,7 +1078,75 @@
                     Items = EditRepository.ItemsByItemType(
                         this.Field.ItemType, this.Field.FilterProperty, this.Field.FilterValue);
 
-                    System.Diagnostics.Debug.WriteLine("Lookup Items loaded: Count: " + Items.Count.ToSecureString());
+                    System.Diagnostics.Debug.WriteLine("Lookup Items loaded: " + 
+                    " ItemType: " + this.Field.ItemType +
+                    " Property: " + this.Field.FilterProperty +
+                    " FilterValue: " + this.Field.FilterValue +
+                    " Count: " + Items.Count.ToSecureString());
+                     
+                    if(Items.Count >= 1)
+                    {
+                        foreach(IDTO dto in this.Items)
+                        {
+                            System.Diagnostics.Debug.WriteLine("LookUp-Item: " + dto.Title.ToSecureString());
+                        }
+                    }
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine("ItemType is null in Drop Down Items Loading");
+                }
+            }
+
+             // Status 
+            if (Field.Type == EditFieldType.Status)
+            {
+                if (this.Field.ItemType != null)
+                {
+                    Items = EditRepository.ItemsByItemType(
+                        "Lookup", "Typ", "Status");
+
+                    System.Diagnostics.Debug.WriteLine("Lookup Items loaded: " + 
+                    " ItemType: " + this.Field.ItemType +
+                    " Property: " + this.Field.FilterProperty +
+                    " FilterValue: " + this.Field.FilterValue +
+                    " Count: " + Items.Count.ToSecureString());
+                     
+                    if(Items.Count >= 1)
+                    {
+                        foreach(IDTO dto in this.Items)
+                        {
+                            System.Diagnostics.Debug.WriteLine("LookUp-Item: " + dto.Title.ToSecureString());
+                        }
+                    }
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine("ItemType is null in Drop Down Items Loading");
+                }
+            }
+
+               // Priority 
+            if (Field.Type == EditFieldType.Priority)
+            {
+                if (this.Field.ItemType != null)
+                {
+                    Items = EditRepository.ItemsByItemType(
+                        "Lookup", "Typ", "Priority");
+
+                    System.Diagnostics.Debug.WriteLine("Lookup Items loaded: " + 
+                    " ItemType: " + this.Field.ItemType +
+                    " Property: " + this.Field.FilterProperty +
+                    " FilterValue: " + this.Field.FilterValue +
+                    " Count: " + Items.Count.ToSecureString());
+                     
+                    if(Items.Count >= 1)
+                    {
+                        foreach(IDTO dto in this.Items)
+                        {
+                            System.Diagnostics.Debug.WriteLine("LookUp-Item: " + dto.Title.ToSecureString());
+                        }
+                    }
                 }
                 else
                 {
