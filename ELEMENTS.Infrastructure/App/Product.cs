@@ -34,6 +34,9 @@ namespace tsp.DEFAULT
             this.Fields.Add(new EditField() { Title = "Title", ColumnCSSClass = "col-6", Mode = EditFieldMode.View, Type = EditFieldType.Text });
             this.Fields.Add(new EditField() { Title = "Kategorie", Property = "Kategorie", ColumnCSSClass = "col-6", Type = EditFieldType.TextBox });
             this.Fields.Add(new EditField() { Title = "Fortschritt", Property = "Progress", ColumnCSSClass = "col-6", Type = EditFieldType.ProgressBox });
+            
+            this.Fields.Add(new EditField() { Title = "Priorität", Property = "Priority", ColumnCSSClass = "col-6", Type = EditFieldType.Priority });
+            this.Fields.Add(new EditField() { Title = "Status", Property = "Status", ColumnCSSClass = "col-6", Type = EditFieldType.Status });
 
             // Columns 
             this.Columns = new List<IColumn>();
@@ -41,6 +44,9 @@ namespace tsp.DEFAULT
             this.Columns.Add(new Column() { Title = "Title", Property = "Title", ColumnCSSClass = "col px-2", Type = ColumnType.Link });
             this.Columns.Add(new Column() { Title = "Kategorie", Property = "Kategorie", ColumnCSSClass = "col px-2", Type = ColumnType.Text });
             this.Columns.Add(new Column() { Title = "Fortschritt", Property = "Progress", ColumnCSSClass = "col px-2", Type = ColumnType.Progress });
+            
+            this.Columns.Add(new Column() { Title = "Priorität", Property = "Priority", ColumnCSSClass = "col px-2", Type = ColumnType.Priority});
+            this.Columns.Add(new Column() { Title = "Status", Property = "Status", ColumnCSSClass = "col px-2", Type = ColumnType.Status });
 
         }
 

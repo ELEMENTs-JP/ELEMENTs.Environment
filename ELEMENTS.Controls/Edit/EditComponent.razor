@@ -43,9 +43,11 @@
                Field.Type == EditFieldType.Priority)
                 {
                     <div class="row min-edit-height">
-                        <span class="badge bg-secondary">
-                            @Value.ToSecureString("---")
-                        </span>
+                        <div class="col">
+                            <span class="badge bg-secondary">
+                                @Value.ToSecureString("---")
+                            </span>
+                        </div>
                     </div>
                 }
 
@@ -80,7 +82,7 @@
                 }
 
                 @if (Field.Type == EditFieldType.PercentBox ||
-                    Field.Type == EditFieldType.ProgressBox)
+               Field.Type == EditFieldType.ProgressBox)
                 {
                     <div class="row g-0 min-edit-height align-items-center">
                         <div class="col-auto text-muted">
@@ -88,13 +90,13 @@
                         </div>
                         <div class="col-auto ps-2">
                             <div class="progress" style="width: 5rem">
-                                <div class="progress-bar" 
-                                        style="width: @IntValue.ToSecureString()%" 
-                                        role="progressbar" 
-                                        aria-valuenow="@IntValue.ToSecureString()" 
-                                        aria-valuemin="0" 
-                                        aria-valuemax="100"
-                                        aria-label="@IntValue.ToSecureString()% Complete">
+                                <div class="progress-bar"
+                                     style="width: @IntValue.ToSecureString()%"
+                                     role="progressbar"
+                                     aria-valuenow="@IntValue.ToSecureString()"
+                                     aria-valuemin="0"
+                                     aria-valuemax="100"
+                                     aria-label="@IntValue.ToSecureString()% Complete">
                                     <span class="visually-hidden">@IntValue.ToSecureString()% Complete</span>
                                 </div>
                             </div>
@@ -139,7 +141,7 @@
                 }
 
                 @if (Field.Type == EditFieldType.CheckBox ||
-                Field.Type == EditFieldType.ToggleSwitch)
+               Field.Type == EditFieldType.ToggleSwitch)
                 {
                     <div class="row g-0 min-edit-edit align-items-center">
                         <div class="col">
@@ -189,8 +191,8 @@
                     <div class="input-group">
                         <input type="text"
                        @bind-value="Value"
-                       class="@ControlCSS"
-                       placeholder="@Placeholder"
+                               class="@ControlCSS"
+                               placeholder="@Placeholder"
                        @bind-value:event="oninput"
                        @onchange="@( e => { ValueChanged(); })" />
 
@@ -208,10 +210,10 @@
                 <div class="col-12">
 
                     <textarea style="min-height:120px;"
-                      class="@ControlCSS"
-                      placeholder="@Placeholder"
+                              class="@ControlCSS"
+                              placeholder="@Placeholder"
                       @oninput="@(e => { Value = e.Value.ToSecureString(); ValueChanged(); })"
-                      rows="6">@Value</textarea>
+                              rows="6">@Value</textarea>
 
                 </div>
                 <div class="col"></div>
@@ -354,8 +356,8 @@
 
                         <input type="number" step="0.01"
                        @bind-value="DecValue"
-                       class="@ControlCSS"
-                       placeholder="@Placeholder"
+                               class="@ControlCSS"
+                               placeholder="@Placeholder"
                        @bind-value:event="oninput"
                        @onchange="@( e => { ValueChanged(e.Value); })" />
 
@@ -383,8 +385,8 @@
                     <div class="input-group">
                         <input type="number" step="0.01"
                        @bind-value="DecValue"
-                       class="@ControlCSS"
-                       placeholder="@Placeholder"
+                               class="@ControlCSS"
+                               placeholder="@Placeholder"
                        @bind-value:event="oninput"
                        @onchange="@( e => { ValueChanged(e.Value); })" />
                         <button type="button" class="btn btn-ghost-success" @onclick="Save">
@@ -403,8 +405,8 @@
                     <div class="input-group">
                         <input type="number"
                        @bind-value="IntValue"
-                       class="@ControlCSS"
-                       placeholder="@Placeholder"
+                               class="@ControlCSS"
+                               placeholder="@Placeholder"
                        @bind-value:event="oninput"
                        @onchange="@( e => { ValueChanged(e.Value); })" />
 
@@ -425,8 +427,8 @@
 
                         <input type="number"
                        @bind-value="IntValue"
-                       class="@ControlCSS"
-                       placeholder="@Placeholder"
+                               class="@ControlCSS"
+                               placeholder="@Placeholder"
                        @bind-value:event="oninput"
                        @onchange="@( e => { ValueChanged(e.Value); })" />
 
@@ -453,8 +455,8 @@
 
                         <input type="number" min="0" max="100"
                        @bind-value="IntValue"
-                       class="@ControlCSS"
-                       placeholder="@Placeholder"
+                               class="@ControlCSS"
+                               placeholder="@Placeholder"
                        @bind-value:event="oninput"
                        @onchange="@( e => { ValueChanged(e.Value); })" />
 
@@ -480,8 +482,8 @@
                     <div class="input-group">
                         <input type="date"
                        @bind-value="DateTimeValue"
-                       class="@ControlCSS"
-                       placeholder="@Placeholder"
+                               class="@ControlCSS"
+                               placeholder="@Placeholder"
                        @bind-value:event="oninput"
                        @onchange="@( e => { ValueChanged(e.Value); })" />
 
@@ -503,8 +505,8 @@
                     <div class="input-group">
                         <input type="datetime-local"
                        @bind-value="DateTimeValue"
-                       class="@ControlCSS"
-                       placeholder="@Placeholder"
+                               class="@ControlCSS"
+                               placeholder="@Placeholder"
                        @bind-value:event="oninput"
                        @onchange="@( e => { ValueChanged(e.Value); })" />
 
@@ -524,8 +526,8 @@
                     <div class="input-group">
                         <input type="time"
                        @bind-value="DateTimeValue"
-                       class="@ControlCSS"
-                       placeholder="@Placeholder"
+                               class="@ControlCSS"
+                               placeholder="@Placeholder"
                        @bind-value:event="oninput"
                        @onchange="@( e => { ValueChanged(e.Value); })" />
 
@@ -563,9 +565,9 @@
                 <div class="col">
                     <div class="input-group">
                         <Switch Title="@Field.Title.ToSecureString()"
-                          Description="@Field.Description.ToSecureString()"
-                          Value="@BoolValue"
-                          ValueChanged="@( e => { BoolValue = e; })" />
+                        Description="@Field.Description.ToSecureString()"
+                        Value="@BoolValue"
+                        ValueChanged="@( e => { BoolValue = e; })" />
 
                         <button type="button" class="btn btn-sm btn-ghost-success" @onclick="Save">
                             <i class="fas fa-check"></i>
@@ -957,8 +959,8 @@
                         }
                         catch (Exception ex)
                         {
-                            System.Diagnostics.Debug.WriteLine("Error: Update:Item: " 
-                            + " - Field: " + this.Field.Property + " - Value: " + this.Value.ToSecureString() + " " 
+                            System.Diagnostics.Debug.WriteLine("Error: Update:Item: "
+                            + " - Field: " + this.Field.Property + " - Value: " + this.Value.ToSecureString() + " "
                             + ex.Message.ToSecureString());
                         }
                     }
@@ -984,7 +986,7 @@
     {
         try
         {
-            // Generic LookUp 
+            // Generic LookUp
             if (Field.Type == EditFieldType.LookupItems ||
                 Field.Type == EditFieldType.Priority ||
                 Field.Type == EditFieldType.Status)
