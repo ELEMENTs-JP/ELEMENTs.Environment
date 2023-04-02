@@ -135,15 +135,11 @@
                         <div class="col">
                             @if (BoolValue.ToSecureBool() == true)
                             {
-                                <span class="badge bg-green">
-                                    <i class="fas fa-check"></i>
-                                </span>
+                                <span class="badge bg-green">aktiv</span>
                             }
                             else
                             {
-                                <span class="badge bg-red">
-                                    <i class="fas fa-times"></i>
-                                </span>
+                                <span class="badge bg-secondary">inaktiv</span>
                             }
                         </div>
                     </div>
@@ -218,6 +214,88 @@
         }
 
         @if (Field.Type == EditFieldType.LookupItems)
+        {
+            <div class="row gx-1  d-flex align-items-center">
+                <div class="col">
+
+                    @* --- SELECT DROP DOWN --- *@
+                    <select class="form-select" title="@( Value.ToSecureString() )"
+                    @onchange="@(e => { Value = e.Value.ToSecureString(); ValueChanged(); })">
+
+                        <option class="@OptionItemCSS" value="---">--- bitte wählen ---</option>
+
+                        @if (Items.Count >= 1)
+                        {
+                            @foreach (IDTO item in Items)
+                            {
+                                @if (this.Value.ToSecureString() == item.Title.ToSecureString())
+                                {
+                                    item.Checked = true;
+                                }
+
+                                @if (item.Checked)
+                                {
+                                    <option class="@OptionItemCSS" value="@item.Title.ToSecureString()" selected>@item.Title.ToSecureString()</option>
+                                }
+                                else
+                                {
+                                    <option class="@OptionItemCSS" value="@item.Title.ToSecureString()">@item.Title.ToSecureString()</option>
+                                }
+                            }
+                        }
+                    </select>
+
+                </div>
+                <div class="col-auto">
+                    <button type="button" class="btn btn-sm btn-ghost-success" @onclick="Save">
+                        <i class="fas fa-check"></i>
+                    </button>
+                </div>
+            </div>
+        }
+
+        @if (Field.Type == EditFieldType.Status)
+        {
+            <div class="row gx-1  d-flex align-items-center">
+                <div class="col">
+
+                    @* --- SELECT DROP DOWN --- *@
+                    <select class="form-select" title="@( Value.ToSecureString() )"
+                    @onchange="@(e => { Value = e.Value.ToSecureString(); ValueChanged(); })">
+
+                        <option class="@OptionItemCSS" value="---">--- bitte wählen ---</option>
+
+                        @if (Items.Count >= 1)
+                        {
+                            @foreach (IDTO item in Items)
+                            {
+                                @if (this.Value.ToSecureString() == item.Title.ToSecureString())
+                                {
+                                    item.Checked = true;
+                                }
+
+                                @if (item.Checked)
+                                {
+                                    <option class="@OptionItemCSS" value="@item.Title.ToSecureString()" selected>@item.Title.ToSecureString()</option>
+                                }
+                                else
+                                {
+                                    <option class="@OptionItemCSS" value="@item.Title.ToSecureString()">@item.Title.ToSecureString()</option>
+                                }
+                            }
+                        }
+                    </select>
+
+                </div>
+                <div class="col-auto">
+                    <button type="button" class="btn btn-sm btn-ghost-success" @onclick="Save">
+                        <i class="fas fa-check"></i>
+                    </button>
+                </div>
+            </div>
+        }
+
+        @if (Field.Type == EditFieldType.Priority)
         {
             <div class="row gx-1  d-flex align-items-center">
                 <div class="col">
@@ -487,6 +565,9 @@
             </div>
         }
 
+
+
+
         @if (!string.IsNullOrEmpty(Field.Description))
         {
             <div><small class="text-muted">@Field.Description.ToSecureString()</small></div>
@@ -706,7 +787,9 @@
                                 }
 
                                 // Drop Down Items List
-                                if (Field.Type == EditFieldType.LookupItems)
+                                if (Field.Type == EditFieldType.LookupItems ||
+                                    Field.Type == EditFieldType.Status ||
+                                    Field.Type == EditFieldType.Priority)
                                 {
                                     this.Value = EditRepository.DTO.GetProperty(Field.Property).Value.ToSecureString();
 
@@ -891,7 +974,10 @@
     {
         try
         {
-            if (Field.Type == EditFieldType.LookupItems)
+            // Generic LookUp 
+            if (Field.Type == EditFieldType.LookupItems ||
+                Field.Type == EditFieldType.Priority ||
+                Field.Type == EditFieldType.Status)
             {
                 if (this.Field.ItemType != null)
                 {

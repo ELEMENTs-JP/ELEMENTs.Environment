@@ -249,6 +249,9 @@ namespace ELEMENTS.Infrastructure
         CheckBox = 51,
         ToggleSwitch = 52,
 
+        Status = 61,
+        Priority = 62,
+
     }
 
     public enum EditFieldMode
