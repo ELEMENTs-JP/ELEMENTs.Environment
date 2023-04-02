@@ -864,7 +864,9 @@
                         }
                         catch (Exception ex)
                         {
-
+                            System.Diagnostics.Debug.WriteLine("Error: Update:Item: " 
+                            + " - Field: " + this.Field.Property + " - Value: " + this.Value.ToSecureString() + " " 
+                            + ex.Message.ToSecureString());
                         }
                     }
                 }
