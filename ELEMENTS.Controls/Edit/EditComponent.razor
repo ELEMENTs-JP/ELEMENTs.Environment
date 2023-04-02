@@ -70,7 +70,7 @@
                 }
 
                 @if (Field.Type == EditFieldType.PercentBox ||
-               Field.Type == EditFieldType.ProgressBox)
+                    Field.Type == EditFieldType.ProgressBox)
                 {
                     <div class="row g-0 min-edit-height align-items-center">
                         <div class="col-auto text-muted">
@@ -128,7 +128,8 @@
 
                 }
 
-                @if (Field.Type == EditFieldType.CheckBox)
+                @if (Field.Type == EditFieldType.CheckBox ||
+                Field.Type == EditFieldType.ToggleSwitch)
                 {
                     <div class="row g-0 min-edit-edit align-items-center">
                         <div class="col">
@@ -456,6 +457,24 @@
                 <div class="col">
                     <div class="input-group">
                         <CheckBox Title="@Field.Title.ToSecureString()"
+                          Description="@Field.Description.ToSecureString()"
+                          Value="@BoolValue"
+                          ValueChanged="@( e => { BoolValue = e; })" />
+
+                        <button type="button" class="btn btn-sm btn-ghost-success" @onclick="Save">
+                            <i class="fas fa-check"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        }
+
+        @if (Field.Type == EditFieldType.ToggleSwitch)
+        {
+            <div class="row gx-1 d-flex align-items-center">
+                <div class="col">
+                    <div class="input-group">
+                        <Switch Title="@Field.Title.ToSecureString()"
                           Description="@Field.Description.ToSecureString()"
                           Value="@BoolValue"
                           ValueChanged="@( e => { BoolValue = e; })" />

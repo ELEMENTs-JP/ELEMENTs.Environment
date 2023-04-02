@@ -247,6 +247,7 @@ namespace ELEMENTS.Infrastructure
         OptionItems = 42,
     
         CheckBox = 51,
+        ToggleSwitch = 52,
 
     }
 
