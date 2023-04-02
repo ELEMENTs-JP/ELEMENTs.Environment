@@ -226,9 +226,8 @@
 }
 
 @code {
-
     // Image
-    private string Base64String { get; set; }
+    private string Base64String { get; set; } = "";
 
     [Parameter]
     public ISqlDatabaseService SqlService { get; set; }
@@ -265,7 +264,7 @@
     [Parameter]
     public string RelatedItemType { get; set; } = string.Empty;
 
-    protected override void OnParametersSet()
+    protected override async Task OnParametersSetAsync()
     {
         try
         {
@@ -278,15 +277,17 @@
 
                 if (Column.Type == ColumnType.UserImage)
                 {
-                    LoadUserImage();
+                    await LoadUserImage();
+
+                    System.Diagnostics.Debug.WriteLine("Start User Image Load: " + this.Value.ToSecureString());
                 }
                 if (Column.Type == ColumnType.Parents)
                 {
-                    LoadParents();
+                    await LoadParents();
                 }
                 if (Column.Type == ColumnType.Children)
                 {
-                    LoadChildren();
+                    await LoadChildren();
                 }
             }
         }
@@ -295,8 +296,9 @@
             System.Diagnostics.Debug.WriteLine("FAIL: " + ex.Message);
         }
 
-        base.OnParametersSet();
+        await base.OnParametersSetAsync();
     }
+
 
     private async Task LoadUserImage()
     {
@@ -309,8 +311,19 @@
                     Base64String = DTO.GetUserProfileImage(SqlService);
                     this.StateHasChanged();
                     await Task.FromResult<string>("OK");
+
+                    System.Diagnostics.Debug.WriteLine("User Image loaded successfully: " + this.Value.ToSecureString());
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine("User Image Load Error: SqlService = NULL");
                 }
             }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine("User Image Load Errror: DTO = NULL");
+            }
+
         }
         catch (Exception ex)
         {
