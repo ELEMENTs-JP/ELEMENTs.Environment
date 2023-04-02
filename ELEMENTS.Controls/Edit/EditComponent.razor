@@ -51,6 +51,16 @@
                     </div>
                 }
 
+                @if (Field.Type == EditFieldType.PersonPicker)
+                {
+                    <div class="row min-edit-height">
+                        <div class="col">
+                            @if(!string.IsNullOrEmpty(Value)) { <i class="fa-regular fa-user me-1"></i> }
+                            <span class="">@Value.ToSecureString("---")</span>
+                        </div>
+                    </div>
+                }
+
                 @if (Field.Type == EditFieldType.MoneyBox)
                 {
 
