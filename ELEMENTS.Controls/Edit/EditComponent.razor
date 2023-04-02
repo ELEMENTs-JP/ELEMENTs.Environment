@@ -56,7 +56,7 @@
 
                     <div class="row min-edit-height">
                         <div class="col-auto text-muted">
-                            @DecValue.ToSecureDecimal().ToString("C3", CultureInfo.CurrentCulture).ToSecureString("---")
+                            @DecValue.ToSecureDecimal().ToString("C", new CultureInfo("de-DE")).ToSecureString("---")
                         </div>
                         <div class="col-auto ps-2 me-auto">
                             <i class="fas fa-money-bill"></i>
@@ -226,6 +226,47 @@
         }
 
         @if (Field.Type == EditFieldType.LookupItems)
+        {
+            <div class="row gx-1  d-flex align-items-center">
+                <div class="col">
+
+                    @* --- SELECT DROP DOWN --- *@
+                    <select class="form-select" title="@( Value.ToSecureString() )"
+                    @onchange="@(e => { Value = e.Value.ToSecureString(); ValueChanged(); })">
+
+                        <option class="@OptionItemCSS" value="---">--- bitte wählen ---</option>
+
+                        @if (Items.Count >= 1)
+                        {
+                            @foreach (IDTO item in Items)
+                            {
+                                @if (this.Value.ToSecureString() == item.Title.ToSecureString())
+                                {
+                                    item.Checked = true;
+                                }
+
+                                @if (item.Checked)
+                                {
+                                    <option class="@OptionItemCSS" value="@item.Title.ToSecureString()" selected>@item.Title.ToSecureString()</option>
+                                }
+                                else
+                                {
+                                    <option class="@OptionItemCSS" value="@item.Title.ToSecureString()">@item.Title.ToSecureString()</option>
+                                }
+                            }
+                        }
+                    </select>
+
+                </div>
+                <div class="col-auto">
+                    <button type="button" class="btn btn-sm btn-ghost-success" @onclick="Save">
+                        <i class="fas fa-check"></i>
+                    </button>
+                </div>
+            </div>
+        }
+
+        @if (Field.Type == EditFieldType.PersonPicker)
         {
             <div class="row gx-1  d-flex align-items-center">
                 <div class="col">
@@ -716,6 +757,26 @@
                         this.DateTimeValue = value.ToSecureDateTime();
                         break;
                     }
+                case EditFieldType.Status:
+                    {
+                        this.Value = value.ToSecureString();
+                        break;
+                    }
+                case EditFieldType.Priority:
+                    {
+                        this.Value = value.ToSecureString();
+                        break;
+                    }
+                case EditFieldType.LookupItems:
+                    {
+                        this.Value = value.ToSecureString();
+                        break;
+                    }
+                case EditFieldType.PersonPicker:
+                    {
+                        this.Value = value.ToSecureString();
+                        break;
+                    }
 
                 default:
                     {
@@ -806,6 +867,14 @@
                                     this.Value = EditRepository.DTO.GetProperty(Field.Property).Value.ToSecureString();
 
                                     LoadItems();
+                                }
+
+                                // Person Picker 
+                                if (Field.Type == EditFieldType.PersonPicker)
+                                {
+                                    this.Value = EditRepository.DTO.GetProperty(Field.Property).Value.ToSecureString();
+
+                                    LoadPeople();
                                 }
 
                                 // Money // Decimal
@@ -918,11 +987,24 @@
                                 }
 
                                 // Boolean // CheckBox
-                                if (Field.Type == EditFieldType.CheckBox)
+                                if (Field.Type == EditFieldType.CheckBox ||
+                                Field.Type == EditFieldType.ToggleSwitch)
                                 {
                                     EditRepository.DTO.SetProperty(this.BoolValue.ToSecureString(), Field.Property);
                                 }
 
+                                // Status / Priority 
+                                if (Field.Type == EditFieldType.Status ||
+                                    Field.Type == EditFieldType.Priority)
+                                {
+                                    EditRepository.DTO.SetProperty(this.Value.ToSecureString(), Field.Property);
+                                }
+
+                                // People 
+                                if (Field.Type == EditFieldType.PersonPicker)
+                                {
+                                    EditRepository.DTO.SetProperty(this.Value.ToSecureString(), Field.Property);
+                                }
                             }
                             catch (Exception ex)
                             {
@@ -995,6 +1077,33 @@
                 {
                     Items = EditRepository.ItemsByItemType(
                         this.Field.ItemType, this.Field.FilterProperty, this.Field.FilterValue);
+
+                    System.Diagnostics.Debug.WriteLine("Lookup Items loaded: Count: " + Items.Count.ToSecureString());
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine("ItemType is null in Drop Down Items Loading");
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine("Fehler: " + ex.Message);
+        }
+    }
+
+    private void LoadPeople()
+    {
+        try
+        {
+            // Generic LookUp
+            if (Field.Type == EditFieldType.PersonPicker)
+            {
+                if (this.Field.ItemType != null)
+                {
+                    Items = EditRepository.ItemsByItemType("User", "", "");
+
+                    System.Diagnostics.Debug.WriteLine("People Items loaded: Count: " + Items.Count.ToSecureString());
                 }
                 else
                 {

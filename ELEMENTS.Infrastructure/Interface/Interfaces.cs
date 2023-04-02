@@ -248,6 +248,7 @@ namespace ELEMENTS.Infrastructure
 
         LookupItems = 41,
         OptionItems = 42,
+        PersonPicker = 43,
     
         CheckBox = 51,
         ToggleSwitch = 52,
