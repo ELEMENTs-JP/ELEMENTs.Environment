@@ -187,6 +187,9 @@ namespace ELEMENTS.Infrastructure
         Children = 32,
         //Related = 33,
         //Parallels = 34,
+
+        Priority = 41,
+        Status = 42,
     }
 
     // Edit Field 

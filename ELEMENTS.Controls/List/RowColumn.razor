@@ -194,6 +194,27 @@
                     }
 
                 }
+                else if (Column.Type == ColumnType.Priority)
+                {
+                    <div class="row g-0">
+                        <div class="col">
+                            <span class="badge bg-secondary">
+                                @Value.ToSecureString("---")
+                            </span>
+                        </div>
+                    </div>
+                 
+                }
+                else if (Column.Type == ColumnType.Status)
+                {
+                    <div class="row g-0">
+                        <div class="col">
+                            <span class="badge bg-secondary">
+                                @Value.ToSecureString("---")
+                            </span>
+                        </div>
+                    </div>
+                }
                 else
                 {
                     @Value.ToSecureString()

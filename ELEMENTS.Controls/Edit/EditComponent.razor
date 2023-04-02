@@ -39,6 +39,16 @@
                     </div>
                 }
 
+                @if (Field.Type == EditFieldType.Status ||
+               Field.Type == EditFieldType.Priority)
+                {
+                    <div class="row min-edit-height">
+                        <span class="badge bg-secondary">
+                            @Value.ToSecureString("---")
+                        </span>
+                    </div>
+                }
+
                 @if (Field.Type == EditFieldType.MoneyBox)
                 {
 
